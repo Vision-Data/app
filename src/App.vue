@@ -1,6 +1,6 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <img alt="Vue logo" src="./assets/color-logo.svg" width="200">
+  <HelloWorld msg="Vision, l'application de visualisation de données."/>
 </template>
 
 <script>
