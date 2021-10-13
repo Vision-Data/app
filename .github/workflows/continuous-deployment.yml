@@ -20,5 +20,6 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd ${{ secrets.PROJECT_PATH }}
+            git pull origin main
             npm ci
             npm run build
