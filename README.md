@@ -2,3 +2,5 @@
 Web application that help you to visualize, test and generate document from an API
 
 [![CD](https://github.com/Vision-Data/app/actions/workflows/continuous-deployment.yml/badge.svg?branch=main)](https://github.com/Vision-Data/app/actions/workflows/continuous-deployment.yml)
+
+[![CD](https://github.com/Vision-Data/app/actions/workflows/continuous-deployment.yml/badge.svg?event=release)](https://github.com/Vision-Data/app/actions/workflows/continuous-deployment.yml)
