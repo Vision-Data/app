@@ -68,3 +68,9 @@ jobs:
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1
+      
+    - name: Emit event to deploy 
+      uses: mvasigh/dispatch-action@main
+      with:
+        token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        event_type: deploy
