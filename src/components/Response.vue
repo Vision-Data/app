@@ -5,15 +5,21 @@
         <p id="result"> OK !</p>
     </div>
     <div class="data">
-        <!-- <v-for></v-for> -->
-        <p id="state"> Etat 200</p>
-        <p id="result"> OK !</p>
+        <div v-for="object in objects" :key="object.data">
+            <Data />
+        </div>
     </div>
   </div>
 </template>
 
 <script>
-export default { name: "Response", request: "" };
+    import Data from "./Data.vue";
+    export default {
+        name: "Response",
+        components: {
+            Data
+        }
+    };
 </script>
 
 <style scoped>
