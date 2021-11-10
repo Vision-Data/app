@@ -1,17 +1,21 @@
 <template>
-  <img alt="Vue logo" src="./assets/color-logo.svg" width="200">
-  <HelloWorld msg="Vision, l'application de visualisation de données ! :]"/>
+  <img alt="Vue logo" src="./assets/color-logo.svg" width="200" />
+
+  <HelloWorld msg="Vision, l'application de visualisation de données ! :]" />
+  <SearchBar />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import SearchBar from "./components/SearchBar.vue";
+import HelloWorld from "./components/HelloWorld.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
+    SearchBar,
     HelloWorld
   }
-}
+};
 </script>
 
 <style>
