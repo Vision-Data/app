@@ -69,7 +69,8 @@ jobs:
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1
       
-    - name: Repository Dispatch
+    - if:   github.event_name != 'pull_request'
+      name: Repository Dispatch
       uses: peter-evans/repository-dispatch@v1
       with:
         token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
