@@ -3,17 +3,20 @@
 
   <HelloWorld msg="Vision, l'application de visualisation de données ! :]" />
   <SearchBar />
+  <CallApi />
 </template>
 
 <script>
 import SearchBar from "./components/SearchBar.vue";
 import HelloWorld from "./components/HelloWorld.vue";
+import CallApi from "./components/CallApi.vue";
 
 export default {
   name: "App",
   components: {
     SearchBar,
-    HelloWorld
+    HelloWorld,
+    CallApi
   }
 };
 </script>
