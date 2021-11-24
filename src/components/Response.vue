@@ -1,26 +1,38 @@
 <template>
   <div class="response">
     <div class="alert alert-success">
-    <div class="flex-1">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="w-6 h-6 mx-2 stroke-current">          
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>                
-        </svg> 
-        <label>Etat 200 : OK !</label>
+      <div class="flex-1">
+        <label>
+          <button class="badge bg-success border-transparent">Etat</button> 200
+          : OK !</label
+        >
+      </div>
     </div>
+
+    <div class="alert alert-info">
+      <div class="flex-1">
+        <label>
+          <button class="badge bg-info border-transparent">ID</button> {{ id }}
+        </label>
+      </div>
     </div>
 
     <Data />
-    
   </div>
 </template>
 
 <script>
-    import Data from "./Data.vue";
-    export default {
-        name: "Response",
-        components: {
-            Data
-        },
+import Data from "./Data.vue";
+export default {
+  name: "Response",
+  components: {
+    Data,
+  },
+  data() {
+    return {
+      id: 1,
     };
+  },
+};
 </script>
 
