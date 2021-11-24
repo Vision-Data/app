@@ -94,6 +94,7 @@ export default {
       this.pasteError = false;
       try {
         this.searchInput = await navigator.clipboard.readText();
+        this.checkHttps();
       } catch {
         this.pasteError = true;
       }
