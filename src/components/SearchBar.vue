@@ -1,7 +1,10 @@
 <template>
   <div class="form-control">
     <label class="label">
-      <span class="label-text">
+      <span
+        class="label-text text-gray-400
+"
+      >
         URL de l'API
 
         <ToolTipInformations
@@ -28,18 +31,24 @@
 
     <div class="relative">
       <label class="input-group">
-        <SecurityLock :isHttps="false" />
+        <SecurityLock :isHttps="isHttps" />
         <input
+          v-model="searchInput"
           type="text"
+          @keyup="checkHttps"
           placeholder="https://api.example.com/v1"
           class="w-full pr-16 input input-primary input-bordered"
+          :class="{ 'input-error': pasteError }"
         />
         <ToolTipInformations
           direction="bottom"
           helperText="Coller"
           color="primary"
         >
-          <button class="absolute top-0 right-0 rounded-l-none btn btn-ghost">
+          <button
+            class="absolute top-0 right-0 rounded-l-none btn btn-ghost"
+            v-on:click="pasteContent()"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="h-6 w-6"
@@ -57,6 +66,12 @@
           </button>
         </ToolTipInformations>
       </label>
+
+      <label class="label" v-if="pasteError">
+        <span class="label-text-alt text-error"
+          >Vous devez autoriser l'accès à votre presse papier
+        </span>
+      </label>
     </div>
   </div>
 </template>
@@ -66,8 +81,27 @@ import SecurityLock from "./SecurityLock.vue";
 import ToolTipInformations from "./ToolTipInformations.vue";
 export default {
   name: "SearchBar",
-  request: "",
-  components: { SecurityLock, ToolTipInformations }
+  components: { SecurityLock, ToolTipInformations },
+  data() {
+    return {
+      searchInput: "",
+      pasteError: false,
+      isHttps: false
+    };
+  },
+  methods: {
+    async pasteContent() {
+      this.pasteError = false;
+      try {
+        this.searchInput = await navigator.clipboard.readText();
+      } catch {
+        this.pasteError = true;
+      }
+    },
+    checkHttps() {
+      this.isHttps = this.searchInput.includes("https");
+    }
+  }
 };
 </script>
 
