@@ -1,43 +1,84 @@
 <template>
-<div class="select">
-    <select v-model="choice" :required="true" class="select select-bordered w-full max-w-xs">
-        <option value="GET">⇲ Recevoir (GET)</option>
-        <option value="POST">➤ Envoyer (POST)</option>
-        <option value="DELETE">🗑 Supprimer (DELETE)</option>
-        <option value="UPDATE">⛭ Modifier (UPDATE)</option>
+  <div class="select">
+    <select
+      v-model="choice"
+      :required="true"
+      class="select select-bordered w-full max-w-xs"
+    >
+      <option value="GET">⇲ Recevoir (GET)</option>
+      <option value="POST">➤ Envoyer (POST)</option>
+      <option value="DELETE">🗑 Supprimer (DELETE)</option>
+      <option value="PUT">⛭ Modifier (PUT)</option>
     </select>
-    <button class="btn btn-primary" id="valid" @click="toogleButton()">{{ valid }}</button>
-    <input type="text" name="sec" value="0" size=3>
-</div>
+    <button class="btn btn-primary" id="valid" @click="toogleButton()">
+      {{ valid }}
+    </button>
+  </div>
 </template>
 
 <script>
-export default { 
-    name: "SearchBar", 
-    request: "",
-     data () {
-        return {
-            valid: 'Lancer',
-            choice: 'GET'
-        }
+export default {
+  name: "SearchBar",
+  props: ["research"],
+  data() {
+    return {
+      valid: "Lancer",
+      choice: "GET",
+    };
+  },
+  methods: {
+    toogleButton() {
+      this.valid = this.valid == "Lancer" ? "■" : "Lancer";
+      if (this.valid == "■") {
+        this.callApi();
+      }
     },
-    methods:{
-        toogleButton()  {
-           console.log(this.valid)
-           this.valid = this.valid == "Lancer" ? "■" : "Lancer";
-           if(this.valid == "■"){
-               this.callApi(this.choice);
-            }
-        },
-        callApi(choice){
-            console.log("La requete est : " + choice)
-            console.log(this.valid)
-            this.valid = "Lancer";
-        },
-    }
+    callApi() {
+      let mail = "test@test.fr";
+      let password = "azerty-85";
+      // Envoi de la requete API
+      if (this.research === "") {
+        window.alert("Le champ URL est vide");
+      } else {
+        if (this.choice == "GET") {
+          fetch(this.research, {
+            method: this.choice,
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              mail: mail,
+              password: password,
+            }),
+          })
+            .then((r) => r.json())
+            .then((res) => {
+              console.log(res.results);
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+        }else if(this.choice == "POST" || this.choice == "DELETE" || this.choice == "PUT")
+        console.log(this.choice + " " + this.research);
+        fetch(this.research, {
+          method: this.choice,
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            mail: mail,
+            password: password,
+          }),
+        })
+          .then((r) => r.json())
+          .then((res) => {
+            console.log(res);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
+
+      this.valid = "Lancer";
+    },
+  },
 };
-
-
 </script>
 
 <style scoped>

@@ -7,10 +7,10 @@
         src="./assets/color-logo.svg"
         width="150"
       />
-      <SearchBar class="w-8/12" />
+      <SearchBar class="w-8/12" @research="sendResearch" />
     </header>
-    
-    <CallApi />
+
+    <CallApi :research="research" />
   </div>
 </template>
 
@@ -22,7 +22,18 @@ export default {
   name: "App",
   components: {
     SearchBar,
-    CallApi
+    CallApi,
+  },
+  data() {
+    return {
+      research: "",
+    };
+  },
+
+  methods: {
+    sendResearch(data) {
+      this.research = data;
+    },
   },
 };
 </script>
