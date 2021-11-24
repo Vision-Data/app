@@ -1,8 +1,9 @@
 <template>
   <span v-if="isHttps">
-    <div
-      data-tip="URL Sécurisée"
-      class="tooltip tooltip-bottom tooltip-primary"
+    <ToolTipInformations
+      direction="bottom"
+      helperText="URL Sécurisé"
+      color="primary"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -16,13 +17,14 @@
           clip-rule="evenodd"
         />
       </svg>
-    </div>
+    </ToolTipInformations>
   </span>
 
   <span v-else>
-    <div
-      data-tip="URL non Sécurisée"
-      class="tooltip tooltip-bottom tooltip-primary"
+    <ToolTipInformations
+      direction="bottom"
+      helperText="URL non sécurisée"
+      color="primary"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -34,15 +36,16 @@
           d="M10 2a5 5 0 00-5 5v2a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2H7V7a3 3 0 015.905-.75 1 1 0 001.937-.5A5.002 5.002 0 0010 2z"
         />
       </svg>
-    </div>
+    </ToolTipInformations>
   </span>
 </template>
 
 <script>
+import ToolTipInformations from "./ToolTipInformations.vue";
 export default {
   name: "SecurityLock",
-  request: "",
-  props: ["isHttps"]
+  props: ["isHttps"],
+  components: { ToolTipInformations }
 };
 </script>
 

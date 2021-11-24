@@ -1,5 +1,8 @@
 <template>
-  <div :data-tip="helperText" :class="`tooltip tooltip-${direction}`">
+  <div
+    :data-tip="helperText"
+    :class="`tooltip tooltip-${direction} tooltip-${color}`"
+  >
     <slot></slot>
   </div>
 </template>
@@ -7,6 +10,6 @@
 <script>
 export default {
   name: "ToolTipInformations",
-  props: ["helperText", "direction"]
+  props: ["helperText", "direction", "color"]
 };
 </script>

@@ -34,7 +34,11 @@
           placeholder="https://api.example.com/v1"
           class="w-full pr-16 input input-primary input-bordered"
         />
-        <ToolTipInformations direction="bottom" helperText="Coller">
+        <ToolTipInformations
+          direction="bottom"
+          helperText="Coller"
+          color="primary"
+        >
           <button class="absolute top-0 right-0 rounded-l-none btn btn-ghost">
             <svg
               xmlns="http://www.w3.org/2000/svg"
