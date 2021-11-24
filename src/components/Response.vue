@@ -9,13 +9,7 @@
       </div>
     </div>
 
-    <div class="alert alert-info">
-      <div class="flex-1">
-        <label>
-          <button class="badge bg-info border-transparent">ID</button> {{ id }}
-        </label>
-      </div>
-    </div>
+
 
     <Data />
   </div>
