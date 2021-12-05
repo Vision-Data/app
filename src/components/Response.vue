@@ -40,30 +40,37 @@ export default {
 </script>
 
 <style>
+.response ::selection {
+  background-color: #afafaf;
+  color: black;
+}
 .result-container {
   display: flex;
   flex-direction: column;
 }
+.selection-data {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
 .alert {
   margin: 10px;
 }
-
 .alert label {
   max-width: 24rem;
   overflow-wrap: break-word;
 }
-
 .alert .flex-1 {
   display: flex;
   flex-wrap: wrap;
   position: relative;
   align-items: flex-start;
 }
-
 .badge {
   margin-right: .8rem;
 }
 .data-result {
   font-weight: bold;
+  flex: 1;
 }
 </style>

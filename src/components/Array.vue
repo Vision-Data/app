@@ -1,7 +1,7 @@
 <template>
-  <section>
+  <section :class="{ 'array-over': selection}" @mouseover="selection = true" @mouseout="selection = false">
 
-      <div class="alert array" :class="`alert-${color}`">
+      <div class="alert array" :class="`alert-${color}`" >
         <div class="flex-1">
           <b class="badge border-transparent array-title tooltip" :class="`bg-${color}`" data-tip="Tableau">🗃 {{ name }}</b>
           <div class="array-content">
@@ -14,6 +14,7 @@
                 </div>
 
           </div>
+          <button class="btn btn-xs selection-data" id="select" v-show="selection">SELECT</button>
         </div>
       </div>
 
@@ -29,11 +30,18 @@ export default {
   components: {
     Value
   },
+  data: ()=>({
+    selection: false
+  }),
   props: ['name','data','color']
 };
 </script>
 
 <style>
+.array-over {
+  box-shadow: inset 0 0 0 2px rgba(98, 98, 98, 0.123);
+  border-radius: 1.5rem;
+}
 .array .array-title {
   border-radius: 5px;
   text-transform: uppercase;
@@ -56,7 +64,7 @@ export default {
   position: relative;
 }
 .array .array-container:hover {
-  box-shadow: inset 0 0 0 2px rgb(255, 255, 255);
+  box-shadow: inset 0 0 0 2px rgb(216, 216, 216);
 }
 .array .array-container:hover::before {
   content: attr(data-id);
@@ -64,7 +72,7 @@ export default {
   top: 0;
   left: 0;
   padding: .2rem .5rem;
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(216, 216, 216);
   color: black;
   border-radius: 5px;
   z-index: 15;
