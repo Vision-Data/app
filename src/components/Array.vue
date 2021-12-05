@@ -1,19 +1,19 @@
 <template>
   <section>
 
-      <div class="alert alert-error array">
+      <div class="alert array" :class="`alert-${color}`">
         <div class="flex-1">
-          <b class="badge bg-error border-transparent array-title">Abilities</b>
+          <b class="badge border-transparent array-title" :class="`bg-${color}`">{{ name }}</b>
           <div class="array-content">
 
-                  <div class="alert alert-error array-container" v-for="(ability, index) in pokemon.abilities" :key="ability.data" :data-id="index" >
+                  <div class="alert array-container" :class="`alert-${color}`" v-for="(ability, index) in data.abilities" :key="ability.data" :data-id="index" >
                     <div class="flex-1">
                       <label class="array-value">
-                        <b class="badge bg-error border-transparent">Name</b>
+                        <b class="badge border-transparent" :class="`bg-${color}`">Name</b>
                         <span class="data-result">{{ ability.ability.name === "" ? "(vide)" : ability.ability.name }}</span>
                       </label>
                       <label class="array-value">
-                        <b class="badge bg-error border-transparent">URL</b>
+                        <b class="badge border-transparent" :class="`bg-${color}`">URL</b>
                         <span class="data-result">{{ ability.ability.url }}</span>
                       </label>
                     </div>
@@ -28,19 +28,9 @@
 
 
 <script>
-import bidoof from "../assets/bidoof.json";
-
 export default {
   name: "Data",
-  mounted: () => {
-    console.log(bidoof);
-  },
-  components: {},
-  data() {
-    return {
-      pokemon: bidoof,
-    };
-  },
+  props: ['name','data','color']
 };
 </script>
 

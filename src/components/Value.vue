@@ -1,10 +1,10 @@
 <template>
   <section>
 
-    <div class="alert alert-info value">
+    <div class="alert value" :class="`alert-${color}`">
       <div class="flex-1">
-          <b class="badge bg-info border-transparent">Expérience de Base</b>
-          <span class="data-result">{{ pokemon.base_experience }}</span>
+          <b class="badge border-transparent" :class="`bg-${color}`">{{ name }}</b>
+          <span class="data-result">{{ data.base_experience }}</span>
       </div>
     </div>
 
@@ -13,15 +13,9 @@
 
 
 <script>
-import bidoof from "../assets/bidoof.json";
-
 export default {
   name: "Value",
-  data() {
-    return {
-      pokemon: bidoof,
-    };
-  },
+  props: ['name','data','color']
 };
 </script>
 

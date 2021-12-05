@@ -8,9 +8,9 @@
     <div class="alert">
       <div class="result-container">
         <b>Resultats</b>
-        <Value />
-        <Object/>
-        <Array/>
+        <Value name="Expérience de Base" :data="pokemon" color="info"/>
+        <Object name="Form" :data="pokemon" color="warning"/>
+        <Array name="Abilities" :data="pokemon" color="error"/>
       </div>
     </div>
 
@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import bidoof from "../assets/bidoof.json";
 import Value from "./Value.vue";
 import Object from "./Object.vue";
 import Array from "./Array.vue"
@@ -32,6 +33,7 @@ export default {
   data() {
     return {
       id: 1,
+      pokemon: bidoof
     };
   },
 };

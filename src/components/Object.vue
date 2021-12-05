@@ -1,16 +1,16 @@
 <template>
   <section>
 
-    <div class="alert alert-warning object">
+    <div class="alert object" :class="`alert-${color}`">
       <div class="flex-1">
-        <b class="badge bg-warning border-transparent object-title">Form</b>
+        <b class="badge border-transparent object-title" :class="`bg-${color}`">{{ name }}</b>
         <label class="object-value">
-          <b class="badge bg-warning border-transparent">Name</b>
-          <span class="data-result">{{ pokemon.forms.name }}</span>
+          <b class="badge border-transparent" :class="`bg-${color}`">Name</b>
+          <span class="data-result">{{ data.forms.name }}</span>
         </label>
         <label class="object-value">
-          <b class="badge bg-warning border-transparent">Url</b>
-          <span class="data-result">{{ pokemon.forms.url }}</span>
+          <b class="badge border-transparent" :class="`bg-${color}`">Url</b>
+          <span class="data-result">{{ data.forms.url }}</span>
         </label>
       </div>
     </div>
@@ -20,15 +20,9 @@
 
 
 <script>
-import bidoof from "../assets/bidoof.json";
-
 export default {
   name: "Data",
-  data() {
-    return {
-      pokemon: bidoof,
-    };
-  },
+  props: ['name','data', 'color']
 };
 </script>
 
