@@ -3,21 +3,15 @@
 
       <div class="alert array" :class="`alert-${color}`">
         <div class="flex-1">
-          <b class="badge border-transparent array-title" :class="`bg-${color}`">{{ name }}</b>
+          <b class="badge border-transparent array-title tooltip" :class="`bg-${color}`" data-tip="Tableau">🗃 {{ name }}</b>
           <div class="array-content">
 
-                  <div class="alert array-container" :class="`alert-${color}`" v-for="(ability, index) in data.abilities" :key="ability.data" :data-id="index" >
-                    <div class="flex-1">
-                      <label class="array-value">
-                        <b class="badge border-transparent" :class="`bg-${color}`">Name</b>
-                        <span class="data-result">{{ ability.ability.name === "" ? "(vide)" : ability.ability.name }}</span>
-                      </label>
-                      <label class="array-value">
-                        <b class="badge border-transparent" :class="`bg-${color}`">URL</b>
-                        <span class="data-result">{{ ability.ability.url }}</span>
-                      </label>
-                    </div>
+                <div class="alert array-container" :class="`alert-${color}`" v-for="(ability, index) in data.abilities" :key="ability.data" :data-id="index" >
+                  <div class="flex-1">
+                    <Value name="Name" :data="ability.ability.name === '' ? '(vide)' : ability.ability.name" color="error"/>
+                    <Value name="URL" :data="ability.ability.url" color="error"/>
                   </div>
+                </div>
 
           </div>
         </div>
@@ -28,8 +22,13 @@
 
 
 <script>
+import Value from "./Value.vue";
+
 export default {
   name: "Data",
+  components: {
+    Value
+  },
   props: ['name','data','color']
 };
 </script>
@@ -37,6 +36,7 @@ export default {
 <style>
 .array .array-title {
   border-radius: 5px;
+  text-transform: uppercase;
 }
 .array .flex-1 {
   display: flex;
@@ -56,7 +56,7 @@ export default {
   position: relative;
 }
 .array .array-container:hover {
-  box-shadow: inset 0 0 0 2px rgb(211, 211, 211);
+  box-shadow: inset 0 0 0 2px rgb(255, 255, 255);
 }
 .array .array-container:hover::before {
   content: attr(data-id);
@@ -64,7 +64,7 @@ export default {
   top: 0;
   left: 0;
   padding: .2rem .5rem;
-  background-color: rgb(195, 195, 195);
+  background-color: rgb(255, 255, 255);
   color: black;
   border-radius: 5px;
   z-index: 15;

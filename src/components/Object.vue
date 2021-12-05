@@ -3,15 +3,9 @@
 
     <div class="alert object" :class="`alert-${color}`">
       <div class="flex-1">
-        <b class="badge border-transparent object-title" :class="`bg-${color}`">{{ name }}</b>
-        <label class="object-value">
-          <b class="badge border-transparent" :class="`bg-${color}`">Name</b>
-          <span class="data-result">{{ data.forms.name }}</span>
-        </label>
-        <label class="object-value">
-          <b class="badge border-transparent" :class="`bg-${color}`">Url</b>
-          <span class="data-result">{{ data.forms.url }}</span>
-        </label>
+        <b class="badge border-transparent object-title tooltip" :class="`bg-${color}`" data-tip="Objet">📕 {{ name }}</b>
+        <Value name="Name" :data="data.forms.name" color="warning"/>
+        <Value name="URL" :data="data.forms.url" color="warning"/>
       </div>
     </div>
 
@@ -20,8 +14,13 @@
 
 
 <script>
+import Value from "./Value.vue";
+
 export default {
   name: "Data",
+  components: {
+    Value
+  },
   props: ['name','data', 'color']
 };
 </script>
@@ -32,13 +31,11 @@ export default {
   position: relative;
   top: -1rem;
   left: -1rem;
+  text-transform: uppercase;
 }
 .object .flex-1 {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-}
-.object-value {
-  margin-bottom: 0.4rem;
 }
 </style>

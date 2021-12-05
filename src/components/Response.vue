@@ -5,10 +5,10 @@
         <label><span class="badge bg-success border-transparent">Etat</span> 200 : OK !</label>
       </div>
     </div>
-    <div class="alert">
+    <div class="alert bg-base-200">
       <div class="result-container">
         <b>Resultats</b>
-        <Value name="Expérience de Base" :data="pokemon" color="info"/>
+        <Value name="Expérience de Base" :data="pokemon.base_experience" color="info" isStandalone="true"/>
         <Object name="Form" :data="pokemon" color="warning"/>
         <Array name="Abilities" :data="pokemon" color="error"/>
       </div>
