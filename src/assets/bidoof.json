@@ -61,6 +61,10 @@
         "name": "bidoof",
         "url": "https://pokeapi.co/api/v2/pokemon-form/399/"
     },
+    "formsx2": {
+        "name": "bidoof junior megaevolution pro ",
+        "url": "https://pokeapi.co/api/v2/pokemon-form/400/"
+    },
     "game_indices": [
         {
             "game_index": 399,

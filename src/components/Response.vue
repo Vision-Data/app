@@ -28,7 +28,7 @@
           isStandalone="true"
         /> -->
         <!-- <ObjectComponent name="Form" :data="pokemon" color="warning" /> -->
-        <ArrayComponent name="Abilities" :data="pokemon" color="error" />
+        <!-- <ArrayComponent name="Abilities" :data="pokemon" color="error" /> -->
       </div>
       <button @click="one_value">One Value</button>
     </div>
@@ -89,6 +89,13 @@ export default {
             });
           } else {
             console.log("C'est un objet");
+            this.components.push(markRaw(ObjectComponent));
+            this.parameters.push({
+              name: key,
+              data: this.pokemon[key],
+              color: "error",
+              isStandalone: true,
+            });
           }
         }
       });
