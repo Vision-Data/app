@@ -25,6 +25,7 @@
                 :name="index"
                 :data="elt === '' ? '(vide)' : elt"
                 color="error"
+                isFromArray="true"
               />
             </div>
           </div>

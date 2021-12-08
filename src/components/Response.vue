@@ -54,14 +54,14 @@ export default {
       const json = Object.keys(this.pokemon);
       console.log(json);
       json.forEach((key) => {
-        console.log(this.pokemon[key]);
-        console.log(typeof this.pokemon[key]);
+        // console.log(this.pokemon[key]);
+        // console.log(typeof this.pokemon[key]);
         if (
           typeof this.pokemon[key] === "string" ||
           typeof this.pokemon[key] === "number" ||
           typeof this.pokemon[key] === "boolean"
         ) {
-          console.log("C'est une valeur unique");
+          // console.log("C'est une valeur unique");
           this.components.push(markRaw(ValueComponent));
           this.parameters.push({
             name: key,
@@ -71,22 +71,22 @@ export default {
           });
         } else if (typeof this.pokemon[key] === "object") {
           if (Array.isArray(this.pokemon[key])) {
-            console.log("C'est un tableau");
+            // console.log("C'est un tableau");
             this.components.push(markRaw(ArrayComponent));
             this.parameters.push({
               name: key,
               data: this.pokemon[key],
               color: "warning",
-              isStandalone: true,
+              isStandalone: false,
             });
           } else {
-            console.log("C'est un objet");
+            // console.log("C'est un objet");
             this.components.push(markRaw(ObjectComponent));
             this.parameters.push({
               name: key,
               data: this.pokemon[key],
               color: "error",
-              isStandalone: true,
+              isStandalone: false,
             });
           }
         }

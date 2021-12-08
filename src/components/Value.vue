@@ -7,7 +7,7 @@
   >
     <div class="alert value" :class="`alert-${color}`" v-if="isStandalone">
       <div class="flex-1">
-        <b class="badge border-transparent" :class="`bg-${color}`" v-if="!isObject()">{{
+        <b class="badge border-transparent" :class="`bg-${color}`" v-if="isKeyHidden()">{{
           name
         }}</b>
         <span class="data-result">{{ data }}</span>
@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="value standalone" v-else>
-      <b class="badge border-transparent" :class="`bg-${color}`" v-if="!isObject()">{{ name }}</b>
+      <b class="badge border-transparent" :class="`bg-${color}`" v-if="isKeyHidden()">{{ name }}</b>
       <span class="data-result">{{ data }}</span>
       <button
         class="btn btn-xs selection-data"
@@ -40,7 +40,7 @@
 <script>
 export default {
   name: "Value",
-  props: ["name", "data", "color", "isStandalone"],
+  props: ["name", "data", "color", "isStandalone", "isFromArray"],
   data: () => ({
     selection: false,
   }),
@@ -51,9 +51,8 @@ export default {
         value:this.data
       })
     },
-    isObject() {
-      console.log(typeof this.data)
-      return typeof this.data === "object" ? false : true
+    isKeyHidden() {
+      return this.isFromArray && typeof this.data !== "object" ? false : true
     }
   },
 };
