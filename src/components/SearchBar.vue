@@ -13,7 +13,11 @@
 <script>
 export default {
   name: "SearchBar",
-  request: "",
+  data() {
+    return {
+      request: null,
+    }
+  },
   methods: {
     emitQuery() {
       this.$emit("query", this.request);
