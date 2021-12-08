@@ -8,6 +8,7 @@
         width="150"
       />
       <SearchBar class="w-8/12" @query="sendQuery" />
+      <dark-mode/>
     </header>
 
     <CallApi :query="query" />
@@ -15,6 +16,7 @@
 </template>
 
 <script>
+import DarkMode from './components/Dark-Mode.vue';
 import SearchBar from "./components/SearchBar.vue";
 import CallApi from "./components/CallApi.vue";
 
@@ -23,6 +25,7 @@ export default {
   components: {
     SearchBar,
     CallApi,
+    DarkMode,
   },
   data() {
     return {
