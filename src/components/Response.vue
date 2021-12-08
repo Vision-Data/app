@@ -21,14 +21,6 @@
           >
           </component>
         </template>
-        <!-- <ValueComponent
-          name="Expérience de Base"
-          :data="pokemon.base_experience"
-          color="info"
-          isStandalone="true"
-        /> -->
-        <!-- <ObjectComponent name="Form" :data="pokemon" color="warning" /> -->
-        <!-- <ArrayComponent name="Abilities" :data="pokemon" color="error" /> -->
       </div>
       <button @click="one_value">One Value</button>
     </div>

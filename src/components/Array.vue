@@ -33,6 +33,7 @@
           class="btn btn-xs selection-data"
           id="select"
           v-show="selection"
+          @click="selectData()"
         >
           SELECT
         </button>
@@ -53,6 +54,13 @@ export default {
   data: () => ({
     selection: false,
   }),
+  methods: {
+    selectData() {
+      console.log({
+        key:this.name,
+        value:this.data
+      })
+    }},
   props: ["name", "data", "color"],
 };
 </script>
