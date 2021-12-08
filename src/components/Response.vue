@@ -33,6 +33,7 @@ import ValueComponent from "./Value.vue";
 import ObjectComponent from "./Object.vue";
 import ArrayComponent from "./Array.vue";
 import { markRaw } from "vue";
+import Recursive from "../services/recursive.js";
 
 export default {
   name: "Response",
@@ -50,6 +51,8 @@ export default {
   },
   methods: {
     one_value() {
+      const abcd = Recursive.recursive();
+      console.log(abcd);
       const json = Object.keys(this.pokemon);
       console.log(json);
       json.forEach((key) => {
