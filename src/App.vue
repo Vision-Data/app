@@ -5,9 +5,14 @@
         class="container w-full md:w-screen max-w-screen-lg md:-mx-60"
         @query="sendQuery"
       />
-      <CallApi :query="query" @detectChoice="needBodyToSend = $event" />
+      <CallApi
+        :query="query"
+        @detectChoice="needBodyToSend = $event"
+        :body="body"
+      />
       <RequestBody
         :needBodyToSend="needBodyToSend"
+        @requestBodyContent="body = $event"
         class="container w-full md:w-screen
       max-w-screen-lg md:-mx-60"
       />
@@ -32,6 +37,7 @@ export default {
   data() {
     return {
       query: "",
+      body: "",
       needBodyToSend: false,
     };
   },

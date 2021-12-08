@@ -20,7 +20,7 @@
 const axios = require("axios");
 export default {
   name: "SearchBar",
-  props: ["query"],
+  props: ["query", "body"],
   data() {
     return {
       valid: "Lancer",
@@ -44,55 +44,46 @@ export default {
         this.callApi();
       }
     },
+    async makeRequest(choice, query, body) {
+      if (choice == "GET") {
+        try {
+          const response = await axios.get(query);
+          console.log(response);
+        } catch (error) {
+          console.error(error);
+        }
+      } else if (choice == "POST") {
+        try {
+          const response = await axios.post(query, body);
+          console.log(response);
+        } catch (error) {
+          console.error(error);
+        }
+      } else if (choice == "PUT") {
+        try {
+          const response = await axios.put(query, body);
+          console.log(response);
+        } catch (error) {
+          console.error(error);
+        }
+      } else if (choice == "DELETE") {
+        try {
+          const response = await axios.delete(query);
+          console.log(response);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    },
     callApi() {
-      let body = { mail: "test@test.fr", password: "azerty-85" };
+      console.log(this.body);
       // Envoi de la requete API
       if (this.query === "") {
         window.alert("Le champ URL est vide");
       } else {
-        if (this.choice == "GET") {
-          axios
-            .get(this.query)
-            .then(function(response) {
-              console.log(response.data);
-            })
-            .catch(function(error) {
-              console.log(error);
-            });
-        } else if (this.choice == "POST") {
-          axios
-            .post(this.query, body)
-            .then(function(response) {
-              console.log(response);
-            })
-            .catch(function(error) {
-              console.log(error);
-              console.log(body);
-            });
-        } else if (this.choice == "PUT") {
-          axios
-            .put(this.query, body)
-            .then(function(response) {
-              console.log(response);
-            })
-            .catch(function(error) {
-              console.log(error);
-              console.log(body);
-            });
-        } else if (this.choice == "DELETE") {
-          axios
-            .delete(this.query)
-            .then(function(response) {
-              console.log(response);
-            })
-            .catch(function(error) {
-              console.log(error);
-              console.log(body);
-            });
-        }
+        this.valid = "Lancer";
+        this.makeRequest(this.choice, this.query, this.body);
       }
-
-      this.valid = "Lancer";
     },
   },
 };
