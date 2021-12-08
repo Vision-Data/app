@@ -22,7 +22,7 @@
           </component>
         </template>
       </div>
-      <button @click="one_value">One Value</button>
+      <button @click="one_value">Show Data</button>
     </div>
   </div>
 </template>
