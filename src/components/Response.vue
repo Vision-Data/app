@@ -97,6 +97,9 @@ export default {
 </script>
 
 <style>
+.selected {
+  --tw-bg-opacity: 0.4!important;
+}
 .response ::selection {
   background-color: #afafaf;
   color: black;

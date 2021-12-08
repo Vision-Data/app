@@ -5,11 +5,12 @@
     @mouseover="selection = true"
     @mouseout="selection = false"
   >
-    <div class="alert value" :class="`alert-${color}`" v-if="isStandalone">
+    <div class="alert value" :class="[`alert-${color}`,{'selected': selected}]" v-if="isStandalone">
       <div class="flex-1">
-        <b class="badge border-transparent" :class="`bg-${color}`" v-if="isKeyHidden()">{{
+        <b class="badge border-transparent" :class="`bg-${color}` " v-if="isKeyHidden()">{{
           name
         }}</b>
+          
         <span class="data-result">{{ data }}</span>
         <button
           class="btn btn-xs selection-data"
@@ -21,7 +22,7 @@
         </button>
       </div>
     </div>
-    <div class="value standalone" v-else>
+    <div class="value notstandalone" :class="{'selected-value': selected}" v-else>
       <b class="badge border-transparent" :class="`bg-${color}`" v-if="isKeyHidden()">{{ name }}</b>
       <span class="data-result">{{ data }}</span>
       <button
@@ -43,9 +44,11 @@ export default {
   props: ["name", "data", "color", "isStandalone", "isFromArray"],
   data: () => ({
     selection: false,
+    selected: false
   }),
   methods: {
     selectData() {
+      this.selected = !this.selected;
       console.log({
         key:this.name,
         value:this.data
@@ -59,6 +62,11 @@ export default {
 </script>
 
 <style scoped>
+.selected-value {
+  box-shadow: inset 0 0 0 1px rgb(173, 173, 173);
+  border-radius: .5rem;
+  background-color: rgba(110, 110, 110, 0.05);
+}
 .value-line {
   width: 100%;
   border-radius: 0.5rem;
@@ -66,7 +74,7 @@ export default {
 .value {
   position: relative;
 }
-.value-over .value.standalone {
+.value-over .value.notstandalone {
   background-color: rgba(110, 110, 110, 0.05);
 }
 .value .flex-1 {
@@ -77,7 +85,8 @@ export default {
 .value b {
   text-transform: uppercase;
 }
-.value.standalone {
+.value.notstandalone {
   margin-bottom: 0.6rem;
+  padding: .5rem;
 }
 </style>
