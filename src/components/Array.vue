@@ -22,7 +22,7 @@
           >
             <div class="flex-1">
               <Value
-                name="Name"
+                :name="index"
                 :data="elt === '' ? '(vide)' : elt"
                 color="error"
               />
