@@ -55,11 +55,14 @@
     "evolutions": [
         "bidoof junior",
         1000,
-        false
+        false,
+        null,
+        ""
     ],
     "forms": {
         "name": "bidoof",
-        "url": "https://pokeapi.co/api/v2/pokemon-form/399/"
+        "url": "https://pokeapi.co/api/v2/pokemon-form/399/",
+        "valeur" : null
     },
     "formsx2": {
         "name": "bidoof junior megaevolution pro ",
