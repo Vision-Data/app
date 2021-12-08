@@ -86,7 +86,7 @@ export default {
     return {
       searchInput: "",
       pasteError: false,
-      isHttps: false
+      isHttps: false,
     };
   },
   methods: {
@@ -100,9 +100,9 @@ export default {
       }
     },
     checkHttps() {
-      this.isHttps = this.searchInput.includes("https");
-    }
-  }
+      this.isHttps = this.searchInput.slice(0, 5).includes("https");
+    },
+  },
 };
 </script>
 
