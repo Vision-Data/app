@@ -4,6 +4,7 @@
       <SearchBar
         class="container w-full md:w-screen max-w-screen-lg md:-mx-60"
       />
+      <dark-mode />
     </header>
   </div>
 </template>
