@@ -5,7 +5,7 @@
       placeholder="https://api.example.com/v1"
       class="input input-bordered"
       v-model="request"
-      @change="emitResearch"
+      @change="emitQuery"
     />
   </div>
 </template>
@@ -15,8 +15,8 @@ export default {
   name: "SearchBar",
   request: "",
   methods: {
-    emitResearch() {
-      this.$emit("research", this.request);
+    emitQuery() {
+      this.$emit("query", this.request);
     },
   },
 };

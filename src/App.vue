@@ -7,10 +7,10 @@
         src="./assets/color-logo.svg"
         width="150"
       />
-      <SearchBar class="w-8/12" @research="sendResearch" />
+      <SearchBar class="w-8/12" @query="sendQuery" />
     </header>
 
-    <CallApi :research="research" />
+    <CallApi :query="query" />
   </div>
 </template>
 
@@ -26,13 +26,13 @@ export default {
   },
   data() {
     return {
-      research: "",
+      query: "",
     };
   },
 
   methods: {
-    sendResearch(data) {
-      this.research = data;
+    sendQuery(data) {
+      this.query = data;
     },
   },
 };

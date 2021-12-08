@@ -3,12 +3,9 @@
     <select
       v-model="choice"
       :required="true"
-      class="select select-bordered w-full max-w-xs"
-    >
-      <option value="GET">⇲ Recevoir (GET)</option>
-      <option value="POST">➤ Envoyer (POST)</option>
-      <option value="DELETE">🗑 Supprimer (DELETE)</option>
-      <option value="PUT">⛭ Modifier (PUT)</option>
+      class="select select-bordered w-full max-w-xs">
+      <option v-for="value in choices" :key="value.key" :value="value.method">{{ value.text }}</option>
+
     </select>
     <button class="btn btn-primary" id="valid" @click="toogleButton()">
       {{ valid }}
@@ -19,10 +16,16 @@
 <script>
 export default {
   name: "SearchBar",
-  props: ["research"],
+  props: ["query"],
   data() {
     return {
       valid: "Lancer",
+      choices: [
+        {method : "GET", text: "⇲ Recevoir (GET)"},
+        {method : "POST", text: "➤ Envoyer (POST)"},
+        {method : "DELETE", text: "🗑 Supprimer (DELETE) "},
+        {method : "PUT", text: "⛭ Modifier (PUT)"}
+      ],
       choice: "GET",
     };
   },
@@ -37,17 +40,13 @@ export default {
       let mail = "test@test.fr";
       let password = "azerty-85";
       // Envoi de la requete API
-      if (this.research === "") {
+      if (this.query === "") {
         window.alert("Le champ URL est vide");
       } else {
         if (this.choice == "GET") {
-          fetch(this.research, {
+          fetch(this.query, {
             method: this.choice,
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              mail: mail,
-              password: password,
-            }),
+            headers: { "Content-Type": "application/json" }
           })
             .then((r) => r.json())
             .then((res) => {
@@ -57,8 +56,7 @@ export default {
               console.log(error);
             });
         }else if(this.choice == "POST" || this.choice == "DELETE" || this.choice == "PUT")
-        console.log(this.choice + " " + this.research);
-        fetch(this.research, {
+        fetch(this.query, {
           method: this.choice,
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
