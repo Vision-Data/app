@@ -13,11 +13,11 @@
         <b>Resultats</b>
         <template v-for="(component, index) in components" :key="index">
           <component
-            :is="component"
-            :name="parameters[index].name"
-            :data="parameters[index].data"
-            :color="parameters[index].color"
-            :isStandalone="parameters[index].isStandalone"
+            :is="components[index].component"
+            :name="components[index].name"
+            :data="components[index].data"
+            :color="components[index].color"
+            :isStandalone="components[index].isStandalone"
           >
           </component>
         </template>
@@ -46,7 +46,6 @@ export default {
       id: 1,
       pokemon: bidoof,
       components: [],
-      parameters: [],
     };
   },
   methods: {
@@ -62,8 +61,8 @@ export default {
           typeof this.pokemon[key] === "boolean"
         ) {
           // console.log("C'est une valeur unique");
-          this.components.push(markRaw(ValueComponent));
-          this.parameters.push({
+          this.components.push({
+            component: markRaw(ValueComponent),
             name: key,
             data: this.pokemon[key],
             color: "info",
@@ -72,8 +71,8 @@ export default {
         } else if (typeof this.pokemon[key] === "object") {
           if (Array.isArray(this.pokemon[key])) {
             // console.log("C'est un tableau");
-            this.components.push(markRaw(ArrayComponent));
-            this.parameters.push({
+            this.components.push({
+              component: markRaw(ArrayComponent),
               name: key,
               data: this.pokemon[key],
               color: "warning",
@@ -81,8 +80,8 @@ export default {
             });
           } else {
             // console.log("C'est un objet");
-            this.components.push(markRaw(ObjectComponent));
-            this.parameters.push({
+            this.components.push({
+              component: markRaw(ObjectComponent),
               name: key,
               data: this.pokemon[key],
               color: "error",
@@ -98,13 +97,13 @@ export default {
 
 <style>
 .selected {
-  --tw-bg-opacity: 0.4!important;
+  --tw-bg-opacity: 0.4 !important;
 }
 .alert.selected {
- color: rgb(77, 77, 77); 
+  color: rgb(77, 77, 77);
 }
 .value:not(.selected):not(.selected-value) {
-  color: rgb(78, 78, 78)!important;
+  color: rgb(78, 78, 78) !important;
 }
 .response ::selection {
   background-color: #afafaf;
