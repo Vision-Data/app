@@ -1,13 +1,9 @@
 <template>
-  <div class="m-4">
-    <header class="flex justify-center items-center">
-      <img
-        class="p-10"
-        alt="Vue logo"
-        src="./assets/color-logo.svg"
-        width="150"
+  <div class="flex justify-center mt-10 ">
+    <header>
+      <SearchBar
+        class="container w-full md:w-screen max-w-screen-lg md:-mx-60"
       />
-      <SearchBar class="w-8/12" />
     </header>
   </div>
 </template>
