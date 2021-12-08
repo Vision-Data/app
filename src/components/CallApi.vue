@@ -3,9 +3,12 @@
     <select
       v-model="choice"
       :required="true"
-      class="select select-bordered w-full max-w-xs">
-      <option v-for="value in choices" :key="value.key" :value="value.method">{{ value.text }}</option>
-
+      class="select select-bordered w-full max-w-xs"
+      @change="emitChoice"
+    >
+      <option v-for="value in choices" :key="value.key" :value="value.method">{{
+        value.text
+      }}</option>
     </select>
     <button class="btn btn-primary" id="valid" @click="toogleButton()">
       {{ valid }}
@@ -14,6 +17,7 @@
 </template>
 
 <script>
+const axios = require("axios");
 export default {
   name: "SearchBar",
   props: ["query"],
@@ -21,15 +25,19 @@ export default {
     return {
       valid: "Lancer",
       choices: [
-        {method : "GET", text: "⇲ Recevoir (GET)"},
-        {method : "POST", text: "➤ Envoyer (POST)"},
-        {method : "DELETE", text: "🗑 Supprimer (DELETE) "},
-        {method : "PUT", text: "⛭ Modifier (PUT)"}
+        { method: "GET", text: "⇲ Recevoir (GET)" },
+        { method: "POST", text: "➤ Envoyer (POST)" },
+        { method: "DELETE", text: "🗑 Supprimer (DELETE) " },
+        { method: "PUT", text: "⛭ Modifier (PUT)" },
       ],
       choice: "GET",
     };
   },
   methods: {
+    emitChoice() {
+      let isSendable = this.choice == "POST" || this.choice == "PUT";
+      this.$emit("detectChoice", isSendable);
+    },
     toogleButton() {
       this.valid = this.valid == "Lancer" ? "■" : "Lancer";
       if (this.valid == "■") {
@@ -37,40 +45,51 @@ export default {
       }
     },
     callApi() {
-      let mail = "test@test.fr";
-      let password = "azerty-85";
+      let body = { mail: "test@test.fr", password: "azerty-85" };
       // Envoi de la requete API
       if (this.query === "") {
         window.alert("Le champ URL est vide");
       } else {
         if (this.choice == "GET") {
-          fetch(this.query, {
-            method: this.choice,
-            headers: { "Content-Type": "application/json" }
-          })
-            .then((r) => r.json())
-            .then((res) => {
-              console.log(res.results);
+          axios
+            .get(this.query)
+            .then(function(response) {
+              console.log(response.data);
             })
-            .catch(function (error) {
+            .catch(function(error) {
               console.log(error);
             });
-        }else if(this.choice == "POST" || this.choice == "DELETE" || this.choice == "PUT")
-        fetch(this.query, {
-          method: this.choice,
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            mail: mail,
-            password: password,
-          }),
-        })
-          .then((r) => r.json())
-          .then((res) => {
-            console.log(res);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+        } else if (this.choice == "POST") {
+          axios
+            .post(this.query, body)
+            .then(function(response) {
+              console.log(response);
+            })
+            .catch(function(error) {
+              console.log(error);
+              console.log(body);
+            });
+        } else if (this.choice == "PUT") {
+          axios
+            .put(this.query, body)
+            .then(function(response) {
+              console.log(response);
+            })
+            .catch(function(error) {
+              console.log(error);
+              console.log(body);
+            });
+        } else if (this.choice == "DELETE") {
+          axios
+            .delete(this.query)
+            .then(function(response) {
+              console.log(response);
+            })
+            .catch(function(error) {
+              console.log(error);
+              console.log(body);
+            });
+        }
       }
 
       this.valid = "Lancer";

@@ -5,27 +5,34 @@
         class="container w-full md:w-screen max-w-screen-lg md:-mx-60"
         @query="sendQuery"
       />
-      <dark-mode/>
-      <CallApi :query="query" />
+      <CallApi :query="query" @detectChoice="needBodyToSend = $event" />
+      <RequestBody
+        :needBodyToSend="needBodyToSend"
+        class="container w-full md:w-screen
+      max-w-screen-lg md:-mx-60"
+      />
+      <dark-mode />
     </header>
   </div>
 </template>
 
 <script>
-import DarkMode from './components/Dark-Mode.vue';
+import DarkMode from "./components/Dark-Mode.vue";
 import SearchBar from "./components/SearchBar.vue";
 import CallApi from "./components/CallApi.vue";
-
+import RequestBody from "./components/RequestBody.vue";
 export default {
   name: "App",
   components: {
     SearchBar,
     CallApi,
     DarkMode,
+    RequestBody,
   },
   data() {
     return {
       query: "",
+      needBodyToSend: false,
     };
   },
 
