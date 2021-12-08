@@ -50,6 +50,8 @@
         }
     ],
     "base_experience": 50,
+    "base_experiencex2": "100",
+    "base_experiencex3": true,
     "forms": 
         {
             "name": "bidoof",

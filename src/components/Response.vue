@@ -2,39 +2,79 @@
   <div class="response">
     <div class="alert alert-success">
       <div class="flex-1">
-        <label><span class="badge bg-success border-transparent">Etat</span> 200 : OK !</label>
+        <label
+          ><span class="badge bg-success border-transparent">Etat</span> 200 :
+          OK !</label
+        >
       </div>
     </div>
     <div class="alert bg-base-200">
       <div class="result-container">
         <b>Resultats</b>
-        <Value name="Expérience de Base" :data="pokemon.base_experience" color="info" isStandalone="true"/>
-        <Object name="Form" :data="pokemon" color="warning"/>
-        <Array name="Abilities" :data="pokemon" color="error"/>
+        <template v-for="(component, index) in components" :key="index">
+          <component :is="component" :name="parameters[index].name" :data="parameters[index].data" :color="parameters[index].color" :isStandalone="parameters[index].isStandalone"> </component>
+        </template>
+        <!-- <ValueComponent
+          name="Expérience de Base"
+          :data="pokemon.base_experience"
+          color="info"
+          isStandalone="true"
+        /> -->
+        <ObjectComponent name="Form" :data="pokemon" color="warning" />
+        <ArrayComponent name="Abilities" :data="pokemon" color="error" />
       </div>
+      <button @click="one_value">One Value</button>
     </div>
-
   </div>
 </template>
 
 <script>
 import bidoof from "../assets/bidoof.json";
-import Value from "./Value.vue";
-import Object from "./Object.vue";
-import Array from "./Array.vue"
+import ValueComponent from "./Value.vue";
+import ObjectComponent from "./Object.vue";
+import ArrayComponent from "./Array.vue";
+import { markRaw } from "vue";
 
 export default {
   name: "Response",
   components: {
-    Value,
-    Object,
-    Array
+    ValueComponent,
+    ObjectComponent,
+    ArrayComponent,
   },
   data() {
     return {
       id: 1,
-      pokemon: bidoof
+      pokemon: bidoof,
+      components: [],
+      parameters: []
     };
+  },
+  methods: {
+    one_value() {
+      const json = Object.keys(this.pokemon);
+      console.log(json);
+      json.forEach((key) => {
+        console.log(this.pokemon[key]);
+        console.log(typeof this.pokemon[key]);
+        if (
+          typeof this.pokemon[key] === "string" ||
+          typeof this.pokemon[key] === "number" ||
+          typeof this.pokemon[key] === "boolean"
+        ) {
+          console.log("C'est une valeur unique");
+          this.components.push(markRaw(ValueComponent))
+          this.parameters.push({name: key, data: this.pokemon[key], color: "info", isStandalone:true })
+
+        } else if (typeof this.pokemon[key] === "object") {
+          if (Array.isArray(this.pokemon[key])) {
+            console.log("C'est un tableau");
+          } else {
+            console.log("C'est un objet");
+          }
+        }
+      });
+    },
   },
 };
 </script>
@@ -67,7 +107,7 @@ export default {
   align-items: flex-start;
 }
 .badge {
-  margin-right: .8rem;
+  margin-right: 0.8rem;
 }
 .data-result {
   font-weight: bold;
