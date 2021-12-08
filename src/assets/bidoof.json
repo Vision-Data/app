@@ -49,15 +49,18 @@
             "slot": 3
         }
     ],
-    "base_experience": 50,
-    "base_experiencex2": "100",
-    "base_experiencex3": true,
-    "forms": 
-        {
-            "name": "bidoof",
-            "url": "https://pokeapi.co/api/v2/pokemon-form/399/"
-        }
-    ,
+    "level": 50,
+    "power": "100",
+    "male": true,
+    "evolutions": [
+        "bidoof junior",
+        1000,
+        false
+    ],
+    "forms": {
+        "name": "bidoof",
+        "url": "https://pokeapi.co/api/v2/pokemon-form/399/"
+    },
     "game_indices": [
         {
             "game_index": 399,

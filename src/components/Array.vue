@@ -1,23 +1,43 @@
 <template>
-  <section :class="{ 'array-over': selection}" @mouseover="selection = true" @mouseout="selection = false">
-
-      <div class="alert array" :class="`alert-${color}`" >
-        <div class="flex-1">
-          <b class="badge border-transparent array-title tooltip" :class="`bg-${color}`" data-tip="Tableau">🗃 {{ name }}</b>
-          <div class="array-content">
-
-                <div class="alert array-container" :class="`alert-${color}`" v-for="(ability, index) in data.abilities" :key="ability.data" :data-id="index" >
-                  <div class="flex-1">
-                    <Value name="Name" :data="ability.ability.name === '' ? '(vide)' : ability.ability.name" color="error"/>
-                    <Value name="URL" :data="ability.ability.url" color="error"/>
-                  </div>
-                </div>
-
+  <section
+    :class="{ 'array-over': selection }"
+    @mouseover="selection = true"
+    @mouseout="selection = false"
+  >
+    <div class="alert array" :class="`alert-${color}`">
+      <div class="flex-1">
+        <b
+          class="badge border-transparent array-title tooltip"
+          :class="`bg-${color}`"
+          data-tip="Tableau"
+          >🗃 {{ name }}</b
+        >
+        <div class="array-content">
+          <div
+            class="alert array-container"
+            :class="`alert-${color}`"
+            v-for="(elt, index) in data"
+            :key="index"
+            :data-id="index"
+          >
+            <div class="flex-1">
+              <Value
+                name="Name"
+                :data="elt === '' ? '(vide)' : elt"
+                color="error"
+              />
+            </div>
           </div>
-          <button class="btn btn-xs selection-data" id="select" v-show="selection">SELECT</button>
         </div>
+        <button
+          class="btn btn-xs selection-data"
+          id="select"
+          v-show="selection"
+        >
+          SELECT
+        </button>
       </div>
-
+    </div>
   </section>
 </template>
 
@@ -28,12 +48,12 @@ import Value from "./Value.vue";
 export default {
   name: "Data",
   components: {
-    Value
+    Value,
   },
-  data: ()=>({
-    selection: false
+  data: () => ({
+    selection: false,
   }),
-  props: ['name','data','color']
+  props: ["name", "data", "color"],
 };
 </script>
 
@@ -71,7 +91,7 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
-  padding: .2rem .5rem;
+  padding: 0.2rem 0.5rem;
   background-color: rgb(216, 216, 216);
   color: black;
   border-radius: 5px;

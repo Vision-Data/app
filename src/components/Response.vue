@@ -12,7 +12,14 @@
       <div class="result-container">
         <b>Resultats</b>
         <template v-for="(component, index) in components" :key="index">
-          <component :is="component" :name="parameters[index].name" :data="parameters[index].data" :color="parameters[index].color" :isStandalone="parameters[index].isStandalone"> </component>
+          <component
+            :is="component"
+            :name="parameters[index].name"
+            :data="parameters[index].data"
+            :color="parameters[index].color"
+            :isStandalone="parameters[index].isStandalone"
+          >
+          </component>
         </template>
         <!-- <ValueComponent
           name="Expérience de Base"
@@ -20,7 +27,7 @@
           color="info"
           isStandalone="true"
         /> -->
-        <ObjectComponent name="Form" :data="pokemon" color="warning" />
+        <!-- <ObjectComponent name="Form" :data="pokemon" color="warning" /> -->
         <ArrayComponent name="Abilities" :data="pokemon" color="error" />
       </div>
       <button @click="one_value">One Value</button>
@@ -47,7 +54,7 @@ export default {
       id: 1,
       pokemon: bidoof,
       components: [],
-      parameters: []
+      parameters: [],
     };
   },
   methods: {
@@ -63,12 +70,23 @@ export default {
           typeof this.pokemon[key] === "boolean"
         ) {
           console.log("C'est une valeur unique");
-          this.components.push(markRaw(ValueComponent))
-          this.parameters.push({name: key, data: this.pokemon[key], color: "info", isStandalone:true })
-
+          this.components.push(markRaw(ValueComponent));
+          this.parameters.push({
+            name: key,
+            data: this.pokemon[key],
+            color: "info",
+            isStandalone: true,
+          });
         } else if (typeof this.pokemon[key] === "object") {
           if (Array.isArray(this.pokemon[key])) {
             console.log("C'est un tableau");
+            this.components.push(markRaw(ArrayComponent));
+            this.parameters.push({
+              name: key,
+              data: this.pokemon[key],
+              color: "warning",
+              isStandalone: true,
+            });
           } else {
             console.log("C'est un objet");
           }
