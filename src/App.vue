@@ -3,12 +3,11 @@
     <header>
       <SearchBar
         class="container w-full md:w-screen max-w-screen-lg md:-mx-60"
+        @query="sendQuery"
       />
-      <SearchBar class="w-8/12" @query="sendQuery" />
       <dark-mode/>
+      <CallApi :query="query" />
     </header>
-
-    <CallApi :query="query" />
   </div>
 </template>
 

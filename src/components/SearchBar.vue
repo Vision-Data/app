@@ -97,6 +97,7 @@ export default {
       try {
         this.searchInput = await navigator.clipboard.readText();
         this.checkHttps();
+        this.emitQuery();
       } catch {
         this.pasteError = true;
       }
@@ -105,7 +106,7 @@ export default {
       this.isHttps = this.searchInput.slice(0, 5).includes("https");
     },
     emitQuery() {
-      this.$emit("query", this.request);
+      this.$emit("query", this.searchInput);
     },
   }
 };
