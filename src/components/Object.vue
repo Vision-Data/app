@@ -4,7 +4,7 @@
     @mouseover="selection = true"
     @mouseout="selection = false"
   >
-    <div class="alert object" :class="`alert-${color}`">
+    <div class="alert object" :class="[`alert-${color}`,{'selected': selected}]">
       <div class="flex-1">
         <b
           class="badge border-transparent object-title tooltip"
@@ -43,6 +43,7 @@ export default {
   },
   methods: {
     selectData() {
+      this.selected = !this.selected;
       console.log({
         key:this.name,
         value:this.data
@@ -51,6 +52,7 @@ export default {
   },
   data: () => ({
     selection: false,
+    selected: false
   }),
   props: ["name", "data", "color"],
 };

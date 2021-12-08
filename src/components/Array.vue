@@ -4,7 +4,7 @@
     @mouseover="selection = true"
     @mouseout="selection = false"
   >
-    <div class="alert array" :class="`alert-${color}`">
+    <div class="alert array" :class="[`alert-${color}`,{'selected': selected}]">
       <div class="flex-1">
         <b
           class="badge border-transparent array-title tooltip"
@@ -15,7 +15,7 @@
         <div class="array-content">
           <div
             class="alert array-container"
-            :class="`alert-${color}`"
+            :class="[`alert-${color}`,{'selected': selected}]"
             v-for="(elt, index) in data"
             :key="index"
             :data-id="index"
@@ -54,9 +54,11 @@ export default {
   },
   data: () => ({
     selection: false,
+    selected: false
   }),
   methods: {
     selectData() {
+      this.selected = !this.selected;
       console.log({
         key:this.name,
         value:this.data

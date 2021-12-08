@@ -5,11 +5,12 @@
     @mouseover="selection = true"
     @mouseout="selection = false"
   >
-    <div class="alert value" :class="`alert-${color}`" v-if="isStandalone">
+    <div class="alert value" :class="[`alert-${color}`,{'selected': selected}]" v-if="isStandalone">
       <div class="flex-1">
-        <b class="badge border-transparent" :class="`bg-${color}`" v-if="isKeyHidden()">{{
+        <b class="badge border-transparent" :class="`bg-${color}` " v-if="isKeyHidden()">{{
           name
         }}</b>
+          
         <span class="data-result">{{ data }}</span>
         <button
           class="btn btn-xs selection-data"
@@ -21,7 +22,7 @@
         </button>
       </div>
     </div>
-    <div class="value standalone" v-else>
+    <div class="value standalone" :class="{'selected-value': selected}" v-else>
       <b class="badge border-transparent" :class="`bg-${color}`" v-if="isKeyHidden()">{{ name }}</b>
       <span class="data-result">{{ data }}</span>
       <button
@@ -43,9 +44,11 @@ export default {
   props: ["name", "data", "color", "isStandalone", "isFromArray"],
   data: () => ({
     selection: false,
+    selected: false
   }),
   methods: {
     selectData() {
+      this.selected = !this.selected;
       console.log({
         key:this.name,
         value:this.data
@@ -59,6 +62,10 @@ export default {
 </script>
 
 <style scoped>
+.selected-value {
+  border: 3px solid rgb(124, 185, 32);
+  border-radius: .5rem;
+}
 .value-line {
   width: 100%;
   border-radius: 0.5rem;
