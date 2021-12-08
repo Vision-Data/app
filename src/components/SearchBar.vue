@@ -34,6 +34,7 @@
         <SecurityLock :isHttps="isHttps" />
         <input
           v-model="searchInput"
+          @change="emitQuery"
           type="text"
           @keyup="checkHttps"
           placeholder="https://api.example.com/v1"
@@ -73,6 +74,7 @@
         </span>
       </label>
     </div>
+
   </div>
 </template>
 
@@ -102,7 +104,10 @@ export default {
     checkHttps() {
       this.isHttps = this.searchInput.slice(0, 5).includes("https");
     },
-  },
+    emitQuery() {
+      this.$emit("query", this.request);
+    },
+  }
 };
 </script>
 
