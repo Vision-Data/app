@@ -100,6 +100,12 @@ export default {
 .selected {
   --tw-bg-opacity: 0.4!important;
 }
+.alert.selected {
+ color: rgb(77, 77, 77); 
+}
+.value:not(.selected):not(.selected-value) {
+  color: rgb(78, 78, 78)!important;
+}
 .response ::selection {
   background-color: #afafaf;
   color: black;

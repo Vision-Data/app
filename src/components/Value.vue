@@ -67,6 +67,10 @@ export default {
   border-radius: .5rem;
   background-color: rgba(110, 110, 110, 0.05);
 }
+
+.alert .value:not(.selected-value):not(.selected) {
+  color: rgb(104, 104, 104);
+}
 .value-line {
   width: 100%;
   border-radius: 0.5rem;
