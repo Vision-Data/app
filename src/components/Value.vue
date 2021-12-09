@@ -1,52 +1,19 @@
 <template>
-  <section
-    class="value-line"
-    :class="{ 'value-over': selection }"
-    @mouseover="selection = true"
-    @mouseout="selection = false"
-  >
-    <div
-      class="alert value"
-      :class="[`alert-${color}`, { selected: selected }]"
-      v-if="isStandalone"
-    >
+  <section class="value-line" :class="{ 'value-over': selection }" @mouseover="selection = true" @mouseout="selection = false">
+    <div class="alert value" :class="[`alert-${color}`, { selected: selected }]" v-if="isStandalone">
       <div class="flex-1">
-        <b
-          class="badge border-transparent"
-          :class="`bg-${color}`"
-          v-if="isKeyHidden()"
-          >{{ name }}</b
-        >
+        <b class="badge border-transparent value-name" :class="`bg-${color}`" v-if="name !== ''">{{ name }}</b>
 
-        <span class="data-result">{{ dataValue }}</span>
-        <button
-          class="btn btn-xs selection-data"
-          id="select"
-          v-show="selection"
-          @click="selectData()"
-        >
+        <span class="data-result" :class="{ 'italic': dataValue === '(vide)' || dataValue === '' }">{{ dataValue === '' ? '(vide)' : dataValue }}</span>
+        <button class="btn btn-xs selection-data" id="select" v-show="selection" @click="selectData()">
           SELECT
         </button>
       </div>
     </div>
-    <div
-      class="value notstandalone"
-      :class="{ 'selected-value': selected }"
-      v-else
-    >
-      <b
-        class="badge border-transparent"
-        :class="`bg-${color}`"
-        v-if="isKeyHidden()"
-        >{{ name }}</b
-      >
-      <span class="data-result">{{ dataValue }}</span>
-      <button
-        class="btn btn-xs selection-data"
-        id="select"
-        v-show="selection"
-        @click="selectData()"
-      >
+    <div class="value notstandalone" :class="{ 'selected-value': selected }" v-else>
+      <b class="badge border-transparent value-name" :class="`bg-${color}`" v-if="name !== ''">{{ name }}</b>
+      <span class="data-result">{{ dataValue === '' ? '(vide)' : dataValue }}</span>
+      <button class="btn btn-xs selection-data" id="select" v-show="selection" @click="selectData()">
         SELECT
       </button>
     </div>
@@ -57,7 +24,7 @@
 <script>
 export default {
   name: "Value",
-  props: ["name", "data", "color", "isStandalone", "isFromArray"],
+  props: ["name", "data", "color", "isStandalone"],
   data: () => ({
     dataValue: "",
     selection: false,
@@ -65,15 +32,6 @@ export default {
   }),
   created() {
     this.dataValue = this.data;
-    if (this.dataValue === null) {
-      this.dataValue = "(Vide)";
-    }
-     if (this.dataValue === "") {
-      this.dataValue = "(Vide)";
-    }
-    if (this.dataValue === undefined) {
-      this.dataValue = "(Vide)";
-    }
   },
   methods: {
     selectData() {
@@ -83,14 +41,14 @@ export default {
         value: this.data,
       });
     },
-    isKeyHidden() {
-      return this.isFromArray && typeof this.dataValue !== "object" ? false : true;
-    },
   },
 };
 </script>
 
 <style scoped>
+.array-content > .value-line  > .value > .flex-1 > .value-name {
+  display: none;
+}
 .selected-value {
   box-shadow: inset 0 0 0 1px rgb(173, 173, 173);
   border-radius: 0.5rem;

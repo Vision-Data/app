@@ -22,7 +22,7 @@
           </component>
         </template>
       </div>
-      <button @click="one_value">Show Data</button>
+      <button @click="parseData">Show Data</button>
     </div>
   </div>
 </template>
@@ -32,8 +32,8 @@ import bidoof from "../assets/bidoof.json";
 import ValueComponent from "./Value.vue";
 import ObjectComponent from "./Object.vue";
 import ArrayComponent from "./Array.vue";
-import { markRaw } from "vue";
 import Recursive from "../services/recursive.js";
+import { markRaw } from 'vue'
 
 export default {
   name: "Response",
@@ -47,52 +47,16 @@ export default {
       id: 1,
       pokemon: bidoof,
       components: [],
+      comps: {
+        ValueComponent: markRaw(ValueComponent),
+        ObjectComponent: markRaw(ObjectComponent),
+        ArrayComponent: markRaw(ArrayComponent),
+      }
     };
   },
   methods: {
-    one_value() {
-      const abcd = Recursive.recursive();
-      console.log(abcd);
-      const json = Object.keys(this.pokemon);
-      console.log(json);
-      json.forEach((key) => {
-        // console.log(this.pokemon[key]);
-        // console.log(typeof this.pokemon[key]);
-        if (
-          typeof this.pokemon[key] === "string" ||
-          typeof this.pokemon[key] === "number" ||
-          typeof this.pokemon[key] === "boolean"
-        ) {
-          // console.log("C'est une valeur unique");
-          this.components.push({
-            component: markRaw(ValueComponent),
-            name: key,
-            data: this.pokemon[key],
-            color: "info",
-            isStandalone: true,
-          });
-        } else if (typeof this.pokemon[key] === "object") {
-          if (Array.isArray(this.pokemon[key])) {
-            // console.log("C'est un tableau");
-            this.components.push({
-              component: markRaw(ArrayComponent),
-              name: key,
-              data: this.pokemon[key],
-              color: "warning",
-              isStandalone: false,
-            });
-          } else {
-            // console.log("C'est un objet");
-            this.components.push({
-              component: markRaw(ObjectComponent),
-              name: key,
-              data: this.pokemon[key],
-              color: "error",
-              isStandalone: false,
-            });
-          }
-        }
-      });
+    parseData() {
+      this.components = Recursive.recursive(this.pokemon, this.comps);
     },
   },
 };

@@ -1,44 +1,15 @@
 <template>
-  <section
-    :class="{ 'array-over': selection }"
-    @mouseover="selection = true"
-    @mouseout="selection = false"
-  >
-    <div
-      class="alert array"
-      :class="[`alert-${color}`, { selected: selected }]"
-    >
+  <section :class="{ 'array-over': selection }" @mouseover="selection = true" @mouseout="selection = false">
+    <div class="alert array" :class="[`alert-${color}`, { selected: selected }]">
       <div class="flex-1">
-        <b
-          class="badge border-transparent array-title tooltip"
-          :class="`bg-${color}`"
-          data-tip="Tableau"
-          >🗃 {{ name }}</b
-        >
+        <b class="badge border-transparent array-title tooltip" :class="`bg-${color}`" data-tip="Tableau">🗃 {{ name }}</b>
         <div class="array-content">
-          <div
-            class="alert array-container"
-            :class="[`alert-${color}`, { selected: selected }]"
-            v-for="(elt, index) in data"
-            :key="index"
-            :data-id="index"
-          >
-            <div class="flex-1">
-              <Value
-                :name="index"
-                color="error"
-                isFromArray="true"
-                :data="elt"
-              />
-            </div>
-          </div>
+          <template v-for="(component, index) in components" :key="index">
+            <component :is="components[index].component" :name="components[index].name" :data="components[index].data" :color="components[index].color" :isStandalone="components[index].isStandalone">
+            </component>
+          </template>
         </div>
-        <button
-          class="btn btn-xs selection-data"
-          id="select"
-          v-show="selection"
-          @click="selectData()"
-        >
+        <button class="btn btn-xs selection-data" id="select" v-show="selection" @click="selectData()">
           SELECT
         </button>
       </div>
@@ -48,17 +19,33 @@
 
 
 <script>
-import Value from "./Value.vue";
+import ValueComponent from "./Value.vue";
+import ObjectComponent from "./Object.vue";
+import ArrayComponent from "./Array.vue";
+import Recursive from "../services/recursive.js";
+import { markRaw } from "vue";
 
 export default {
-  name: "Data",
+  name: "Array",
+  props: ["name", "data", "color", "isStandalone"],
   components: {
-    Value,
+    ValueComponent,
+    ObjectComponent,
+    ArrayComponent,
   },
   data: () => ({
     selection: false,
     selected: false,
+    components: [],
+    comps: {
+      ValueComponent: markRaw(ValueComponent),
+      ObjectComponent: markRaw(ObjectComponent),
+      ArrayComponent: markRaw(ArrayComponent),
+    },
   }),
+  created() {
+    this.components = Recursive.recursive(this.data, this.comps);
+  },
   methods: {
     selectData() {
       this.selected = !this.selected;
@@ -68,7 +55,6 @@ export default {
       });
     },
   },
-   props: ["name", "data", "color"],
 };
 </script>
 
