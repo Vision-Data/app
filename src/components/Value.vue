@@ -29,8 +29,8 @@ export default {
     this.identifier = await this.$store.dispatch('giveIdentifier')
   },
   methods: {
-    async selectData() {
-      this.selected = !this.selected;
+    selectData() {
+      this.select = !this.select;
       this.$store.commit('receiveSelectedData',{
         key: this.name,
         value: this.data,

@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div class="alert array" :class="[`alert-${color}`, { selected: selected }, { 'array-over': selection }]" @mouseover="selection = true" @mouseout="selection = false">
+    <div class="alert array" :data-identifier="identifier" :class="[`alert-${color}`, { selected: selected }, { 'array-over': selection }]" @mouseover="selection = true" @mouseout="selection = false">
       <div class="flex-1">
         <b class="badge border-transparent array-title tooltip" :class="`bg-${color}`" data-tip="Tableau">🗃 {{ name }}</b>
         <div class="array-content">
@@ -34,6 +34,7 @@ export default {
     ArrayComponent,
   },
   data: () => ({
+    identifier: null,
     selection: false,
     selected: false,
     components: [],
@@ -43,17 +44,9 @@ export default {
       ArrayComponent: markRaw(ArrayComponent),
     },
   }),
-  created() {
+  async created() {
     this.components = Recursive.recursive(this.data, this.comps);
-  },
-  watch: {
-    isParentSelected: {
-      immediate: true,
-      handler(val, oldVal) {
-        if (!oldVal && val) this.selected = true;
-        else this.selected = false;
-      },
-    },
+    this.identifier = await this.$store.dispatch('giveIdentifier')
   },
   methods: {
     selectData() {
@@ -62,7 +55,15 @@ export default {
         key: this.name,
         value: this.data,
       });
-      console.log(this.$store.state.selectedData);
+    },
+  },
+  watch: {
+    isParentSelected: {
+      immediate: true,
+      handler(val, oldVal) {
+        if (!oldVal && val) this.selected = true;
+        else this.selected = false;
+      },
     },
   },
 };

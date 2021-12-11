@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div class="alert object" :class="[`alert-${color}`, { selected: selected },{ 'object-over': selection }]" @mouseover="selection = true" @mouseout="selection = false">
+    <div class="alert object" :data-identifier="identifier" :class="[`alert-${color}`, { selected: selected },{ 'object-over': selection }]" @mouseover="selection = true" @mouseout="selection = false">
       <div class="flex-1">
         <b class="badge border-transparent object-title tooltip" :class="`bg-${color}`" data-tip="Objet">📕 {{ name }}</b>
         <template v-for="(component, index) in components" :key="index">
@@ -31,6 +31,7 @@ export default {
     ArrayComponent,
   },
   data: () => ({
+    identifier: null,
     selection: false,
     selected: false,
     components: [],
@@ -40,17 +41,9 @@ export default {
       ArrayComponent: markRaw(ArrayComponent),
     },
   }),
-  created() {
+  async created() {
     this.components = Recursive.recursive(this.data, this.comps);
-  },
-  watch: {
-    isParentSelected: {
-      immediate: true,
-      handler(val, oldVal) {
-        if (!oldVal && val) this.selected = true;
-        else this.selected = false;
-      },
-    },
+    this.identifier = await this.$store.dispatch('giveIdentifier')
   },
   methods: {
     selectData() {
@@ -59,7 +52,15 @@ export default {
         key: this.name,
         value: this.data,
       });
-      console.log(this.$store.state.selectedData);
+    },
+  },
+  watch: {
+    isParentSelected: {
+      immediate: true,
+      handler(val, oldVal) {
+        if (!oldVal && val) this.selected = true;
+        else this.selected = false;
+      },
     },
   },
 };
