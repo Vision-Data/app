@@ -60,18 +60,18 @@ export default {
 }
 
 .result-container > section > .alert-info.selected,
-.alert-info .alert.selected {
+.result-container > section > .alert-info .alert.selected {
   box-shadow: inset 0 0 0 2px hsl(var(--in));
   background-color: hsla(var(--in)/0.2);
 }
 
 .result-container > section > .alert-error.selected,
-.alert-error .alert.selected {
+.result-container > section > .alert-error .alert.selected {
   box-shadow: inset 0 0 0 2px hsl(var(--er));
   background-color: hsla(var(--er)/0.2);
 }
 .result-container > section > .alert-warning.selected,
-.alert-warning .alert.selected {
+.result-container > section > .alert-warning .alert.selected {
   box-shadow: inset 0 0 0 2px hsl(var(--wa));
   background-color: hsla(var(--wa)/0.2);
 }
