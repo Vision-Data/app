@@ -59,6 +59,10 @@
         null,
         ""
     ],
+    "zevol": {
+        "tab": [0,1,2,3,4,1,5],
+        "bonjour": 0
+    },
     "forms": {
         "name": "bidoof",
         "url": "https://pokeapi.co/api/v2/pokemon-form/399/",

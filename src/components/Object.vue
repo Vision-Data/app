@@ -3,10 +3,10 @@
     <div class="alert object" :class="[`alert-${color}`, { selected: selected },{ 'object-over': selection }]" @mouseover="selection = true" @mouseout="selection = false">
       <div class="flex-1">
         <b class="badge border-transparent object-title tooltip" :class="`bg-${color}`" data-tip="Objet">📕 {{ name }}</b>
-          <template v-for="(component, index) in components" :key="index">
-            <component :is="components[index].component" :name="components[index].name" :data="components[index].data" :color="components[index].color">
-            </component>
-          </template>
+        <template v-for="(component, index) in components" :key="index">
+          <component :is="components[index].component" :name="components[index].name" :data="components[index].data" :color="components[index].color" :isParentSelected="selected">
+          </component>
+        </template>
         <button class="btn btn-xs selection-data" id="select" v-show="selection" @click="selectData()">
           SELECT
         </button>
@@ -20,11 +20,11 @@ import ValueComponent from "./Value.vue";
 import ObjectComponent from "./Object.vue";
 import ArrayComponent from "./Array.vue";
 import Recursive from "../services/recursive.js";
-import { markRaw } from 'vue'
+import { markRaw } from "vue";
 
 export default {
   name: "Object",
-  props: ["name", "data", "color", ],
+  props: ["name", "data", "color", "isParentSelected"],
   components: {
     ValueComponent,
     ObjectComponent,
@@ -38,10 +38,19 @@ export default {
       ValueComponent: markRaw(ValueComponent),
       ObjectComponent: markRaw(ObjectComponent),
       ArrayComponent: markRaw(ArrayComponent),
-    }
+    },
   }),
   created() {
-      this.components = Recursive.recursive(this.data, this.comps);
+    this.components = Recursive.recursive(this.data, this.comps);
+  },
+  watch: {
+    isParentSelected: {
+      immediate: true,
+      handler(val, oldVal) {
+        if (!oldVal && val) this.selected = true;
+        else this.selected = false;
+      },
+    },
   },
   methods: {
     selectData() {

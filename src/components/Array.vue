@@ -5,7 +5,7 @@
         <b class="badge border-transparent array-title tooltip" :class="`bg-${color}`" data-tip="Tableau">🗃 {{ name }}</b>
         <div class="array-content">
           <template v-for="(component, index) in components" :key="index">
-            <component :is="components[index].component" :name="components[index].name" :data="components[index].data" :color="components[index].color">
+            <component :is="components[index].component" :name="components[index].name" :data="components[index].data" :color="components[index].color" :isParentSelected="selected">
             </component>
           </template>
         </div>
@@ -27,7 +27,7 @@ import { markRaw } from "vue";
 
 export default {
   name: "Array",
-  props: ["name", "data", "color"],
+  props: ["name", "data", "color", "isParentSelected"],
   components: {
     ValueComponent,
     ObjectComponent,
@@ -45,6 +45,15 @@ export default {
   }),
   created() {
     this.components = Recursive.recursive(this.data, this.comps);
+  },
+  watch: {
+    isParentSelected: {
+      immediate: true,
+      handler(val, oldVal) {
+        if (!oldVal && val) this.selected = true;
+        else this.selected = false;
+      },
+    },
   },
   methods: {
     selectData() {

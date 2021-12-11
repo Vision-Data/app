@@ -1,11 +1,11 @@
 <template>
-  <section class="value-line" >
-    <div class="alert value" :class="[`alert-${color}`, { selected: selected }, { 'value-over': selection }]" @mouseover="selection = true" @mouseout="selection = false">
+  <section class="value-line">
+    <div class="alert value" :class="[`alert-${color}`, { selected: selected }, { 'value-over': over }]" @mouseover="over = true" @mouseout="over = false">
       <div class="flex-1">
         <b class="badge border-transparent value-name" :class="`bg-${color}`" v-if="name !== ''">{{ name }}</b>
 
         <span class="data-result" :class="{ 'italic': dataValue === '(vide)' || dataValue === '' }">{{ dataValue === '' ? '(vide)' : dataValue }}</span>
-        <button class="btn btn-xs selection-data" id="select" v-show="selection" @click="selectData()">
+        <button class="btn btn-xs selection-data" id="select" v-show="over" @click="selectData()">
           SELECT
         </button>
       </div>
@@ -17,23 +17,28 @@
 <script>
 export default {
   name: "Value",
-  props: ["name", "data", "color"],
+  props: ["name", "data", "color","isParentSelected"],
   data: () => ({
     dataValue: "",
-    selection: false,
-    selected: false,
+    over: false,
+    select: false
   }),
   created() {
     this.dataValue = this.data;
   },
   methods: {
     selectData() {
-      this.selected = !this.selected;
+      this.select = !this.select;
       console.log({
         key: this.name,
         value: this.data,
       });
     },
+  },
+  computed: {
+    selected() {
+      return this.isParentSelected || this.select ? true : false;      
+    }
   },
 };
 </script>
@@ -54,18 +59,18 @@ export default {
   border-radius: 1rem;
 }
 
-.result-container > section > .alert-info,
+.result-container > section > .alert-info.selected,
 .alert-info .alert.selected {
   box-shadow: inset 0 0 0 2px hsl(var(--in));
   background-color: hsla(var(--in)/0.2);
 }
 
-.result-container > section > .alert-error,
+.result-container > section > .alert-error.selected,
 .alert-error .alert.selected {
   box-shadow: inset 0 0 0 2px hsl(var(--er));
   background-color: hsla(var(--er)/0.2);
 }
-.result-container > section > .alert-warning,
+.result-container > section > .alert-warning.selected,
 .alert-warning .alert.selected {
   box-shadow: inset 0 0 0 2px hsl(var(--wa));
   background-color: hsla(var(--wa)/0.2);
@@ -73,7 +78,9 @@ export default {
 
 
 
-
+.value-over {
+  filter: brightness(80%);
+}
 .value-line {
   border-radius: 0.5rem;
 }
