@@ -58,10 +58,11 @@ export default {
   methods: {
     selectData() {
       this.selected = !this.selected;
-      console.log({
+      this.$store.commit('receiveSelectedData',{
         key: this.name,
         value: this.data,
       });
+      console.log(this.$store.state.selectedData);
     },
   },
 };

@@ -20,7 +20,6 @@
 </template>
 
 <script>
-import bidoof from "../assets/bidoof.json";
 import ValueComponent from "./Value.vue";
 import ObjectComponent from "./Object.vue";
 import ArrayComponent from "./Array.vue";
@@ -37,7 +36,7 @@ export default {
   data() {
     return {
       id: 1,
-      pokemon: bidoof,
+      pokemon: this.$store.state.response,
       components: [],
       comps: {
         ValueComponent: markRaw(ValueComponent),
@@ -50,7 +49,7 @@ export default {
     parseData() {
       this.components = Recursive.recursive(this.pokemon, this.comps);
     },
-  },
+  }
 };
 </script>
 

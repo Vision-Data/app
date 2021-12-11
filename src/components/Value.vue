@@ -1,6 +1,6 @@
 <template>
   <section class="value-line">
-    <div class="alert value" :class="[`alert-${color}`, { selected: selected }, { 'value-over': over }]" @mouseover="over = true" @mouseout="over = false">
+    <div class="alert value" :data-identifier="identifier" :class="[`alert-${color}`, { selected: selected }, { 'value-over': over }]" @mouseover="over = true" @mouseout="over = false">
       <div class="flex-1">
         <b class="badge border-transparent value-name" :class="`bg-${color}`" v-if="name !== ''">{{ name }}</b>
 
@@ -21,15 +21,17 @@ export default {
   data: () => ({
     dataValue: "",
     over: false,
-    select: false
+    select: false,
+    identifier: null
   }),
-  created() {
+  async created() {
     this.dataValue = this.data;
+    this.identifier = await this.$store.dispatch('giveIdentifier')
   },
   methods: {
-    selectData() {
-      this.select = !this.select;
-      console.log({
+    async selectData() {
+      this.selected = !this.selected;
+      this.$store.commit('receiveSelectedData',{
         key: this.name,
         value: this.data,
       });
