@@ -2,23 +2,15 @@
   <div class="response">
     <div class="alert alert-success">
       <div class="flex-1">
-        <label
-          ><span class="badge bg-success border-transparent">Etat</span> 200 :
-          OK !</label
-        >
+        <label><span class="badge bg-success border-transparent">Etat</span> 200 :
+          OK !</label>
       </div>
     </div>
     <div class="alert bg-base-200">
       <div class="result-container">
         <b>Resultats</b>
         <template v-for="(component, index) in components" :key="index">
-          <component
-            :is="components[index].component"
-            :name="components[index].name"
-            :data="components[index].data"
-            :color="components[index].color"
-            :isStandalone="components[index].isStandalone"
-          >
+          <component :is="components[index].component" :name="components[index].name" :data="components[index].data" :color="components[index].color">
           </component>
         </template>
       </div>
@@ -33,7 +25,7 @@ import ValueComponent from "./Value.vue";
 import ObjectComponent from "./Object.vue";
 import ArrayComponent from "./Array.vue";
 import Recursive from "../services/recursive.js";
-import { markRaw } from 'vue'
+import { markRaw } from "vue";
 
 export default {
   name: "Response",
@@ -51,7 +43,7 @@ export default {
         ValueComponent: markRaw(ValueComponent),
         ObjectComponent: markRaw(ObjectComponent),
         ArrayComponent: markRaw(ArrayComponent),
-      }
+      },
     };
   },
   methods: {
@@ -73,12 +65,17 @@ export default {
   color: rgb(78, 78, 78) !important;
 }
 .response *::selection {
-  background-color: #414141!important;
-  color: rgb(255, 255, 255)!important;
+  background-color: #414141 !important;
+  color: rgb(255, 255, 255) !important;
 }
 .result-container {
   display: flex;
   flex-direction: column;
+}
+.result-container .object > .flex-1 > .value-line > .alert{
+  margin: 2px;
+  padding: 10px!important;
+
 }
 .selection-data {
   position: absolute;

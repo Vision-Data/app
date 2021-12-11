@@ -1,10 +1,10 @@
 <template>
-  <section :class="{ 'object-over': selection }" @mouseover="selection = true" @mouseout="selection = false">
-    <div class="alert object" :class="[`alert-${color}`, { selected: selected }]">
+  <section>
+    <div class="alert object" :class="[`alert-${color}`, { selected: selected },{ 'object-over': selection }]" @mouseover="selection = true" @mouseout="selection = false">
       <div class="flex-1">
         <b class="badge border-transparent object-title tooltip" :class="`bg-${color}`" data-tip="Objet">📕 {{ name }}</b>
           <template v-for="(component, index) in components" :key="index">
-            <component :is="components[index].component" :name="components[index].name" :data="components[index].data" :color="components[index].color" :isStandalone="components[index].isStandalone">
+            <component :is="components[index].component" :name="components[index].name" :data="components[index].data" :color="components[index].color">
             </component>
           </template>
         <button class="btn btn-xs selection-data" id="select" v-show="selection" @click="selectData()">
@@ -24,7 +24,7 @@ import { markRaw } from 'vue'
 
 export default {
   name: "Object",
-  props: ["name", "data", "color", "isStandalone"],
+  props: ["name", "data", "color", ],
   components: {
     ValueComponent,
     ObjectComponent,

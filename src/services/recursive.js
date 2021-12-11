@@ -7,11 +7,10 @@ function recursive(data, comps) {
             name: '',
             data: data,
             color: "info",
-            isStandalone: true,
         });
     } else {
         const json = Object.keys(data);
-        
+
         json.forEach(key => {
             if (typeof data[key] === "string" || typeof data[key] === "number" || typeof data[key] === "boolean") {
                 components.push({
@@ -19,7 +18,6 @@ function recursive(data, comps) {
                     name: key,
                     data: data[key],
                     color: "info",
-                    isStandalone: true,
                 });
             } else if (typeof data[key] === 'object' && (data[key] === null || data[key] === undefined)) {
                 data[key] = '(vide)';
@@ -28,7 +26,6 @@ function recursive(data, comps) {
                     name: key,
                     data: data[key],
                     color: "info",
-                    isStandalone: true,
                 });
             } else if (typeof data[key] === "object") {
                 if (Array.isArray(data[key])) {
@@ -36,9 +33,7 @@ function recursive(data, comps) {
                         component: comps.ArrayComponent,
                         name: key,
                         data: data[key],
-                        color: "warning",
-                        isStandalone: false,
-                        isFromArray: true
+                        color: "warning"
                     });
                 } else {
                     components.push({
@@ -46,7 +41,6 @@ function recursive(data, comps) {
                         name: key,
                         data: data[key],
                         color: "error",
-                        isStandalone: false,
                     });
                 }
             }

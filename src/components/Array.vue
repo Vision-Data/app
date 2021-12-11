@@ -1,11 +1,11 @@
 <template>
-  <section :class="{ 'array-over': selection }" @mouseover="selection = true" @mouseout="selection = false">
-    <div class="alert array" :class="[`alert-${color}`, { selected: selected }]">
+  <section>
+    <div class="alert array" :class="[`alert-${color}`, { selected: selected }, { 'array-over': selection }]" @mouseover="selection = true" @mouseout="selection = false">
       <div class="flex-1">
         <b class="badge border-transparent array-title tooltip" :class="`bg-${color}`" data-tip="Tableau">🗃 {{ name }}</b>
         <div class="array-content">
           <template v-for="(component, index) in components" :key="index">
-            <component :is="components[index].component" :name="components[index].name" :data="components[index].data" :color="components[index].color" :isStandalone="components[index].isStandalone">
+            <component :is="components[index].component" :name="components[index].name" :data="components[index].data" :color="components[index].color">
             </component>
           </template>
         </div>
@@ -27,7 +27,7 @@ import { markRaw } from "vue";
 
 export default {
   name: "Array",
-  props: ["name", "data", "color", "isStandalone"],
+  props: ["name", "data", "color"],
   components: {
     ValueComponent,
     ObjectComponent,
@@ -86,17 +86,6 @@ export default {
 }
 .array .array-container:hover {
   box-shadow: inset 0 0 0 2px rgb(216, 216, 216);
-}
-.array .array-container:hover::before {
-  content: attr(data-id);
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: 0.2rem 0.5rem;
-  background-color: rgb(216, 216, 216);
-  color: black;
-  border-radius: 5px;
-  z-index: 15;
 }
 .array .array-value {
   margin-bottom: 0.4rem;
