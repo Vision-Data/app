@@ -46,9 +46,10 @@ export default {
     this.identifier = await this.$store.dispatch('giveIdentifier')
   },
   methods: {
-    selectData() {
+    async selectData() {
       this.selected = !this.selected;
-      this.$store.commit('receiveSelectedData',{
+      await this.$store.dispatch("verifyExistance", {
+        id: this.identifier,
         key: this.name,
         value: this.data,
       });
