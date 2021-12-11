@@ -72,9 +72,9 @@ export default {
 .value:not(.selected):not(.selected-value) {
   color: rgb(78, 78, 78) !important;
 }
-.response ::selection {
-  background-color: #afafaf;
-  color: black;
+.response *::selection {
+  background-color: #414141!important;
+  color: rgb(255, 255, 255)!important;
 }
 .result-container {
   display: flex;

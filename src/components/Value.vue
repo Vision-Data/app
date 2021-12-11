@@ -10,13 +10,6 @@
         </button>
       </div>
     </div>
-    <div class="value notstandalone" :class="{ 'selected-value': selected }" v-else>
-      <b class="badge border-transparent value-name" :class="`bg-${color}`" v-if="name !== ''">{{ name }}</b>
-      <span class="data-result">{{ dataValue === '' ? '(vide)' : dataValue }}</span>
-      <button class="btn btn-xs selection-data" id="select" v-show="selection" @click="selectData()">
-        SELECT
-      </button>
-    </div>
   </section>
 </template>
 
@@ -46,9 +39,16 @@ export default {
 </script>
 
 <style scoped>
+
 .array-content > .value-line  > .value > .flex-1 > .value-name {
   display: none;
 }
+
+.response *:not(.result-container):not(.array-content) > .value-line > .alert.value {
+  background: none;
+  padding: 0;
+}
+
 .selected-value {
   box-shadow: inset 0 0 0 1px rgb(173, 173, 173);
   border-radius: 0.5rem;
@@ -59,7 +59,6 @@ export default {
   color: rgb(104, 104, 104);
 }
 .value-line {
-  width: 100%;
   border-radius: 0.5rem;
 }
 .value {
