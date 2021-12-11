@@ -15,6 +15,9 @@ const store = createStore({
         receiveSelectedData(state, value) {
             state.selectedData.push(value);
         },
+        deleteSpecifiedData(state, value) {
+            state.selectedData = state.selectedData.filter(elt => elt.id !== value.id);
+        },
         changeIdentifier(state) {
             state.identifier++;
         }
@@ -28,6 +31,15 @@ const store = createStore({
         giveIdentifier({commit, getters}) {
             commit('changeIdentifier')
             return getters.getIdentifier;
+        },
+        verifyExistance({ state, commit }, payload) {
+            if(state.selectedData.length === 0) commit('receiveSelectedData', payload);
+            else {
+                const obj = state.selectedData.find(res => res.id === payload.id)
+                if (obj === undefined) commit('receiveSelectedData', payload);
+                else commit('deleteSpecifiedData', payload);
+                console.log(state.selectedData);
+            }
         }
     },
 })

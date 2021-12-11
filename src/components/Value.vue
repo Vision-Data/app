@@ -17,21 +17,22 @@
 <script>
 export default {
   name: "Value",
-  props: ["name", "data", "color","isParentSelected"],
+  props: ["name", "data", "color", "isParentSelected"],
   data: () => ({
     dataValue: "",
     over: false,
     select: false,
-    identifier: null
+    identifier: null,
   }),
   async created() {
     this.dataValue = this.data;
-    this.identifier = await this.$store.dispatch('giveIdentifier')
+    this.identifier = await this.$store.dispatch("giveIdentifier");
   },
   methods: {
-    selectData() {
+    async selectData() {
       this.select = !this.select;
-      this.$store.commit('receiveSelectedData',{
+      await this.$store.dispatch("verifyExistance", {
+        id: this.identifier,
         key: this.name,
         value: this.data,
       });
@@ -39,19 +40,21 @@ export default {
   },
   computed: {
     selected() {
-      return this.isParentSelected || this.select ? true : false;      
-    }
+      return this.isParentSelected || this.select ? true : false;
+    },
   },
 };
 </script>
 
 <style scoped>
-
-.array-content > .value-line  > .value > .flex-1 > .value-name {
+.array-content > .value-line > .value > .flex-1 > .value-name {
   display: none;
 }
 
-.response *:not(.result-container):not(.array-content) > .value-line > .alert.value {
+.response
+  *:not(.result-container):not(.array-content)
+  > .value-line
+  > .alert.value {
   background: none;
   padding: 0;
 }
@@ -64,21 +67,19 @@ export default {
 .result-container > section > .alert-info.selected,
 .result-container > section > .alert-info .alert.selected {
   box-shadow: inset 0 0 0 2px hsl(var(--in));
-  background-color: hsla(var(--in)/0.2);
+  background-color: hsla(var(--in) / 0.2);
 }
 
 .result-container > section > .alert-error.selected,
 .result-container > section > .alert-error .alert.selected {
   box-shadow: inset 0 0 0 2px hsl(var(--er));
-  background-color: hsla(var(--er)/0.2);
+  background-color: hsla(var(--er) / 0.2);
 }
 .result-container > section > .alert-warning.selected,
 .result-container > section > .alert-warning .alert.selected {
   box-shadow: inset 0 0 0 2px hsl(var(--wa));
-  background-color: hsla(var(--wa)/0.2);
+  background-color: hsla(var(--wa) / 0.2);
 }
-
-
 
 .value-over {
   filter: brightness(80%);
