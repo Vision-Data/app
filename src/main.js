@@ -30,9 +30,6 @@ const store = createStore({
     getIdentifier(state) {
       return state.identifier;
     },
-    getResponse(state) {
-      return state.response;
-    },
   },
   actions: {
     giveIdentifier({ commit, getters }) {

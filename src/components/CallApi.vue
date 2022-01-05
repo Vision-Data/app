@@ -59,34 +59,37 @@ export default {
         try {
           response = await axios.get(query);
         } catch (error) {
-          console.log(error.response);
-
+          if (error.response) {
+            response = error.response;
+          }
           // TODO gestion des erreurs (404, 500, etc)
         }
       } else if (choice == "POST") {
         try {
           response = await axios.post(query, body);
         } catch (error) {
-          console.error(error);
+          if (error.response) {
+            response = error.response;
+          }
         }
       } else if (choice == "PUT") {
         try {
           response = await axios.put(query, body);
         } catch (error) {
-          console.error(error);
+          if (error.response) {
+            response = error.response;
+          }
         }
       } else if (choice == "DELETE") {
         try {
           response = await axios.delete(query);
         } catch (error) {
-          console.error(error);
+          response = error.response;
         }
       }
-
-      this.$store.dispatch("sendRequest", response.data);
+      this.$store.dispatch("sendRequest", response);
     },
     callApi() {
-      console.log(this.body);
       // Envoi de la requete API
       if (this.query === "") {
         window.alert("Le champ URL est vide");

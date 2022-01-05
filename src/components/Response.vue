@@ -1,11 +1,29 @@
 <template>
-  <div class="response" v-if="responseData" :key="index">
-    <div class="alert alert-success">
+  <div class="response" :key="index">
+    <div
+      class="alert"
+      v-bind:class="{
+        'alert-success':
+          responseData && responseData.status.toString().startsWith('2'),
+        'alert-error':
+          responseData && !responseData.status.toString().startsWith('2'),
+      }"
+    >
       <div class="flex-1">
         <label
-          ><span class="badge bg-success border-transparent">Etat</span> 200 :
-          OK !</label
-        >
+          ><span
+            class="badge border-transparent"
+            v-bind:class="{
+              'bg-success':
+                responseData && responseData.status?.toString().startsWith('2'),
+              'bg-error':
+                responseData &&
+                !responseData.status?.toString().startsWith('2'),
+            }"
+            >Etat</span
+          >
+          {{ responseData?.status }} : {{ responseData?.statusText }}
+        </label>
       </div>
     </div>
     <div class="alert bg-base-200">
@@ -52,7 +70,12 @@ export default {
   },
   methods: {
     parseData() {
-      this.components = Recursive.recursive(this.responseData, this.comps);
+      if (this.responseData?.data) {
+        this.components = Recursive.recursive(
+          this.responseData?.data,
+          this.comps
+        );
+      }
     },
   },
 
