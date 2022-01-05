@@ -3,77 +3,100 @@
     <select
       v-model="choice"
       :required="true"
-      class="select select-bordered w-full max-w-xs">
-      <option v-for="value in choices" :key="value.key" :value="value.method">{{ value.text }}</option>
-
+      class="select select-bordered w-full max-w-xs"
+      @change="emitChoice"
+    >
+      <option v-for="value in choices" :key="value.key" :value="value.method">{{
+        value.text
+      }}</option>
     </select>
-    <button class="btn btn-primary" id="valid" @click="toogleButton()">
+    <button
+      class="btn btn-primary"
+      id="valid"
+      v-if="!isLoading"
+      @click="toogleButton()"
+    >
       {{ valid }}
+    </button>
+    <button class="btn btn-outline btn-primary loading" v-if="isLoading">
+      En cours
     </button>
   </div>
 </template>
 
 <script>
+const axios = require("axios");
 export default {
   name: "SearchBar",
-  props: ["query"],
+  props: ["query", "body"],
   data() {
     return {
       valid: "Lancer",
+      isLoading: false,
       choices: [
-        {method : "GET", text: "⇲ Recevoir (GET)"},
-        {method : "POST", text: "➤ Envoyer (POST)"},
-        {method : "DELETE", text: "🗑 Supprimer (DELETE) "},
-        {method : "PUT", text: "⛭ Modifier (PUT)"}
+        { method: "GET", text: "⇲ Recevoir (GET)" },
+        { method: "POST", text: "➤ Envoyer (POST)" },
+        { method: "DELETE", text: "🗑 Supprimer (DELETE) " },
+        { method: "PUT", text: "⛭ Modifier (PUT)" },
       ],
       choice: "GET",
     };
   },
   methods: {
+    emitChoice() {
+      let isSendable = this.choice == "POST" || this.choice == "PUT";
+      this.$emit("detectChoice", isSendable);
+    },
     toogleButton() {
       this.valid = this.valid == "Lancer" ? "■" : "Lancer";
       if (this.valid == "■") {
         this.callApi();
       }
     },
+    async makeRequest(choice, query, body) {
+      let response;
+      if (choice == "GET") {
+        try {
+          response = await axios.get(query);
+        } catch (error) {
+          if (error.response) {
+            response = error.response;
+          }
+          // TODO gestion des erreurs (404, 500, etc)
+        }
+      } else if (choice == "POST") {
+        try {
+          response = await axios.post(query, body);
+        } catch (error) {
+          if (error.response) {
+            response = error.response;
+          }
+        }
+      } else if (choice == "PUT") {
+        try {
+          response = await axios.put(query, body);
+        } catch (error) {
+          if (error.response) {
+            response = error.response;
+          }
+        }
+      } else if (choice == "DELETE") {
+        try {
+          response = await axios.delete(query);
+        } catch (error) {
+          response = error.response;
+        }
+      }
+      this.$store.dispatch("sendRequest", response);
+    },
     callApi() {
-      let mail = "test@test.fr";
-      let password = "azerty-85";
       // Envoi de la requete API
       if (this.query === "") {
         window.alert("Le champ URL est vide");
       } else {
-        if (this.choice == "GET") {
-          fetch(this.query, {
-            method: this.choice,
-            headers: { "Content-Type": "application/json" }
-          })
-            .then((r) => r.json())
-            .then((res) => {
-              console.log(res.results);
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
-        }else if(this.choice == "POST" || this.choice == "DELETE" || this.choice == "PUT")
-        fetch(this.query, {
-          method: this.choice,
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            mail: mail,
-            password: password,
-          }),
-        })
-          .then((r) => r.json())
-          .then((res) => {
-            console.log(res);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+        this.valid = "Lancer";
+        this.makeRequest(this.choice, this.query, this.body);
       }
-
-      this.valid = "Lancer";
     },
   },
 };
