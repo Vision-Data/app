@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.result-container > section > .alert-info .badge,
+.result-container > section > .alert-info .alert {
+    background-color: hsla(var(--in)/var(--tw-bg-opacity,1));
+}
+.result-container > section > .alert-error .badge,
+.result-container > section > .alert-error .alert{
+    background-color: hsla(var(--er)/var(--tw-bg-opacity,1));
+}
+.result-container > section > .alert-warning .badge,
+.alert-warning .alert{
+    background-color: hsla(var(--wa)/var(--tw-bg-opacity,1));
+}
