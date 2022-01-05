@@ -10,8 +10,16 @@
         value.text
       }}</option>
     </select>
-    <button class="btn btn-primary" id="valid" @click="toogleButton()">
+    <button
+      class="btn btn-primary"
+      id="valid"
+      v-if="!isLoading"
+      @click="toogleButton()"
+    >
       {{ valid }}
+    </button>
+    <button class="btn btn-outline btn-primary loading" v-if="isLoading">
+      En cours
     </button>
   </div>
 </template>
@@ -24,6 +32,7 @@ export default {
   data() {
     return {
       valid: "Lancer",
+      isLoading: false,
       choices: [
         { method: "GET", text: "⇲ Recevoir (GET)" },
         { method: "POST", text: "➤ Envoyer (POST)" },
