@@ -1,20 +1,44 @@
 <template>
-  <div class="response">
-    <div class="alert alert-success">
+  <div class="response" :key="index">
+    <div
+      class="alert"
+      v-bind:class="{
+        'alert-success':
+          responseData && responseData.status.toString().startsWith('2'),
+        'alert-error':
+          responseData && !responseData.status.toString().startsWith('2'),
+      }"
+    >
       <div class="flex-1">
-        <label><span class="badge bg-success border-transparent">Etat</span> 200 :
-          OK !</label>
+        <label
+          ><span
+            class="badge border-transparent"
+            v-bind:class="{
+              'bg-success':
+                responseData && responseData.status?.toString().startsWith('2'),
+              'bg-error':
+                responseData &&
+                !responseData.status?.toString().startsWith('2'),
+            }"
+            >Etat</span
+          >
+          {{ responseData?.status }} : {{ responseData?.statusText }}
+        </label>
       </div>
     </div>
     <div class="alert bg-base-200">
       <div class="result-container">
         <b>Resultats</b>
         <template v-for="(component, index) in components" :key="index">
-          <component :is="components[index].component" :name="components[index].name" :data="components[index].data" :color="components[index].color">
+          <component
+            :is="components[index].component"
+            :name="components[index].name"
+            :data="components[index].data"
+            :color="components[index].color"
+          >
           </component>
         </template>
       </div>
-      <button @click="parseData">Show Data</button>
     </div>
   </div>
 </template>
@@ -25,7 +49,6 @@ import ObjectComponent from "./Object.vue";
 import ArrayComponent from "./Array.vue";
 import Recursive from "../services/recursive.js";
 import { markRaw } from "vue";
-
 export default {
   name: "Response",
   components: {
@@ -35,6 +58,7 @@ export default {
   },
   data() {
     return {
+      index: 0,
       responseData: this.$store.state.response,
       components: [],
       comps: {
@@ -46,9 +70,28 @@ export default {
   },
   methods: {
     parseData() {
-      this.components = Recursive.recursive(this.responseData, this.comps);
+      if (this.responseData?.data) {
+        this.components = Recursive.recursive(
+          this.responseData?.data,
+          this.comps
+        );
+      }
     },
-  }
+  },
+
+  created() {
+    this.unwatch = this.$store.watch(
+      (state) => state.response,
+      (newValue) => {
+        this.responseData = newValue;
+        this.index = this.index + 1;
+        this.parseData();
+      }
+    );
+  },
+  beforeUnmount() {
+    this.unwatch();
+  },
 };
 </script>
 
@@ -71,10 +114,9 @@ export default {
   display: flex;
   flex-direction: column;
 }
-.result-container .object > .flex-1 > .value-line > .alert{
+.result-container .object > .flex-1 > .value-line > .alert {
   margin: 2px;
-  padding: 10px!important;
-
+  padding: 10px !important;
 }
 .selection-data {
   position: absolute;
