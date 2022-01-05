@@ -20,19 +20,36 @@ export default {
         isDark: false
     }),
     created() {
-        if (document.querySelector('html').getAttribute('data-theme') == 'dark') this.isDark = true
-        else this.isDark = false;
+        if 
+        (
+            ((window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) 
+            && localStorage.getItem('dark') === 'true')
+            || localStorage.getItem('dark') === 'true'
+        )
+        {
+            this.isDark = true
+            this.toDark();
+        } 
+        else
+        {
+            this.toLight();
+            this.isDark = false;
+        }
     },
     methods: {
         changeTheme() {
             this.isDark = !this.isDark;
-            if (document.querySelector('html').getAttribute('data-theme') === 'dark') {
-                document.querySelector('html').setAttribute('data-theme', 'visionTheme')
-            }
-            else {
-                document.querySelector('html').setAttribute('data-theme', 'dark')
-            } 
-        }       
+            if (this.isDark) this.toDark()
+            else this.toLight()
+        },
+        toDark() {
+            document.querySelector('html').setAttribute('data-theme', 'dark')
+            localStorage.setItem('dark', true)
+        },
+        toLight() {
+            document.querySelector('html').setAttribute('data-theme', 'visionTheme')
+            localStorage.setItem('dark', false)
+        }
     }
 }
 </script>
