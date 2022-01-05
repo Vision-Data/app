@@ -53,14 +53,15 @@ export default {
 </script>
 
 <style>
+
 .selected {
   --tw-bg-opacity: 0.4 !important;
 }
 .alert.selected {
-  color: rgb(77, 77, 77);
+   color: rgb(78, 78, 78);
 }
 .value:not(.selected):not(.selected-value) {
-  color: rgb(78, 78, 78) !important;
+   color: rgb(78, 78, 78) !important;
 }
 .response *::selection {
   background-color: #414141 !important;
@@ -100,4 +101,10 @@ export default {
   font-weight: bold;
   flex: 1;
 }
+[data-theme=dark] .value:not(.selected):not(.selected-value),
+[data-theme=dark] .badge,
+[data-theme=dark] .data-result,
+[data-theme=dark] .alert.selected {
+  color: white;
+} 
 </style>
