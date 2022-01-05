@@ -12,6 +12,7 @@
     </header>
 
     <CallApi :query="query" />
+    <Chart />
   </div>
 </template>
 
@@ -19,6 +20,8 @@
 import DarkMode from './components/Dark-Mode.vue';
 import SearchBar from "./components/SearchBar.vue";
 import CallApi from "./components/CallApi.vue";
+import Chart from "./components/Chart.vue";
+
 
 export default {
   name: "App",
@@ -26,6 +29,7 @@ export default {
     SearchBar,
     CallApi,
     DarkMode,
+    Chart
   },
   data() {
     return {
