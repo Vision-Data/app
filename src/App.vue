@@ -18,7 +18,7 @@
       />
       <dark-mode />
     </header>
-      <Response />
+    <Response />
   </div>
 </template>
 

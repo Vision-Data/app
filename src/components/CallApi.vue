@@ -54,35 +54,36 @@ export default {
       }
     },
     async makeRequest(choice, query, body) {
+      let response;
       if (choice == "GET") {
         try {
-          const response = await axios.get(query);
-          console.log(response);
+          response = await axios.get(query);
         } catch (error) {
-          console.error(error);
+          console.log(error.response);
+
+          // TODO gestion des erreurs (404, 500, etc)
         }
       } else if (choice == "POST") {
         try {
-          const response = await axios.post(query, body);
-          console.log(response);
+          response = await axios.post(query, body);
         } catch (error) {
           console.error(error);
         }
       } else if (choice == "PUT") {
         try {
-          const response = await axios.put(query, body);
-          console.log(response);
+          response = await axios.put(query, body);
         } catch (error) {
           console.error(error);
         }
       } else if (choice == "DELETE") {
         try {
-          const response = await axios.delete(query);
-          console.log(response);
+          response = await axios.delete(query);
         } catch (error) {
           console.error(error);
         }
       }
+
+      this.$store.dispatch("sendRequest", response.data);
     },
     callApi() {
       console.log(this.body);
