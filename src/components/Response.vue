@@ -35,8 +35,7 @@ export default {
   },
   data() {
     return {
-      id: 1,
-      pokemon: this.$store.state.response,
+      responseData: this.$store.state.response,
       components: [],
       comps: {
         ValueComponent: markRaw(ValueComponent),
@@ -47,7 +46,7 @@ export default {
   },
   methods: {
     parseData() {
-      this.components = Recursive.recursive(this.pokemon, this.comps);
+      this.components = Recursive.recursive(this.responseData, this.comps);
     },
   }
 };
