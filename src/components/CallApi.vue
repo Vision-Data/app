@@ -110,4 +110,10 @@ export default {
   width: 40vw;
   height: 4em;
 }
+#valid {
+  margin-left: 1rem;
+}
+.input-group>*, .input-group>.input {
+  border-radius: .5rem;
+}
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="chart-container">
     <h1>Schéma de données</h1>
     <LineChart
       :data="dataChart"

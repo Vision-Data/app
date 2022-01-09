@@ -1,15 +1,17 @@
 <template>
   <div class="flex justify-center mt-10 ">
     <header>
-      <SearchBar
-        class="container w-full md:w-screen max-w-screen-lg md:-mx-60"
-        @query="sendQuery"
-      />
-      <CallApi
-        :query="query"
-        @detectChoice="needBodyToSend = $event"
-        :body="body"
-      />
+      <div class="sending-container">
+        <SearchBar
+          class="container w-full max-w-screen-lg"
+          @query="sendQuery"
+        />
+        <CallApi
+          :query="query"
+          @detectChoice="needBodyToSend = $event"
+          :body="body"
+        />
+      </div>
       <RequestBody
         :needBodyToSend="needBodyToSend"
         @requestBodyContent="body = $event"
@@ -19,8 +21,10 @@
       <dark-mode />
     </header>
   </div>
-  <Response />
-  <Chart />
+  <div class="response-container">
+    <Response />
+    <Chart />
+  </div>
 </template>
 
 <script>
@@ -56,3 +60,28 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.response-container {
+  display: flex;
+}
+.sending-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+.sending-container > .form-control {
+  min-width: 500px;
+  max-width: 700px;
+  margin-right: 2rem;
+}
+.sending-container > .select {
+  margin-top: 1rem;
+  padding-left: 0;
+}
+header {
+  width: 100%;
+  margin: 1rem;
+}
+</style>
