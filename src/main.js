@@ -1,12 +1,9 @@
-import { createApp } from 'vue'
-import { createStore } from 'vuex'
-import App from './App.vue'
-import './styles/tailwind.css'
-import './styles/chartist.css'
-
-import './styles/global.css'
-
+import { createApp } from "vue";
+import { createStore } from "vuex";
+import App from "./App.vue";
 import "./styles/tailwind.css";
+import "./styles/chartist.css";
+
 import "./styles/global.css";
 
 const store = createStore({
@@ -17,7 +14,7 @@ const store = createStore({
   }),
   mutations: {
     receiveSelectedData(state, value) {
-      state.selectedData.push(value);
+      state.selectedData = [...state.selectedData, value];
     },
     deleteSpecifiedData(state, value) {
       state.selectedData = state.selectedData.filter(
@@ -42,9 +39,9 @@ const store = createStore({
       return getters.getIdentifier;
     },
     verifyExistance({ state, commit }, payload) {
-      if (state.selectedData.length === 0)
+      if (state.selectedData.length === 0) {
         commit("receiveSelectedData", payload);
-      else {
+      } else {
         const obj = state.selectedData.find((res) => res.id === payload.id);
         if (obj === undefined) commit("receiveSelectedData", payload);
         else commit("deleteSpecifiedData", payload);

@@ -18,10 +18,9 @@
       />
       <dark-mode />
     </header>
-
-    <Chart />
-    <Response />
   </div>
+  <Response />
+  <Chart />
 </template>
 
 <script>
@@ -29,8 +28,9 @@ import DarkMode from "./components/Dark-Mode.vue";
 import SearchBar from "./components/SearchBar.vue";
 import Response from "./components/Response.vue";
 import CallApi from "./components/CallApi.vue";
-import Chart from "./components/Chart.vue";
+import Chart from "./components/Charts/Chart.vue";
 import RequestBody from "./components/RequestBody.vue";
+
 export default {
   name: "App",
   components: {
