@@ -5,7 +5,10 @@
         <SearchBar class="container w-full max-w-screen-lg" @query="sendQuery" />
         <CallApi :query="query" @detectChoice="needBodyToSend = $event" :body="body" />
       </div>
-      <RequestBody :needBodyToSend="needBodyToSend" @requestBodyContent="body = $event" class="container w-full md:w-screen
+      <button class="btn btn-sm" title="Utiliser ces données" @click="isBodyOpen = true" v-if="needBodyToSend">
+        Modifier Body
+      </button>
+      <RequestBody :needBodyToSend="needBodyToSend" v-show="isBodyOpen" @close="closing" @requestBodyContent="body = $event" class="container w-full md:w-screen
       max-w-screen-lg md:-mx-60" />
       <dark-mode />
     </header>
@@ -50,6 +53,7 @@ export default {
       needBodyToSend: false,
       isOpen: false,
       isChartDisplayed: false,
+      isBodyOpen: true
     };
   },
 
@@ -60,12 +64,15 @@ export default {
     isOpened(payload) {
       this.isOpen = payload;
     },
+    closing() {
+      this.isBodyOpen = false;
+    },
     openModal() {
       this.isOpen = true;
     },
     displayChart(payload) {
       // TODO: change for dynamic chart display
-      if (payload.name === 'curves') {
+      if (payload.name === "curves") {
         this.isChartDisplayed = true;
         this.isOpen = false;
       }
