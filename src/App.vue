@@ -21,6 +21,7 @@
       <dark-mode />
     </header>
   </div>
+  <DiagramChoice/>
   <div class="response-container">
     <Response />
     <Chart />
@@ -34,6 +35,7 @@ import Response from "./components/Response.vue";
 import CallApi from "./components/CallApi.vue";
 import Chart from "./components/Charts/Chart.vue";
 import RequestBody from "./components/RequestBody.vue";
+import DiagramChoice from "./components/DiagramChoice.vue"
 
 export default {
   name: "App",
@@ -44,6 +46,7 @@ export default {
     DarkMode,
     Chart,
     RequestBody,
+    DiagramChoice
   },
   data() {
     return {
