@@ -1,27 +1,14 @@
 <template>
   <div class="response" :key="index">
-    <div
-      class="alert"
-      v-bind:class="{
-        'alert-success':
-          responseData && responseData.status.toString().startsWith('2'),
-        'alert-error':
-          responseData && !responseData.status.toString().startsWith('2'),
-      }"
-    >
+    <div class="alert" v-bind:class="{ 'alert-success': responseData && responseData.status.toString().startsWith('2'),        'alert-error':          responseData && !responseData.status.toString().startsWith('2'),      }">
       <div class="flex-1">
-        <label
-          ><span
-            class="badge border-transparent"
-            v-bind:class="{
+        <label><span class="badge border-transparent" v-bind:class="{
               'bg-success':
                 responseData && responseData.status?.toString().startsWith('2'),
               'bg-error':
                 responseData &&
                 !responseData.status?.toString().startsWith('2'),
-            }"
-            >Etat</span
-          >
+            }">Etat</span>
           {{ responseData?.status }} : {{ responseData?.statusText }}
         </label>
       </div>
@@ -30,12 +17,7 @@
       <div class="result-container">
         <b>Resultats</b>
         <template v-for="(component, index) in components" :key="index">
-          <component
-            :is="components[index].component"
-            :name="components[index].name"
-            :data="components[index].data"
-            :color="components[index].color"
-          >
+          <component :is="components[index].component" :name="components[index].name" :data="components[index].data" :color="components[index].color">
           </component>
         </template>
       </div>
@@ -54,7 +36,7 @@ export default {
   components: {
     ValueComponent,
     ObjectComponent,
-    ArrayComponent,
+    ArrayComponent
   },
   data() {
     return {
@@ -64,8 +46,8 @@ export default {
       comps: {
         ValueComponent: markRaw(ValueComponent),
         ObjectComponent: markRaw(ObjectComponent),
-        ArrayComponent: markRaw(ArrayComponent),
-      },
+        ArrayComponent: markRaw(ArrayComponent)
+      }
     };
   },
   methods: {
@@ -76,13 +58,13 @@ export default {
           this.comps
         );
       }
-    },
+    }
   },
 
   created() {
     this.unwatch = this.$store.watch(
-      (state) => state.response,
-      (newValue) => {
+      state => state.response,
+      newValue => {
         this.responseData = newValue;
         this.index = this.index + 1;
         this.parseData();
@@ -91,20 +73,19 @@ export default {
   },
   beforeUnmount() {
     this.unwatch();
-  },
+  }
 };
 </script>
 
 <style>
-
 .selected {
   --tw-bg-opacity: 0.4 !important;
 }
 .alert.selected {
-   color: rgb(78, 78, 78);
+  color: rgb(78, 78, 78);
 }
 .value:not(.selected):not(.selected-value) {
-   color: rgb(78, 78, 78) !important;
+  color: rgb(78, 78, 78) !important;
 }
 .response *::selection {
   background-color: #414141 !important;
@@ -143,10 +124,10 @@ export default {
   font-weight: bold;
   flex: 1;
 }
-[data-theme=dark] .value:not(.selected):not(.selected-value),
-[data-theme=dark] .badge,
-[data-theme=dark] .data-result,
-[data-theme=dark] .alert.selected {
+[data-theme="dark"] .value:not(.selected):not(.selected-value),
+[data-theme="dark"] .badge,
+[data-theme="dark"] .data-result,
+[data-theme="dark"] .alert.selected {
   color: white;
-} 
+}
 </style>

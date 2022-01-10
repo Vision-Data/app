@@ -8,8 +8,8 @@
                 </div>
             </div>
             <div class="modal-action">
-                <label for="my-modal-2" class="btn">Annuler</label>
-                <label for="my-modal-2" class="btn btn-primary">Sélectionnez</label> 
+                <label for="my-modal-2" class="btn" @click="cancel">Annuler</label>
+                <label for="my-modal-2" class="btn btn-primary" @click="selectChart">Sélectionnez</label> 
             </div>
         </div>
     </div>
@@ -43,6 +43,14 @@ export default {
             },
         ]
     }),
+    methods: {
+        cancel() {
+            this.$emit('cancel', false)
+        },
+        selectChart() {
+            this.$emit('chart', {name:this.diagrams[this.current].ref})
+        }
+    }
 
 }
 </script>
