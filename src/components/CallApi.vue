@@ -1,21 +1,11 @@
 <template>
   <div class="select">
-    <select
-      v-model="choice"
-      :required="true"
-      class="select select-bordered w-full max-w-xs"
-      @change="emitChoice"
-    >
+    <select v-model="choice" :required="true" class="select select-bordered w-full max-w-xs" aria-label="Sélectionnez la méthode d'envoi" @change="emitChoice">
       <option v-for="value in choices" :key="value.key" :value="value.method">{{
         value.text
       }}</option>
     </select>
-    <button
-      class="btn btn-primary"
-      id="valid"
-      v-if="!isLoading"
-      @click="toogleButton()"
-    >
+    <button class="btn btn-primary" id="valid" v-if="!isLoading" @click="toogleButton()">
       {{ valid }}
     </button>
     <button class="btn btn-outline btn-primary loading" v-if="isLoading">
@@ -37,9 +27,9 @@ export default {
         { method: "GET", text: "⇲ Recevoir (GET)" },
         { method: "POST", text: "➤ Envoyer (POST)" },
         { method: "DELETE", text: "🗑 Supprimer (DELETE) " },
-        { method: "PUT", text: "⛭ Modifier (PUT)" },
+        { method: "PUT", text: "⛭ Modifier (PUT)" }
       ],
-      choice: "GET",
+      choice: "GET"
     };
   },
   methods: {
@@ -97,8 +87,8 @@ export default {
         this.valid = "Lancer";
         this.makeRequest(this.choice, this.query, this.body);
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -113,7 +103,8 @@ export default {
 #valid {
   margin-left: 1rem;
 }
-.input-group>*, .input-group>.input {
-  border-radius: .5rem;
+.input-group > *,
+.input-group > .input {
+  border-radius: 0.5rem;
 }
 </style>

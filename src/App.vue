@@ -1,6 +1,7 @@
 <template>
   <div class="flex justify-center mt-10 ">
     <header>
+      <dark-mode />
       <div class="sending-container">
         <SearchBar class="container w-full max-w-screen-lg" @query="sendQuery" />
         <CallApi :query="query" @detectChoice="needBodyToSend = $event" :body="body" />
@@ -10,7 +11,6 @@
       </button>
       <RequestBody :needBodyToSend="needBodyToSend" v-show="isBodyOpen" @close="closing" @requestBodyContent="body = $event" class="container w-full md:w-screen
       max-w-screen-lg md:-mx-60" />
-      <dark-mode />
     </header>
   </div>
   <DiagramChoice @chart="displayChart" @cancel="isOpened" v-show="isOpen" />

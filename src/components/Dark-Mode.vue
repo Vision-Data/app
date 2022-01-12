@@ -1,5 +1,5 @@
 <template>
-    <button id="change-theme" @click="changeTheme()" class="bg-base-300">
+    <button id="change-theme" @click="changeTheme()" class="bg-base-300" aria-label="Changer le thème">
         <div class="sun" v-if="!isDark">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
@@ -66,5 +66,14 @@ export default {
     position: fixed;
     top: 1rem;
     right: 1rem;
+    box-shadow: 
+        0px 0px 0 2px hsl(var(--b1)),
+        0px 0px 0 0px gray;
+    transition: box-shadow .2s ease-in;
+}
+#change-theme:focus {
+    box-shadow: 
+        0px 0px 0 2px hsl(var(--b1)),
+        0px 0px 0 4px gray;
 }
 </style>
