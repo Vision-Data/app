@@ -18,8 +18,8 @@ export default {
       selectedDataX: this.$store.state.selectedData.x,
       selectedDataY: this.$store.state.selectedData.y,
       dataChart: {
-        labels: this.selectedDataY ? this.selectedDataY : [],
-        series: this.selectedDataX ? [this.selectedDataX] : [],
+        labels: this.selectedDataX ? this.selectedDataX : [],
+        series: this.selectedDataY ? [this.selectedDataY] : [],
       },
       optionsChart: {
         width: 600,
@@ -76,13 +76,13 @@ export default {
   watch: {
     selectedDataX: {
       handler(newValue) {
-        this.dataChart.series = [newValue];
+        this.dataChart.labels = newValue;
       },
       deep: true,
     },
     selectedDataY: {
       handler(newValue) {
-        this.dataChart.labels = newValue;
+        this.dataChart.series = [newValue];
       },
       deep: true,
     },
