@@ -20,7 +20,7 @@
     </svg>
   </button>
   <div class="response-container">
-    <Response />
+    <Response @launch-modal="isOpenByResponse" />
     <Chart v-if="isChartDisplayed" />
   </div>
 </template>
@@ -58,6 +58,9 @@ export default {
   },
 
   methods: {
+    isOpenByResponse(payload){
+      this.isOpen = payload
+    },
     sendQuery(data) {
       this.query = data;
     },

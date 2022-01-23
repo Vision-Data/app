@@ -5,7 +5,7 @@
         value.text
       }}</option>
     </select>
-    <button class="btn btn-primary" id="valid" v-if="!isLoading" @click="toogleButton()">
+    <button class="btn btn-primary" id="valid" v-if="!isLoading" @click="toggleButton()">
       {{ valid }}
     </button>
     <button class="btn btn-outline btn-primary loading" v-if="isLoading">
@@ -37,7 +37,7 @@ export default {
       let isSendable = this.choice == "POST" || this.choice == "PUT";
       this.$emit("detectChoice", isSendable);
     },
-    toogleButton() {
+    toggleButton() {
       this.valid = this.valid == "Lancer" ? "■" : "Lancer";
       if (this.valid == "■") {
         this.callApi();
