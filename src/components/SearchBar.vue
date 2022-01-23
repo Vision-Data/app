@@ -69,7 +69,7 @@ export default {
 
 <style scoped>
 .rounded-r {
-  border-top-right-radius: 0.5rem;
-  border-bottom-right-radius: 0.5rem;
+  border-top-right-radius: 0.5rem!important;
+  border-bottom-right-radius: 0.5rem!important;
 }
 </style>
