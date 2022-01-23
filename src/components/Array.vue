@@ -9,9 +9,6 @@
             </component>
           </template>
         </div>
-        <button class="btn btn-xs selection-data" id="select" v-show="selection" @click="selectData()">
-          SELECT
-        </button>
       </div>
     </div>
   </section>
@@ -47,16 +44,6 @@ export default {
   async created() {
     this.components = Recursive.recursive(this.data, this.comps);
     this.identifier = await this.$store.dispatch("giveIdentifier");
-  },
-  methods: {
-    async selectData() {
-      this.selected = !this.selected;
-      await this.$store.dispatch("verifyExistance", {
-        id: this.identifier,
-        key: this.name,
-        value: this.data,
-      });
-    },
   },
   watch: {
     isParentSelected: {

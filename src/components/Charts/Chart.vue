@@ -15,10 +15,11 @@ export default {
   name: "Chart",
   data() {
     return {
-      selectedData: this.$store.state.selectedData,
+      selectedDataX: this.$store.state.selectedData.x,
+      selectedDataY: this.$store.state.selectedData.y,
       dataChart: {
-        labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-        series: this.selectedData ? [this.selectedData] : [],
+        labels: this.selectedDataY ? this.selectedDataY : [],
+        series: this.selectedDataX ? [this.selectedDataX] : [],
       },
       optionsChart: {
         width: 600,
@@ -53,21 +54,35 @@ export default {
     LineChart,
   },
   mounted() {
-    this.unwatch = this.$store.watch(
-      (state) => state.selectedData,
+    this.unwatchX = this.$store.watch(
+      (state) => state.selectedData.x,
       (newValue) => {
         // TODO : gérer la sélection de tableau, d'objet...
-        this.selectedData = newValue.map((item) => item.value);
+        this.selectedDataX = newValue.map((item) => item.value);
+      }
+    );
+    this.unwatchY = this.$store.watch(
+      (state) => state.selectedData.y,
+      (newValue) => {
+        // TODO : gérer la sélection de tableau, d'objet...
+        this.selectedDataY = newValue.map((item) => item.value.toString());
       }
     );
   },
   beforeUnmount() {
-    this.unwatch();
+    this.unwatchX();
+    this.unwatchY();
   },
   watch: {
-    selectedData: {
+    selectedDataX: {
       handler(newValue) {
         this.dataChart.series = [newValue];
+      },
+      deep: true,
+    },
+    selectedDataY: {
+      handler(newValue) {
+        this.dataChart.labels = newValue;
       },
       deep: true,
     },

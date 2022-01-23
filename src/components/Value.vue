@@ -5,8 +5,11 @@
         <b class="badge border-transparent value-name" :class="`bg-${color}`" v-if="name !== ''">{{ name }}</b>
 
         <span class="data-result" :class="{ 'italic': dataValue === '(vide)' || dataValue === '' }">{{ dataValue === '' ? '(vide)' : dataValue }}</span>
-        <button class="btn btn-xs selection-data" id="select" v-show="over" @click="selectData()">
-          SELECT
+        <button class="btn btn-xs selection-data-x" id="selectX" v-show="over" @click="selectDataX()">
+          X
+        </button>
+        <button class="btn btn-xs selection-data-y" id="selectY" v-show="over" @click="selectDataY()">
+          Y
         </button>
       </div>
     </div>
@@ -29,9 +32,17 @@ export default {
     this.identifier = await this.$store.dispatch("giveIdentifier");
   },
   methods: {
-    async selectData() {
+    async selectDataX() {
       this.select = !this.select;
-      await this.$store.dispatch("verifyExistance", {
+      await this.$store.dispatch("verifyExistanceX", {
+        id: this.identifier,
+        key: this.name,
+        value: this.data,
+      });
+    },
+    async selectDataY() {
+      this.select = !this.select;
+      await this.$store.dispatch("verifyExistanceY", {
         id: this.identifier,
         key: this.name,
         value: this.data,

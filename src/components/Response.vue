@@ -104,6 +104,16 @@ export default {
   top: 0;
   right: 0;
 }
+.selection-data-x {
+  position: absolute;
+  top: 0;
+  right: 2rem;
+}
+.selection-data-y {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
 .alert {
   margin: 10px;
 }
