@@ -1,20 +1,29 @@
-import Vue from 'vue' 
-import Router from 'vue-router' 
-import App from '../App.vue'
+import Home from '../views/Home.vue'
+import { createWebHistory, createRouter } from 'vue-router';
 
-Vue.use(Router)
 
-export default new Router({
-  routes: [
+const routes = [
     {
         path: '/',
-        name: 'App',
-        component: App
+        name: 'Home',
+        component: Home
     },
-    {
-        path: '/test',
-        name: 'Test',
-        component: () => import(/* webpackChunkName: "about" */ '../components/Test.vue')
-    }
-  ]
-})
+    // {
+    //     path: '/register',
+    //     name: 'Register',
+    //     component: () => import(/* webpackChunkName: "about" */ '../components/Registration.vue')
+    // },
+    // {
+    //     path: '/login',
+    //     name: 'Login',
+    //     component: () => import(/* webpackChunkName: "about" */ '../components/Login.vue')
+    // }
+];
+
+const router = createRouter({
+    history: createWebHistory(),
+    routes,
+});
+
+export default router;
+
