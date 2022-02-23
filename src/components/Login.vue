@@ -1,0 +1,125 @@
+<template>
+  <div class="login-page">
+    <img
+      id="logo"
+      :src="require(`@/assets/watermark-color.png`)"
+      alt="logo-vision"
+    />
+    <div class="third-part">
+      <h2>Connexion</h2>
+      <button>
+        <img
+          class="logo-login"
+          :src="require(`@/assets/LogoGoogle.png`)"
+          alt="logo-vision"
+        />
+        Connexion avec Google
+      </button>
+      <button>
+        <img
+          class="logo-login"
+          :src="require(`@/assets/LogoGithub.png`)"
+          alt="logo-vision"
+        />Connexion avec Github
+      </button>
+    </div>
+    <div class="email">
+      <h2>OU</h2>
+      <div class="mail">
+        <label class="login-info" for="email">Adresse Email</label>
+        <input class="login-info" type="email" name="email" placeholder="Adresse Email"/>
+      </div>
+      <div class="password">
+        <label class="login-info" for="password">Mot de passe</label>
+        <input class="login-info" type="password" name="passwords" placeholder="Mot de passe"/>
+      </div>
+    </div>
+    <div class="login">
+      <button class="btn btn-primary login-button">CONNEXION</button>
+      <a href="#"
+        ><span class="register"
+          >Vous n'avez pas de compte ? Inscrivez-vous !</span
+        ></a
+      >
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "Login",
+};
+</script>
+
+<style scoped>
+:focus-visible {
+    outline:none;
+}
+
+.login-page {
+  width: 30%;
+  background-color: #f6f6f6;
+  margin: 150px;
+}
+
+.third-part,
+.mail,
+.password,
+.login {
+  background-color: #f6f6f6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+h2 {
+  color: #242424;
+  font-weight: bold;
+  text-align: center;
+  font-size: 20px;
+}
+
+#logo {
+  width: 35%;
+}
+
+.third-part button {
+  background-color: white;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #686868;
+  font-weight: 600;
+  font-size: 20px;
+  width: 60%;
+  margin: 2%;
+  padding: 2%;
+  border-radius: 10px;
+}
+
+.third-part button .logo-login {
+  width: 7%;
+  margin-right: 15px;
+}
+label.login-info{
+    width: 55%;
+    text-align: left;
+}
+
+input.login-info {
+  width: 60%;
+  margin: 2% 0% 6% 4%;
+  padding: 2%;
+  border-radius: 10px;
+}
+
+.login-button{
+    width: 60%;
+}
+
+.register {
+  color: #fa810f;
+}
+</style>
