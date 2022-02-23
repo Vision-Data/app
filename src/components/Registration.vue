@@ -1,62 +1,65 @@
 <template>
-  <div class="registration-page">
-    <img
-      id="logo"
-      :src="require(`@/assets/watermark-color.png`)"
-      alt="logo-vision"
-    />
-    <div id="email">
-      <h2>Inscription</h2>
-      <div class="mail">
-        <label class="registration-info" for="email">Adresse Email</label>
-        <input
-          class="registration-info"
-          type="email"
-          name="email"
-          placeholder="Adresse Email"
-        />
-      </div>
+  <div class="body">
+    <div class="registration-page">
+      <img
+        id="logo"
+        :src="require(`@/assets/watermark-color.png`)"
+        alt="logo-vision"
+      />
+      <div id="email">
+        <h2>Inscription</h2>
+        <div class="mail">
+          <label class="registration-info" for="email">Adresse Email</label>
+          <input
+            class="registration-info"
+            type="email"
+            name="email"
+            placeholder="Adresse Email"
+          />
+        </div>
 
-      <div id="pseudo">
-        <label class="registration-info" for="pseudo">Pseudo</label>
-        <input
-          class="registration-info"
-          type="text"
-          name="pseudo"
-          placeholder="Nom ou Pseudo"
-        />
-      </div>
+        <div id="pseudo">
+          <label class="registration-info" for="pseudo">Pseudo</label>
+          <input
+            class="registration-info"
+            type="text"
+            name="pseudo"
+            placeholder="Nom ou Pseudo"
+          />
+        </div>
 
-      <div id="password">
-        <label class="registration-info" for="password">Mot de passe</label>
-        <input
-          class="password-info"
-          type="password"
-          name="passwords"
-          placeholder="Mot de passe"
-        />
-        <input
-          class="password-info"
-          type="password"
-          name="passwords"
-          placeholder="Confirmation du mot de passe"
-        />
+        <div id="password">
+          <label class="registration-info" for="password">Mot de passe</label>
+          <input
+            class="password-info"
+            type="password"
+            name="passwords"
+            placeholder="Mot de passe"
+          />
+          <input
+            class="password-info"
+            type="password"
+            name="passwords"
+            placeholder="Confirmation du mot de passe"
+          />
+        </div>
       </div>
-    </div>
-    <div class="registration">
-      <button class="btn btn-primary registration-button">INSCRIPTION</button>
-      <a href="#"
-        ><span class="login"
-          >Vous avez déjà un compte ? Connectez-vous !</span
-        ></a
+      <div class="registration">
+        <button class="btn btn-primary registration-button">INSCRIPTION</button>
+
+        <router-link to="/login"
+          ><span class="login"
+            >Vous avez déjà un compte ? Connectez-vous !</span
+          ></router-link
+        >
+      </div>
+      <div
+        v-if="message"
+        class="alert"
+        :class="successful ? 'alert-success' : 'alert-danger'"
       >
-    </div>
-    <div
-      v-if="message"
-      class="alert"
-      :class="successful ? 'alert-success' : 'alert-danger'"
-    >
-      {{ message }}
+        {{ message }}
+      </div>
     </div>
   </div>
 </template>
@@ -68,14 +71,19 @@ export default {
 </script>
 
 <style scoped>
+.body {
+  background-color: #f6f6f6;
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+}
+
 :focus-visible {
   outline: none;
 }
 
 .registration-page {
-  width: 30%;
-  background-color: #f6f6f6;
-  margin: 150px;
+  width: 35%;
 }
 
 .third-part,
@@ -95,10 +103,14 @@ h2 {
   font-weight: bold;
   text-align: center;
   font-size: 20px;
+  margin-bottom: 5%;
 }
 
 #logo {
-  width: 35%;
+  width: 60%;
+  margin: 10%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .third-part button {
@@ -149,5 +161,35 @@ input.registration-info {
 
 .login {
   color: #fa810f;
+}
+
+@media (max-width: 1250px) {
+  .registration-page {
+    width: 50%;
+  }
+}
+
+@media (max-width: 800px) {
+  .registration-page {
+    width: 80%;
+  }
+  #logo{
+    margin: 5%;
+    
+  margin-left: auto;
+  margin-right: auto;
+  }
+}
+
+@media (max-width: 500px) {
+  .registration-page {
+    width: 90%;
+  }
+  #logo{
+    margin: 5%;
+    
+  margin-left: auto;
+  margin-right: auto;
+  }
 }
 </style>
