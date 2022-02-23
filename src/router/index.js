@@ -13,11 +13,11 @@ const routes = [
     //     name: 'Register',
     //     component: () => import(/* webpackChunkName: "about" */ '../components/Registration.vue')
     // },
-    // {
-    //     path: '/login',
-    //     name: 'Login',
-    //     component: () => import(/* webpackChunkName: "about" */ '../components/Login.vue')
-    // }
+    {
+        path: '/login',
+        name: 'Login',
+        component: () => import(/* webpackChunkName: "about" */ '../components/Login.vue')
+    }
 ];
 
 const router = createRouter({
