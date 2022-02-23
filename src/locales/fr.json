@@ -1,0 +1,6 @@
+{
+  "searchbarTooltip": {
+    "helperText": "L'URL est le chemin d'accès des informations débutant généralement par https://",
+    "helperPlaceholder": "URL de l'API"
+  }
+}

@@ -5,14 +5,15 @@ import "./styles/tailwind.css";
 import "./styles/chartist.css";
 
 import "./styles/global.css";
+import i18n from "./i18n";
 
 const store = createStore({
   state: () => ({
     identifier: 0,
     response: null,
     selectedData: {
-      x:[],
-      y:[]
+      x: [],
+      y: [],
     },
   }),
   mutations: {
@@ -77,4 +78,5 @@ const store = createStore({
 
 const app = createApp(App);
 app.use(store);
+app.use(i18n);
 app.mount("#app");
