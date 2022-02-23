@@ -29,6 +29,7 @@
         <div class="mail">
           <label class="login-info" for="email">Adresse Email</label>
           <input
+            v-model="email"
             class="login-info"
             type="email"
             name="email"
@@ -38,6 +39,7 @@
         <div class="password">
           <label class="login-info" for="password">Mot de passe</label>
           <input
+            v-model="password"
             class="login-info"
             type="password"
             name="passwords"
@@ -46,20 +48,48 @@
         </div>
       </div>
       <div class="login">
-        <button class="btn btn-primary login-button">CONNEXION</button>
-        <a href="#"
-          ><span class="register"
-            >Vous n'avez pas de compte ? Inscrivez-vous !</span
-          ></a
-        >
+        <button class="btn btn-primary login-button" @click="login()">
+          CONNEXION
+        </button>
+        <router-link to="/register">
+          <span class="register">
+            Vous n'avez pas de compte ? Inscrivez-vous !
+          </span>
+        </router-link>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+const axios = require("axios");
 export default {
   name: "Login",
+  data() {
+    return {
+      email: "",
+      password: "",
+    };
+  },
+
+  methods: {
+    login() {
+      const api = process.env.VUE_APP_LOGIN;
+      axios
+        .post(api + `login`, {
+          email: this.email,
+          password: this.password,
+        })
+        .then((response) => {
+          console.log(response);
+          this.$router.push("/");
+        })
+        .catch(function (error) {
+          let error1 = error.response.data
+          console.log(error1[0]);
+        });
+    },
+  },
 };
 </script>
 
@@ -153,11 +183,11 @@ input.login-info {
   .login-page {
     width: 80%;
   }
-  #logo{
+  #logo {
     margin: 5%;
-    
-  margin-left: auto;
-  margin-right: auto;
+
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 
@@ -165,11 +195,11 @@ input.login-info {
   .login-page {
     width: 90%;
   }
-  #logo{
+  #logo {
     margin: 5%;
-    
-  margin-left: auto;
-  margin-right: auto;
+
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 </style>
