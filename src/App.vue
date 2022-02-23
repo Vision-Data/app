@@ -2,9 +2,13 @@
   <div class="flex justify-center mt-10 ">
     <header>
       <dark-mode />
+        <button class="btn btn-sm" title="Utiliser ces données" @click="isBodyOpen = true">
+        <router-link to="/test">Test</router-link>
+      </button>
       <div class="sending-container">
         <SearchBar class="container w-full max-w-screen-lg" @query="sendQuery" />
         <CallApi :query="query" @detectChoice="needBodyToSend = $event" :body="body" />
+        
       </div>
       <button class="btn btn-sm" title="Utiliser ces données" @click="isBodyOpen = true" v-if="needBodyToSend">
         Modifier Body
