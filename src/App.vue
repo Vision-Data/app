@@ -23,6 +23,9 @@
     <Response @launch-modal="isOpenByResponse" />
     <Chart v-if="isChartDisplayed" />
   </div>
+  <div>
+    <Registration/>
+  </div>
 </template>
 
 <script>
@@ -33,6 +36,7 @@ import CallApi from "./components/CallApi.vue";
 import Chart from "./components/Charts/Chart.vue";
 import RequestBody from "./components/RequestBody.vue";
 import DiagramChoice from "./components/DiagramChoice.vue";
+import Registration from "./components/Registration.vue";
 
 export default {
   name: "App",
@@ -43,7 +47,8 @@ export default {
     DarkMode,
     Chart,
     RequestBody,
-    DiagramChoice
+    DiagramChoice,
+    Registration
   },
   data() {
     return {
