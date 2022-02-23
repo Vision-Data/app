@@ -3,6 +3,7 @@ import { createStore } from "vuex";
 import App from "./App.vue";
 import "./styles/tailwind.css";
 import "./styles/chartist.css";
+import router from "./router";
 
 import "./styles/global.css";
 
@@ -77,4 +78,5 @@ const store = createStore({
 
 const app = createApp(App);
 app.use(store);
+app.use(router);
 app.mount("#app");
