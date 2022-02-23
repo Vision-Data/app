@@ -20,6 +20,7 @@
     "vue": "^3.0.0",
     "vue-chartist": "^3.0.0",
     "vue-prism-editor": "^2.0.0-alpha.2",
+    "vue-router": "^4.0.12",
     "vuex": "^4.0.2"
   },
   "devDependencies": {
