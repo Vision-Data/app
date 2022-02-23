@@ -1,46 +1,58 @@
 <template>
-  <div class="login-page">
-    <img
-      id="logo"
-      :src="require(`@/assets/watermark-color.png`)"
-      alt="logo-vision"
-    />
-    <div class="third-part">
-      <h2>Connexion</h2>
-      <button>
-        <img
-          class="logo-login"
-          :src="require(`@/assets/LogoGoogle.png`)"
-          alt="logo-vision"
-        />
-        Connexion avec Google
-      </button>
-      <button>
-        <img
-          class="logo-login"
-          :src="require(`@/assets/LogoGithub.png`)"
-          alt="logo-vision"
-        />Connexion avec Github
-      </button>
-    </div>
-    <div class="email">
-      <h2>OU</h2>
-      <div class="mail">
-        <label class="login-info" for="email">Adresse Email</label>
-        <input class="login-info" type="email" name="email" placeholder="Adresse Email"/>
+  <div class="body">
+    <div class="login-page">
+      <img
+        id="logo"
+        :src="require(`@/assets/watermark-color.png`)"
+        alt="logo-vision"
+      />
+      <div class="third-part">
+        <h2>Connexion</h2>
+        <button>
+          <img
+            class="logo-login"
+            :src="require(`@/assets/LogoGoogle.png`)"
+            alt="logo-vision"
+          />
+          Connexion avec Google
+        </button>
+        <button>
+          <img
+            class="logo-login"
+            :src="require(`@/assets/LogoGithub.png`)"
+            alt="logo-vision"
+          />Connexion avec Github
+        </button>
       </div>
-      <div class="password">
-        <label class="login-info" for="password">Mot de passe</label>
-        <input class="login-info" type="password" name="passwords" placeholder="Mot de passe"/>
+      <div class="email">
+        <h2>OU</h2>
+        <div class="mail">
+          <label class="login-info" for="email">Adresse Email</label>
+          <input
+            class="login-info"
+            type="email"
+            name="email"
+            placeholder="Adresse Email"
+          />
+        </div>
+        <div class="password">
+          <label class="login-info" for="password">Mot de passe</label>
+          <input
+            class="login-info"
+            type="password"
+            name="passwords"
+            placeholder="Mot de passe"
+          />
+        </div>
       </div>
-    </div>
-    <div class="login">
-      <button class="btn btn-primary login-button">CONNEXION</button>
-      <a href="#"
-        ><span class="register"
-          >Vous n'avez pas de compte ? Inscrivez-vous !</span
-        ></a
-      >
+      <div class="login">
+        <button class="btn btn-primary login-button">CONNEXION</button>
+        <a href="#"
+          ><span class="register"
+            >Vous n'avez pas de compte ? Inscrivez-vous !</span
+          ></a
+        >
+      </div>
     </div>
   </div>
 </template>
@@ -52,14 +64,19 @@ export default {
 </script>
 
 <style scoped>
+.body {
+  background-color: #f6f6f6;
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+}
+
 :focus-visible {
-    outline:none;
+  outline: none;
 }
 
 .login-page {
-  width: 30%;
-  background-color: #f6f6f6;
-  margin: 150px;
+  width: 40%;
 }
 
 .third-part,
@@ -81,7 +98,10 @@ h2 {
 }
 
 #logo {
-  width: 35%;
+  width: 50%;
+  margin: 5%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .third-part button {
@@ -103,9 +123,9 @@ h2 {
   width: 7%;
   margin-right: 15px;
 }
-label.login-info{
-    width: 55%;
-    text-align: left;
+label.login-info {
+  width: 55%;
+  text-align: left;
 }
 
 input.login-info {
@@ -115,11 +135,41 @@ input.login-info {
   border-radius: 10px;
 }
 
-.login-button{
-    width: 60%;
+.login-button {
+  width: 60%;
 }
 
 .register {
   color: #fa810f;
+}
+
+@media (max-width: 1250px) {
+  .login-page {
+    width: 50%;
+  }
+}
+
+@media (max-width: 800px) {
+  .login-page {
+    width: 80%;
+  }
+  #logo{
+    margin: 5%;
+    
+  margin-left: auto;
+  margin-right: auto;
+  }
+}
+
+@media (max-width: 500px) {
+  .login-page {
+    width: 90%;
+  }
+  #logo{
+    margin: 5%;
+    
+  margin-left: auto;
+  margin-right: auto;
+  }
 }
 </style>
