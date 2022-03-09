@@ -45,6 +45,9 @@
             name="passwords"
             placeholder="Mot de passe"
           />
+          <div v-if="passwordError != null" class="error">
+            <span>{{ passwordError }}</span>
+          </div>
         </div>
       </div>
       <div class="login">
@@ -69,6 +72,7 @@ export default {
     return {
       email: "",
       password: "",
+      passwordError: null,
     };
   },
 
@@ -84,9 +88,12 @@ export default {
           console.log(response);
           this.$router.push("/");
         })
-        .catch(function (error) {
-          let error1 = error.response.data
-          console.log(error1[0]);
+        .catch((error) => {
+          let errors = error.response.data.errors;
+
+          this.passwordError = null;
+
+          this.passwordError = errors[0].message;
         });
     },
   },
@@ -171,6 +178,15 @@ input.login-info {
 
 .register {
   color: #fa810f;
+}
+
+.error {
+  background-color: #f16e6e;
+  border: red solid 1px;
+  border-radius: 5px;
+  color: white;
+  padding: 1%;
+  margin: 1%;
 }
 
 @media (max-width: 1250px) {
