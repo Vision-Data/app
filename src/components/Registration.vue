@@ -20,6 +20,9 @@
                 name="email"
                 placeholder="Adresse Email"
               />
+              <div v-if="emailError != null" class="error">
+                <span>{{ emailError }}</span>
+              </div>
             </div>
 
             <div id="pseudo">
@@ -31,6 +34,9 @@
                 name="pseudo"
                 placeholder="Nom ou Pseudo"
               />
+              <div v-if="pseudoError != null" class="error">
+                <span>{{ pseudoError }}</span>
+              </div>
             </div>
 
             <div id="password">
@@ -70,13 +76,6 @@
               ></router-link
             >
           </div>
-          <div
-            v-if="message"
-            class="alert"
-            :class="successful ? 'alert-success' : 'alert-danger'"
-          >
-            {{ message }}
-          </div>
         </div>
         <h2>OU</h2>
         <div class="third-part">
@@ -113,13 +112,13 @@ export default {
       passwordConf: "",
       passwordError: null,
       emailError: null,
-      pseudoError: null
+      pseudoError: null,
     };
   },
   methods: {
     register() {
       if (this.password === this.passwordConf) {
-        this.passwordError = null
+        this.passwordError = null;
         const api = process.env.VUE_APP_HOST_API;
         axios
           .post(api + `register`, {
@@ -131,28 +130,27 @@ export default {
             console.log(response);
             this.$router.push("/");
           })
-          .catch(function (error) {
+          .catch((error) => {
             let errors = error.response.data.errors;
-            errors.forEach(element => {
-              switch(element.field){
-                case 'full_name':
-                  console.log(element.message)
-                  console.log(this.pseudoError)
-                  this.pseudoError = "TEST"
+            this.pseudoError = null;
+            this.emailError = null;
+            this.passwordError = null;
+            errors.forEach((element) => {
+              switch (element.field) {
+                case "full_name":
+                  this.pseudoError = element.message;
                   break;
-                case 'email':
-                  console.log(element.message)
-                  this.emailError = "AUTRE TEST"
+                case "email":
+                  this.emailError = element.message;
                   break;
-                case 'password':
-                  console.log(element.message)
-                  this.passwordError = "ENCORE UN"
+                case "password":
+                  this.passwordError = element.message;
                   break;
               }
             });
           });
-      }else{
-        this.passwordError = "Les deux mots de passe doivent être identiques"
+      } else {
+        this.passwordError = "Les deux mots de passe doivent être identiques";
       }
     },
   },
@@ -280,6 +278,7 @@ input.registration-info {
   border-radius: 5px;
   color: white;
   padding: 1%;
+  margin: 1%;
 }
 
 @media (max-width: 950px) {
