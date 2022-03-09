@@ -16,12 +16,13 @@
     "core-js": "^3.6.5",
     "daisyui": "^1.16.2",
     "postcss": "^8.2.13",
-    "prismjs": "^1.25.0",
+    "prismjs": "^1.27.0",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.17",
     "vue": "^3.0.0",
     "vue-chartist": "^3.0.0",
     "vue-i18n": "^9.1.0",
     "vue-prism-editor": "^2.0.0-alpha.2",
+    "vue-router": "^4.0.12",
     "vuex": "^4.0.2"
   },
   "devDependencies": {
