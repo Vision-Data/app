@@ -54,7 +54,7 @@
             </div>
           </div>
           <div class="registration">
-            <button class="btn btn-primary registration-button" >
+            <button class="btn btn-primary registration-button" @click="register()">
               INSCRIPTION
             </button>
 
@@ -96,9 +96,38 @@
 </template>
 
 <script>
+const axios = require("axios");
 export default {
   name: "Registration",
-  
+  data() {
+    return {
+      email: "",
+      pseudo: "",
+      password: "",
+      passwordConf: "",
+    };
+  },
+  methods: {
+    register() {
+      if (this.password === this.passwordConf) {
+        const api = process.env.VUE_APP_HOST_API;
+        axios
+          .post(api + `register`, {
+            email: this.email,
+            full_name: this.pseudo,
+            password: this.password,
+          })
+          .then((response) => {
+            console.log(response);
+            this.$router.push("/");
+          })
+          .catch(function (error) {
+            let error1 = error.response.data;
+            console.log(error1[0]);
+          });
+      }
+    },
+  },
 };
 </script>
 
