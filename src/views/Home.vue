@@ -1,6 +1,6 @@
 <template>
-<div>
-      <nav>
+  <div>
+    <nav>
       <router-link to="/">Accueil</router-link>
       <router-link to="/login">Connexion</router-link>
       <router-link to="/register">Inscription</router-link>
@@ -59,10 +59,11 @@
       </svg>
     </button>
     <div class="response-container">
+      <LoadingProgress :done="isOpenByResponse" />
       <Response @launch-modal="isOpenByResponse" />
       <Chart v-if="isChartDisplayed" />
     </div>
-</div>
+  </div>
 </template>
 
 <script>
@@ -73,6 +74,7 @@ import CallApi from "../components/CallApi.vue";
 import Chart from "../components/Charts/Chart.vue";
 import RequestBody from "../components/RequestBody.vue";
 import DiagramChoice from "../components/DiagramChoice.vue";
+import LoadingProgress from "../components/LoadingProgress.vue";
 
 export default {
   name: "Home",
@@ -84,6 +86,7 @@ export default {
     Chart,
     RequestBody,
     DiagramChoice,
+    LoadingProgress,
   },
   data() {
     return {
