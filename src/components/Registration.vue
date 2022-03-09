@@ -51,10 +51,16 @@
                 name="password"
                 placeholder="Confirmation du mot de passe"
               />
+              <div v-if="passwordError != null" class="error">
+                <span>{{ passwordError }}</span>
+              </div>
             </div>
           </div>
           <div class="registration">
-            <button class="btn btn-primary registration-button" @click="register()">
+            <button
+              class="btn btn-primary registration-button"
+              @click="register()"
+            >
               INSCRIPTION
             </button>
 
@@ -105,11 +111,15 @@ export default {
       pseudo: "",
       password: "",
       passwordConf: "",
+      passwordError: null,
+      emailError: null,
+      pseudoError: null
     };
   },
   methods: {
     register() {
       if (this.password === this.passwordConf) {
+        this.passwordError = null
         const api = process.env.VUE_APP_HOST_API;
         axios
           .post(api + `register`, {
@@ -122,9 +132,27 @@ export default {
             this.$router.push("/");
           })
           .catch(function (error) {
-            let error1 = error.response.data;
-            console.log(error1[0]);
+            let errors = error.response.data.errors;
+            errors.forEach(element => {
+              switch(element.field){
+                case 'full_name':
+                  console.log(element.message)
+                  console.log(this.pseudoError)
+                  this.pseudoError = "TEST"
+                  break;
+                case 'email':
+                  console.log(element.message)
+                  this.emailError = "AUTRE TEST"
+                  break;
+                case 'password':
+                  console.log(element.message)
+                  this.passwordError = "ENCORE UN"
+                  break;
+              }
+            });
           });
+      }else{
+        this.passwordError = "Les deux mots de passe doivent être identiques"
       }
     },
   },
@@ -244,6 +272,14 @@ input.registration-info {
 .third-part button .logo-login {
   width: 7%;
   margin-right: 15px;
+}
+
+.error {
+  background-color: #f16e6e;
+  border: red solid 1px;
+  border-radius: 5px;
+  color: white;
+  padding: 1%;
 }
 
 @media (max-width: 950px) {
