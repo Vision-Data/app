@@ -1,12 +1,13 @@
 <template>
-<div>
-      <nav>
+  <div>
+    <nav>
       <router-link to="/">Accueil</router-link>
       <router-link to="/login">Connexion</router-link>
       <router-link to="/register">Inscription</router-link>
     </nav>
     <div class="flex justify-center mt-10">
       <header>
+        <language-select />
         <dark-mode />
         <div class="sending-container">
           <SearchBar
@@ -62,7 +63,7 @@
       <Response @launch-modal="isOpenByResponse" />
       <Chart v-if="isChartDisplayed" />
     </div>
-</div>
+  </div>
 </template>
 
 <script>
@@ -73,6 +74,7 @@ import CallApi from "../components/CallApi.vue";
 import Chart from "../components/Charts/Chart.vue";
 import RequestBody from "../components/RequestBody.vue";
 import DiagramChoice from "../components/DiagramChoice.vue";
+import LanguageSelect from "../components/LanguageSelect.vue";
 
 export default {
   name: "Home",
@@ -84,6 +86,7 @@ export default {
     Chart,
     RequestBody,
     DiagramChoice,
+    LanguageSelect,
   },
   data() {
     return {
