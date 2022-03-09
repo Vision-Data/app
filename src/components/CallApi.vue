@@ -1,15 +1,26 @@
 <template>
   <div class="select">
-    <select v-model="choice" :required="true" class="select select-bordered w-full max-w-xs" aria-label="Sélectionnez la méthode d'envoi" @change="emitChoice">
+    <select
+      v-model="choice"
+      :required="true"
+      class="select select-bordered w-full max-w-xs"
+      aria-label="Sélectionnez la méthode d'envoi"
+      @change="emitChoice"
+    >
       <option v-for="value in choices" :key="value.key" :value="value.method">{{
         value.text
       }}</option>
     </select>
-    <button class="btn btn-primary" id="valid" v-if="!isLoading" @click="toggleButton()">
+    <button
+      class="btn btn-primary"
+      id="valid"
+      v-if="!isLoading"
+      @click="toggleButton()"
+    >
       {{ valid }}
     </button>
     <button class="btn btn-outline btn-primary loading" v-if="isLoading">
-      En cours
+      {{ $t("searchbarTooltip.loadingText") }}
     </button>
   </div>
 </template>
@@ -21,15 +32,27 @@ export default {
   props: ["query", "body"],
   data() {
     return {
-      valid: "Lancer",
+      valid: this.$t("searchbarTooltip.runButton"),
       isLoading: false,
       choices: [
-        { method: "GET", text: "⇲ Recevoir (GET)" },
-        { method: "POST", text: "➤ Envoyer (POST)" },
-        { method: "DELETE", text: "🗑 Supprimer (DELETE) " },
-        { method: "PUT", text: "⛭ Modifier (PUT)" }
+        {
+          method: "GET",
+          text: `${this.$t("searchbarTooltip.methodGetSelectText")}`,
+        },
+        {
+          method: "POST",
+          text: `➤ ${this.$t("searchbarTooltip.methodPostSelectText")}`,
+        },
+        {
+          method: "DELETE",
+          text: `🗑 ${this.$t("searchbarTooltip.methodDeleteSelectText")}`,
+        },
+        {
+          method: "PUT",
+          text: `✏ ${this.$t("searchbarTooltip.methodPutSelectText")}`,
+        },
       ],
-      choice: "GET"
+      choice: "GET",
     };
   },
   methods: {
@@ -38,7 +61,10 @@ export default {
       this.$emit("detectChoice", isSendable);
     },
     toggleButton() {
-      this.valid = this.valid == "Lancer" ? "■" : "Lancer";
+      this.valid =
+        this.valid == this.$t("searchbarTooltip.runButton")
+          ? "■"
+          : this.$t("searchbarTooltip.runButton");
       if (this.valid == "■") {
         this.callApi();
       }
@@ -82,13 +108,13 @@ export default {
     callApi() {
       // Envoi de la requete API
       if (this.query === "") {
-        window.alert("Le champ URL est vide");
+        window.alert(this.$t("searchbarTooltip.emptyInputText"));
       } else {
-        this.valid = "Lancer";
+        this.valid = this.$t("searchbarTooltip.runButton");
         this.makeRequest(this.choice, this.query, this.body);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
