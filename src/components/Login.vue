@@ -74,7 +74,7 @@ export default {
 
   methods: {
     login() {
-      const api = process.env.VUE_APP_LOGIN;
+      const api = process.env.VUE_APP_HOST_API;
       axios
         .post(api + `login`, {
           email: this.email,
