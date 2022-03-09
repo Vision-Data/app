@@ -20,7 +20,7 @@
       {{ valid }}
     </button>
     <button class="btn btn-outline btn-primary loading" v-if="isLoading">
-      Loading...
+      {{ $t("searchbarTooltip.loadingText") }}
     </button>
   </div>
 </template>
