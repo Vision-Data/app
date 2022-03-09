@@ -40,7 +40,7 @@
         />
         <ToolTipInformations
           direction="bottom"
-          helperText="Coller"
+          :helperText="$t('clipboardTooltip.helperText')"
           color="primary"
         >
           <button
@@ -95,7 +95,7 @@ export default {
         this.searchInput = await navigator.clipboard.readText();
         this.checkHttps();
         this.emitQuery();
-      } catch {
+      } catch (error) {
         this.pasteError = true;
       }
     },

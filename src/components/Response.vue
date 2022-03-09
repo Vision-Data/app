@@ -1,23 +1,42 @@
 <template>
   <div class="response" :key="index">
-    <div class="alert" v-bind:class="{ 'alert-success': responseData && responseData.status.toString().startsWith('2'),        'alert-error':          responseData && !responseData.status.toString().startsWith('2'),      }">
+    <div
+      class="alert"
+      v-bind:class="{
+        'alert-success':
+          responseData && responseData.status.toString().startsWith('2'),
+        'alert-error':
+          responseData && !responseData.status.toString().startsWith('2'),
+      }"
+    >
       <div class="flex-1">
-        <label><span class="badge border-transparent" v-bind:class="{
+        <label
+          ><span
+            class="badge border-transparent"
+            v-bind:class="{
               'bg-success':
                 responseData && responseData.status?.toString().startsWith('2'),
               'bg-error':
                 responseData &&
                 !responseData.status?.toString().startsWith('2'),
-            }">Etat</span>
+            }"
+          >
+            {{ $t("responseCard.responseStatus") }}</span
+          >
           {{ responseData?.status }} : {{ responseData?.statusText }}
         </label>
       </div>
     </div>
     <div class="alert bg-base-200">
       <div class="result-container">
-        <b>Resultats</b>
+        <b> {{ $t("responseCard.responseTitle") }}</b>
         <template v-for="(component, index) in components" :key="index">
-          <component :is="components[index].component" :name="components[index].name" :data="components[index].data" :color="components[index].color">
+          <component
+            :is="components[index].component"
+            :name="components[index].name"
+            :data="components[index].data"
+            :color="components[index].color"
+          >
           </component>
         </template>
       </div>
@@ -36,7 +55,7 @@ export default {
   components: {
     ValueComponent,
     ObjectComponent,
-    ArrayComponent
+    ArrayComponent,
   },
   data() {
     return {
@@ -46,13 +65,13 @@ export default {
       comps: {
         ValueComponent: markRaw(ValueComponent),
         ObjectComponent: markRaw(ObjectComponent),
-        ArrayComponent: markRaw(ArrayComponent)
-      }
+        ArrayComponent: markRaw(ArrayComponent),
+      },
     };
   },
   methods: {
     launchModal() {
-      this.$emit('launch-modal', true)
+      this.$emit("launch-modal", true);
     },
     parseData() {
       if (this.responseData?.data) {
@@ -62,13 +81,13 @@ export default {
           this.comps
         );
       }
-    }
+    },
   },
 
   created() {
     this.unwatch = this.$store.watch(
-      state => state.response,
-      newValue => {
+      (state) => state.response,
+      (newValue) => {
         this.responseData = newValue;
         this.index = this.index + 1;
         this.parseData();
@@ -77,7 +96,7 @@ export default {
   },
   beforeUnmount() {
     this.unwatch();
-  }
+  },
 };
 </script>
 
