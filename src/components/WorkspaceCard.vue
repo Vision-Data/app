@@ -6,12 +6,12 @@
     >
       <div class="m-8">
         <figure>
-          <img :src="logo" alt="Logo" />
+          <img :src="workspace.logo" alt="Logo" />
         </figure>
       </div>
     </div>
     <div class="w-48 flex justify-center mt-8">
-      <h1 class="text-3xl workspaceName">{{ name }}</h1>
+      <h1 class="text-3xl workspaceName">{{ workspace.name }}</h1>
     </div>
   </div>
 </template>
@@ -19,13 +19,12 @@
 <script>
 export default {
   name: "WorkspaceCard",
-  props: ["name", "logo"],
+  props: ["workspace"],
   methods: {
-    onClick() {
-      this.$router.push("/workspaces?name=" + this.name);
+    async onClick() {
+      this.$router.push("/workspaces?name=" + this.workspace.name);
     },
   },
-  data() {},
 };
 </script>
 
