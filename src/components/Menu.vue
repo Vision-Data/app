@@ -1,5 +1,4 @@
 <template>
-  <div class="body">
     <div class="menu">
       <div class="workspace-page">
         <img
@@ -44,23 +43,16 @@
         </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
 export default {
-  name: "Workspace",
+  name: "Menu",
   methods: {},
 };
 </script>
 
 <style>
-.body {
-  background-color: #f6f6f6;
-  display: flex;
-  width: 100%;
-  height: 100vh;
-}
 
 .menu {
   background-color: #ffffff;

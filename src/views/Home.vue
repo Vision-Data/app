@@ -1,10 +1,6 @@
 <template>
-  <div>
-    <nav>
-      <router-link to="/">Accueil</router-link>
-      <router-link to="/login">Connexion</router-link>
-      <router-link to="/register">Inscription</router-link>
-    </nav>
+  <div class="workspace">
+    <Menu />
     <div class="flex justify-center mt-10">
       <header>
         <language-select />
@@ -75,6 +71,7 @@ import Chart from "../components/Charts/Chart.vue";
 import RequestBody from "../components/RequestBody.vue";
 import DiagramChoice from "../components/DiagramChoice.vue";
 import LanguageSelect from "../components/LanguageSelect.vue";
+import Menu from "../components/Menu.vue";
 
 export default {
   name: "Home",
@@ -87,6 +84,7 @@ export default {
     RequestBody,
     DiagramChoice,
     LanguageSelect,
+    Menu,
   },
   data() {
     return {
@@ -160,5 +158,11 @@ header {
 }
 #selectSchema svg {
   pointer-events: none;
+}
+
+.workspace {
+  display: flex;
+  background-color: #f6f6f6;
+  height: auto;
 }
 </style>

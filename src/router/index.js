@@ -16,7 +16,7 @@ const routes = [
     {
         path: '/workspace',
         name: 'Workspace',
-        component: () => import(/* webpackChunkName: "about" */ '../components/Workspace.vue')
+        component: () => import(/* webpackChunkName: "about" */ '../components/Menu.vue')
     }
     // {
     //     path: '/login',
