@@ -8,17 +8,6 @@ on:
 jobs:
   analyze:
     name: "🧐 Analyze"
-    name: "CodeQL"
-
-on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
-
-jobs:
-  analyze:
-    name: Analyze
     runs-on: ubuntu-latest
     permissions:
       actions: read
