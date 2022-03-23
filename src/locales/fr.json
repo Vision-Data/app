@@ -12,6 +12,11 @@
     "emptyInputText": "Le champ URL est vide",
     "loadingText": "Chargement..."
   },
+  "selectWorkspace": {
+    "create": "Créer un espace de travail",
+    "title": "Choix de l'espace de travail",
+    "tooltip": "Qu'est-ce qu'un espace de travail ?"
+  },
   "chart": {
     "title": "Schéma de données"
   },
