@@ -13,6 +13,11 @@ const routes = [
     //     name: 'Register',
     //     component: () => import(/* webpackChunkName: "about" */ '../components/Registration.vue')
     // },
+    {
+        path: '/workspace',
+        name: 'Workspace',
+        component: () => import(/* webpackChunkName: "about" */ '../components/Workspace.vue')
+    }
     // {
     //     path: '/login',
     //     name: 'Login',
