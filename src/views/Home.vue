@@ -7,7 +7,7 @@
     </nav>
     <div class="flex justify-center mt-10">
       <header>
-        <language-select />
+        <LanguageSelect />
         <dark-mode />
         <div class="sending-container">
           <SearchBar
