@@ -9,8 +9,8 @@ const routes = [
     component: Home,
   },
   {
-    path: "/workspace",
-    name: "Workspace",
+    path: "/workspaces",
+    name: "Workspaces",
     component: SelectWorkspace,
   },
   // {
