@@ -16,6 +16,7 @@
           <CallApi
             :query="query"
             @detectChoice="needBodyToSend = $event"
+            v-on:click="started = !started"
             :body="body"
           />
         </div>
@@ -58,10 +59,13 @@
         />
       </svg>
     </button>
+
     <div class="response-container">
-      <LoadingProgress :done="isOpenByResponse" />
       <Response @launch-modal="isOpenByResponse" />
       <Chart v-if="isChartDisplayed" />
+      <div v-if="needBodyToSend == false">
+        <LoadingOverlay :loading="true" />
+      </div>
     </div>
   </div>
 </template>
@@ -74,8 +78,7 @@ import CallApi from "../components/CallApi.vue";
 import Chart from "../components/Charts/Chart.vue";
 import RequestBody from "../components/RequestBody.vue";
 import DiagramChoice from "../components/DiagramChoice.vue";
-import LoadingProgress from "../components/LoadingProgress.vue";
-
+import LoadingOverlay from "../components/LoadingOverlay.vue";
 export default {
   name: "Home",
   components: {
@@ -86,11 +89,14 @@ export default {
     Chart,
     RequestBody,
     DiagramChoice,
-    LoadingProgress,
+    LoadingOverlay,
   },
   data() {
     return {
+      visible: true,
+      started: false,
       query: "",
+      done: false,
       body: "",
       chart: {},
       needBodyToSend: false,

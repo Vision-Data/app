@@ -12,12 +12,12 @@
       }}</option>
     </select>
     <button
-      :class="{ loading: isLoading, 'btn-outline': isLoading }"
+      :class="{ loading: isLoading, 'btn-outline': this.isLoading }"
       class="btn btn-primary"
       id="valid"
       @click="toggleButton()"
     >
-      {{ isLoading ? "En cours" : valid }}
+      {{ this.valid }}
     </button>
   </div>
 </template>
@@ -42,6 +42,7 @@ export default {
   },
   methods: {
     switchIsLoadging() {
+      this.valid = this.valid == "Lancer" ? "En cours" : "Lancer";
       return (this.isLoading = !this.isLoading);
     },
     emitChoice() {
@@ -51,6 +52,7 @@ export default {
     toggleButton() {
       this.valid = this.valid == "Lancer" ? "En cours" : "Lancer";
       if (this.valid == "En cours") {
+        console.log(this.valid);
         this.callApi();
       }
     },
