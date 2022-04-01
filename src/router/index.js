@@ -2,11 +2,16 @@ import Home from '../views/Home.vue'
 import { createWebHistory, createRouter } from 'vue-router';
 
 
-const routes = [
-    {
+const routes = [{
         path: '/',
         name: 'Home',
         component: Home
+    },
+    {
+        path: '/chart',
+        name: 'Chart',
+        component: () =>
+            import ( /* webpackChunkName: "about" */ '../components/DChart.vue')
     },
     // {
     //     path: '/register',
@@ -26,4 +31,3 @@ const router = createRouter({
 });
 
 export default router;
-
