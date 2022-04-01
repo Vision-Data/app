@@ -43,7 +43,8 @@ export default {
   methods: {
     initSvg() {
         //récupération de l'élément svg et ajout d'un groupe
-        this.svg = d3.select(this.$refs.histogram).append("g");
+        this.svg = d3.select(this.$refs.histogram)
+        this.svg = this.svg.append("g");
         this.renderSvg();//lancer la création du graphique
     },
     renderSvg() {
@@ -63,6 +64,7 @@ export default {
 
       //sélection des rectangles avec les données de la computed "histogram"
       const selection = this.svg.selectAll("rect").data(this.histogram);
+      this.svg = this.svg.append('g').call(d3.axisRight(y).ticks(15));
 
       // affectation des propriétés à la sélection des rectangles
       selection
@@ -76,7 +78,7 @@ export default {
         ) // on positionne la barre horizontalement (décalage sur axe x)
         .attr("width", x.bandwidth()) // largeur de la barre est définie par la scale x
         .attr("height", d => y(d.y)); // on donne une hauteur à la barre selon la valeur de la donnée
-
+      
       selection.exit().remove();// on sort et on enlève les excédants
     }
   }

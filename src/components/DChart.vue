@@ -145,4 +145,7 @@ export default {
 </script>
 
 <style>
+.chart {
+  padding: 1rem;
+}
 </style>
