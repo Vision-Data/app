@@ -61,7 +61,7 @@
     </button>
     <div class="response-container">
       <Response @launch-modal="isOpenByResponse" />
-      <Chart v-if="isChartDisplayed" />
+      <Chart v-if="isChartDisplayed" :type="chartType" />
     </div>
   </div>
 </template>
@@ -97,6 +97,7 @@ export default {
       isOpen: false,
       isChartDisplayed: false,
       isBodyOpen: true,
+      chartType: "curves",
     };
   },
 
@@ -117,10 +118,10 @@ export default {
       this.isOpen = true;
     },
     displayChart(payload) {
-      // TODO: change for dynamic chart display
-      if (payload.name === "curves") {
+      if (payload.name === "curves" || payload.name === "bars" || payload.name === "map" || payload.name === "donut") {
         this.isChartDisplayed = true;
         this.isOpen = false;
+        this.chartType = payload.name;
       }
     },
   },

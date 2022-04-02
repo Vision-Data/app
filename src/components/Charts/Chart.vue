@@ -1,9 +1,9 @@
 <template>
   <div class="chart-container">
     <h1>{{ $t("chart.title") }}</h1>
-    <LineChart :data="dataLine" :options="optionsChart" :responsiveOptions="responsiveOptionsChart" />
-    <HistoChart :data="dataHisto" />
-    <DonutChart :data="dataDonut" />
+    <LineChart :data="dataLine" :options="optionsChart" :responsiveOptions="responsiveOptionsChart" v-if="type === 'curves'" />
+    <HistoChart :data="dataHisto" v-if="type === 'bars'"/>
+    <DonutChart :data="dataDonut" v-if="type === 'donut'"/>
   </div>
 </template>
 
@@ -14,6 +14,7 @@ import DonutChart from "./ChartType/DonutChart.vue";
 
 export default {
   name: "Chart",
+  props: ['type'],
   data() { return {
     selectedDataX: this.$store.state.selectedData.x,
     selectedDataY: this.$store.state.selectedData.y,

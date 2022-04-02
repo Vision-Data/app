@@ -91,13 +91,13 @@ export default {
   height: 6rem;
   object-fit: contain;
 }
-
-/* TODO: remove css temporary */
-.modal-item:nth-child(4),
-.modal-item:nth-child(2n + 1) {
-  opacity: 0.4;
-}
 .modal-item.active {
   border: 2px solid black;
 }
+  
+  /* TODO: remove css temporary */
+  /* .modal-item:nth-child(4),
+  .modal-item:nth-child(2n + 1) {
+    opacity: 0.4;
+  } */
 </style>
