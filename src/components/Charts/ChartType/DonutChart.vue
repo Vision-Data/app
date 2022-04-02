@@ -61,7 +61,7 @@ export default {
 
       // add color to the slices
       const color = d3.scaleOrdinal()
-        .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56"])
+        .range(["#FE9430", "#FBB800", "#28965a", "#4099DD","#DD4040"])
 
       this.svg = this.svg
         .selectAll('slices')
@@ -71,7 +71,6 @@ export default {
           .attr('fill', function(d){ return(color(d.data[1]))})
           .attr("stroke", "white")
           .style("stroke-width", "2px")
-          .style("opacity", 0.7)
 
     },
   },
