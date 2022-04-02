@@ -95,9 +95,7 @@ export default {
   border: 2px solid black;
 }
   
-  /* TODO: remove css temporary */
-  /* .modal-item:nth-child(4),
-  .modal-item:nth-child(2n + 1) {
-    opacity: 0.4;
-  } */
+.modal-item:nth-child(4) {
+  opacity: 0;
+}
 </style>
