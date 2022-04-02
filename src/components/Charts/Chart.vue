@@ -3,18 +3,21 @@
     <h1>{{ $t("chart.title") }}</h1>
     <LineChart :data="dataLine" :options="optionsChart" :responsiveOptions="responsiveOptionsChart" />
     <HistoChart :data="dataHisto" />
+    <DonutChart :data="dataDonut" />
   </div>
 </template>
 
 <script>
 import LineChart from "./ChartType/LineChart.vue";
 import HistoChart from "./ChartType/HistoChart.vue";
+import DonutChart from "./ChartType/DonutChart.vue";
 
 export default {
   name: "Chart",
   data() { return {
     selectedDataX: this.$store.state.selectedData.x,
     selectedDataY: this.$store.state.selectedData.y,
+    dataDonut:  {a: 9, b: 20, c:30, d:8, e:12},
     dataHisto: [
       -0.07759597784808844, 0.5619279383911953, -0.051554452335713964,
       -0.3839089613567747, 0.9658295198906364, 0.48366524934238464,
@@ -54,6 +57,7 @@ export default {
   components: {
     LineChart,
     HistoChart,
+    DonutChart
   },
   mounted() {
     this.unwatchX = this.$store.watch(
