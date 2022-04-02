@@ -11,6 +11,7 @@ import * as d3 from "d3"; //importation de d3 pour utiliser la librairie
 
 export default {
   name: "HistoChart",
+  props: ["data"],
   data: () => ({
     width: 800, //largeur du canvas du graphique
     height: 400, //hauteur du canvas du graphique
@@ -20,7 +21,6 @@ export default {
       bottom: 20,
       left: 40,
     },
-    data: [ -0.07759597784808844, 0.5619279383911953, -0.051554452335713964,  -0.3839089613567747,  0.9658295198906364,  0.48366524934238464  ],
     numBins: 0, //nombre de bars
     svg: null, //intialisation de la variable svg
   }),

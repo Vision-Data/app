@@ -1,57 +1,59 @@
 <template>
   <div class="chart-container">
     <h1>{{ $t("chart.title") }}</h1>
-    <LineChart
-      :data="dataChart"
-      :options="optionsChart"
-      :responsiveOptions="responsiveOptionsChart"
-    />
+    <LineChart :data="dataLine" :options="optionsChart" :responsiveOptions="responsiveOptionsChart" />
+    <HistoChart :data="dataHisto" />
   </div>
 </template>
 
 <script>
 import LineChart from "./ChartType/LineChart.vue";
+import HistoChart from "./ChartType/HistoChart.vue";
+
 export default {
   name: "Chart",
-  data() {
-    return {
-      selectedDataX: this.$store.state.selectedData.x,
-      selectedDataY: this.$store.state.selectedData.y,
-      dataChart: {
-        labels: this.selectedDataX ? this.selectedDataX : [],
-        series: this.selectedDataY ? [this.selectedDataY] : [],
+  data() { return {
+    selectedDataX: this.$store.state.selectedData.x,
+    selectedDataY: this.$store.state.selectedData.y,
+    dataHisto: [
+      -0.07759597784808844, 0.5619279383911953, -0.051554452335713964,
+      -0.3839089613567747, 0.9658295198906364, 0.48366524934238464,
+    ],
+    dataLine: {
+      labels: this.selectedDataX ? this.selectedDataX : [],
+      series: this.selectedDataY ? [this.selectedDataY] : [],
+    },
+    optionsChart: {
+      width: 600,
+      height: 300,
+      labelInterpolationFnc: function (value) {
+        return value[0];
       },
-      optionsChart: {
-        width: 600,
-        height: 300,
-        labelInterpolationFnc: function(value) {
-          return value[0];
+    },
+    responsiveOptionsChart: [
+      [
+        "screen and (min-width: 640px)",
+        {
+          chartPadding: 30,
+          labelOffset: 100,
+          labelDirection: "explode",
+          labelInterpolationFnc: function (value) {
+            return value;
+          },
         },
-      },
-      responsiveOptionsChart: [
-        [
-          "screen and (min-width: 640px)",
-          {
-            chartPadding: 30,
-            labelOffset: 100,
-            labelDirection: "explode",
-            labelInterpolationFnc: function(value) {
-              return value;
-            },
-          },
-        ],
-        [
-          "screen and (min-width: 1024px)",
-          {
-            labelOffset: 80,
-            chartPadding: 20,
-          },
-        ],
       ],
-    };
-  },
+      [
+        "screen and (min-width: 1024px)",
+        {
+          labelOffset: 80,
+          chartPadding: 20,
+        },
+      ],
+    ],
+  }},
   components: {
     LineChart,
+    HistoChart,
   },
   mounted() {
     this.unwatchX = this.$store.watch(

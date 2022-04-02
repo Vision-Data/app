@@ -7,12 +7,6 @@ const routes = [{
         name: 'Home',
         component: Home
     },
-    {
-        path: '/chart',
-        name: 'Chart',
-        component: () =>
-            import ( /* webpackChunkName: "about" */ '../components/DChart.vue')
-    },
     // {
     //     path: '/register',
     //     name: 'Register',
