@@ -21,9 +21,9 @@
           />
           <button
             class="btn btn-primary"
+            :class="{ loading: isLoading }"
             id="valid"
-            v-if="!isLoading"
-            @click="callApi()"
+            @click="fetchData()"
           >
             {{ $t("searchbarTooltip.runButton") }}
           </button>
@@ -84,7 +84,7 @@ import RequestBody from "../components/ApiRequest/RequestBody.vue";
 import DiagramChoice from "../components/ApiRequest/DiagramChoice.vue";
 import LanguageSelect from "../components/Commons/LanguageSelect.vue";
 
-const axios = require("axios");
+import makeRequest from "../services/api-request.js";
 
 export default {
   name: "Home",
@@ -107,6 +107,7 @@ export default {
       isOpen: false,
       isChartDisplayed: false,
       isBodyOpen: true,
+      isLoading: false,
     };
   },
 
@@ -133,49 +134,15 @@ export default {
     needBodyToSend() {
       return this.choice == "POST" || this.choice == "PUT";
     },
-    async makeRequest(choice, query, body) {
-      let response;
-      if (choice == "GET") {
-        try {
-          response = await axios.get(query);
-        } catch (error) {
-          if (error.response) {
-            response = error.response;
-          }
-          // TODO gestion des erreurs (404, 500, etc)
-        }
-      } else if (choice == "POST") {
-        try {
-          response = await axios.post(query, body);
-        } catch (error) {
-          if (error.response) {
-            response = error.response;
-          }
-        }
-      } else if (choice == "PUT") {
-        try {
-          response = await axios.put(query, body);
-        } catch (error) {
-          if (error.response) {
-            response = error.response;
-          }
-        }
-      } else if (choice == "DELETE") {
-        try {
-          response = await axios.delete(query);
-        } catch (error) {
-          response = error.response;
-        }
-      }
-      this.$store.dispatch("sendRequest", response);
-    },
-    callApi() {
-      // Envoi de la requete API
+    async fetchData() {
       if (this.query === "") {
         window.alert(this.$t("searchbarTooltip.emptyInputText"));
       } else {
         this.valid = this.$t("searchbarTooltip.runButton");
-        this.makeRequest(this.choice, this.query, this.body);
+        this.isLoading = true;
+        const response = await makeRequest(this.choice, this.query, this.body);
+        this.isLoading = false;
+        this.$store.dispatch("sendRequest", response);
       }
     },
   },
