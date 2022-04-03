@@ -25,10 +25,26 @@ export default {
     radius: 0, //rayon du donut
   }),
   watch: {
-    data: "renderSvg",
+    data: {
+      handler(newValue, oldValue) {
+        console.log('ma direction');
+        if (newValue !== oldValue) {
+          this.renderSvg();
+          console.log('deuxieme direction');
+        }
+      },
+      deep: true
+    }
   },
   mounted() {
     this.initSvg(); //lancer la création du svg
+  },
+  computed: {
+    donut() {
+      const pie = d3.pie().sort(null).value((d) => d[1]);
+      
+      return pie(Object.entries(this.data)); //formattage des données grâce a Object.entries
+    },
   },
   methods: {
     initSvg() {
@@ -49,10 +65,7 @@ export default {
       this.renderSvg(); //lancer la création du graphique
     },
     renderSvg() {
-      const pie = d3.pie().sort(null).value((d) => d[1]); //création du donut en fonction des données
-      
-      
-      const ready = pie(Object.entries(this.data)); //formattage des données grâce a Object.entries
+      const ready = this.donut;
 
       //création des carces du donut
       const arc = d3.arc()
