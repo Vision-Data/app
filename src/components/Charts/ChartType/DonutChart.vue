@@ -49,7 +49,7 @@ export default {
       this.renderSvg(); //lancer la création du graphique
     },
     renderSvg() {
-      const pie = d3.pie().value((d) => d[1]); //création du donut en fonction des données
+      const pie = d3.pie().sort(null).value((d) => d[1]); //création du donut en fonction des données
       
       
       const ready = pie(Object.entries(this.data)); //formattage des données grâce a Object.entries
@@ -59,18 +59,59 @@ export default {
         .innerRadius(this.radius * 0.5)
         .outerRadius(this.radius * 0.8); 
 
+      const outerArc = d3.arc()
+        .innerRadius(this.radius * 0.9)
+        .outerRadius(this.radius * 0.9)
+
       // add color to the slices
       const color = d3.scaleOrdinal()
         .range(["#FE9430", "#FBB800", "#28965a", "#4099DD","#DD4040"])
 
+      //affect to a useable var for d3
+      const radius = this.radius;
+      
+      
       this.svg = this.svg
-        .selectAll('slices')
+      .selectAll('allSlices')
+      .data(ready)
+      .join('path')
+        .attr('d', arc)
+        .attr('fill', d => color(d.data[1]))
+        .attr("stroke", "white")
+        .style("stroke-width", "2px")
+
+    this.svg = this.svg
+      .selectAll('allPolylines')
+      .insert('polyline', ':first-child')
+      .data(ready)
+      .join('polyline')
+        .attr("stroke", "black")
+        .style("fill", "none")
+        .attr("stroke-width", 1)
+        .attr('points', function(d) {
+          const posA = arc.centroid(d) // line insertion in the slice
+          const posB = outerArc.centroid(d) // line break: we use the other arc generator that has been built only for that
+          const posC = outerArc.centroid(d); // Label position = almost the same as posB
+          const midangle = d.startAngle + (d.endAngle - d.startAngle) / 2 // we need the angle to see if the X position will be at the extreme right or extreme left
+          posC[0] = radius * 0.95 * (midangle < Math.PI ? 1 : -1); // multiply by 1 or -1 to put it on the right or on the left
+          return [posA, posB, posC]
+        })
+
+      this.svg = this.svg
+        .selectAll('allLabels')
         .data(ready)
-        .join('path')
-          .attr('d', arc)
-          .attr('fill', function(d){ return(color(d.data[1]))})
-          .attr("stroke", "white")
-          .style("stroke-width", "2px")
+        .join('text')
+          .text(d => d.data[0])
+          .attr('transform', function(d) {
+              const pos = outerArc.centroid(d);
+              const midangle = d.startAngle + (d.endAngle - d.startAngle) / 2;
+              pos[0] = radius * 0.99 * (midangle < Math.PI ? 1 : -1);
+              return `translate(${pos})`;
+          })
+          .style('text-anchor', function(d) {
+              const midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
+              return (midangle < Math.PI ? 'start' : 'end')
+          })
 
     },
   },
