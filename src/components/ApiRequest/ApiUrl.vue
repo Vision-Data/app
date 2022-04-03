@@ -79,7 +79,7 @@
 import SecurityLock from "./SecurityLock.vue";
 import ToolTipInformations from "../Commons/ToolTipInformations.vue";
 export default {
-  name: "SearchBar",
+  name: "ApiUrl",
   components: { SecurityLock, ToolTipInformations },
   data() {
     return {

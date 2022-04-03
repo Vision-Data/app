@@ -10,23 +10,34 @@
         <language-select />
         <dark-mode />
         <div class="sending-container">
-          <ApiUrl class="container w-full max-w-screen-lg" @query="sendQuery" />
+          <ApiUrl
+            class="container w-full max-w-screen-lg"
+            @query="query = $event"
+          />
           <SelectHttpMethod
             :query="query"
-            @detectChoice="needBodyToSend = $event"
+            @detectChoice="choice = $event"
             :body="body"
           />
+          <button
+            class="btn btn-primary"
+            id="valid"
+            v-if="!isLoading"
+            @click="callApi()"
+          >
+            {{ $t("searchbarTooltip.runButton") }}
+          </button>
         </div>
         <button
           class="btn btn-sm"
           title="Utiliser ces données"
           @click="isBodyOpen = true"
-          v-if="needBodyToSend"
+          v-if="needBodyToSend()"
         >
           Modifier Body
         </button>
         <RequestBody
-          :needBodyToSend="needBodyToSend"
+          :needBodyToSend="needBodyToSend()"
           v-show="isBodyOpen"
           @close="closing"
           @requestBodyContent="body = $event"
@@ -73,6 +84,8 @@ import RequestBody from "../components/ApiRequest/RequestBody.vue";
 import DiagramChoice from "../components/ApiRequest/DiagramChoice.vue";
 import LanguageSelect from "../components/Commons/LanguageSelect.vue";
 
+const axios = require("axios");
+
 export default {
   name: "Home",
   components: {
@@ -89,8 +102,8 @@ export default {
     return {
       query: "",
       body: "",
+      choice: "GET",
       chart: {},
-      needBodyToSend: false,
       isOpen: false,
       isChartDisplayed: false,
       isBodyOpen: true,
@@ -100,9 +113,6 @@ export default {
   methods: {
     isOpenByResponse(payload) {
       this.isOpen = payload;
-    },
-    sendQuery(data) {
-      this.query = data;
     },
     isOpened(payload) {
       this.isOpen = payload;
@@ -118,6 +128,54 @@ export default {
       if (payload.name === "curves") {
         this.isChartDisplayed = true;
         this.isOpen = false;
+      }
+    },
+    needBodyToSend() {
+      return this.choice == "POST" || this.choice == "PUT";
+    },
+    async makeRequest(choice, query, body) {
+      let response;
+      if (choice == "GET") {
+        try {
+          response = await axios.get(query);
+        } catch (error) {
+          if (error.response) {
+            response = error.response;
+          }
+          // TODO gestion des erreurs (404, 500, etc)
+        }
+      } else if (choice == "POST") {
+        try {
+          response = await axios.post(query, body);
+        } catch (error) {
+          if (error.response) {
+            response = error.response;
+          }
+        }
+      } else if (choice == "PUT") {
+        try {
+          response = await axios.put(query, body);
+        } catch (error) {
+          if (error.response) {
+            response = error.response;
+          }
+        }
+      } else if (choice == "DELETE") {
+        try {
+          response = await axios.delete(query);
+        } catch (error) {
+          response = error.response;
+        }
+      }
+      this.$store.dispatch("sendRequest", response);
+    },
+    callApi() {
+      // Envoi de la requete API
+      if (this.query === "") {
+        window.alert(this.$t("searchbarTooltip.emptyInputText"));
+      } else {
+        this.valid = this.$t("searchbarTooltip.runButton");
+        this.makeRequest(this.choice, this.query, this.body);
       }
     },
   },
