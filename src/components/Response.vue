@@ -137,6 +137,11 @@ export default {
   top: 0;
   right: 0;
 }
+.selection-data-all {
+  position: absolute;
+  top: 0;
+  right: -3rem;
+}
 .alert {
   margin: 10px;
 }

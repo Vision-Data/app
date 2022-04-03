@@ -11,6 +11,9 @@
         <button class="btn btn-xs selection-data-y" id="selectY" v-show="over" @click="selectDataY()">
           Y
         </button>
+        <button class="btn btn-xs selection-data-all" id="selectAll" v-show="over" @click="selectDataAll()">
+          All
+        </button>
       </div>
     </div>
   </section>
@@ -43,6 +46,14 @@ export default {
     async selectDataY() {
       this.select = !this.select;
       await this.$store.dispatch("verifyExistanceY", {
+        id: this.identifier,
+        key: this.name,
+        value: this.data,
+      });
+    },
+    async selectDataAll() {
+      this.select = !this.select;
+      await this.$store.dispatch("verifyExistanceObj", {
         id: this.identifier,
         key: this.name,
         value: this.data,

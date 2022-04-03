@@ -15,6 +15,7 @@ const store = createStore({
     selectedData: {
       x: [],
       y: [],
+      obj: [],
     },
   }),
   mutations: {
@@ -24,6 +25,9 @@ const store = createStore({
     receiveSelectedDataY(state, value) {
       state.selectedData.y = [...state.selectedData.y, value];
     },
+    receiveSelectedDataObj(state, value) {
+      state.selectedData.obj = [...state.selectedData.obj, value];
+    },
     deleteSpecifiedDataX(state, value) {
       state.selectedData.x = state.selectedData.x.filter(
         (elt) => elt.id !== value.id
@@ -31,6 +35,11 @@ const store = createStore({
     },
     deleteSpecifiedDataY(state, value) {
       state.selectedData.y = state.selectedData.y.filter(
+        (elt) => elt.id !== value.id
+      );
+    },
+    deleteSpecifiedDataObj(state, value) {
+      state.selectedData.obj = state.selectedData.obj.filter(
         (elt) => elt.id !== value.id
       );
     },
@@ -69,6 +78,16 @@ const store = createStore({
         const obj = state.selectedData.y.find((res) => res.id === payload.id);
         if (obj === undefined) commit("receiveSelectedDataY", payload);
         else commit("deleteSpecifiedDataY", payload);
+      }
+    },
+    verifyExistanceObj({ state, commit }, payload) {
+      console.log(payload);
+      if (state.selectedData.obj.length === 0) {
+        commit("receiveSelectedDataObj", payload);
+      } else {
+        const obj = state.selectedData.obj.find((res) => res.id === payload.id);
+        if (obj === undefined) commit("receiveSelectedDataObj", payload);
+        else commit("deleteSpecifiedDataObj", payload);
       }
     },
     sendRequest({ commit }, payload) {
