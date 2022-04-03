@@ -10,11 +10,8 @@
         <language-select />
         <dark-mode />
         <div class="sending-container">
-          <SearchBar
-            class="container w-full max-w-screen-lg"
-            @query="sendQuery"
-          />
-          <CallApi
+          <ApiUrl class="container w-full max-w-screen-lg" @query="sendQuery" />
+          <SelectHttpMethod
             :query="query"
             @detectChoice="needBodyToSend = $event"
             :body="body"
@@ -67,21 +64,21 @@
 </template>
 
 <script>
-import DarkMode from "../components/Dark-Mode.vue";
-import SearchBar from "../components/SearchBar.vue";
-import Response from "../components/Response.vue";
-import CallApi from "../components/CallApi.vue";
+import DarkMode from "../components/Commons/DarkMode.vue";
+import ApiUrl from "../components/ApiRequest/ApiUrl.vue";
+import Response from "../components/ApiRequest/Response.vue";
+import SelectHttpMethod from "../components/ApiRequest/SelectHttpMethod.vue";
 import Chart from "../components/Charts/Chart.vue";
-import RequestBody from "../components/RequestBody.vue";
-import DiagramChoice from "../components/DiagramChoice.vue";
-import LanguageSelect from "../components/LanguageSelect.vue";
+import RequestBody from "../components/ApiRequest/RequestBody.vue";
+import DiagramChoice from "../components/ApiRequest/DiagramChoice.vue";
+import LanguageSelect from "../components/Commons/LanguageSelect.vue";
 
 export default {
   name: "Home",
   components: {
-    SearchBar,
+    ApiUrl,
     Response,
-    CallApi,
+    SelectHttpMethod,
     DarkMode,
     Chart,
     RequestBody,

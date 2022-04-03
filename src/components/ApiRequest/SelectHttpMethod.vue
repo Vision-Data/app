@@ -28,7 +28,7 @@
 <script>
 const axios = require("axios");
 export default {
-  name: "SearchBar",
+  name: "SelectHttpMethod",
   props: ["query", "body"],
   data() {
     return {

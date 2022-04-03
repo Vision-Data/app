@@ -77,7 +77,7 @@
 
 <script>
 import SecurityLock from "./SecurityLock.vue";
-import ToolTipInformations from "./ToolTipInformations.vue";
+import ToolTipInformations from "../Commons/ToolTipInformations.vue";
 export default {
   name: "SearchBar",
   components: { SecurityLock, ToolTipInformations },

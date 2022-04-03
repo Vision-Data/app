@@ -1,10 +1,31 @@
 <template>
   <section>
-    <div class="alert object" :data-identifier="identifier" :class="[`alert-${color}`, { selected: selected },{ 'object-over': selection }]" @mouseover="selection = true" @mouseout="selection = false">
+    <div
+      class="alert object"
+      :data-identifier="identifier"
+      :class="[
+        `alert-${color}`,
+        { selected: selected },
+        { 'object-over': selection },
+      ]"
+      @mouseover="selection = true"
+      @mouseout="selection = false"
+    >
       <div class="flex-1">
-        <b class="badge border-transparent object-title tooltip" :class="`bg-${color}`" data-tip="Objet">📕 {{ name }}</b>
+        <b
+          class="badge border-transparent object-title tooltip"
+          :class="`bg-${color}`"
+          data-tip="Objet"
+          >📕 {{ name }}</b
+        >
         <template v-for="(component, index) in components" :key="index">
-          <component :is="components[index].component" :name="components[index].name" :data="components[index].data" :color="components[index].color" :isParentSelected="selected">
+          <component
+            :is="components[index].component"
+            :name="components[index].name"
+            :data="components[index].data"
+            :color="components[index].color"
+            :isParentSelected="selected"
+          >
           </component>
         </template>
       </div>
@@ -16,7 +37,7 @@
 import ValueComponent from "./Value.vue";
 import ObjectComponent from "./Object.vue";
 import ArrayComponent from "./Array.vue";
-import Recursive from "../services/recursive.js";
+import Recursive from "../../services/recursive.js";
 import { markRaw } from "vue";
 
 export default {
@@ -40,7 +61,7 @@ export default {
   }),
   async created() {
     this.components = Recursive.recursive(this.data, this.comps);
-    this.identifier = await this.$store.dispatch('giveIdentifier')
+    this.identifier = await this.$store.dispatch("giveIdentifier");
   },
   watch: {
     isParentSelected: {
