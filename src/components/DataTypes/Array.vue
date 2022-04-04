@@ -1,11 +1,32 @@
 <template>
   <section>
-    <div class="alert array" :data-identifier="identifier" :class="[`alert-${color}`, { selected: selected }, { 'array-over': selection }]" @mouseover="selection = true" @mouseout="selection = false">
+    <div
+      class="alert array"
+      :data-identifier="identifier"
+      :class="[
+        `alert-${color}`,
+        { selected: selected },
+        { 'array-over': selection },
+      ]"
+      @mouseover="selection = true"
+      @mouseout="selection = false"
+    >
       <div class="flex-1">
-        <b class="badge border-transparent array-title tooltip" :class="`bg-${color}`" data-tip="Tableau">🗃 {{ name }}</b>
+        <b
+          class="badge border-transparent array-title tooltip"
+          :class="`bg-${color}`"
+          data-tip="Tableau"
+          >🗃 {{ name }}</b
+        >
         <div class="array-content">
           <template v-for="(component, index) in components" :key="index">
-            <component :is="components[index].component" :name="components[index].name" :data="components[index].data" :color="components[index].color" :isParentSelected="selected">
+            <component
+              :is="components[index].component"
+              :name="components[index].name"
+              :data="components[index].data"
+              :color="components[index].color"
+              :isParentSelected="selected"
+            >
             </component>
           </template>
         </div>
@@ -14,12 +35,11 @@
   </section>
 </template>
 
-
 <script>
 import ValueComponent from "./Value.vue";
 import ObjectComponent from "./Object.vue";
 import ArrayComponent from "./Array.vue";
-import Recursive from "../services/recursive.js";
+import Recursive from "../../services/recursive.js";
 import { markRaw } from "vue";
 
 export default {
