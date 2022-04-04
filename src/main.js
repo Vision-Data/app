@@ -7,7 +7,6 @@ import router from "./router";
 
 import "./styles/global.css";
 import i18n from "./i18n";
-import { VueQueryPlugin } from "vue-query";
 
 const store = createStore({
   state: () => ({
@@ -79,6 +78,5 @@ const store = createStore({
 const app = createApp(App);
 app.use(store);
 app.use(i18n);
-app.use(VueQueryPlugin);
 app.use(router);
 app.mount("#app");

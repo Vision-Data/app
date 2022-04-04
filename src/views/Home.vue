@@ -19,23 +19,19 @@
             @detectChoice="choice = $event"
             :body="body"
           />
-          <button
-            class="btn btn-primary"
-            :class="{ loading: isLoading }"
-            id="valid"
+          <Button
+            class="btn-primary"
+            :label="$t('searchbarTooltip.runButton')"
+            :isLoading="isLoading"
             @click="fetchData()"
-          >
-            {{ $t("searchbarTooltip.runButton") }}
-          </button>
+          />
         </div>
-        <button
-          class="btn btn-sm"
-          title="Utiliser ces données"
-          @click="isBodyOpen = true"
+        <Button
+          class="btn-sm"
+          label="Modifier Body"
           v-if="needBodyToSend()"
-        >
-          Modifier Body
-        </button>
+          @click="isBodyOpen = true"
+        />
         <RequestBody
           :needBodyToSend="needBodyToSend()"
           v-show="isBodyOpen"
@@ -46,10 +42,9 @@
       </header>
     </div>
     <DiagramChoice @chart="displayChart" @cancel="isOpened" v-show="isOpen" />
-    <button
+    <Button
       id="selectSchema"
-      class="btn btn-circle btn-lg floating-btn"
-      title="Utiliser ces données"
+      class="btn-circle btn-lg floating-btn"
       @click="openModal"
     >
       <svg
@@ -66,7 +61,7 @@
           d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"
         />
       </svg>
-    </button>
+    </Button>
     <div class="response-container">
       <Response @launch-modal="isOpenByResponse" />
       <Chart v-if="isChartDisplayed" />
@@ -83,6 +78,7 @@ import Chart from "../components/Charts/Chart.vue";
 import RequestBody from "../components/ApiRequest/RequestBody.vue";
 import DiagramChoice from "../components/ApiRequest/DiagramChoice.vue";
 import LanguageSelect from "../components/Commons/LanguageSelect.vue";
+import Button from "../components/Commons/Button.vue";
 
 import makeRequest from "../services/api-request.js";
 
@@ -97,6 +93,7 @@ export default {
     RequestBody,
     DiagramChoice,
     LanguageSelect,
+    Button,
   },
   data() {
     return {
@@ -138,7 +135,6 @@ export default {
       if (this.query === "") {
         window.alert(this.$t("searchbarTooltip.emptyInputText"));
       } else {
-        this.valid = this.$t("searchbarTooltip.runButton");
         this.isLoading = true;
         const response = await makeRequest(this.choice, this.query, this.body);
         this.isLoading = false;
