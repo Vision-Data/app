@@ -4,7 +4,7 @@
       <span class="label-text text-gray-500">
         {{ $t("searchbarTooltip.helperPlaceholder") }}
         <ToolTipInformations
-          direction="top"
+          direction="right"
           :helperText="$t('searchbarTooltip.helperText')"
         >
           <svg
