@@ -27,21 +27,17 @@
         </button>
       </div>
     </div>
-
-    <div
-      class="grid md:grid-cols-4  md:gap-24 sm:gap-32  my-12 mb sm:grid-row-1 "
-    >
-      <WorkspaceCard
-        v-for="workspace in workspaces"
-        :key="workspace.id"
-        :workspace="workspace"
-      />
-    </div>
-    <div class="relative">
+    <div class="container mx-auto px-auto ">
+      <!--lg:px-60 md:px-32  !-->
+      <div class="grid sm:grid-rows-8 md:grid-cols-4 gap-8 my-8">
+        <WorkspaceCard
+          v-for="workspace in workspaces"
+          :key="workspace.id"
+          :workspace="workspace"
+        />
+      </div>
       <div
-        class="tooltip tooltip-open absolute 
-    bottom-0
-    right-0"
+        class="tooltip tooltip-open absolute bottom-0 left-0 h-0 w-16"
         :data-tip="$t('selectWorkspace.tooltip')"
       >
         <svg
@@ -83,7 +79,7 @@ export default {
   },
   async mounted() {
     const result = await WorkspaceService.fetchAllWorkspaces(
-      "MQ.CS2VTCBJX1j8myrjnKYgOdkrXyfyF0CmoVHC2u0hKcgll6yhvI5qsxoF0PmQ"
+      "NA.AH8GZTO8eRIIr3sckSTNeNUjp1xLHEtUtwg38UQqKuUuHqTqxIw549PZN1wd"
     );
     this.workspaces = result.data;
     console.log(result.data);

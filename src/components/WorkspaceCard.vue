@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="mb-12 mx-auto">
     <div
-      class="card w-48 bg-base-100 shadow-2xl hover:bg-base-300"
+      class="card w-36 bg-base-100 shadow-2xl hover:bg-base-300"
       @click="onClick"
     >
       <div class="m-8">
@@ -10,7 +10,7 @@
         </figure>
       </div>
     </div>
-    <div class="w-48 flex justify-center mt-8">
+    <div class="w-36 flex justify-center mt-8">
       <h1 class="text-3xl workspaceName">{{ workspace.name }}</h1>
     </div>
   </div>
