@@ -18,6 +18,11 @@ const routes = [
     //     name: 'Login',
     //     component: () => import(/* webpackChunkName: "about" */ '../components/Login.vue')
     // }
+    {
+        path: '/newworkspace',
+        name: 'NewWorkspace',
+        component: () => import(/* webpackChunkName: "about" */ '../components/NewWorkspace.vue')
+    }
 ];
 
 const router = createRouter({
