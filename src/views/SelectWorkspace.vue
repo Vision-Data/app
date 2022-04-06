@@ -11,7 +11,7 @@
         </h2>
 
         <div>
-          <button class="btn btn-primary sm:p-2" @click="console.log('Vision')">
+          <button class="btn btn-primary sm:p-2" @click="this.goToCreatePage()">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="h-5 w-7"
@@ -36,10 +36,7 @@
             :workspace="workspace"
           />
         </div>
-        <div
-          class="btn-group flex justify-center"
-          :v-if="this.workspaces.length > 0"
-        >
+        <div class="btn-group flex justify-center" v-if="workspaces.length">
           <button
             class="btn  btn-primary btn-outline w-6/12 md:w-24"
             v-bind:class="{
@@ -107,11 +104,17 @@ export default {
       workspaces: [],
       nextPageUrl: undefined,
       previousPageUrl: undefined,
+      // TODO : get usertoken from session
       userToken:
-        "MTQ.uh8Bflqv5uvsiO5ZCtMLWk_RsHcZRUAkz8cNOYrjr4akaxW11QbH0VRw4NBa",
+        "MTU.6vYF6VozpQ3wAg91xXlp2X8FosQ5vGQb1CLd-GdI1jyrE6bQfGiOoJUOK_nl",
     };
   },
   methods: {
+    goToCreatePage() {
+      // TODO : add route to create page
+      // this.$router.push("/workspaces/create");
+    },
+
     async goToNextPage() {
       if (this.nextPageUrl) {
         let result = await WorkspaceService.fetchAllWorkspaces(
@@ -139,7 +142,6 @@ export default {
     let result = await WorkspaceService.fetchAllWorkspaces(this.userToken);
     this.workspaces = result.data;
     this.nextPageUrl = result.meta.next_page_url;
-    console.log(this.nextPageUrl);
   },
 };
 </script>
