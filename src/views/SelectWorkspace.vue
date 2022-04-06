@@ -28,7 +28,6 @@
       </div>
     </div>
     <div class="container mx-auto px-auto ">
-      <!--lg:px-60 md:px-32  !-->
       <div class="grid sm:grid-rows-8 md:grid-cols-4 gap-8 my-8">
         <WorkspaceCard
           v-for="workspace in workspaces"
