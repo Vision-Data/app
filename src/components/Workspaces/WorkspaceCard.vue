@@ -22,7 +22,7 @@ export default {
   props: ["workspace"],
   methods: {
     async onClick() {
-      this.$router.push("/workspaces?name=" + this.workspace.name);
+      this.$router.push("/workspaces/" + this.workspace.id);
     },
   },
 };

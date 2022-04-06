@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="mx-24 lg:mx-48 md:mx-24  my-24">
+    <div class="lg:mx-48 md:mx-24 sm:mx-2 my-24">
       <header class="mb-8">
         <LanguageSelect />
         <dark-mode />
@@ -63,9 +63,9 @@
         </div>
       </div>
     </div>
-    <div class="relative h-32 w-3/4">
+    <div class="relative h-12 md:w-11/12 flex justify-center">
       <TooltipInformations
-        class="tooltip-open absolute bottom-0 right-0 h-16"
+        class="tooltip absolute bottom-0 md:right-0 md:h-16"
         :helperText="$t('selectWorkspace.tooltip')"
       >
         <svg
