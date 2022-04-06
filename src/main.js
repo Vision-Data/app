@@ -52,7 +52,6 @@ const store = createStore({
       return getters.getIdentifier;
     },
     verifyExistanceX({ state, commit }, payload) {
-      console.log(payload);
       if (state.selectedData.x.length === 0) {
         commit("receiveSelectedDataX", payload);
       } else {
@@ -62,7 +61,6 @@ const store = createStore({
       }
     },
     verifyExistanceY({ state, commit }, payload) {
-      console.log(payload);
       if (state.selectedData.y.length === 0) {
         commit("receiveSelectedDataY", payload);
       } else {

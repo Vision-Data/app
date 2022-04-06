@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import ToolTipInformations from "./ToolTipInformations.vue";
+import ToolTipInformations from "../Commons/ToolTipInformations.vue";
 export default {
   name: "SecurityLock",
   props: ["isHttps"],

@@ -45,10 +45,10 @@
 </template>
 
 <script>
-import ValueComponent from "./Value.vue";
-import ObjectComponent from "./Object.vue";
-import ArrayComponent from "./Array.vue";
-import Recursive from "../services/recursive.js";
+import ValueComponent from "../DataTypes/Value.vue";
+import ObjectComponent from "../DataTypes/Object.vue";
+import ArrayComponent from "../DataTypes/Array.vue";
+import Recursive from "../../services/recursive.js";
 import { markRaw } from "vue";
 export default {
   name: "Response",
