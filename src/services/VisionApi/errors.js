@@ -1,7 +1,11 @@
 const formatErrors = (errors) => {
   const result = {};
   errors.forEach((error) => {
-    result[error.field] = error.message;
+    if (error["field"] === undefined) {
+      result["message"] = error.message;
+    } else {
+      result[error.field] = error.message;
+    }
   });
 
   return result;

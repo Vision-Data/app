@@ -5,11 +5,11 @@
     :src="require(`@/assets/watermark-color.png`)"
     alt="logo-vision"
   />
-  <h1 class="text-center text-4xl mt-4">Inscription</h1>
+  <h1 class="text-center font-bold text-4xl mt-4">Inscription</h1>
   <section
-    class="flex flex-col md:flex-row justify-center md:space-x-10 items-center mt-4"
+    class="flex flex-col md:flex-row justify-center md:space-x-10 items-center mt-8"
   >
-    <div class="flex flex-col items-center w-96">
+    <form class="flex flex-col items-center w-96" @submit.prevent="register">
       <div class="form-control w-full max-w-xs">
         <label class="label">
           <span class="label-text">Adresse e-mail</span>
@@ -64,18 +64,18 @@
           >Inscription</Button
         >
       </div>
-    </div>
-    <div class="divider divider-horizontal">
+    </form>
+    <div class="divider divider-horizontal font-bold">
       OU
     </div>
     <div class="w-96">
       <div class="flex flex-col">
         <Button class="btn-lg">
-          <img :src="require(`@/assets/LogoGoogle.png`)" class="w-10 mr-4" />
+          <img :src="require(`@/assets/LogoGoogle.png`)" class="w-8 mr-4" />
           Connexion avec Google
         </Button>
         <Button class="btn-lg mt-4 mb-8">
-          <img :src="require(`@/assets/LogoGithub.png`)" class="w-10 mr-4" />
+          <img :src="require(`@/assets/LogoGithub.png`)" class="w-8 mr-4" />
           Connexion avec Github
         </Button>
         <p class="text-center">

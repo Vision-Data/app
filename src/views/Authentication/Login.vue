@@ -1,221 +1,115 @@
 <template>
-  <div class="body">
-    <div class="login-page">
-      <img
-        id="logo"
-        :src="require(`@/assets/watermark-color.png`)"
-        alt="logo-vision"
-      />
-      <div class="third-part">
-        <h2>Connexion</h2>
-        <button>
-          <img
-            class="logo-login"
-            :src="require(`@/assets/LogoGoogle.png`)"
-            alt="logo-vision"
-          />
+  <img
+    id="logo"
+    class="w-96 m-auto"
+    :src="require(`@/assets/watermark-color.png`)"
+    alt="logo-vision"
+  />
+  <h1 class="text-center font-bold text-4xl mt-4">Connexion</h1>
+  <section class="flex flex-col justify-center items-center mt-8">
+    <div class="w-96 mb-2">
+      <div class="flex flex-col">
+        <Button class="btn-lg">
+          <img :src="require(`@/assets/LogoGoogle.png`)" class="w-8 mr-4" />
           Connexion avec Google
-        </button>
-        <button>
-          <img
-            class="logo-login"
-            :src="require(`@/assets/LogoGithub.png`)"
-            alt="logo-vision"
-          />Connexion avec Github
-        </button>
-      </div>
-      <div class="email">
-        <h2>OU</h2>
-        <div class="mail">
-          <label class="login-info" for="email">Adresse Email</label>
-          <input
-            v-model="email"
-            class="login-info"
-            type="email"
-            name="email"
-            placeholder="Adresse Email"
-          />
-        </div>
-        <div class="password">
-          <label class="login-info" for="password">Mot de passe</label>
-          <input
-            v-model="password"
-            class="login-info"
-            type="password"
-            name="passwords"
-            placeholder="Mot de passe"
-          />
-          <div v-if="passwordError != null" class="error">
-            <span>{{ passwordError }}</span>
-          </div>
-        </div>
-      </div>
-      <div class="login">
-        <button class="btn btn-primary login-button" @click="login()">
-          CONNEXION
-        </button>
-        <router-link to="/register">
-          <span class="register">
-            Vous n'avez pas de compte ? Inscrivez-vous !
-          </span>
-        </router-link>
+        </Button>
+        <Button class="btn-lg mt-4">
+          <img :src="require(`@/assets/LogoGithub.png`)" class="w-8 mr-4" />
+          Connexion avec Github
+        </Button>
       </div>
     </div>
-  </div>
+    <div class="divider divider-horizontal font-bold">
+      OU
+    </div>
+    <div class="flex flex-col items-center w-96">
+      <Alert
+        type="error"
+        :label="errors.message"
+        v-if="errors && errors.message"
+      />
+      <form class="w-full max-w-xs" @submit.prevent="login">
+        <div class="form-control w-full max-w-xs">
+          <label class="label">
+            <span class="label-text">Adresse e-mail</span>
+          </label>
+          <input
+            type="text"
+            placeholder="Adresse e-mail"
+            class="input input-bordered w-full max-w-xs"
+            :class="{ 'input-error': errors && errors.email }"
+            v-model="email"
+          />
+          <ErrorLabel :label="errors.email" v-if="errors && errors.email" />
+        </div>
+        <div class="form-control w-full max-w-xs mt-2">
+          <label class="label">
+            <span class="label-text">Mot de passe</span>
+          </label>
+          <input
+            type="password"
+            placeholder="Mot de passe"
+            class="input input-bordered w-full max-w-xs"
+            :class="{ 'input-error': errors && errors.password }"
+            v-model="password"
+          />
+          <ErrorLabel
+            :label="errors.password"
+            v-if="errors && errors.password"
+          />
+        </div>
+        <div class="form-control w-full max-w-xs mt-8">
+          <Button class="btn-primary" @click="login" :isLoading="isLoading"
+            >Connexion</Button
+          >
+        </div>
+      </form>
+
+      <p class="text-center mt-4">
+        <router-link to="/register" class="link-primary"
+          >Vous n'avez pas de compte ? Inscrivez-vous !</router-link
+        >
+      </p>
+    </div>
+  </section>
 </template>
 
 <script>
-const axios = require("axios");
+import Button from "../../components/Commons/Form/Button.vue";
+import ErrorLabel from "../../components/Commons/Form/ErrorLabel.vue";
+import Alert from "../../components/Commons/Alert.vue";
+
+import { login } from "../../services/VisionApi/authentication";
+
 export default {
   name: "Login",
+  components: { Button, ErrorLabel, Alert },
   data() {
     return {
       email: "",
       password: "",
-      passwordError: null,
+      errors: null,
+      isLoading: false,
     };
   },
 
   methods: {
-    login() {
-      const api = process.env.VUE_APP_HOST_API;
-      axios
-        .post(api + `login`, {
-          email: this.email,
-          password: this.password,
-        })
-        .then((response) => {
-          console.log(response);
-          this.$router.push("/");
-        })
-        .catch((error) => {
-          let errors = error.response.data.errors;
+    async login() {
+      this.isLoading = true;
+      const { response, errors } = await login({
+        email: this.email,
+        password: this.password,
+      });
+      this.isLoading = false;
 
-          this.passwordError = null;
-
-          this.passwordError = errors[0].message;
-        });
+      this.errors = errors;
+      console.log(this.errors);
+      if (!this.errors) {
+        this.$store.dispatch("setToken", response.data.token);
+        this.$store.dispatch("setUser", response.data.user);
+        this.$router.push("/");
+      }
     },
   },
 };
 </script>
-
-<style scoped>
-.body {
-  background-color: #f6f6f6;
-  display: flex;
-  justify-content: center;
-  height: 100vh;
-}
-
-:focus-visible {
-  outline: none;
-}
-
-.login-page {
-  width: 40%;
-}
-
-.third-part,
-.mail,
-.password,
-.login {
-  background-color: #f6f6f6;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-}
-
-h2 {
-  color: #242424;
-  font-weight: bold;
-  text-align: center;
-  font-size: 20px;
-}
-
-#logo {
-  width: 50%;
-  margin: 5%;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.third-part button {
-  background-color: white;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #686868;
-  font-weight: 600;
-  font-size: 20px;
-  width: 60%;
-  margin: 2%;
-  padding: 2%;
-  border-radius: 10px;
-}
-
-.third-part button .logo-login {
-  width: 7%;
-  margin-right: 15px;
-}
-label.login-info {
-  width: 55%;
-  text-align: left;
-}
-
-input.login-info {
-  width: 60%;
-  margin: 2% 0% 6% 4%;
-  padding: 2%;
-  border-radius: 10px;
-}
-
-.login-button {
-  width: 60%;
-}
-
-.register {
-  color: #fa810f;
-}
-
-.error {
-  background-color: #f16e6e;
-  border: red solid 1px;
-  border-radius: 5px;
-  color: white;
-  padding: 1%;
-  margin: 1%;
-}
-
-@media (max-width: 1250px) {
-  .login-page {
-    width: 50%;
-  }
-}
-
-@media (max-width: 800px) {
-  .login-page {
-    width: 80%;
-  }
-  #logo {
-    margin: 5%;
-
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
-
-@media (max-width: 500px) {
-  .login-page {
-    width: 90%;
-  }
-  #logo {
-    margin: 5%;
-
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
-</style>
