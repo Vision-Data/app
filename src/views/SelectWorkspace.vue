@@ -35,40 +35,42 @@
           :workspace="workspace"
         />
       </div>
+      <TooltipInformations
+        class="tooltip-open absolute bottom-0 right-32 h-16 w-16"
+        :helperText="$t('selectWorkspace.tooltip')"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-12 w-12"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="#afafaf"
+          stroke-width="2"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+      </TooltipInformations>
     </div>
-  </div>
-  <div
-    class="tooltip tooltip-open absolute bottom-0 right-32 h-16 w-16"
-    :data-tip="$t('selectWorkspace.tooltip')"
-  >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      class="h-12 w-12"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="#afafaf"
-      stroke-width="2"
-    >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-      />
-    </svg>
   </div>
 </template>
 
 <script>
-import DarkMode from "../components/Dark-Mode.vue";
-import WorkspaceCard from "../components/WorkspaceCard.vue";
+import DarkMode from "../components/Commons/DarkMode.vue";
+import WorkspaceCard from "../components/Workspaces/WorkspaceCard.vue";
 import WorkspaceService from "../services/workspace.js";
-import LanguageSelect from "../components/LanguageSelect.vue";
+import LanguageSelect from "../components/Commons/LanguageSelect.vue";
+import TooltipInformations from "../components/Commons/ToolTipInformations.vue";
 
 export default {
   name: "SelectWorkspace",
   components: {
     DarkMode,
     LanguageSelect,
+    TooltipInformations,
     WorkspaceCard,
   },
   data() {
@@ -78,7 +80,7 @@ export default {
   },
   async mounted() {
     const result = await WorkspaceService.fetchAllWorkspaces(
-      "NA.AH8GZTO8eRIIr3sckSTNeNUjp1xLHEtUtwg38UQqKuUuHqTqxIw549PZN1wd"
+      "OQ.MfdiQwkIWeHgdT4M7pj2N9YVjHnvf4ysKL_cytPHqW_rMQnllAiTV62fkacB"
     );
     this.workspaces = result.data;
     console.log(result.data);
