@@ -8,7 +8,8 @@
           alt="logo-vision"
         />
         <select name="workspace" id="worskpace" @change="changeRoute" v-model="selectedValue" class="select select-bordered w-full max-w-xs">
-            <option v-for="workspace in workspaces" :key="workspace.id" :value="workspace.link">
+            <!-- <option selected value="-1">  Worskpace </option> -->
+            <option v-for="workspace in workspaces" :key="workspace.id" :value="workspace.link" :selected="workspace.name=='Workspace 1'">
               {{ workspace.name }}
             </option>
         </select>
@@ -81,7 +82,7 @@ export default {
   },
   data() {
     return {
-      selectedValue: 1,
+      selectedValue: "Workspace 1",
       workspaces: [
         {
           name: "Workspace 1",
