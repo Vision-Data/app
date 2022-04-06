@@ -38,7 +38,15 @@
           placeholder="Nom"
         />
       </div>
-      <input class="input create" type="button" value="CRÉER" @click="create()" />
+      <input
+        class="input create"
+        type="button"
+        value="CRÉER"
+        @click="create()"
+      />
+      <div v-if="ErrorMessage != null" class="error">
+            <span>{{ ErrorMessage }}</span>
+          </div>
     </div>
   </div>
 </template>
@@ -52,28 +60,35 @@ export default {
       colorChoice: "#778822",
       name: "",
       img: null,
+      ErrorMessage: null
     };
   },
   methods: {
     create() {
       const api = process.env.VUE_APP_HOST_API;
       axios
-        .post(api + `workspaces`, 
-        {headers: { Authorization: "Bearer NQ.Ci4NVEWZz27UsPm1wJk0zdYMDBnpi6mSSFCA7r4j829nno5RDoc9L3veX7j5"}},
-        {
-          name: this.name,
-          logo: this.img,
-          color: this.colorChoice,
-
-        })
+        .post(
+          api + `workspaces`,
+          {
+            name: this.name,
+            logo: this.img,
+            color: this.colorChoice,
+          },
+          {
+            headers: {
+              Authorization:
+                "Bearer MTI.ROkXjpHuqKW8a4_G3LUPRRGnV76RwXGvqoRbuGifNHeJyEShKJU227CvOEb9",
+            },
+          }
+        )
         .then((response) => {
           console.log(response);
           this.$router.push("/");
         })
         .catch((error) => {
           let errors = error.response.data.errors;
-          this.passwordError = null;
-          this.passwordError = errors[0].message;
+          this.ErrorMessage = null;
+          this.ErrorMessage = errors[0].message;
         });
     },
   },
@@ -128,7 +143,8 @@ h1 {
   display: flex;
 }
 
-.name, .picture {
+.name,
+.picture {
   display: flex;
   flex-direction: column;
 }
@@ -139,6 +155,16 @@ h1 {
   background-color: #fa810f;
   color: white;
   width: 100%;
+}
+
+
+.error {
+  background-color: #f16e6e;
+  border: red solid 1px;
+  border-radius: 5px;
+  color: white;
+  padding: 1%;
+  margin: 1%;
 }
 
 @media (max-width: 1250px) {
