@@ -28,33 +28,33 @@
       </div>
     </div>
     <div class="container mx-auto px-auto ">
-      <div class="grid sm:grid-rows-8 md:grid-cols-4 gap-8 my-8">
+      <div class="grid sm:grid-rows-8 md:grid-cols-4 my-8">
         <WorkspaceCard
           v-for="workspace in workspaces"
           :key="workspace.id"
           :workspace="workspace"
         />
       </div>
-      <div
-        class="tooltip tooltip-open absolute bottom-0 left-0 h-0 w-16"
-        :data-tip="$t('selectWorkspace.tooltip')"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-12 w-12"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="#afafaf"
-          stroke-width="2"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-      </div>
     </div>
+  </div>
+  <div
+    class="tooltip tooltip-open absolute bottom-0 right-32 h-16 w-16"
+    :data-tip="$t('selectWorkspace.tooltip')"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-12 w-12"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="#afafaf"
+      stroke-width="2"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+      />
+    </svg>
   </div>
 </template>
 
