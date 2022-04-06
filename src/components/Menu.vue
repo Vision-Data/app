@@ -1,26 +1,22 @@
 <template>
-    <div class="menu">
-      <div class="workspace-page">
+  <div class="menu">
+    <div class="workspace-page">
+      <div class="workspace-header">
         <img
           id="logo"
           :src="require(`@/assets/watermark-color.png`)"
           alt="logo-vision"
         />
-        <router-link class="workspaceLogo" to="/">
-          <select class="select select-bordered w-full max-w-xs">
-            <img
-              id="workspaceImg"
-              :src="require(`@/assets/settings.svg`)"
-              alt="img-workspace"
-            />
-            <option disabled="disabled" selected="selected">Workspaces</option>
-            <option>Workspace 1</option>
-            <option>Workspace 2</option>
-            <option>Workspace 3</option>
-          </select>
-        </router-link>
+        <select name="workspace" id="worskpace" @change="changeRoute" v-model="selectedValue" class="select select-bordered w-full max-w-xs">
+            <option v-for="workspace in workspaces" :key="workspace.id" :value="workspace.link">
+              {{ workspace.name }}
+            </option>
+        </select>
         <div class="param">
-          <button class="btn btn-primary">
+          <button
+            @click="$router.push('Settings')"
+            class="btn btn-primary settings"
+          >
             <img
               id="settings"
               :src="require(`@/assets/settings.svg`)"
@@ -30,30 +26,109 @@
           </button>
         </div>
         <div class="divider"></div>
-        <div class="treeStructure"></div>
-        <div class="schemas">
-          <button class="btn btn-secondary">
-            <img
-              id="schemas"
-              :src="require(`@/assets/schemas.svg`)"
-              alt="icon-schemas"
-            />
-            Schémas
-          </button>
-        </div>
+      </div>
+      <div class="treeStructure">
+        <vue3-router-tree :items="routes">
+          <template #item="{ item }">
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              role="img"
+              class="iconify iconify--carbon"
+              width="20px"
+              height="20px"
+              preserveAspectRatio="xMidYMid meet"
+              viewBox="0 0 32 32"
+              style="transform: rotate(360deg)"
+            >
+              <path
+                d="M11.17 6l3.42 3.41l.58.59H28v16H4V6h7.17m0-2H4a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h24a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2H16l-3.41-3.41A2 2 0 0 0 11.17 4z"
+                fill="currentColor"
+              />
+            </svg>
+            <span> {{ item.name }}</span>
+
+            <span v-if="item.info" class="chip">{{ item.info }}</span>
+          </template>
+        </vue3-router-tree>
+      </div>
+      <div class="schemas">
+        <button @click="$router.push('Schemas')" class="btn btn-secondary">
+          <img
+            id="schemas"
+            :src="require(`@/assets/schemas.svg`)"
+            alt="icon-schemas"
+          />
+          Schémas
+        </button>
       </div>
     </div>
+  </div>
 </template>
 
 <script>
+import Vue3RouterTree from "vue3-router-tree";
+
 export default {
   name: "Menu",
-  methods: {},
+  methods: {
+    changeRoute() {
+      this.$router.push(this.selectedValue);
+    }
+  },
+  components: {
+    Vue3RouterTree,
+  },
+  data() {
+    return {
+      selectedValue: 1,
+      workspaces: [
+        {
+          name: "Workspace 1",
+          link: "/settings",
+        },
+        {
+          name: "Workspace 2",
+          link: "/settingss",
+        },
+        {
+          name: "Workspace 3",
+          link: "/settingsss",
+        },
+      ],
+      routes: [
+        {
+          path: "/",
+          name: "Home",
+          hasIcon: true,
+        },
+        {
+          path: "/workspace",
+          name: "Workspace",
+          hasIcon: true,
+        },
+        {
+          path: "/requetes",
+          name: "Requetes",
+          hasIcon: true,
+          children: [
+            {
+              path: "/requete1",
+              name: "Requete1",
+            },
+            {
+              path: "/requete2",
+              name: "Requete2",
+            },
+          ],
+        },
+      ],
+    };
+  },
 };
 </script>
 
 <style>
-
 .menu {
   background-color: #ffffff;
   justify-content: left;
@@ -61,8 +136,15 @@ export default {
   width: 20%;
 }
 
+.workspace-page {
+  height: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 .divider {
-    margin: 1rem;
+  margin: 1rem;
 }
 
 #logo {
@@ -80,7 +162,7 @@ export default {
 }
 
 .btn {
-  width: 10rem;
+  width: auto;
   margin: 5%;
   margin-left: auto;
   margin-right: auto;
@@ -106,7 +188,23 @@ select {
 }
 
 .treeStructure {
-  display: flex;
-  height: 100%;
+  flex: 1;
+}
+
+.treeStructure .justify-between {
+  justify-content: flex-start;
+}
+
+.treeStructure svg {
+  margin-right: 0.5rem;
+  height: 1rem;
+  width: 1rem;
+  min-height: 1rem;
+  min-width: 1rem;
+}
+
+.settings {
+  background-color: transparent;
+  color: var(--p);
 }
 </style>

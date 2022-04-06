@@ -1,5 +1,5 @@
 <template>
-  <div class="select">
+  <div class="selectMethod">
     <select
       v-model="choice"
       :required="true"

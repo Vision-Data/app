@@ -8,16 +8,21 @@ const routes = [
         name: 'Home',
         component: Home
     },
+    {
+        path: '/settings',
+        name: 'Settings',
+        component: () => import('../views/Home.vue')
+    },
+    {
+        path: '/schemas',
+        name: 'Schemas',
+        component: () => import('../views/Home.vue')
+    },
     // {
     //     path: '/register',
     //     name: 'Register',
     //     component: () => import(/* webpackChunkName: "about" */ '../components/Registration.vue')
     // },
-    {
-        path: '/workspace',
-        name: 'Workspace',
-        component: () => import(/* webpackChunkName: "about" */ '../components/Menu.vue')
-    }
     // {
     //     path: '/login',
     //     name: 'Login',
