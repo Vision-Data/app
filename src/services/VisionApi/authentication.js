@@ -15,6 +15,20 @@ export const signUp = async (data) => {
   return { response, errors };
 };
 
+export const login = async (data) => {
+  let response = null;
+  let errors = null;
+
+  try {
+    const result = await axios.post(`login`, data);
+    response = result;
+  } catch (apiErrors) {
+    errors = formatErrors(apiErrors.response.data.errors);
+  }
+
+  return { response, errors };
+};
+
 export const logout = async (token) => {
   await axios.post(`logout`, {
     headers: {
