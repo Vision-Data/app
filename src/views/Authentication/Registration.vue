@@ -74,10 +74,15 @@
           <img :src="require(`@/assets/LogoGoogle.png`)" class="w-10 mr-4" />
           Connexion avec Google
         </Button>
-        <Button class="btn-lg mt-4">
+        <Button class="btn-lg mt-4 mb-8">
           <img :src="require(`@/assets/LogoGithub.png`)" class="w-10 mr-4" />
           Connexion avec Github
         </Button>
+        <p class="text-center">
+          <router-link to="/login" class="link-primary"
+            >Vous avez déjà un compte ? Connectez-vous !</router-link
+          >
+        </p>
       </div>
     </div>
   </section>
