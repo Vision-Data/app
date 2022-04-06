@@ -1,317 +1,132 @@
 <template>
-  <div class="body">
-    <div class="registration-page">
-      <img
-        id="logo"
-        :src="require(`@/assets/watermark-color.png`)"
-        alt="logo-vision"
-      />
-
-      <h2 id="title">Inscription</h2>
-      <div class="choice">
-        <div class="standard">
-          <div id="registration-inputs">
-            <div class="mail">
-              <label class="registration-info" for="email">Adresse Email</label>
-              <input
-                v-model="email"
-                class="registration-info"
-                type="email"
-                name="email"
-                placeholder="Adresse Email"
-              />
-              <div v-if="emailError != null" class="error">
-                <span>{{ emailError }}</span>
-              </div>
-            </div>
-
-            <div id="pseudo">
-              <label class="registration-info" for="pseudo">Pseudo</label>
-              <input
-                v-model="pseudo"
-                class="registration-info"
-                type="text"
-                name="pseudo"
-                placeholder="Nom ou Pseudo"
-              />
-              <div v-if="pseudoError != null" class="error">
-                <span>{{ pseudoError }}</span>
-              </div>
-            </div>
-
-            <div id="password">
-              <label class="registration-info" for="password"
-                >Mot de passe</label
-              >
-              <input
-                v-model="password"
-                class="password-info"
-                type="password"
-                name="password"
-                placeholder="Mot de passe"
-              />
-              <input
-                v-model="passwordConf"
-                class="password-info"
-                type="password"
-                name="password"
-                placeholder="Confirmation du mot de passe"
-              />
-              <div v-if="passwordError != null" class="error">
-                <span>{{ passwordError }}</span>
-              </div>
-            </div>
-          </div>
-          <div class="registration">
-            <button
-              class="btn btn-primary registration-button"
-              @click="register()"
-            >
-              INSCRIPTION
-            </button>
-
-            <router-link to="/login"
-              ><span class="login"
-                >Vous avez déjà un compte ? Connectez-vous !</span
-              ></router-link
-            >
-          </div>
-        </div>
-        <h2>OU</h2>
-        <div class="third-part">
-          <button>
-            <img
-              class="logo-login"
-              :src="require(`@/assets/LogoGoogle.png`)"
-              alt="logo-vision"
-            />
-            Connexion avec Google
-          </button>
-          <button>
-            <img
-              class="logo-login"
-              :src="require(`@/assets/LogoGithub.png`)"
-              alt="logo-vision"
-            />Connexion avec Github
-          </button>
-        </div>
+  <img
+    id="logo"
+    class="w-96 m-auto"
+    :src="require(`@/assets/watermark-color.png`)"
+    alt="logo-vision"
+  />
+  <h1 class="text-center text-4xl mt-4">Inscription</h1>
+  <section
+    class="flex flex-col md:flex-row justify-center md:space-x-10 items-center mt-4"
+  >
+    <div class="flex flex-col items-center w-96">
+      <div class="form-control w-full max-w-xs">
+        <label class="label">
+          <span class="label-text">Adresse e-mail</span>
+        </label>
+        <input
+          type="text"
+          placeholder="Adresse e-mail"
+          class="input input-bordered w-full max-w-xs"
+          :class="{ 'input-error': errors && errors.email }"
+          v-model="email"
+        />
+        <ErrorLabel :label="errors.email" v-if="errors && errors.email" />
+      </div>
+      <div class="form-control w-full max-w-xs mt-2">
+        <label class="label">
+          <span class="label-text">Pseudo</span>
+        </label>
+        <input
+          type="text"
+          placeholder="Pseudo"
+          class="input input-bordered w-full max-w-xs"
+          :class="{ 'input-error': errors && errors.full_name }"
+          v-model="pseudo"
+        />
+        <ErrorLabel
+          :label="errors.full_name"
+          v-if="errors && errors.full_name"
+        />
+      </div>
+      <div class="form-control w-full max-w-xs mt-2">
+        <label class="label">
+          <span class="label-text">Mot de passe</span>
+        </label>
+        <input
+          type="password"
+          placeholder="Mot de passe"
+          class="input input-bordered w-full max-w-xs"
+          :class="{ 'input-error': errors && errors.password }"
+          v-model="password"
+        />
+        <input
+          type="password"
+          placeholder="Confirmation du mot de passe"
+          class="input input-bordered w-full max-w-xs"
+          :class="{ 'input-error': errors && errors.password }"
+          v-model="passwordConf"
+        />
+        <ErrorLabel :label="errors.password" v-if="errors && errors.password" />
+      </div>
+      <div class="form-control w-full max-w-xs mt-8">
+        <Button class="btn-primary" @click="register" :isLoading="isLoading"
+          >Inscription</Button
+        >
       </div>
     </div>
-  </div>
+    <div class="divider divider-horizontal">
+      OU
+    </div>
+    <div class="w-96">
+      <div class="flex flex-col">
+        <Button class="btn-lg">
+          <img :src="require(`@/assets/LogoGoogle.png`)" class="w-10 mr-4" />
+          Connexion avec Google
+        </Button>
+        <Button class="btn-lg mt-4">
+          <img :src="require(`@/assets/LogoGithub.png`)" class="w-10 mr-4" />
+          Connexion avec Github
+        </Button>
+      </div>
+    </div>
+  </section>
 </template>
 
 <script>
-const axios = require("axios");
+import Button from "../components/Commons/Form/Button.vue";
+import ErrorLabel from "../components/Commons/Form/ErrorLabel.vue";
+
+import { signUp } from "../services/VisionApi/authentication";
+
 export default {
   name: "Registration",
+  components: { Button, ErrorLabel },
   data() {
     return {
       email: "",
       pseudo: "",
       password: "",
       passwordConf: "",
-      passwordError: null,
-      emailError: null,
-      pseudoError: null,
+      errors: null,
+      isLoading: false,
     };
   },
   methods: {
-    register() {
-      if (this.password === this.passwordConf) {
-        this.passwordError = null;
-        const api = process.env.VUE_APP_HOST_API;
-        axios
-          .post(api + `register`, {
-            email: this.email,
-            full_name: this.pseudo,
-            password: this.password,
-          })
-          .then((response) => {
-            console.log(response);
-            this.$router.push("/");
-          })
-          .catch((error) => {
-            let errors = error.response.data.errors;
-            this.pseudoError = null;
-            this.emailError = null;
-            this.passwordError = null;
-            errors.forEach((element) => {
-              switch (element.field) {
-                case "full_name":
-                  this.pseudoError = element.message;
-                  break;
-                case "email":
-                  this.emailError = element.message;
-                  break;
-                case "password":
-                  this.passwordError = element.message;
-                  break;
-              }
-            });
-          });
-      } else {
-        this.passwordError = "Les deux mots de passe doivent être identiques";
+    async register() {
+      if (this.password !== this.passwordConf) {
+        this.errors = {
+          password: "Les deux mots de passe doivent être identiques",
+        };
+        return;
+      }
+
+      this.isLoading = true;
+      const { response, errors } = await signUp({
+        email: this.email,
+        full_name: this.pseudo,
+        password: this.password,
+      });
+
+      this.isLoading = false;
+      this.errors = errors;
+
+      if (!this.errors) {
+        this.$store.dispatch("setToken", response.data.token);
+        this.$store.dispatch("setUser", response.data.user);
+        this.$router.push("/");
       }
     },
   },
 };
 </script>
-
-<style scoped>
-.body {
-  background-color: #f6f6f6;
-  display: flex;
-  justify-content: center;
-  height: 100vh;
-}
-
-:focus-visible {
-  outline: none;
-}
-
-h2 {
-  color: #242424;
-  font-weight: bold;
-  text-align: center;
-  font-size: 20px;
-}
-
-.registration-page {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.registration-page #title {
-  margin-bottom: 2%;
-}
-
-#logo {
-  width: 30%;
-  margin: 3%;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.choice {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  width: 80%;
-}
-
-.standard {
-  width: 100%;
-}
-
-label.registration-info {
-  width: 70%;
-  text-align: left;
-}
-
-input.registration-info {
-  width: 75%;
-  margin: 2% 0%;
-  padding: 2%;
-  border-radius: 10px;
-}
-
-#password {
-  margin-bottom: 5%;
-}
-
-.password-info {
-  width: 75%;
-  margin-bottom: 5px;
-  padding: 2%;
-  border-radius: 10px;
-}
-
-.registration-button {
-  width: 75%;
-}
-
-.login {
-  color: #fa810f;
-}
-
-.third-part,
-.mail,
-#pseudo,
-#password,
-.registration {
-  background-color: #f6f6f6;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-}
-
-.third-part button {
-  background-color: white;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #686868;
-  font-weight: 600;
-  font-size: 20px;
-  width: 75%;
-  margin: 2%;
-  padding: 2%;
-  border-radius: 10px;
-}
-
-.third-part button .logo-registration {
-  width: 7%;
-  margin-right: 15px;
-}
-
-.third-part button .logo-login {
-  width: 7%;
-  margin-right: 15px;
-}
-
-.error {
-  background-color: #f16e6e;
-  border: red solid 1px;
-  border-radius: 5px;
-  color: white;
-  padding: 1%;
-  margin: 1%;
-}
-
-@media (max-width: 950px) {
-  .choice {
-    flex-direction: column-reverse;
-  }
-}
-
-@media (max-width: 800px) {
-  .registration-page {
-    width: 80%;
-  }
-  #logo {
-    margin: 5%;
-
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
-
-@media (max-width: 550px) {
-  .registration-page {
-    width: 90%;
-  }
-  #logo {
-    margin: 5%;
-
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .third-part button {
-    font-size: 16px;
-  }
-}
-</style>

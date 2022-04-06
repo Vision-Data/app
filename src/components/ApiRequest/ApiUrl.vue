@@ -77,7 +77,7 @@
 <script>
 import SecurityLock from "./SecurityLock.vue";
 import ToolTipInformations from "../Commons/ToolTipInformations.vue";
-import Button from "../Commons/Button.vue";
+import Button from "../Commons/Form/Button.vue";
 
 export default {
   name: "ApiUrl",
