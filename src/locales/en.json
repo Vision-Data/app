@@ -1,0 +1,34 @@
+{
+  "searchbarTooltip": {
+    "helperText": "The URL is the path to the information, usually starting with https://",
+    "helperPlaceholder": "API URL",
+    "methodGetSelectText": "GET",
+    "methodPostSelectText": "POST",
+    "methodPutSelectText": "PUT",
+    "methodDeleteSelectText": "DELETE",
+    "runButton": "Run",
+    "securityHelperText": "Secure URL",
+    "emptyInputText": "URL's input is empty",
+    "securityHelperTextNoHttps": "Unsecured URL",
+    "loadingText": "Loading..."
+  },
+  "chart": {
+    "title": "Data schema"
+  },
+  "clipboardTooltip": {
+    "helperText": "Paste content",
+    "needsAuthorizationText": "You must allow access to your printing press"
+  },
+  "diagramChoice": {
+    "cancelButton": "Cancel",
+    "selectButton": "Select",
+    "curvesDiagram": "Curves",
+    "donutDiagram": "Donut",
+    "mapDiagram": "Map",
+    "barsDiagram": "Bars"
+  },
+  "responseCard": {
+    "responseTitle": "Results",
+    "responseStatus": "Status"
+  }
+}

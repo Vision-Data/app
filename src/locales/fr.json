@@ -1,0 +1,34 @@
+{
+  "searchbarTooltip": {
+    "helperText": "L'URL est le chemin d'accès des informations débutant généralement par https://",
+    "helperPlaceholder": "URL de l'API",
+    "methodGetSelectText": "Recevoir (GET)",
+    "methodPostSelectText": "Envoyer (POST)",
+    "methodPutSelectText": "Modifier (PUT)",
+    "methodDeleteSelectText": "Supprimer (DELETE)",
+    "runButton": "Lancer",
+    "securityHelperText": "URL Sécurisée",
+    "securityHelperTextNoHttps": "URL non sécurisée",
+    "emptyInputText": "Le champ URL est vide",
+    "loadingText": "Chargement..."
+  },
+  "chart": {
+    "title": "Schéma de données"
+  },
+  "clipboardTooltip": {
+    "helperText": "Coller le contenu",
+    "needsAuthorizationText": "Vous devez autoriser l'accès à votre presse papier"
+  },
+  "diagramChoice": {
+    "cancelButton": "Annuler",
+    "selectButton": "Selectionner",
+    "curvesDiagram": "Courbes",
+    "donutDiagram": "Donut",
+    "mapDiagram": "Carte",
+    "barsDiagram": "Barres"
+  },
+  "responseCard": {
+    "responseTitle": "Résultats",
+    "responseStatus": "État"
+  }
+}

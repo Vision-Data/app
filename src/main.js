@@ -6,14 +6,15 @@ import "./styles/chartist.css";
 import router from "./router";
 
 import "./styles/global.css";
+import i18n from "./i18n";
 
 const store = createStore({
   state: () => ({
     identifier: 0,
     response: null,
     selectedData: {
-      x:[],
-      y:[]
+      x: [],
+      y: [],
     },
   }),
   mutations: {
@@ -51,7 +52,6 @@ const store = createStore({
       return getters.getIdentifier;
     },
     verifyExistanceX({ state, commit }, payload) {
-      console.log(payload);
       if (state.selectedData.x.length === 0) {
         commit("receiveSelectedDataX", payload);
       } else {
@@ -61,7 +61,6 @@ const store = createStore({
       }
     },
     verifyExistanceY({ state, commit }, payload) {
-      console.log(payload);
       if (state.selectedData.y.length === 0) {
         commit("receiveSelectedDataY", payload);
       } else {
@@ -78,5 +77,6 @@ const store = createStore({
 
 const app = createApp(App);
 app.use(store);
+app.use(i18n);
 app.use(router);
 app.mount("#app");
