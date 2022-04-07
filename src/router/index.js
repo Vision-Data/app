@@ -35,7 +35,7 @@ const routes = [
     path: "/workspaces/create",
     name: "NewWorkspaces",
     component: NewWorkspace,
-    meta: { requiresAuth: true },
+    // meta: { requiresAuth: true },
   },
   {
     path: "/:catchAll(.*)*",
