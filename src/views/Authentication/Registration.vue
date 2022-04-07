@@ -65,7 +65,10 @@
         <ErrorLabel :label="errors.password" v-if="errors && errors.password" />
       </div>
       <div class="form-control w-full max-w-xs mt-8">
-        <Button class="btn-primary" @click="register" :isLoading="isLoading"
+        <Button
+          class="btn-primary"
+          @click.prevent="register"
+          :isLoading="isLoading"
           >Inscription</Button
         >
       </div>
@@ -98,7 +101,7 @@ import Button from "../../components/Commons/Form/Button.vue";
 import ErrorLabel from "../../components/Commons/Form/ErrorLabel.vue";
 import Alert from "../../components/Commons/Alert.vue";
 
-import AuthenticationService from "../../services/VisionApi/Authentication";
+import AuthenticationService from "../../services/VisionApi/Authentication.js";
 
 export default {
   name: "Registration",

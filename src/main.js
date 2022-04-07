@@ -12,21 +12,18 @@ import axios from "axios";
 axios.defaults.baseURL = process.env.VUE_APP_HOST_API;
 
 // Intercepts 401 response and logout user
-axios.interceptors.response.use(undefined, async (error) => {
-  if (error) {
-    const originalRequest = error.config;
-
-    if (error.response.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-
-      if (store.getters.isLogin) {
-        store.dispatch("logout");
-      }
-
+axios.interceptors.response.use(
+  function(response) {
+    return response;
+  },
+  function(error) {
+    if (error.response.status === 401) {
+      store.dispatch("logout");
       router.push("/login");
     }
+    return Promise.reject(error);
   }
-});
+);
 
 const app = createApp(App);
 app.use(store);
