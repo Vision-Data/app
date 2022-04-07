@@ -1,5 +1,6 @@
 import Home from "../views/Home.vue";
 import SelectWorkspace from "../views/SelectWorkspace.vue";
+import NewWorkspace from "../views/NewWorkspace.vue";
 import Register from "../views/Authentication/Registration.vue";
 import Login from "../views/Authentication/Login.vue";
 import NotFound from "../views/NotFound.vue";
@@ -25,9 +26,21 @@ const routes = [
     meta: { guest: true },
   },
   {
-    path: "/workspaces",
-    name: "Workspaces",
+    path: "/workspaces/view",
+    name: "SelectWorkspaces",
     component: SelectWorkspace,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/workspaces/:id",
+    name: "Workspaces",
+    component: Home,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/workspaces/create",
+    name: "NewWorkspaces",
+    component: NewWorkspace,
     meta: { requiresAuth: true },
   },
   {

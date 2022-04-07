@@ -39,7 +39,7 @@
               placeholder="Adresse e-mail"
               class="input input-bordered w-full max-w-xs"
               :class="{ 'input-error': errors && errors.email }"
-              v-model="email"
+              v-model="form.email"
             />
             <ErrorLabel :label="errors.email" v-if="errors && errors.email" />
           </div>
@@ -52,7 +52,7 @@
               placeholder="Mot de passe"
               class="input input-bordered w-full max-w-xs"
               :class="{ 'input-error': errors && errors.password }"
-              v-model="password"
+              v-model="form.password"
             />
             <ErrorLabel
               :label="errors.password"
@@ -60,7 +60,7 @@
             />
           </div>
           <div class="form-control w-full max-w-xs mt-4">
-            <Button class="btn-primary" @click="login" :isLoading="isLoading"
+            <Button class="btn btn-primary" @click.prevent="login" :isLoading="isLoading"
               >Connexion</Button
             >
           </div>
