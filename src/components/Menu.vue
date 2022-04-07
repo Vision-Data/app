@@ -7,11 +7,21 @@
           :src="require(`@/assets/watermark-color.png`)"
           alt="logo-vision"
         />
-        <select name="workspace" id="worskpace" @change="changeRoute" v-model="selectedValue" class="select select-bordered w-full max-w-xs">
-            <!-- <option selected value="-1">  Worskpace </option> -->
-            <option v-for="workspace in workspaces" :key="workspace.id" :value="workspace.link" :selected="workspace.name=='Workspace 1'">
-              {{ workspace.name }}
-            </option>
+        <select
+          name="workspace"
+          id="worskpace"
+          @change="changeRoute"
+          v-model="selectedWorkspace"
+          class="select select-bordered w-full max-w-xs loading"
+        >
+          <!-- <option selected value="-1">  Worskpace </option> -->
+          <option
+            v-for="workspace in workspaces"
+            :key="workspace.id"
+            :value="workspace.id"
+          >
+            {{ workspace.name }}
+          </option>
         </select>
         <div class="param">
           <button
@@ -69,34 +79,31 @@
 
 <script>
 import Vue3RouterTree from "vue3-router-tree";
+import WorkspaceService from "../services/VisionApi/Workspace.js";
 
 export default {
   name: "Menu",
   methods: {
     changeRoute() {
-      this.$router.push(this.selectedValue);
-    }
+      this.$router.push(`/workspaces/${this.selectedWorkspace}`);
+    },
   },
   components: {
     Vue3RouterTree,
   },
+  async mounted() {
+    const { response } = await WorkspaceService.findAll(
+      this.$store.state.token
+    );
+
+    this.workspaces = response.data.data;
+    this.selectedWorkspace =
+      this.$route.params.workspaceId || this.workspaces[0]?.id || "";
+  },
   data() {
     return {
-      selectedValue: "Workspace 1",
-      workspaces: [
-        {
-          name: "Workspace 1",
-          link: "/settings",
-        },
-        {
-          name: "Workspace 2",
-          link: "/settingss",
-        },
-        {
-          name: "Workspace 3",
-          link: "/settingsss",
-        },
-      ],
+      selectedWorkspace: "",
+      workspaces: [],
       routes: [
         {
           path: "/",
@@ -129,7 +136,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .menu {
   background-color: #ffffff;
   justify-content: left;

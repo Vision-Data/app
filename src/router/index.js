@@ -41,6 +41,12 @@ const routes = [
     meta: { requiresAuth: true },
   },
   {
+    path: "/workspaces/:workspaceId",
+    name: "Workspace",
+    component: Home,
+    meta: { requiresAuth: true },
+  },
+  {
     path: "/:catchAll(.*)*",
     name: "Not Found",
     component: NotFound,

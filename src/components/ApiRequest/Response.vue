@@ -100,7 +100,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .selected {
   --tw-bg-opacity: 0.4 !important;
 }

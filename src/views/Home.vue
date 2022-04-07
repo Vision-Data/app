@@ -1,12 +1,12 @@
 <template>
   <div class="workspace">
-    <Menu />
+    <Menu v-if="$store.getters.isLogin" />
     <div class="workspace-body">
       <div class="flex justify-center mt-10">
         <header>
           <div class="workspace-head">
             <language-select />
-            <div class="save">
+            <div class="save" v-if="$store.getters.isLogin">
               <button class="btn btn-secondary">
                 <img
                   id="save"
@@ -30,17 +30,18 @@
             />
             <Button
               class="btn-primary runButton"
-              :label="$t('searchbarTooltip.runButton')"
               :isLoading="isLoading"
               @click="fetchData()"
-            />
+              >{{ $t("searchbarTooltip.runButton") }}
+            </Button>
           </div>
           <Button
-            class="btn-sm"
-            label="Modifier Body"
+            class="btn-sm mt-2"
             v-if="needBodyToSend()"
             @click="isBodyOpen = true"
-          />
+          >
+            Modifier Body
+          </Button>
           <RequestBody
             :needBodyToSend="needBodyToSend()"
             v-show="isBodyOpen"
@@ -163,7 +164,6 @@ export default {
 .workspace-head {
   display: flex;
   justify-content: space-between;
-
 }
 
 .workspace-body {
@@ -172,9 +172,9 @@ export default {
 }
 
 .save button {
- display: flex;
- width: auto;
- margin: 0
+  display: flex;
+  width: auto;
+  margin: 0;
 }
 .response-container {
   display: flex;

@@ -77,7 +77,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .array-over {
   box-shadow: inset 0 0 0 2px rgba(98, 98, 98, 0.123);
   border-radius: 1.5rem;
