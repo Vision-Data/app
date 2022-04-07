@@ -66,7 +66,7 @@
           <ErrorLabel :label="errors.password" v-if="errors && errors.password" />
         </div>
         <div class="form-control w-full max-w-xs mt-4">
-          <Button class="btn-primary" @click="register" :isLoading="isLoading"
+          <Button class="btn-primary" @click.prevent="register" :isLoading="isLoading"
             >Inscription</Button
           >
         </div>

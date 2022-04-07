@@ -35,7 +35,7 @@
         </div>
 
         <div class="form-control w-full max-w-xs mt-4">
-          <Button class="btn btn-primary" @click="create" :isLoading="isLoading">Créer</Button>
+          <Button class="btn btn-primary" @click.prevent="create" :isLoading="isLoading">Créer</Button>
         </div>
       </form>
     </div>
