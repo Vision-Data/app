@@ -1,34 +1,39 @@
 <template>
-<div>
-      <nav>
+  <div>
+    <nav>
       <router-link to="/">Accueil</router-link>
       <router-link to="/login">Connexion</router-link>
       <router-link to="/register">Inscription</router-link>
     </nav>
     <div class="flex justify-center mt-10">
       <header>
+        <LanguageSelect />
         <dark-mode />
         <div class="sending-container">
-          <SearchBar
+          <ApiUrl
             class="container w-full max-w-screen-lg"
-            @query="sendQuery"
+            @query="query = $event"
           />
-          <CallApi
+          <SelectHttpMethod
             :query="query"
-            @detectChoice="needBodyToSend = $event"
+            @detectChoice="choice = $event"
             :body="body"
           />
+          <Button
+            class="btn-primary"
+            :isLoading="isLoading"
+            @click="fetchData()"
+            >{{ $t("searchbarTooltip.runButton") }}</Button
+          >
         </div>
-        <button
-          class="btn btn-sm"
-          title="Utiliser ces données"
+        <Button
+          class="btn-sm mt-2"
+          v-if="needBodyToSend()"
           @click="isBodyOpen = true"
-          v-if="needBodyToSend"
+          >Modifier Body</Button
         >
-          Modifier Body
-        </button>
         <RequestBody
-          :needBodyToSend="needBodyToSend"
+          :needBodyToSend="needBodyToSend()"
           v-show="isBodyOpen"
           @close="closing"
           @requestBodyContent="body = $event"
@@ -37,10 +42,9 @@
       </header>
     </div>
     <DiagramChoice @chart="displayChart" @cancel="isOpened" v-show="isOpen" />
-    <button
+    <Button
       id="selectSchema"
-      class="btn btn-circle btn-lg floating-btn"
-      title="Utiliser ces données"
+      class="btn-circle btn-lg floating-btn"
       @click="openModal"
     >
       <svg
@@ -57,52 +61,55 @@
           d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"
         />
       </svg>
-    </button>
+    </Button>
     <div class="response-container">
       <Response @launch-modal="isOpenByResponse" />
       <Chart v-if="isChartDisplayed" />
     </div>
-</div>
+  </div>
 </template>
 
 <script>
-import DarkMode from "../components/Dark-Mode.vue";
-import SearchBar from "../components/SearchBar.vue";
-import Response from "../components/Response.vue";
-import CallApi from "../components/CallApi.vue";
+import DarkMode from "../components/Commons/DarkMode.vue";
+import ApiUrl from "../components/ApiRequest/ApiUrl.vue";
+import Response from "../components/ApiRequest/Response.vue";
+import SelectHttpMethod from "../components/ApiRequest/SelectHttpMethod.vue";
 import Chart from "../components/Charts/Chart.vue";
-import RequestBody from "../components/RequestBody.vue";
-import DiagramChoice from "../components/DiagramChoice.vue";
+import RequestBody from "../components/ApiRequest/RequestBody.vue";
+import DiagramChoice from "../components/ApiRequest/DiagramChoice.vue";
+import LanguageSelect from "../components/Commons/LanguageSelect.vue";
+import Button from "../components/Commons/Form/Button.vue";
+
+import makeRequest from "../services/api-request.js";
 
 export default {
   name: "Home",
   components: {
-    SearchBar,
+    ApiUrl,
     Response,
-    CallApi,
+    SelectHttpMethod,
     DarkMode,
     Chart,
     RequestBody,
     DiagramChoice,
+    LanguageSelect,
+    Button,
   },
   data() {
     return {
       query: "",
       body: "",
+      choice: "GET",
       chart: {},
-      needBodyToSend: false,
       isOpen: false,
       isChartDisplayed: false,
       isBodyOpen: true,
+      isLoading: false,
     };
   },
-
   methods: {
     isOpenByResponse(payload) {
       this.isOpen = payload;
-    },
-    sendQuery(data) {
-      this.query = data;
     },
     isOpened(payload) {
       this.isOpen = payload;
@@ -118,6 +125,19 @@ export default {
       if (payload.name === "curves") {
         this.isChartDisplayed = true;
         this.isOpen = false;
+      }
+    },
+    needBodyToSend() {
+      return this.choice == "POST" || this.choice == "PUT";
+    },
+    async fetchData() {
+      if (this.query === "") {
+        window.alert(this.$t("searchbarTooltip.emptyInputText"));
+      } else {
+        this.isLoading = true;
+        const response = await makeRequest(this.choice, this.query, this.body);
+        this.isLoading = false;
+        this.$store.dispatch("sendRequest", response);
       }
     },
   },
