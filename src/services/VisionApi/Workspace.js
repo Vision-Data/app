@@ -20,13 +20,19 @@ export default class WorkspaceService {
 
     return { response, errors };
   }
-  static async create(userToken, params) {
+  static async create(userToken, data) {
     let response = null;
     let errors = null;
+    console.log(data);
 
     try {
-      response = await axios.get(
-        params ? `workspaces/create${params}` : `workspaces/create`,
+      response = await axios.post(
+        `workspaces`,
+        {
+          name: data.name,
+          logo: data.img,
+          color: data.color,
+        },
         {
           headers: { Authorization: `Bearer ${userToken}` },
         }

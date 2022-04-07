@@ -11,7 +11,7 @@
           <label class="label">
             <span class="label-text">Nom de l'espace de travail</span>
           </label>
-          <input type="text" placeholder="Nom" class="input input-bordered w-full max-w-xs" :class="{ 'input-error': errors && errors.name }" v-model="name" />
+          <input type="text" placeholder="Nom" class="input input-bordered w-full max-w-xs" :class="{ 'input-error': errors && errors.name }" v-model="form.name" />
           <ErrorLabel :label="errors.name" v-if="errors && errors.name" />
         </div>
 
@@ -20,8 +20,8 @@
             <span class="label-text">Couleur</span>
           </label>
           <div class="color-body">
-            <input type="color" :class="{ 'input-error': errors && errors.color }" v-model="color" />
-            <p>{{ color }}</p>
+            <input type="color" :class="{ 'input-error': errors && errors.color }" v-model="form.color" />
+            <p>{{ form.color }}</p>
           </div>
           <ErrorLabel :label="errors.color" v-if="errors && errors.color" />
         </div>
@@ -30,8 +30,8 @@
           <label class="label">
             <span class="label-text">Image de l'espace de travail</span>
           </label>
-          <input type="text" placeholder="Lien" class="input input-bordered w-full max-w-xs" :class="{ 'input-error': errors && errors.img }" v-model="img" />
-          <ErrorLabel :label="errors.img" v-if="errors && errors.img" />
+          <input type="text" placeholder="Lien" class="input input-bordered w-full max-w-xs" :class="{ 'input-error': errors && errors.logo }" v-model="form.logo" />
+          <ErrorLabel :label="errors.logo" v-if="errors && errors.logo" />
         </div>
 
         <div class="form-control w-full max-w-xs mt-4">
@@ -45,31 +45,38 @@
 <script>
 import DarkMode from "../components/Commons/DarkMode.vue";
 import WorkspaceService from "../services/VisionApi/Workspace.js";
+import Button from "../components/Commons/Form/Button.vue";
+import ErrorLabel from "../components/Commons/Form/ErrorLabel.vue";
 
 export default {
   name: "NewWorkspace",
   data() {
     return {
-      color: "#000000",
-      name: "",
-      img: null,
+      form: { color: "#000000", name: "", logo: null },
       errors: null,
+      isLoading: false,
     };
   },
   components: {
     DarkMode,
+    Button,
+    ErrorLabel,
   },
   methods: {
     async create() {
       this.isLoading = true;
       this.errors = null;
-      const { response, errors } = await WorkspaceService.create(this.form);
+      console.log(this.form);
+      const { response, errors } = await WorkspaceService.create(
+        this.$store.state.token,
+        this.form
+      );
       this.isLoading = false;
 
       this.errors = errors;
       if (!this.errors) {
         this.$router.push({
-          name: "Workspace",
+          name: "Workspaces",
           params: { id: response.data.id },
         });
       }

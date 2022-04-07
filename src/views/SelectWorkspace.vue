@@ -120,8 +120,7 @@ export default {
   },
   methods: {
     goToCreatePage() {
-      // TODO : add route to create page
-      // this.$router.push("/workspaces/create");
+      this.$router.push("/workspaces/create");
     },
 
     async goToNextPage() {
