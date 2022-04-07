@@ -1,5 +1,8 @@
 import Home from "../views/Home.vue";
 import SelectWorkspace from "../views/SelectWorkspace.vue";
+import Register from "../views/Authentication/Registration.vue";
+import Login from "../views/Authentication/Login.vue";
+import NotFound from "../views/NotFound.vue";
 import { createWebHistory, createRouter } from "vue-router";
 
 const routes = [
@@ -9,20 +12,25 @@ const routes = [
     component: Home,
   },
   {
+    path: "/register",
+    name: "Register",
+    component: Register,
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: Login,
+  },
+  {
     path: "/workspaces",
     name: "Workspaces",
     component: SelectWorkspace,
   },
-  // {
-  //     path: '/register',
-  //     name: 'Register',
-  //     component: () => import(/* webpackChunkName: "about" */ '../components/Registration.vue')
-  // },
-  // {
-  //     path: '/login',
-  //     name: 'Login',
-  //     component: () => import(/* webpackChunkName: "about" */ '../components/Login.vue')
-  // }
+  {
+    path: "/:catchAll(.*)*",
+    name: "Not Found",
+    component: NotFound,
+  },
 ];
 
 const router = createRouter({

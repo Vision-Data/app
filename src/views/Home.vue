@@ -21,17 +21,17 @@
           />
           <Button
             class="btn-primary"
-            :label="$t('searchbarTooltip.runButton')"
             :isLoading="isLoading"
             @click="fetchData()"
-          />
+            >{{ $t("searchbarTooltip.runButton") }}</Button
+          >
         </div>
         <Button
-          class="btn-sm"
-          label="Modifier Body"
+          class="btn-sm mt-2"
           v-if="needBodyToSend()"
           @click="isBodyOpen = true"
-        />
+          >Modifier Body</Button
+        >
         <RequestBody
           :needBodyToSend="needBodyToSend()"
           v-show="isBodyOpen"
@@ -78,7 +78,7 @@ import Chart from "../components/Charts/Chart.vue";
 import RequestBody from "../components/ApiRequest/RequestBody.vue";
 import DiagramChoice from "../components/ApiRequest/DiagramChoice.vue";
 import LanguageSelect from "../components/Commons/LanguageSelect.vue";
-import Button from "../components/Commons/Button.vue";
+import Button from "../components/Commons/Form/Button.vue";
 
 import makeRequest from "../services/api-request.js";
 
@@ -107,7 +107,6 @@ export default {
       isLoading: false,
     };
   },
-
   methods: {
     isOpenByResponse(payload) {
       this.isOpen = payload;
