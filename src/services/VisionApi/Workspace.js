@@ -30,7 +30,7 @@ export default class WorkspaceService {
         `workspaces`,
         {
           name: data.name,
-          logo: data.img,
+          logo: data.logo,
           color: data.color,
         },
         {

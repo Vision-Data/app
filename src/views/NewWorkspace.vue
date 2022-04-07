@@ -66,7 +66,6 @@ export default {
     async create() {
       this.isLoading = true;
       this.errors = null;
-      console.log(this.form);
       const { response, errors } = await WorkspaceService.create(
         this.$store.state.token,
         this.form

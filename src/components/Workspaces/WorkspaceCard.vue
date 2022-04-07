@@ -1,12 +1,12 @@
 <template>
   <div class="mb-12 mx-auto">
     <div
-      class="card w-36 bg-base-100 shadow-2xl hover:bg-base-300"
+      class="card bg-base-100 shadow-2xl hover:bg-base-300"
       @click="onClick"
     >
       <div class="m-8">
         <figure>
-          <img :src="workspace.logo" alt="Logo" />
+          <img :src="workspace.logo" alt="" class="workspace-logo" />
         </figure>
       </div>
     </div>
@@ -37,5 +37,16 @@ export default {
   color: #afafafaf;
   font-weight: bold;
   white-space: nowrap;
+}
+figure {
+  width: 6rem;
+  height: 6rem;
+}
+.workspace-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background-color: #afafafaf;
+  border-radius: .5rem;
 }
 </style>
