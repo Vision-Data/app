@@ -22,3 +22,7 @@ html {
         --sc: 0 0% 100%;
     }
 }
+
+form input {
+    margin-bottom: 1rem;
+}
