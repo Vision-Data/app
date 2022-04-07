@@ -24,7 +24,7 @@
           placeholder="Adresse e-mail"
           class="input input-bordered w-full max-w-xs"
           :class="{ 'input-error': errors && errors.email }"
-          v-model="email"
+          v-model="form.email"
         />
         <ErrorLabel :label="errors.email" v-if="errors && errors.email" />
       </div>
@@ -37,7 +37,7 @@
           placeholder="Pseudo"
           class="input input-bordered w-full max-w-xs"
           :class="{ 'input-error': errors && errors.full_name }"
-          v-model="pseudo"
+          v-model="form.full_name"
         />
         <ErrorLabel
           :label="errors.full_name"
@@ -53,14 +53,14 @@
           placeholder="Mot de passe"
           class="input input-bordered w-full max-w-xs"
           :class="{ 'input-error': errors && errors.password }"
-          v-model="password"
+          v-model="form.password"
         />
         <input
           type="password"
           placeholder="Confirmation du mot de passe"
           class="input input-bordered w-full max-w-xs"
           :class="{ 'input-error': errors && errors.password }"
-          v-model="passwordConf"
+          v-model="form.passwordConf"
         />
         <ErrorLabel :label="errors.password" v-if="errors && errors.password" />
       </div>
@@ -98,17 +98,19 @@ import Button from "../../components/Commons/Form/Button.vue";
 import ErrorLabel from "../../components/Commons/Form/ErrorLabel.vue";
 import Alert from "../../components/Commons/Alert.vue";
 
-import { signUp } from "../../services/VisionApi/authentication";
+import AuthenticationService from "../../services/VisionApi/Authentication";
 
 export default {
   name: "Registration",
   components: { Button, ErrorLabel, Alert },
   data() {
     return {
-      email: "",
-      pseudo: "",
-      password: "",
-      passwordConf: "",
+      form: {
+        email: "",
+        full_name: "",
+        password: "",
+        passwordConf: "",
+      },
       errors: null,
       isLoading: false,
     };
@@ -123,15 +125,12 @@ export default {
       }
 
       this.isLoading = true;
-      const { response, errors } = await signUp({
-        email: this.email,
-        full_name: this.pseudo,
-        password: this.password,
-      });
+      const { response, errors } = await AuthenticationService.signUp(
+        this.form
+      );
 
       this.isLoading = false;
       this.errors = errors;
-      console.log(this.errors);
 
       if (!this.errors) {
         this.$store.dispatch("setToken", response.data.token);

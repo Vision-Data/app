@@ -38,7 +38,7 @@
             placeholder="Adresse e-mail"
             class="input input-bordered w-full max-w-xs"
             :class="{ 'input-error': errors && errors.email }"
-            v-model="email"
+            v-model="form.email"
           />
           <ErrorLabel :label="errors.email" v-if="errors && errors.email" />
         </div>
@@ -51,7 +51,7 @@
             placeholder="Mot de passe"
             class="input input-bordered w-full max-w-xs"
             :class="{ 'input-error': errors && errors.password }"
-            v-model="password"
+            v-model="form.password"
           />
           <ErrorLabel
             :label="errors.password"
@@ -79,15 +79,17 @@ import Button from "../../components/Commons/Form/Button.vue";
 import ErrorLabel from "../../components/Commons/Form/ErrorLabel.vue";
 import Alert from "../../components/Commons/Alert.vue";
 
-import { login } from "../../services/VisionApi/authentication";
+import AuthenticationService from "../../services/VisionApi/Authentication";
 
 export default {
   name: "Login",
   components: { Button, ErrorLabel, Alert },
   data() {
     return {
-      email: "",
-      password: "",
+      form: {
+        email: "",
+        password: "",
+      },
       errors: null,
       isLoading: false,
     };
@@ -96,10 +98,7 @@ export default {
   methods: {
     async login() {
       this.isLoading = true;
-      const { response, errors } = await login({
-        email: this.email,
-        password: this.password,
-      });
+      const { response, errors } = await AuthenticationService.login(this.form);
       this.isLoading = false;
 
       this.errors = errors;
