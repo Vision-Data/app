@@ -13,7 +13,7 @@
       type="error"
       :label="errors.message"
       v-if="errors && errors.message"
-    />e
+    />
     <form class="flex flex-col items-center w-96" @submit.prevent="register">
       <div class="form-control w-full max-w-xs">
         <label class="label">
@@ -131,6 +131,7 @@ export default {
 
       this.isLoading = false;
       this.errors = errors;
+      console.log(this.errors);
 
       if (!this.errors) {
         this.$store.dispatch("setToken", response.data.token);
