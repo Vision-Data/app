@@ -103,7 +103,6 @@ export default {
       this.isLoading = false;
 
       this.errors = errors;
-      console.log(this.errors);
       if (!this.errors) {
         this.$store.dispatch("setToken", response.data.token);
         this.$store.dispatch("setUser", response.data.user);

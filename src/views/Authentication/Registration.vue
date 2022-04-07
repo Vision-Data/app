@@ -9,6 +9,11 @@
   <section
     class="flex flex-col md:flex-row justify-center md:space-x-10 items-center mt-8"
   >
+    <Alert
+      type="error"
+      :label="errors.message"
+      v-if="errors && errors.message"
+    />e
     <form class="flex flex-col items-center w-96" @submit.prevent="register">
       <div class="form-control w-full max-w-xs">
         <label class="label">
@@ -91,12 +96,13 @@
 <script>
 import Button from "../../components/Commons/Form/Button.vue";
 import ErrorLabel from "../../components/Commons/Form/ErrorLabel.vue";
+import Alert from "../../components/Commons/Alert.vue";
 
 import { signUp } from "../../services/VisionApi/authentication";
 
 export default {
   name: "Registration",
-  components: { Button, ErrorLabel },
+  components: { Button, ErrorLabel, Alert },
   data() {
     return {
       email: "",
