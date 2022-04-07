@@ -26,3 +26,7 @@ html {
 form input {
     margin-bottom: 1rem;
 }
+
+.alert {
+    margin: .5rem 0;
+}

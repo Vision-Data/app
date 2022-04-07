@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="select-workspace">
     <div class="lg:mx-48 md:mx-24 sm:mx-2 my-24">
-      <header class="mb-8">
+      <header class="mb-8"> 
         <LanguageSelect />
         <dark-mode />
       </header>
@@ -11,7 +11,7 @@
         </h2>
 
         <div>
-          <button class="btn btn-primary sm:p-2" @click="this.goToCreatePage()">
+          <button class="btn btn-primary" @click="this.goToCreatePage()">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="h-5 w-7"
@@ -66,7 +66,7 @@
         </div>
       </div>
     </div>
-    <div class="relative h-12 md:w-11/12 flex justify-center">
+    <div class="help">
       <TooltipInformations
         class="tooltip absolute bottom-0 md:right-0 md:h-16"
         :helperText="$t('selectWorkspace.tooltip')"
@@ -166,6 +166,21 @@ export default {
 </script>
 
 <style scoped>
+.select-workspace {
+  max-height: 100vh;
+}
+@media (max-width: 768px) {
+  .select-workspace {
+    margin: 2rem;
+  }
+}
+  
+
+.help {
+  position: fixed;
+  bottom: 2rem;
+  right: 4rem;
+}
 .avatar {
   background-color: #afafaf !important;
 }
@@ -180,6 +195,7 @@ export default {
   font-size: 1.2em;
   color: #afafaf !important;
   background-color: #f0f0f0 !important;
+  transform: translateX(-80%);
 }
 
 .tooltip {
