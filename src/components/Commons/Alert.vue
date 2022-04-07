@@ -1,5 +1,8 @@
 <template>
-  <div class="alert alert-error shadow-lg" v-if="type === 'error'">
+  <div
+    class="alert shadow-lg"
+    :class="{ 'alert-error': type === 'error', 'alert-info': type === 'info' }"
+  >
     <div>
       <span> {{ label }}</span>
     </div>

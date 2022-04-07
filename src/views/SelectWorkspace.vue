@@ -29,6 +29,12 @@
         </div>
       </div>
       <div class="container mx-auto px-auto ">
+        <Alert
+          label="Vous n'avez pas encore d'espace de travail. Créez le vôtre dès maintenant."
+          type="info"
+          v-if="!workspaces.length && isLoading === false"
+        />
+        <Loading v-if="isLoading" />
         <div class="grid sm:grid-rows-8 md:grid-cols-4 my-8">
           <WorkspaceCard
             v-for="workspace in workspaces"
@@ -87,9 +93,11 @@
 <script>
 import DarkMode from "../components/Commons/DarkMode.vue";
 import WorkspaceCard from "../components/Workspaces/WorkspaceCard.vue";
-import WorkspaceService from "../services/workspace.js";
+import WorkspaceService from "../services/VisionApi/Workspace.js";
 import LanguageSelect from "../components/Commons/LanguageSelect.vue";
 import TooltipInformations from "../components/Commons/ToolTipInformations.vue";
+import Alert from "../components/Commons/Alert.vue";
+import Loading from "../components/Commons/Loading.vue";
 
 export default {
   name: "SelectWorkspace",
@@ -98,15 +106,16 @@ export default {
     LanguageSelect,
     TooltipInformations,
     WorkspaceCard,
+    Alert,
+    Loading,
   },
   data() {
     return {
       workspaces: [],
       nextPageUrl: undefined,
       previousPageUrl: undefined,
-      // TODO : get usertoken from session
-      userToken:
-        "MTU.6vYF6VozpQ3wAg91xXlp2X8FosQ5vGQb1CLd-GdI1jyrE6bQfGiOoJUOK_nl",
+      isLoading: true,
+      errors: null,
     };
   },
   methods: {
@@ -117,31 +126,41 @@ export default {
 
     async goToNextPage() {
       if (this.nextPageUrl) {
-        let result = await WorkspaceService.fetchAllWorkspaces(
-          this.userToken,
+        this.isLoading = true;
+        let { response, errors } = await WorkspaceService.findAll(
+          this.$store.state.token,
           this.nextPageUrl
         );
-        this.workspaces = result.data;
-        this.previousPageUrl = result.meta.previous_page_url;
-        this.nextPageUrl = undefined;
+
+        this.isLoading = false;
+        this.workspaces = response.data.data;
+        this.errors = errors;
+        this.previousPageUrl = response.data.meta.previous_page_url;
+        this.nextPageUrl = response.data.meta.next_page_url;
       }
     },
     async goToPreviousPage() {
       if (this.previousPageUrl) {
-        let result = await WorkspaceService.fetchAllWorkspaces(
-          this.userToken,
+        let { response, errors } = await WorkspaceService.findAll(
+          this.$store.state.token,
           this.previousPageUrl
         );
-        this.workspaces = result.data;
-        this.previousPageUrl = undefined;
-        this.nextPageUrl = result.meta.next_page_url;
+
+        this.errors = errors;
+        this.workspaces = response.data.data;
+        this.previousPageUrl = response.data.meta.previous_page_url;
+        this.nextPageUrl = response.data.meta.next_page_url;
       }
     },
   },
   async mounted() {
-    let result = await WorkspaceService.fetchAllWorkspaces(this.userToken);
-    this.workspaces = result.data;
-    this.nextPageUrl = result.meta.next_page_url;
+    let { response, errors } = await WorkspaceService.findAll(
+      this.$store.state.token
+    );
+    this.isLoading = false;
+    this.errors = errors;
+    this.workspaces = response.data.data;
+    this.nextPageUrl = response.data.meta.next_page_url;
   },
 };
 </script>

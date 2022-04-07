@@ -22,8 +22,7 @@ export default {
   props: ["workspace"],
   methods: {
     async onClick() {
-      // TODO : add route workspaces/:id
-      this.$router.push("/workspaces/" + this.workspace.id);
+      this.$router.push(`/workspaces/${this.workspace.id}`);
     },
   },
 };
