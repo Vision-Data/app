@@ -80,15 +80,17 @@ import Button from "../../components/Commons/Form/Button.vue";
 import ErrorLabel from "../../components/Commons/Form/ErrorLabel.vue";
 import Alert from "../../components/Commons/Alert.vue";
 
-import { login } from "../../services/VisionApi/authentication";
+import AuthenticationService from "../../services/VisionApi/Authentication.js";
 
 export default {
   name: "Login",
   components: { Button, ErrorLabel, Alert },
   data() {
     return {
-      email: "",
-      password: "",
+      form: {
+        email: "",
+        password: "",
+      },
       errors: null,
       isLoading: false,
     };
@@ -97,17 +99,14 @@ export default {
   methods: {
     async login() {
       this.isLoading = true;
-      const { response, errors } = await login({
-        email: this.email,
-        password: this.password,
-      });
+      const { response, errors } = await AuthenticationService.login(this.form);
       this.isLoading = false;
 
       this.errors = errors;
       if (!this.errors) {
         this.$store.dispatch("setToken", response.data.token);
         this.$store.dispatch("setUser", response.data.user);
-        this.$router.push("/");
+        this.$router.push("/workspaces");
       }
     },
   },

@@ -100,17 +100,19 @@ import Button from "../../components/Commons/Form/Button.vue";
 import ErrorLabel from "../../components/Commons/Form/ErrorLabel.vue";
 import Alert from "../../components/Commons/Alert.vue";
 
-import { signUp } from "../../services/VisionApi/authentication";
+import AuthenticationService from "../../services/VisionApi/Authentication.js";
 
 export default {
   name: "Registration",
   components: { Button, ErrorLabel, Alert },
   data() {
     return {
-      email: "",
-      pseudo: "",
-      password: "",
-      passwordConf: "",
+      form: {
+        email: "",
+        full_name: "",
+        password: "",
+        passwordConf: "",
+      },
       errors: null,
       isLoading: false,
     };
@@ -125,11 +127,9 @@ export default {
       }
 
       this.isLoading = true;
-      const { response, errors } = await signUp({
-        email: this.email,
-        full_name: this.pseudo,
-        password: this.password,
-      });
+      const { response, errors } = await AuthenticationService.signUp(
+        this.form
+      );
 
       this.isLoading = false;
       this.errors = errors;
@@ -137,7 +137,7 @@ export default {
       if (!this.errors) {
         this.$store.dispatch("setToken", response.data.token);
         this.$store.dispatch("setUser", response.data.user);
-        this.$router.push("/");
+        this.$router.push("/workspaces");
       }
     },
   },
