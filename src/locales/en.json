@@ -12,6 +12,13 @@
     "securityHelperTextNoHttps": "Unsecured URL",
     "loadingText": "Loading..."
   },
+  "selectWorkspace": {
+    "create": "Create a workspace",
+    "title": "Select a workspace",
+    "tooltip": "What is a workspace ?",
+    "next": "Next",
+    "previous": "Previous"
+  },
   "chart": {
     "title": "Data schema"
   },

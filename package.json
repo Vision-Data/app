@@ -24,7 +24,8 @@
     "vue-prism-editor": "^2.0.0-alpha.2",
     "vue-router": "^4.0.12",
     "vue3-router-tree": "^0.2.4",
-    "vuex": "^4.0.2"
+    "vuex": "^4.0.2",
+    "vuex-persistedstate": "^4.1.0"
   },
   "devDependencies": {
     "@intlify/vue-i18n-loader": "^3.0.0",

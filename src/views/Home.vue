@@ -88,8 +88,8 @@ import Chart from "../components/Charts/Chart.vue";
 import RequestBody from "../components/ApiRequest/RequestBody.vue";
 import DiagramChoice from "../components/ApiRequest/DiagramChoice.vue";
 import LanguageSelect from "../components/Commons/LanguageSelect.vue";
-import Button from "../components/Commons/Button.vue";
 import Menu from "../components/Menu.vue";
+import Button from "../components/Commons/Form/Button.vue";
 
 import makeRequest from "../services/api-request.js";
 
@@ -119,7 +119,6 @@ export default {
       isLoading: false,
     };
   },
-
   methods: {
     isOpenByResponse(payload) {
       this.isOpen = payload;

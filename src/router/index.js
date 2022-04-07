@@ -1,39 +1,83 @@
-import Home from '../views/Home.vue'
-import { createWebHistory, createRouter } from 'vue-router';
-
+import Home from "../views/Home.vue";
+import SelectWorkspace from "../views/SelectWorkspace.vue";
+import Register from "../views/Authentication/Registration.vue";
+import Login from "../views/Authentication/Login.vue";
+import NotFound from "../views/NotFound.vue";
+import { createWebHistory, createRouter } from "vue-router";
+import store from "../store";
 
 const routes = [
-    {
-        path: '/',
-        name: 'Home',
-        component: Home
-    },
-    {
-        path: '/settings',
-        name: 'Settings',
-        component: () => import('../views/Home.vue')
-    },
-    {
-        path: '/schemas',
-        name: 'Schemas',
-        component: () => import('../views/Home.vue')
-    },
-    // {
-    //     path: '/register',
-    //     name: 'Register',
-    //     component: () => import(/* webpackChunkName: "about" */ '../components/Registration.vue')
-    // },
-    // {
-    //     path: '/login',
-    //     name: 'Login',
-    //     component: () => import(/* webpackChunkName: "about" */ '../components/Login.vue')
-    // }
+  {
+    path: "/",
+    name: "Home",
+    component: Home,
+  },
+  {
+    path: "/register",
+    name: "Register",
+    component: Register,
+    meta: { guest: true },
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: Login,
+    meta: { guest: true },
+  },
+  {
+    path: "/settings",
+    name: "Settings",
+    component: () => import("../views/Home.vue"),
+  },
+  {
+    path: "/schemas",
+    name: "Schemas",
+    component: () => import("../views/Home.vue"),
+  },
+  {
+    path: "/workspaces",
+    name: "Workspaces",
+    component: SelectWorkspace,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/:catchAll(.*)*",
+    name: "Not Found",
+    component: NotFound,
+  },
 ];
 
 const router = createRouter({
-    history: createWebHistory(),
-    routes,
+  history: createWebHistory(),
+  routes,
+});
+
+// Check if user is authenticated before navigating to a page
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (store.getters.isLogin) {
+      next();
+      return;
+    }
+
+    next("/login");
+  } else {
+    next();
+  }
+});
+
+// Stop user logged from accessing the route with guest meta
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((record) => record.meta.guest)) {
+    if (store.getters.isLogin) {
+      next("/workspaces");
+      return;
+    }
+
+    next();
+  } else {
+    next();
+  }
 });
 
 export default router;
-
