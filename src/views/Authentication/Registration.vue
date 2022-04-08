@@ -95,7 +95,7 @@ export default {
       if (!this.errors) {
         this.$store.dispatch("setToken", response.data.token);
         this.$store.dispatch("setUser", response.data.user);
-        this.$router.push("/workspaces/view");
+        this.$router.push("/workspaces");
       }
     },
   },

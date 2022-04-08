@@ -1,7 +1,7 @@
 <template>
   <div class="select-workspace">
     <div class="lg:mx-48 md:mx-24 sm:mx-2 my-24">
-      <header class="mb-8"> 
+      <header class="mb-8">
         <LanguageSelect />
         <dark-mode />
       </header>
@@ -158,7 +158,12 @@ export default {
     );
     this.isLoading = false;
     this.errors = errors;
+
     this.workspaces = response.data.data;
+    if (!this.errors && this.workspaces.length === 0) {
+      this.goToCreatePage();
+    }
+
     this.nextPageUrl = response.data.meta.next_page_url;
   },
 };
@@ -173,7 +178,6 @@ export default {
     margin: 2rem;
   }
 }
-  
 
 .help {
   position: fixed;

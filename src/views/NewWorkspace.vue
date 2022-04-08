@@ -4,7 +4,11 @@
       <dark-mode />
     </header>
     <div class="new-workspace-form">
-      <img id="logo" :src="require(`@/assets/watermark-color.png`)" alt="logo-vision" />
+      <img
+        id="logo"
+        :src="require(`@/assets/watermark-color.png`)"
+        alt="logo-vision"
+      />
       <h1>Créer un espace de travail</h1>
       <form class="w-full max-w-xs" @submit.prevent="create">
         <div class="form-control w-full max-w-xs name">
@@ -20,7 +24,11 @@
             <span class="label-text">{{ $t('newWorkspace.color') }}</span>
           </label>
           <div class="color-body">
-            <input type="color" :class="{ 'input-error': errors && errors.color }" v-model="form.color" />
+            <input
+              type="color"
+              :class="{ 'input-error': errors && errors.color }"
+              v-model="form.color"
+            />
             <p>{{ form.color }}</p>
           </div>
           <ErrorLabel :label="errors.color" v-if="errors && errors.color" />
@@ -65,7 +73,6 @@ export default {
   methods: {
     async create() {
       this.isLoading = true;
-      this.errors = null;
       const { response, errors } = await WorkspaceService.create(
         this.$store.state.token,
         this.form
@@ -75,8 +82,8 @@ export default {
       this.errors = errors;
       if (!this.errors) {
         this.$router.push({
-          name: "Workspaces",
-          params: { id: response.data.id },
+          name: "Workspace",
+          params: { workspaceId: response.data.id },
         });
       }
     },

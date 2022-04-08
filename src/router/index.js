@@ -26,14 +26,24 @@ const routes = [
     meta: { guest: true },
   },
   {
-    path: "/workspaces/view",
+    path: "/settings",
+    name: "Settings",
+    component: () => import("../views/Home.vue"),
+  },
+  {
+    path: "/schemas",
+    name: "Schemas",
+    component: () => import("../views/Home.vue"),
+  },
+  {
+    path: "/workspaces",
     name: "SelectWorkspaces",
     component: SelectWorkspace,
     meta: { requiresAuth: true },
   },
   {
-    path: "/workspaces/:id",
-    name: "Workspaces",
+    path: "/workspaces/:workspaceId",
+    name: "Workspace",
     component: Home,
     meta: { requiresAuth: true },
   },

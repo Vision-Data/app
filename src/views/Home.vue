@@ -1,27 +1,41 @@
 <template>
-  <div>
-    <div class="flex justify-center mt-10">
-      <header>
-        <LanguageSelect />
-        <dark-mode />
-        <div class="sending-container">
-          <ApiUrl class="container w-full max-w-screen-lg" @query="query = $event" />
-          <SelectHttpMethod :query="query" @detectChoice="choice = $event" :body="body" />
-          <Button class="btn-primary" :isLoading="isLoading" @click="fetchData()">{{ $t("searchbarTooltip.runButton") }}</Button>
-        </div>
-        <Button class="btn-sm mt-2" v-if="needBodyToSend()" @click="isBodyOpen = true">{{ $t("requestBody.editButton") }}</Button>
-        <RequestBody :needBodyToSend="needBodyToSend()" v-show="isBodyOpen" @close="closing" @requestBodyContent="body = $event" class="container w-full md:w-screen max-w-screen-lg md:-mx-60" />
-      </header>
-    </div>
-    <DiagramChoice @chart="displayChart" @cancel="isOpened" v-show="isOpen" />
-    <Button id="selectSchema" class="btn-circle btn-lg floating-btn" @click="openModal">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
-      </svg>
-    </Button>
-    <div class="response-container">
-      <Response @launch-modal="isOpenByResponse" />
-      <Chart v-if="isChartDisplayed" />
+  <div class="workspace">
+    <Menu v-if="$store.getters.isLogin" />
+    <div class="workspace-body">
+      <div class="flex justify-center mt-10">
+        <header>
+          <div class="workspace-head">
+            <language-select />
+            <div class="save" v-if="$store.getters.isLogin">
+              <button class="btn btn-secondary">
+                <img id="save" :src="require(`@/assets/save.svg`)" alt="icon-save" />
+                <span>Sauvegarder la requête</span>
+              </button>
+            </div>
+          </div>
+          <dark-mode />
+          <div class="sending-container">
+            <ApiUrl class="container w-full max-w-screen-lg" @query="query = $event" />
+            <SelectHttpMethod :query="query" @detectChoice="choice = $event" :body="body" />
+            <Button class="btn-primary runButton" :isLoading="isLoading" @click="fetchData()">{{ $t("searchbarTooltip.runButton") }}
+            </Button>
+          </div>
+          <Button class="btn-sm mt-2" v-if="needBodyToSend()" @click="isBodyOpen = true">
+            Modifier Body
+          </Button>
+          <RequestBody :needBodyToSend="needBodyToSend()" v-show="isBodyOpen" @close="closing" @requestBodyContent="body = $event" class="container w-full md:w-screen max-w-screen-lg md:-mx-60" />
+        </header>
+      </div>
+      <DiagramChoice @chart="displayChart" @cancel="isOpened" v-show="isOpen" />
+      <Button id="selectSchema" class="btn-circle btn-lg floating-btn" @click="openModal">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+        </svg>
+      </Button>
+      <div class="response-container">
+        <Response @launch-modal="isOpenByResponse" />
+        <Chart v-if="isChartDisplayed" />
+      </div>
     </div>
   </div>
 </template>
@@ -35,6 +49,7 @@ import SelectHttpMethod from "../components/ApiRequest/SelectHttpMethod.vue";
 import Chart from "../components/Charts/Chart.vue";
 import RequestBody from "../components/ApiRequest/RequestBody.vue";
 import DiagramChoice from "../components/ApiRequest/DiagramChoice.vue";
+import Menu from "../components/Menu.vue";
 import Button from "../components/Commons/Form/Button.vue";
 
 import makeRequest from "../services/api-request.js";
@@ -51,6 +66,7 @@ export default {
     DiagramChoice,
     LanguageSelect,
     Button,
+    Menu,
   },
   data() {
     return {
@@ -102,6 +118,24 @@ export default {
 </script>
 
 <style scoped>
+.workspace {
+  display: flex;
+}
+.workspace-head {
+  display: flex;
+  justify-content: space-between;
+}
+
+.workspace-body {
+  width: 100%;
+  margin: 1rem;
+}
+
+.save button {
+  display: flex;
+  width: auto;
+  margin: 0;
+}
 .response-container {
   display: flex;
 }
@@ -116,9 +150,10 @@ export default {
   max-width: 700px;
   margin-right: 2rem;
 }
-.sending-container > .select {
+.sending-container > .selectMethod {
   margin-top: 1rem;
   padding-left: 0;
+  margin-right: 1rem;
 }
 header {
   width: 100%;
@@ -134,5 +169,15 @@ header {
 }
 #selectSchema svg {
   pointer-events: none;
+}
+
+#save {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin: 0.4rem;
+}
+
+.runButton {
+  margin: 0;
 }
 </style>
