@@ -63,18 +63,24 @@
             :class="{ 'input-error': errors && errors.password }"
             v-model="form.passwordConf"
           />
-          <ErrorLabel :label="errors.password" v-if="errors && errors.password" />
+          <ErrorLabel
+            :label="errors.password"
+            v-if="errors && errors.password"
+          />
         </div>
         <div class="form-control w-full max-w-xs mt-4">
-          <Button class="btn-primary" @click.prevent="register" :isLoading="isLoading"
+          <Button
+            class="btn-primary"
+            @click.prevent="register"
+            :isLoading="isLoading"
             >Inscription</Button
           >
         </div>
-      <p class="text-center mt-4">
-        <router-link to="/login" class="link-primary"
-          >Vous avez déjà un compte ? Connectez-vous !</router-link
-        >
-      </p>
+        <p class="text-center mt-4">
+          <router-link to="/login" class="link-primary"
+            >Vous avez déjà un compte ? Connectez-vous !</router-link
+          >
+        </p>
       </form>
       <!-- <div class="divider divider-horizontal font-bold">
         OU
@@ -137,7 +143,7 @@ export default {
       if (!this.errors) {
         this.$store.dispatch("setToken", response.data.token);
         this.$store.dispatch("setUser", response.data.user);
-        this.$router.push("/workspaces/view");
+        this.$router.push("/workspaces");
       }
     },
   },

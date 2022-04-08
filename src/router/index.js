@@ -26,7 +26,7 @@ const routes = [
     meta: { guest: true },
   },
   {
-    path: "/workspaces/view",
+    path: "/workspaces",
     name: "SelectWorkspaces",
     component: SelectWorkspace,
     meta: { requiresAuth: true },

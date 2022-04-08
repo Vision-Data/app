@@ -23,7 +23,6 @@ export default class WorkspaceService {
   static async create(userToken, data) {
     let response = null;
     let errors = null;
-    console.log(data);
 
     try {
       response = await axios.post(

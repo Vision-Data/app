@@ -60,7 +60,10 @@
             />
           </div>
           <div class="form-control w-full max-w-xs mt-4">
-            <Button class="btn btn-primary" @click.prevent="login" :isLoading="isLoading"
+            <Button
+              class="btn btn-primary"
+              @click.prevent="login"
+              :isLoading="isLoading"
               >Connexion</Button
             >
           </div>
@@ -106,7 +109,7 @@ export default {
       if (!this.errors) {
         this.$store.dispatch("setToken", response.data.token);
         this.$store.dispatch("setUser", response.data.user);
-        this.$router.push("/workspaces/view");
+        this.$router.push("/workspaces");
       }
     },
   },
