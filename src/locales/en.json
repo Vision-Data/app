@@ -21,6 +21,13 @@
     "next": "Next",
     "previous": "Previous"
   },
+  "newWorkspace": {
+    "name": "Name of the workspace",
+    "namePlaceholder": "Name",
+    "color": "Color",
+    "image": "Image of the workspace",
+    "createButton": "Create"
+  },
   "chart": {
     "title": "Data schema"
   },

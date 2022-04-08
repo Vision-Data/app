@@ -21,6 +21,13 @@
     "next": "Suivant",
     "previous": "Précédent"
   },
+  "newWorkspace": {
+    "name": "Nom de l'espace de travail",
+    "namePlaceholder": "Nom",
+    "color": "Couleur",
+    "image": "Image de l'espace de travail",
+    "createButton": "Créer"
+  },
   "chart": {
     "title": "Schéma de données"
   },

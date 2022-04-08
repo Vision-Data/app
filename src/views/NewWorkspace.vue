@@ -9,15 +9,15 @@
       <form class="w-full max-w-xs" @submit.prevent="create">
         <div class="form-control w-full max-w-xs name">
           <label class="label">
-            <span class="label-text">Nom de l'espace de travail</span>
+            <span class="label-text">{{ $t('newWorkspace.name') }}</span>
           </label>
-          <input type="text" placeholder="Nom" class="input input-bordered w-full max-w-xs" :class="{ 'input-error': errors && errors.name }" v-model="form.name" />
+          <input type="text" :placeholder="$t('newWorkspace.namePlaceholder')" class="input input-bordered w-full max-w-xs" :class="{ 'input-error': errors && errors.name }" v-model="form.name" />
           <ErrorLabel :label="errors.name" v-if="errors && errors.name" />
         </div>
 
         <div class="form-control w-full max-w-xs color">
           <label class="label">
-            <span class="label-text">Couleur</span>
+            <span class="label-text">{{ $t('newWorkspace.color') }}</span>
           </label>
           <div class="color-body">
             <input type="color" :class="{ 'input-error': errors && errors.color }" v-model="form.color" />
@@ -28,14 +28,14 @@
 
         <div class="form-control w-full max-w-xs picture">
           <label class="label">
-            <span class="label-text">Image de l'espace de travail</span>
+            <span class="label-text">{{ $t('newWorkspace.image') }}</span>
           </label>
-          <input type="text" placeholder="Lien" class="input input-bordered w-full max-w-xs" :class="{ 'input-error': errors && errors.logo }" v-model="form.logo" />
+          <input type="text" placeholder="https://..." class="input input-bordered w-full max-w-xs" :class="{ 'input-error': errors && errors.logo }" v-model="form.logo" />
           <ErrorLabel :label="errors.logo" v-if="errors && errors.logo" />
         </div>
 
         <div class="form-control w-full max-w-xs mt-4">
-          <Button class="btn btn-primary" @click.prevent="create" :isLoading="isLoading">Créer</Button>
+          <Button class="btn btn-primary" @click.prevent="create" :isLoading="isLoading">{{ $t('newWorkspace.createButton') }}</Button>
         </div>
       </form>
     </div>
