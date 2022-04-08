@@ -1,5 +1,6 @@
 import Home from "../views/Home.vue";
 import SelectWorkspace from "../views/SelectWorkspace.vue";
+import NewWorkspace from "../views/NewWorkspace.vue";
 import Register from "../views/Authentication/Registration.vue";
 import Login from "../views/Authentication/Login.vue";
 import NotFound from "../views/NotFound.vue";
@@ -36,7 +37,7 @@ const routes = [
   },
   {
     path: "/workspaces",
-    name: "Workspaces",
+    name: "SelectWorkspaces",
     component: SelectWorkspace,
     meta: { requiresAuth: true },
   },
@@ -44,6 +45,12 @@ const routes = [
     path: "/workspaces/:workspaceId",
     name: "Workspace",
     component: Home,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/workspaces/create",
+    name: "NewWorkspaces",
+    component: NewWorkspace,
     meta: { requiresAuth: true },
   },
   {

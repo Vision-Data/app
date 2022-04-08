@@ -82,13 +82,13 @@
 
 <script>
 import DarkMode from "../components/Commons/DarkMode.vue";
+import LanguageSelect from "../components/Commons/LanguageSelect.vue";
 import ApiUrl from "../components/ApiRequest/ApiUrl.vue";
 import Response from "../components/ApiRequest/Response.vue";
 import SelectHttpMethod from "../components/ApiRequest/SelectHttpMethod.vue";
 import Chart from "../components/Charts/Chart.vue";
 import RequestBody from "../components/ApiRequest/RequestBody.vue";
 import DiagramChoice from "../components/ApiRequest/DiagramChoice.vue";
-import LanguageSelect from "../components/Commons/LanguageSelect.vue";
 import Menu from "../components/Menu.vue";
 import Button from "../components/Commons/Form/Button.vue";
 
