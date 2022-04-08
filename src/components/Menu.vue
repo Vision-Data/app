@@ -107,7 +107,7 @@ export default {
       routes: [
         {
           path: "/",
-          name: "Home",
+          name: "Workspace",
           hasIcon: true,
         },
         {

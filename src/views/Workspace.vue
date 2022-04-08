@@ -55,7 +55,7 @@ import Button from "../components/Commons/Form/Button.vue";
 import makeRequest from "../services/api-request.js";
 
 export default {
-  name: "Home",
+  name: "Workspace",
   components: {
     ApiUrl,
     Response,

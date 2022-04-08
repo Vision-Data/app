@@ -9,7 +9,7 @@
         :src="require(`@/assets/watermark-color.png`)"
         alt="logo-vision"
       />
-      <h1>Créer un espace de travail</h1>
+      <h1>{{ $t('newWorkspace.title') }}</h1>
       <form class="w-full max-w-xs" @submit.prevent="create">
         <div class="form-control w-full max-w-xs name">
           <label class="label">

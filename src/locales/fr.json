@@ -22,6 +22,7 @@
     "previous": "Précédent"
   },
   "newWorkspace": {
+    "title": "Créer un espace de travail",
     "name": "Nom de l'espace de travail",
     "namePlaceholder": "Nom",
     "color": "Couleur",

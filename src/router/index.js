@@ -1,4 +1,4 @@
-import Home from "../views/Home.vue";
+import Workspace from "../views/Workspace.vue";
 import SelectWorkspace from "../views/SelectWorkspace.vue";
 import NewWorkspace from "../views/NewWorkspace.vue";
 import Register from "../views/Authentication/Registration.vue";
@@ -10,8 +10,8 @@ import store from "../store";
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: Home,
+    name: "Workspace",
+    component: Workspace,
   },
   {
     path: "/register",
@@ -28,12 +28,12 @@ const routes = [
   {
     path: "/settings",
     name: "Settings",
-    component: () => import("../views/Home.vue"),
+    component: () => import("../views/Workspace.vue"),
   },
   {
     path: "/schemas",
     name: "Schemas",
-    component: () => import("../views/Home.vue"),
+    component: () => import("../views/Workspace.vue"),
   },
   {
     path: "/workspaces",
@@ -44,7 +44,7 @@ const routes = [
   {
     path: "/workspaces/:workspaceId",
     name: "Workspace",
-    component: Home,
+    component: Workspace,
     meta: { requiresAuth: true },
   },
   {

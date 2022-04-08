@@ -22,6 +22,7 @@
     "previous": "Previous"
   },
   "newWorkspace": {
+    "title": "Create a new workspace",
     "name": "Name of the workspace",
     "namePlaceholder": "Name",
     "color": "Color",
