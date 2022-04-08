@@ -29,6 +29,11 @@
     "image": "Image de l'espace de travail",
     "createButton": "Créer"
   },
+  "workspace": {
+    "saveButton": "Sauvegarder la requête",
+    "graphs": "Schémas",
+    "settings": "Paramètres"
+  },
   "chart": {
     "title": "Schéma de données"
   },

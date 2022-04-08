@@ -29,6 +29,11 @@
     "image": "Image of the workspace",
     "createButton": "Create"
   },
+  "workspace": {
+    "saveButton": "Save the request",
+    "graphs": "Graphs",
+    "settings": "Settings"
+  },
   "chart": {
     "title": "Data schema"
   },

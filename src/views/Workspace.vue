@@ -9,7 +9,7 @@
             <div class="save" v-if="$store.getters.isLogin">
               <button class="btn btn-secondary">
                 <img id="save" :src="require(`@/assets/save.svg`)" alt="icon-save" />
-                <span>Sauvegarder la requête</span>
+                <span>{{ $t('workspace.saveButton') }}</span>
               </button>
             </div>
           </div>
@@ -21,7 +21,7 @@
             </Button>
           </div>
           <Button class="btn-sm mt-2" v-if="needBodyToSend()" @click="isBodyOpen = true">
-            Modifier Body
+            {{ $t('requestBody.editButton') }}
           </Button>
           <RequestBody :needBodyToSend="needBodyToSend()" v-show="isBodyOpen" @close="closing" @requestBodyContent="body = $event" class="container w-full md:w-screen max-w-screen-lg md:-mx-60" />
         </header>
