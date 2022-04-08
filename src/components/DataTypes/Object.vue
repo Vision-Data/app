@@ -15,7 +15,7 @@
         <b
           class="badge border-transparent object-title tooltip"
           :class="`bg-${color}`"
-          data-tip="Objet"
+          :data-tip="$t('commons.object')"
           >📕 {{ name }}</b
         >
         <template v-for="(component, index) in components" :key="index">

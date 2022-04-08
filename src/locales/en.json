@@ -25,7 +25,10 @@
     "title": "Data schema"
   },
   "commons": {
-    "changeTheme": "Change theme"
+    "changeTheme": "Change theme",
+    "array": "Array",
+    "object": "Object",
+    "emptyPlaceholder": "(empty)"
   },
   "clipboardTooltip": {
     "helperText": "Paste content",

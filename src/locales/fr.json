@@ -25,7 +25,10 @@
     "title": "Schéma de données"
   },
   "commons": {
-    "changeTheme": "Changer le thème"
+    "changeTheme": "Changer le thème",
+    "array": "Tableau",
+    "object": "Objet",
+    "emptyPlaceholder": "(vide)"
   },
   "clipboardTooltip": {
     "helperText": "Coller le contenu",
