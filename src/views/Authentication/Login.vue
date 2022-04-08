@@ -61,7 +61,7 @@
           </div>
           <div class="form-control w-full max-w-xs mt-4">
             <Button
-              class="btn btn-primary"
+              class="btn-primary"
               @click.prevent="login"
               :isLoading="isLoading"
               >Connexion</Button

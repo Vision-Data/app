@@ -78,7 +78,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #change-theme {
   display: flex;
   justify-content: center;

@@ -38,7 +38,7 @@
             placeholder="Pseudo"
             class="input input-bordered w-full max-w-xs"
             :class="{ 'input-error': errors && errors.full_name }"
-            v-model="form.pseudo"
+            v-model="form.full_name"
           />
           <ErrorLabel
             :label="errors.full_name"

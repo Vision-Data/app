@@ -99,8 +99,8 @@ export default {
       this.errors = errors;
       if (!this.errors) {
         this.$router.push({
-          name: "Workspaces",
-          params: { id: response.data.id },
+          name: "Workspace",
+          params: { workspaceId: response.data.id },
         });
       }
     },
