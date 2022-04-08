@@ -28,9 +28,8 @@ axios.interceptors.response.use(
       store.dispatch("logout");
       router.push("/login");
     } else if (error.response.status === 500) {
-      notyf.error(
-        "Nous avons rencontré un problème. Veuillez réessayer plus tard."
-      );
+      const { t } = i18n.global;
+      notyf.error(t("errors.errorServer"));
     }
     return Promise.reject(error);
   }

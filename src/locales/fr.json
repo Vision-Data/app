@@ -32,7 +32,19 @@
   "workspace": {
     "saveButton": "Sauvegarder la requête",
     "graphs": "Schémas",
-    "settings": "Paramètres"
+    "settings": {
+      "name": "Paramètres",
+      "tabs": {
+        "informations": {
+          "name": "Vos informations",
+          "labels": {
+            "email": "Email",
+            "full_name": "Nom complet"
+          }
+        }
+      },
+      "logout": "Déconnexion"
+    }
   },
   "chart": {
     "title": "Schéma de données"
@@ -44,7 +56,9 @@
     "emptyPlaceholder": "(vide)",
     "unavailableTitle": "Ressources Indisponible",
     "unavailableText": "La page que vous recherchez n'existe pas ou plus.",
-    "returnHome": "Retour à l'accueil"
+    "returnHome": "Retour à l'accueil",
+    "closeModal": "Fermer",
+    "logoutSuccess": "Vous avez été déconnecté avec succès."
   },
   "clipboardTooltip": {
     "helperText": "Coller le contenu",
@@ -78,5 +92,8 @@
     "bodyTitle": "Body (Données à envoyer)",
     "saveButton": "Enregistrer",
     "editButton": "Modifier le body"
+  },
+  "errors": {
+    "errorServer": "Impossible de récupérer les informations. Veuillez réessayer plus tard."
   }
 }

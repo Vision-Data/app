@@ -32,7 +32,19 @@
   "workspace": {
     "saveButton": "Save the request",
     "graphs": "Graphs",
-    "settings": "Settings"
+    "settings": {
+      "name": "Settings",
+      "tabs": {
+        "informations": {
+          "name": "Your informations",
+          "labels": {
+            "email": "Email",
+            "full_name": "Full name"
+          }
+        }
+      },
+      "logout": "Logout"
+    }
   },
   "chart": {
     "title": "Data schema"
@@ -44,7 +56,9 @@
     "emptyPlaceholder": "(empty)",
     "unavailableTitle": "Unavailable resource",
     "unavailableText": "The page didn't exist.",
-    "returnHome": "Return to home"
+    "returnHome": "Return to home",
+    "closeModal": "Close",
+    "logoutSuccess": "You have been successfully logged out"
   },
   "clipboardTooltip": {
     "helperText": "Paste content",
@@ -78,5 +92,8 @@
     "bodyTitle": "Body (data to send)",
     "saveButton": "Save",
     "editButton": "Edit Body"
+  },
+  "errors": {
+    "errorServer": "Unable to retrieve information. Please try again later."
   }
 }
