@@ -42,6 +42,18 @@
     "mapDiagram": "Carte",
     "barsDiagram": "Barres"
   },
+  "authentication": {
+    "login": "Connexion",
+    "signup": "Inscription",
+    "emailAdress": "Adresse e-mail",
+    "password": "Mot de passe",
+    "confirmPassword": "Confirmer le Mot de passe",
+    "username": "Nom d'utilisateur",
+    "loginButton": "Connexion",
+    "signupButton": "Inscription",
+    "notRegisteredText": "Vous n'avez pas de compte ? Inscrivez-vous !",
+    "alreadyRegisteredText": "Vous avez déjà un compte ? Connectez-vous !",
+  },
   "responseCard": {
     "responseTitle": "Résultats",
     "responseStatus": "État"
