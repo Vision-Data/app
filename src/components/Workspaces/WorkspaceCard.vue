@@ -1,9 +1,6 @@
 <template>
-  <div class="mb-12 mx-auto">
-    <div
-      class="card bg-base-100 shadow-2xl hover:bg-base-300"
-      @click="onClick"
-    >
+  <div class="workspace-card mb-12 mx-auto">
+    <div class="card bg-base-100 shadow-2xl hover:bg-base-300" @click="onClick">
       <div class="m-8">
         <figure>
           <img :src="workspace.logo" alt="" class="workspace-logo" />
@@ -47,6 +44,6 @@ figure {
   height: 100%;
   object-fit: cover;
   background-color: #afafafaf;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
 }
 </style>

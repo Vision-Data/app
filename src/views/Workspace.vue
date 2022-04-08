@@ -1,6 +1,6 @@
 <template>
   <div class="workspace">
-    <Menu v-if="$store.getters.isLogin" />
+    <Menu v-if="$store.getters.isLogin" :requests="requests" />
     <div class="workspace-body">
       <div class="flex justify-center mt-10">
         <header>
@@ -74,6 +74,7 @@ export default {
       body: "",
       choice: "GET",
       chart: {},
+      requests: [],
       isOpen: false,
       isChartDisplayed: false,
       isBodyOpen: true,
@@ -124,9 +125,6 @@ export default {
           console.log(`The contact with ${id} not found`);
         } else {
           console.table(event.target.result);
-          // this.query = event.target.result.url;
-          // this.choice = event.target.result.method;
-          // this.body = event.target.result.body;
         }
       };
 
@@ -157,6 +155,7 @@ export default {
       };
     },
     getAllRequests(db) {
+      let res = [];
       let request = db
         .transaction("requests", "readonly")
         .objectStore("requests");
@@ -164,10 +163,11 @@ export default {
       request.openCursor().onsuccess = (event) => {
         let cursor = event.target.result;
         if (cursor) {
-          console.log(cursor.value);
+          res.push(cursor.value);
           cursor.continue();
         } else {
           console.log("No more entries!");
+          return res;
         }
       };
       request.onerror = function () {
@@ -189,7 +189,9 @@ export default {
       let req = indexedDB.open("db", 1);
       // let insertRequest = this.insertRequest;
       // let getRequestById = this.getRequestById;
-      let getAllRequests = this.getAllRequests;
+      // let getAllRequests = this.getAllRequests;
+      // let formatRequestsForTree = this.formatRequestsForTree;
+      let createStructure = this.createStructure;
 
       req.onerror = function (event) {
         //TODO: gérer l'affichage de l'erreur (autorisation, etc)
@@ -203,16 +205,6 @@ export default {
         if (!db.objectStoreNames.contains("requests")) {
           db.createObjectStore("requests", { autoIncrement: true });
         }
-
-        // switch (event.oldVersion) {
-        //   case 0:
-        //     // if no database, create one
-        //     break;
-
-        //   case 1:
-        //     // if client had v1 then update
-        //     break;
-        // }
       };
 
       //travailler avec la base de données
@@ -227,9 +219,66 @@ export default {
 
         // insertRequest(db, payload);
         // getRequestById(db, 3);
-        getAllRequests(db);
+
+        // console.log(getAllRequests(db));
+        let content = [
+          {
+            workspaceId: 1,
+            query: "https://api.github.com/users/octocat/repos",
+            choice: "GET",
+            body: "",
+          },
+          {
+            workspaceId: 1,
+            query: "https://api.github.com/users/octocat/repos",
+            choice: "GET",
+            body: "",
+          },
+        ];
+        content.forEach((element) => {
+          createStructure(element.query, element.workspaceId);
+        });
       };
     },
+    createStructure(path, id) {
+      let result = path.split("//")[1]; //get characters after ://
+      let directories = result.split("/"); //array of directories
+      // ['api.github.com', 'users', 'octocat', 'repos']
+      let parent = {
+        workspaceId: id,
+        name: directories.shift(),
+        children: [],
+      };
+
+      this.createDirectories(directories, parent, id);
+      console.log(this.requests);
+      return result;
+    },
+    createDirectories(directories, parent, id) {
+      let name = directories.shift();
+
+      parent.children.push({
+        path: `/workspaces/${id}/requests`,
+        name,
+        hasIcon: true,
+        children: [],
+      });
+
+
+      if (directories.length > 0) {
+        this.createDirectories(directories, parent, id);
+      } else {
+        this.requests = parent;
+      }
+    },
+    // methodd(payload) {
+    //   let tree = [];
+
+    //   payload.forEach((element) => {
+    //     tree.push(formatRequestsForTree(element));
+    //   });
+    //   return tree
+    // }
   },
 };
 </script>

@@ -12,78 +12,37 @@
 
         <div>
           <button class="btn btn-primary" @click="this.goToCreatePage()">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-7"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
-                clip-rule="evenodd"
-              />
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-7" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
             </svg>
             {{ $t("selectWorkspace.create") }}
           </button>
         </div>
       </div>
       <div class="container mx-auto px-auto ">
-        <Alert
-          label="Vous n'avez pas encore d'espace de travail. Créez le vôtre dès maintenant."
-          type="info"
-          v-if="!workspaces.length && isLoading === false"
-        />
+        <Alert label="Vous n'avez pas encore d'espace de travail. Créez le vôtre dès maintenant." type="info" v-if="!workspaces.length && isLoading === false" />
         <Loading v-if="isLoading" />
-        <div class="grid sm:grid-rows-8 md:grid-cols-4 my-8">
-          <WorkspaceCard
-            v-for="workspace in workspaces"
-            :key="workspace.id"
-            :workspace="workspace"
-          />
+        <div class="workspace-grid grid sm:grid-rows-8 md:grid-cols-4 my-8">
+          <WorkspaceCard v-for="workspace in workspaces" :key="workspace.id" :workspace="workspace" />
         </div>
         <div class="btn-group flex justify-center" v-if="workspaces.length">
-          <button
-            class="btn  btn-primary btn-outline w-6/12 md:w-24"
-            v-bind:class="{
+          <button class="btn  btn-primary btn-outline w-6/12 md:w-24" v-bind:class="{
               'opacity-50': !previousPageUrl,
-            }"
-            :disabled="!previousPageUrl"
-            @click="this.goToPreviousPage()"
-          >
+            }" :disabled="!previousPageUrl" @click="this.goToPreviousPage()">
             {{ $t("selectWorkspace.previous") }}
           </button>
-          <button
-            class="btn btn-primary btn-outline w-6/12 md:w-24"
-            v-bind:class="{
+          <button class="btn btn-primary btn-outline w-6/12 md:w-24" v-bind:class="{
               'opacity-50': !nextPageUrl,
-            }"
-            :disabled="!nextPageUrl"
-            @click="this.goToNextPage()"
-          >
+            }" :disabled="!nextPageUrl" @click="this.goToNextPage()">
             {{ $t("selectWorkspace.next") }}
           </button>
         </div>
       </div>
     </div>
     <div class="help">
-      <TooltipInformations
-        class="tooltip absolute bottom-0 md:right-0 md:h-16"
-        :helperText="$t('selectWorkspace.tooltip')"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-12 w-12"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="#afafaf"
-          stroke-width="2"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
+      <TooltipInformations class="tooltip absolute bottom-0 md:right-0 md:h-16" :helperText="$t('selectWorkspace.tooltip')">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="#afafaf" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
       </TooltipInformations>
     </div>
@@ -177,6 +136,10 @@ export default {
   .select-workspace {
     margin: 2rem;
   }
+}
+
+.workspace-grid {
+  gap: 1rem 2rem;
 }
 
 .help {

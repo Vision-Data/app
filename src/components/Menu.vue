@@ -17,7 +17,7 @@
         <div class="divider"></div>
       </div>
       <div class="tree-structure">
-        <vue3-router-tree :items="routes">
+        <vue3-router-tree :items="requestss">
           <template #item="{ item }">
             <div class="tree-structure-container">
               <div class="tree-structure-head">
@@ -47,28 +47,13 @@ import WorkspaceService from "../services/VisionApi/Workspace.js";
 
 export default {
   name: "Menu",
+  props: ["requests"],
   methods: {
     changeRoute() {
       this.$router.push(`/workspaces/${this.selectedWorkspace}`);
     },
-  },
-  components: {
-    Vue3RouterTree,
-  },
-  async mounted() {
-    const { response } = await WorkspaceService.findAll(
-      this.$store.state.token
-    );
-
-    this.workspaces = response.data.data;
-    this.selectedWorkspace =
-      this.$route.params.workspaceId || this.workspaces[0]?.id || "";
-  },
-  data() {
-    return {
-      selectedWorkspace: "",
-      workspaces: [],
-      routes: [
+    changeData() {
+      this.requestss = [
         {
           path: "/",
           name: "Workspace",
@@ -94,7 +79,28 @@ export default {
             },
           ],
         },
-      ],
+      ];
+    },
+  },
+  components: {
+    Vue3RouterTree,
+  },
+  async mounted() {
+    const { response } = await WorkspaceService.findAll(
+      this.$store.state.token
+    );
+
+    this.workspaces = response.data.data;
+    this.selectedWorkspace =
+      this.$route.params.workspaceId || this.workspaces[0]?.id || "";
+      this.changeData();
+  },
+  data() {
+    return {
+      test: 0,
+      selectedWorkspace: "",
+      workspaces: [],
+      requestss: [],
     };
   },
 };
@@ -188,7 +194,6 @@ export default {
 .tree-structure-chip {
   margin-left: auto;
 }
-
 
 .settings {
   background-color: transparent;
