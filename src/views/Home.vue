@@ -1,10 +1,5 @@
 <template>
   <div>
-    <nav>
-      <router-link to="/">Accueil</router-link>
-      <router-link to="/login">Connexion</router-link>
-      <router-link to="/register">Inscription</router-link>
-    </nav>
     <div class="flex justify-center mt-10">
       <header>
         <LanguageSelect />

@@ -52,7 +52,7 @@
     "loginButton": "Connexion",
     "signupButton": "Inscription",
     "notRegisteredText": "Vous n'avez pas de compte ? Inscrivez-vous !",
-    "alreadyRegisteredText": "Vous avez déjà un compte ? Connectez-vous !",
+    "alreadyRegisteredText": "Vous avez déjà un compte ? Connectez-vous !"
   },
   "responseCard": {
     "responseTitle": "Résultats",

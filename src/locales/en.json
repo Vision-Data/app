@@ -42,6 +42,18 @@
     "mapDiagram": "Map",
     "barsDiagram": "Bars"
   },
+  "authentication": {
+    "login": "Login",
+    "signup": "Sign Up",
+    "emailAdress": "Email address",
+    "password": "Password",
+    "confirmPassword": "Confirm the password",
+    "username": "Username",
+    "loginButton": "Login",
+    "signupButton": "Sign Up",
+    "notRegisteredText": "You don't have any account, sign up now !",
+    "alreadyRegisteredText": "You already have an account, login here !"
+  },
   "responseCard": {
     "responseTitle": "Results",
     "responseStatus": "Status"
