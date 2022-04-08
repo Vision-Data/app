@@ -10,7 +10,9 @@
     "securityHelperText": "Secure URL",
     "emptyInputText": "URL's input is empty",
     "securityHelperTextNoHttps": "Unsecured URL",
-    "loadingText": "Loading..."
+    "loadingText": "Loading...",
+    "insertApiPath": "Insert Api Path",
+    "clipboardAccess": "You must authorize access to the clipboard to use this option"
   },
   "selectWorkspace": {
     "create": "Create a workspace",

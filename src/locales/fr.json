@@ -10,7 +10,9 @@
     "securityHelperText": "URL Sécurisée",
     "securityHelperTextNoHttps": "URL non sécurisée",
     "emptyInputText": "Le champ URL est vide",
-    "loadingText": "Chargement..."
+    "loadingText": "Chargement...",
+    "insertApiPath": "Insérer le chemin l'API",
+    "clipboardAccess": "Vous devez autoriser l'accès à votre presse papier"
   },
   "selectWorkspace": {
     "create": "Créer un espace de travail",
