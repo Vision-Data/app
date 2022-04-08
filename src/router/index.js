@@ -10,8 +10,8 @@ import store from "../store";
 const routes = [
   {
     path: "/",
-    name: "Workspace",
-    component: Workspace,
+    name: "Home",
+    component: SelectWorkspace,
   },
   {
     path: "/register",
