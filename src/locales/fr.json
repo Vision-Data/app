@@ -35,7 +35,10 @@
     "changeTheme": "Changer le thème",
     "array": "Tableau",
     "object": "Objet",
-    "emptyPlaceholder": "(vide)"
+    "emptyPlaceholder": "(vide)",
+    "unavailableTitle": "Ressources Indisponible",
+    "unavailableText": "La page que vous recherchez n'existe pas ou plus.",
+    "returnHome": "Retour à l'accueil"
   },
   "clipboardTooltip": {
     "helperText": "Coller le contenu",

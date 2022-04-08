@@ -35,7 +35,10 @@
     "changeTheme": "Change theme",
     "array": "Array",
     "object": "Object",
-    "emptyPlaceholder": "(empty)"
+    "emptyPlaceholder": "(empty)",
+    "unavailableTitle": "Unavailable resource",
+    "unavailableText": "The page didn't exist.",
+    "returnHome": "Return to home"
   },
   "clipboardTooltip": {
     "helperText": "Paste content",
