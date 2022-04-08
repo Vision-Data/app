@@ -7,10 +7,10 @@
           <div class="workspace-head">
             <language-select />
             <div class="save" v-if="$store.getters.isLogin">
-              <button class="btn btn-secondary">
+              <Button class="btn-secondary" @click="saveRequest">
                 <img id="save" :src="require(`@/assets/save.svg`)" alt="icon-save" />
                 <span>{{ $t('workspace.saveButton') }}</span>
-              </button>
+              </Button>
             </div>
           </div>
           <dark-mode />
@@ -112,6 +112,67 @@ export default {
         this.isLoading = false;
         this.$store.dispatch("sendRequest", response);
       }
+    },
+    saveRequest() {
+      const payload = {
+        workspaceId: this.$route.params.workspaceId,
+        query: this.query,
+        body: this.body,
+        choice: this.choice,
+      };
+
+      let req = indexedDB.open("db", 1);
+
+      req.onerror = function (event) {
+        //TODO: gérer l'affichage de l'erreur (autorisation, etc)
+        console.error(event);
+      };
+
+      //si le client n'a pas de base de données (initialisation)
+      req.onupgradeneeded = function () {
+        let db = req.result;
+
+        if (!db.objectStoreNames.contains("requests")) {
+          db.createObjectStore("requests", { autoIncrement: true });
+        }
+
+        // switch (event.oldVersion) {
+        //   case 0:
+        //     // if no database, create one
+        //     break;
+
+        //   case 1:
+        //     // if client had v1 then update
+        //     break;
+        // }
+      };
+
+      //travailler avec la base de données
+      req.onsuccess = function () {
+        let db = req.result;
+
+        //close db on update
+        db.versiononchange = function () {
+          db.close();
+          alert("Database is outdated, please reload the page.");
+        };
+
+        let request = db
+          .transaction("requests", "readwrite")
+          .objectStore("requests")
+          .put(payload);
+
+        request.onsuccess = function () {
+          console.log("Request added to database", request.result);
+        };
+        request.onerror = function () {
+          console.error("Error adding request to database");
+        };
+        request.oncomplete = function () {
+          console.log("Request added to database");
+          db.close();
+        };
+      };
     },
   },
 };
