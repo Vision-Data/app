@@ -2,16 +2,6 @@ html {
     overflow-x: hidden;
 }
 
-[data-theme=dark] {
-    --p: 29 99% 59%;
-    --pf: 29 95.9% 52%;
-    --pc: 0 0% 100%;
-    --s: 44 100% 49%;
-    --sf: 43 100% 46.1%;
-    --sc: 0 0% 100%;
-}
-
-
 @media (prefers-color-scheme: dark) {
     :root {
         --p: 29 99% 59%;
@@ -20,8 +10,25 @@ html {
         --s: 44 100% 49%;
         --sf: 43 100% 46.1%;
         --sc: 0 0% 100%;
+        --menu: #4e5666;
     }
 }
+
+:root {
+    --menu: #f1f1f1;
+}
+
+[data-theme=dark] {
+    --p: 29 99% 59%;
+    --pf: 29 95.9% 52%;
+    --pc: 0 0% 100%;
+    --s: 44 100% 49%;
+    --sf: 43 100% 46.1%;
+    --sc: 0 0% 100%;
+    --menu: #4e5666;
+}
+
+
 
 form input {
     margin-bottom: 1rem;

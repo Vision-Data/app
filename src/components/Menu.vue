@@ -2,74 +2,38 @@
   <div class="menu">
     <div class="workspace-page">
       <div class="workspace-header">
-        <img
-          id="logo"
-          :src="require(`@/assets/watermark-color.png`)"
-          alt="logo-vision"
-        />
-        <select
-          name="workspace"
-          id="worskpace"
-          @change="changeRoute"
-          v-model="selectedWorkspace"
-          class="select select-bordered w-full max-w-xs loading"
-        >
-          <!-- <option selected value="-1">  Worskpace </option> -->
-          <option
-            v-for="workspace in workspaces"
-            :key="workspace.id"
-            :value="workspace.id"
-          >
+        <img id="logo" :src="require(`@/assets/watermark-color.png`)" alt="logo-vision" />
+        <select name="workspace" id="workspace-select" @change="changeRoute" v-model="selectedWorkspace" class="select select-bordered w-full max-w-xs loading">
+          <option v-for="workspace in workspaces" :key="workspace.id" :value="workspace.id">
             {{ workspace.name }}
           </option>
         </select>
         <div class="param">
-          <button
-            @click="$router.push('Settings')"
-            class="btn btn-primary settings"
-          >
-            <img
-              id="settings"
-              :src="require(`@/assets/settings.svg`)"
-              alt="icon-settings"
-            />
+          <button @click="$router.push('Settings')" class="btn btn-primary settings">
+            <img id="settings" :src="require(`@/assets/settings.svg`)" alt="icon-settings" />
             {{ $t('workspace.settings') }}
           </button>
         </div>
         <div class="divider"></div>
       </div>
-      <div class="treeStructure">
+      <div class="tree-structure">
         <vue3-router-tree :items="routes">
           <template #item="{ item }">
-            <svg
-              aria-hidden="true"
-              focusable="false"
-              role="img"
-              class="iconify iconify--carbon"
-              width="20px"
-              height="20px"
-              preserveAspectRatio="xMidYMid meet"
-              viewBox="0 0 32 32"
-              style="transform: rotate(360deg)"
-            >
-              <path
-                d="M11.17 6l3.42 3.41l.58.59H28v16H4V6h7.17m0-2H4a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h24a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2H16l-3.41-3.41A2 2 0 0 0 11.17 4z"
-                fill="currentColor"
-              />
-            </svg>
-            <span> {{ item.name }}</span>
-
-            <span v-if="item.info" class="chip">{{ item.info }}</span>
+            <div class="tree-structure-container">
+              <div class="tree-structure-head">
+                <svg aria-hidden="true" focusable="false" role="img" class="tree-structure-icon iconify iconify--carbon" width="20px" height="20px" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32" style="transform: rotate(360deg)">
+                  <path d="M11.17 6l3.42 3.41l.58.59H28v16H4V6h7.17m0-2H4a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h24a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2H16l-3.41-3.41A2 2 0 0 0 11.17 4z" fill="currentColor" />
+                </svg>
+                <span class="tree-structure-name"> {{ item.name }}</span>
+              </div>
+              <span v-if="item.info" class="tree-structure-chip chip">{{ item.info }}</span>
+            </div>
           </template>
         </vue3-router-tree>
       </div>
       <div class="schemas">
         <button @click="$router.push('Schemas')" class="btn btn-secondary">
-          <img
-            id="schemas"
-            :src="require(`@/assets/schemas.svg`)"
-            alt="icon-schemas"
-          />
+          <img id="schemas" :src="require(`@/assets/schemas.svg`)" alt="icon-schemas" />
           {{ $t('workspace.graphs') }}
         </button>
       </div>
@@ -138,7 +102,7 @@ export default {
 
 <style scoped>
 .menu {
-  background-color: #ffffff;
+  background-color: var(--menu);
   justify-content: left;
   display: flex;
   width: 20%;
@@ -149,37 +113,39 @@ export default {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  padding: 1.5rem;
 }
 
 .divider {
   margin: 1rem;
 }
 
+.workspaceLogo,
+.btn,
 #logo {
-  width: 70%;
-  margin: 5%;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto;
 }
 
 #settings,
 #schemas {
   width: 1.5rem;
   height: 1.5rem;
-  margin: 0.4rem;
+  margin-right: 0.5rem;
+}
+
+[data-theme="dark"] #settings,
+[data-theme="dark"] #schemas {
+  filter: invert(1);
 }
 
 .btn {
   width: auto;
-  margin: 5%;
-  margin-left: auto;
-  margin-right: auto;
   display: flex;
 }
-/* 
-select {
 
-} */
+#workspace-select {
+  margin: 1rem 0;
+}
 
 #workspaceImg {
   width: 4rem;
@@ -189,27 +155,40 @@ select {
 .workspaceLogo {
   height: auto;
   width: 10rem;
-  margin: 5%;
-  margin-left: auto;
-  margin-right: auto;
   display: flex;
 }
 
-.treeStructure {
+.tree-structure {
   flex: 1;
 }
-
-.treeStructure .justify-between {
-  justify-content: flex-start;
+.tree-structure > div {
+  margin-left: -1rem;
 }
 
-.treeStructure svg {
+.tree-structure-icon {
   margin-right: 0.5rem;
   height: 1rem;
   width: 1rem;
   min-height: 1rem;
   min-width: 1rem;
 }
+
+.tree-structure-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.tree-structure-head {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.tree-structure-chip {
+  margin-left: auto;
+}
+
 
 .settings {
   background-color: transparent;
