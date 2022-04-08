@@ -24,6 +24,9 @@
   "chart": {
     "title": "Schéma de données"
   },
+  "commons": {
+    "changeTheme": "Changer le thème"
+  },
   "clipboardTooltip": {
     "helperText": "Coller le contenu",
     "needsAuthorizationText": "Vous devez autoriser l'accès à votre presse papier"

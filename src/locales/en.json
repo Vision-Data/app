@@ -24,6 +24,9 @@
   "chart": {
     "title": "Data schema"
   },
+  "commons": {
+    "changeTheme": "Change theme"
+  },
   "clipboardTooltip": {
     "helperText": "Paste content",
     "needsAuthorizationText": "You must allow access to your printing press"
