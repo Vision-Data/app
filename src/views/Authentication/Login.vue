@@ -1,12 +1,7 @@
 <template>
   <div class="login">
-    <img
-      id="logo"
-      class="w-96"
-      :src="require(`@/assets/watermark-color.png`)"
-      alt="logo-vision mb-8"
-    />
-    <h1 class="text-center font-bold text-4xl mt-4">Connexion</h1>
+    <img id="logo" class="w-96" :src="require(`@/assets/watermark-color.png`)" alt="logo-vision mb-8" />
+    <h1 class="text-center font-bold text-4xl mt-4">{{ $t('authentication.login') }}</h1>
     <section class="flex flex-col justify-center items-center mt-8">
       <!-- <div class="w-96 mb-2">
         <div class="flex flex-col">
@@ -24,54 +19,28 @@
         OU
       </div>  -->
       <div class="flex flex-col items-center w-96">
-        <Alert
-          type="error"
-          :label="errors.message"
-          v-if="errors && errors.message"
-        />
+        <Alert type="error" :label="errors.message" v-if="errors && errors.message" />
         <form class="w-full max-w-xs" @submit.prevent="login">
           <div class="form-control w-full max-w-xs">
             <label class="label">
-              <span class="label-text">Adresse e-mail</span>
+              <span class="label-text">{{ $t('authentication.emailAdress') }}</span>
             </label>
-            <input
-              type="text"
-              placeholder="Adresse e-mail"
-              class="input input-bordered w-full max-w-xs"
-              :class="{ 'input-error': errors && errors.email }"
-              v-model="form.email"
-            />
+            <input type="text" :placeholder="$t('authentication.emailAdress')" class="input input-bordered w-full max-w-xs" :class="{ 'input-error': errors && errors.email }" v-model="form.email" />
             <ErrorLabel :label="errors.email" v-if="errors && errors.email" />
           </div>
           <div class="form-control w-full max-w-xs">
             <label class="label">
-              <span class="label-text">Mot de passe</span>
+              <span class="label-text">{{ $t('authentication.password') }}</span>
             </label>
-            <input
-              type="password"
-              placeholder="Mot de passe"
-              class="input input-bordered w-full max-w-xs"
-              :class="{ 'input-error': errors && errors.password }"
-              v-model="form.password"
-            />
-            <ErrorLabel
-              :label="errors.password"
-              v-if="errors && errors.password"
-            />
+            <input type="password" :placeholder="$t('authentication.password')" class="input input-bordered w-full max-w-xs" :class="{ 'input-error': errors && errors.password }" v-model="form.password" />
+            <ErrorLabel :label="errors.password" v-if="errors && errors.password" />
           </div>
           <div class="form-control w-full max-w-xs mt-4">
-            <Button
-              class="btn-primary"
-              @click.prevent="login"
-              :isLoading="isLoading"
-              >Connexion</Button
-            >
+            <Button class="btn btn-primary" @click.prevent="login" :isLoading="isLoading">{{ $t('authentication.loginButton') }}</Button>
           </div>
         </form>
         <p class="text-center mt-4">
-          <router-link to="/register" class="link-primary"
-            >Vous n'avez pas de compte ? Inscrivez-vous !</router-link
-          >
+          <router-link to="/register" class="link-primary">{{ $t('authentication.notRegisteredText') }}</router-link>
         </p>
       </div>
     </section>

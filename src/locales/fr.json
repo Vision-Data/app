@@ -10,7 +10,9 @@
     "securityHelperText": "URL Sécurisée",
     "securityHelperTextNoHttps": "URL non sécurisée",
     "emptyInputText": "Le champ URL est vide",
-    "loadingText": "Chargement..."
+    "loadingText": "Chargement...",
+    "insertApiPath": "Insérer le chemin l'API",
+    "clipboardAccess": "Vous devez autoriser l'accès à votre presse papier"
   },
   "selectWorkspace": {
     "create": "Créer un espace de travail",
@@ -19,8 +21,30 @@
     "next": "Suivant",
     "previous": "Précédent"
   },
+  "newWorkspace": {
+    "title": "Créer un espace de travail",
+    "name": "Nom de l'espace de travail",
+    "namePlaceholder": "Nom",
+    "color": "Couleur",
+    "image": "Image de l'espace de travail",
+    "createButton": "Créer"
+  },
+  "workspace": {
+    "saveButton": "Sauvegarder la requête",
+    "graphs": "Schémas",
+    "settings": "Paramètres"
+  },
   "chart": {
     "title": "Schéma de données"
+  },
+  "commons": {
+    "changeTheme": "Changer le thème",
+    "array": "Tableau",
+    "object": "Objet",
+    "emptyPlaceholder": "(vide)",
+    "unavailableTitle": "Ressources Indisponible",
+    "unavailableText": "La page que vous recherchez n'existe pas ou plus.",
+    "returnHome": "Retour à l'accueil"
   },
   "clipboardTooltip": {
     "helperText": "Coller le contenu",
@@ -34,8 +58,25 @@
     "mapDiagram": "Carte",
     "barsDiagram": "Barres"
   },
+  "authentication": {
+    "login": "Connexion",
+    "signup": "Inscription",
+    "emailAdress": "Adresse e-mail",
+    "password": "Mot de passe",
+    "confirmPassword": "Confirmer le Mot de passe",
+    "username": "Nom d'utilisateur",
+    "loginButton": "Connexion",
+    "signupButton": "Inscription",
+    "notRegisteredText": "Vous n'avez pas de compte ? Inscrivez-vous !",
+    "alreadyRegisteredText": "Vous avez déjà un compte ? Connectez-vous !"
+  },
   "responseCard": {
     "responseTitle": "Résultats",
     "responseStatus": "État"
+  },
+  "requestBody": {
+    "bodyTitle": "Body (Données à envoyer)",
+    "saveButton": "Enregistrer",
+    "editButton": "Modifier le body"
   }
 }

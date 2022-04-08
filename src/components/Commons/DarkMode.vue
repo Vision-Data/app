@@ -3,7 +3,8 @@
     id="change-theme"
     @click="changeTheme()"
     class="bg-base-300"
-    aria-label="Changer le thème"
+    :aria-label="$t('commons.changeTheme')"
+    :title="$t('commons.changeTheme')"
   >
     <div class="sun" v-if="!isDark">
       <svg

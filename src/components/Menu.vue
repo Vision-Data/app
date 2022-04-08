@@ -33,7 +33,7 @@
               :src="require(`@/assets/settings.svg`)"
               alt="icon-settings"
             />
-            Paramètres
+            {{ $t('workspace.settings') }}
           </button>
         </div>
         <div class="divider"></div>
@@ -70,7 +70,7 @@
             :src="require(`@/assets/schemas.svg`)"
             alt="icon-schemas"
           />
-          Schémas
+          {{ $t('workspace.graphs') }}
         </button>
       </div>
     </div>
@@ -107,7 +107,7 @@ export default {
       routes: [
         {
           path: "/",
-          name: "Home",
+          name: "Workspace",
           hasIcon: true,
         },
         {

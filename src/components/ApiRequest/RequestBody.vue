@@ -3,13 +3,13 @@
     <div class="modal-box">
       <div class="form-control" v-if="needBodyToSend">
         <label class="label">
-          <span class="label-text">Body (Données à envoyer)</span>
+          <span class="label-text">{{ $t("requestBody.bodyTitle") }}</span>
         </label>
 
         <prism-editor class="my-editor" v-model="code" :highlight="highlighter" line-numbers @change="emitBody"></prism-editor>
       </div>
       <div class="modal-action">
-        <label for="my-modal-2" class="btn btn-primary" @click="close">Enregistrer</label>
+        <label for="my-modal-2" class="btn btn-primary" @click="close">{{ $t("requestBody.saveButton") }}</label>
       </div>
     </div>
   </div>

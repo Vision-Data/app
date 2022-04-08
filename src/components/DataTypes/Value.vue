@@ -4,7 +4,7 @@
       <div class="flex-1">
         <b class="badge border-transparent value-name" :class="`bg-${color}`" v-if="name !== ''">{{ name }}</b>
 
-        <span class="data-result" :class="{ 'italic': dataValue === '(vide)' || dataValue === '' }">{{ dataValue === '' ? '(vide)' : dataValue }}</span>
+        <span class="data-result" :class="{ 'italic': dataValue === $t('commons.emptyPlaceholder') || dataValue === '' }">{{ dataValue === '' ? $t('commons.emptyPlaceholder') : dataValue }}</span>
         <button class="btn btn-xs selection-data-x" id="selectX" v-show="over" @click="selectDataX()">
           X
         </button>
