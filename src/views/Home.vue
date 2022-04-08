@@ -14,7 +14,7 @@
           <SelectHttpMethod :query="query" @detectChoice="choice = $event" :body="body" />
           <Button class="btn-primary" :isLoading="isLoading" @click="fetchData()">{{ $t("searchbarTooltip.runButton") }}</Button>
         </div>
-        <Button class="btn-sm mt-2" v-if="needBodyToSend()" @click="isBodyOpen = true">Modifier Body</Button>
+        <Button class="btn-sm mt-2" v-if="needBodyToSend()" @click="isBodyOpen = true">{{ $t("requestBody.editButton") }}</Button>
         <RequestBody :needBodyToSend="needBodyToSend()" v-show="isBodyOpen" @close="closing" @requestBodyContent="body = $event" class="container w-full md:w-screen max-w-screen-lg md:-mx-60" />
       </header>
     </div>

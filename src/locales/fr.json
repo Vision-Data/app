@@ -39,5 +39,10 @@
   "responseCard": {
     "responseTitle": "Résultats",
     "responseStatus": "État"
+  },
+  "requestBody": {
+    "bodyTitle": "Body (Données à envoyer)",
+    "saveButton": "Enregistrer",
+    "editButton": "Modifier le body"
   }
 }

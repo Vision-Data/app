@@ -39,5 +39,10 @@
   "responseCard": {
     "responseTitle": "Results",
     "responseStatus": "Status"
+  },
+  "requestBody": {
+    "bodyTitle": "Body (data to send)",
+    "saveButton": "Save",
+    "editButton": "Edit Body"
   }
 }
