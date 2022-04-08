@@ -113,15 +113,83 @@ export default {
         this.$store.dispatch("sendRequest", response);
       }
     },
-    saveRequest() {
-      const payload = {
-        workspaceId: this.$route.params.workspaceId,
-        query: this.query,
-        body: this.body,
-        choice: this.choice,
+    getRequestById(db, id) {
+      let request = db
+        .transaction("requests", "readonly")
+        .objectStore("requests")
+        .get(id);
+
+      request.onsuccess = (event) => {
+        if (!event.target.result) {
+          console.log(`The contact with ${id} not found`);
+        } else {
+          console.table(event.target.result);
+          // this.query = event.target.result.url;
+          // this.choice = event.target.result.method;
+          // this.body = event.target.result.body;
+        }
       };
 
+      request.onerror = (event) => {
+        console.log(`Error: ${event.target.errorCode}`);
+      };
+
+      request.oncomplete = function () {
+        console.log("The request completed successfully");
+        db.close();
+      };
+    },
+    insertRequest(db, payload) {
+      let request = db
+        .transaction("requests", "readwrite")
+        .objectStore("requests")
+        .put(payload);
+
+      request.onsuccess = function () {
+        console.log("Request added to database", request.result);
+      };
+      request.onerror = function () {
+        console.error("Error adding request to database");
+      };
+      request.oncomplete = function () {
+        console.log("Request added to database");
+        db.close();
+      };
+    },
+    getAllRequests(db) {
+      let request = db
+        .transaction("requests", "readonly")
+        .objectStore("requests");
+
+      request.openCursor().onsuccess = (event) => {
+        let cursor = event.target.result;
+        if (cursor) {
+          console.log(cursor.value);
+          cursor.continue();
+        } else {
+          console.log("No more entries!");
+        }
+      };
+      request.onerror = function () {
+        console.error("Error adding request to database");
+      };
+      request.oncomplete = function () {
+        console.log("Request added to database");
+        db.close();
+      };
+    },
+    saveRequest() {
+      // const payload = {
+      //   workspaceId: this.$route.params.workspaceId,
+      //   query: this.query,
+      //   body: this.body,
+      //   choice: this.choice,
+      // };
+
       let req = indexedDB.open("db", 1);
+      // let insertRequest = this.insertRequest;
+      // let getRequestById = this.getRequestById;
+      let getAllRequests = this.getAllRequests;
 
       req.onerror = function (event) {
         //TODO: gérer l'affichage de l'erreur (autorisation, etc)
@@ -157,21 +225,9 @@ export default {
           alert("Database is outdated, please reload the page.");
         };
 
-        let request = db
-          .transaction("requests", "readwrite")
-          .objectStore("requests")
-          .put(payload);
-
-        request.onsuccess = function () {
-          console.log("Request added to database", request.result);
-        };
-        request.onerror = function () {
-          console.error("Error adding request to database");
-        };
-        request.oncomplete = function () {
-          console.log("Request added to database");
-          db.close();
-        };
+        // insertRequest(db, payload);
+        // getRequestById(db, 3);
+        getAllRequests(db);
       };
     },
   },
