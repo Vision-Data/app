@@ -31,10 +31,15 @@ export default class AuthenticationService {
   }
 
   static async logout(token) {
-    await axios.post(`logout`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.post(
+      `logout`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response;
   }
 }

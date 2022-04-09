@@ -89,6 +89,7 @@ export default createStore({
     logout({ commit }) {
       commit("updateToken", null);
       commit("updateUser", null);
+      commit("updateSelectedWorkspace", null);
     },
     setSelectedWorkspace({ commit }, workspace) {
       commit("updateSelectedWorkspace", workspace);

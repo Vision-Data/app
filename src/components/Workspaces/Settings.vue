@@ -50,13 +50,16 @@ import Button from "../Commons/Form/Button.vue";
 import Tabs from "../Commons/Tabs/Tabs.vue";
 import Tab from "../Commons/Tabs/Tab.vue";
 
+import AuthenticationService from "../../services/VisionApi/Authentication.js";
+
 export default {
   name: "Settings",
   inject: ["notyf"],
   props: ["openSettings"],
   components: { Modal, Button, Tabs, Tab },
   methods: {
-    logout() {
+    async logout() {
+      await AuthenticationService.logout(this.$store.state.token);
       this.$store.dispatch("logout");
       this.$router.push("/login");
       this.notyf.success(this.$t("commons.logoutSuccess"));
