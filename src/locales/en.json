@@ -27,7 +27,8 @@
     "namePlaceholder": "Name",
     "color": "Color",
     "image": "Image of the workspace",
-    "createButton": "Create"
+    "createButton": "Create",
+    "success": "Welcome to your new workspace"
   },
   "workspace": {
     "saveButton": "Save the request",

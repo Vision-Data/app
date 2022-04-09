@@ -27,7 +27,8 @@
     "namePlaceholder": "Nom",
     "color": "Couleur",
     "image": "Image de l'espace de travail",
-    "createButton": "Créer"
+    "createButton": "Créer",
+    "success": "Bienvenue dans votre nouvel espace de travail"
   },
   "workspace": {
     "saveButton": "Sauvegarder la requête",
