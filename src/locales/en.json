@@ -36,11 +36,14 @@
       "name": "Settings",
       "tabs": {
         "informations": {
-          "name": "Your informations",
+          "name": "Informations",
           "labels": {
             "email": "Email",
             "full_name": "Full name"
           }
+        },
+        "workspaces": {
+          "name": "Workspace"
         }
       },
       "logout": "Logout"

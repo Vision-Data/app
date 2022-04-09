@@ -82,10 +82,17 @@ export default {
   name: "Menu",
   methods: {
     changeRoute() {
+      this.setWorkspace();
       this.$router.push(`/workspaces/${this.selectedWorkspace}`);
     },
     goToSettings() {
       this.$emit("openSettings");
+    },
+    setWorkspace() {
+      const workspace = this.workspaces.find(
+        (workspace) => workspace.id === this.selectedWorkspace
+      );
+      this.$store.dispatch("setSelectedWorkspace", workspace);
     },
   },
   components: {
@@ -99,6 +106,8 @@ export default {
     this.workspaces = response.data.data;
     this.selectedWorkspace =
       this.$route.params.workspaceId || this.workspaces[0]?.id || "";
+
+    this.setWorkspace();
   },
   data() {
     return {

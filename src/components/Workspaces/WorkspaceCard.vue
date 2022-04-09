@@ -23,6 +23,7 @@ export default {
   props: ["workspace"],
   methods: {
     async onClick() {
+      this.$store.dispatch("setSelectedWorkspace", this.workspace);
       this.$router.push(`/workspaces/${this.workspace.id}`);
     },
   },
