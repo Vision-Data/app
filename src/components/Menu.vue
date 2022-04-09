@@ -24,16 +24,13 @@
           </option>
         </select>
         <div class="param">
-          <button
-            @click="$router.push('Settings')"
-            class="btn btn-primary settings"
-          >
+          <button @click="goToSettings" class="btn btn-primary settings">
             <img
               id="settings"
               :src="require(`@/assets/settings.svg`)"
               alt="icon-settings"
             />
-            {{ $t('workspace.settings') }}
+            {{ $t("workspace.settings.name") }}
           </button>
         </div>
         <div class="divider"></div>
@@ -70,7 +67,7 @@
             :src="require(`@/assets/schemas.svg`)"
             alt="icon-schemas"
           />
-          {{ $t('workspace.graphs') }}
+          {{ $t("workspace.graphs") }}
         </button>
       </div>
     </div>
@@ -85,7 +82,17 @@ export default {
   name: "Menu",
   methods: {
     changeRoute() {
+      this.setWorkspace();
       this.$router.push(`/workspaces/${this.selectedWorkspace}`);
+    },
+    goToSettings() {
+      this.$emit("openSettings");
+    },
+    setWorkspace() {
+      const workspace = this.workspaces.find(
+        (workspace) => workspace.id === this.selectedWorkspace
+      );
+      this.$store.dispatch("setSelectedWorkspace", workspace);
     },
   },
   components: {
@@ -99,6 +106,8 @@ export default {
     this.workspaces = response.data.data;
     this.selectedWorkspace =
       this.$route.params.workspaceId || this.workspaces[0]?.id || "";
+
+    this.setWorkspace();
   },
   data() {
     return {

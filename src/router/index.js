@@ -10,7 +10,7 @@ import store from "../store";
 const routes = [
   {
     path: "/",
-    name: "Workspace",
+    name: "Home",
     component: Workspace,
   },
   {
@@ -24,11 +24,6 @@ const routes = [
     name: "Login",
     component: Login,
     meta: { guest: true },
-  },
-  {
-    path: "/settings",
-    name: "Settings",
-    component: () => import("../views/Workspace.vue"),
   },
   {
     path: "/schemas",
