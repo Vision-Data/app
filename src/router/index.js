@@ -26,11 +26,6 @@ const routes = [
     meta: { guest: true },
   },
   {
-    path: "/settings",
-    name: "Settings",
-    component: () => import("../views/Workspace.vue"),
-  },
-  {
     path: "/schemas",
     name: "Schemas",
     component: () => import("../views/Workspace.vue"),

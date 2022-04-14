@@ -3,7 +3,11 @@
     <div class="card bg-base-100 shadow-2xl hover:bg-base-300" @click="onClick">
       <div class="m-8">
         <figure>
-          <img :src="workspace.logo" alt="" class="workspace-logo" />
+          <img
+            :src="workspace.logo || require('@/assets/noPicture.png')"
+            alt=""
+            class="workspace-logo"
+          />
         </figure>
       </div>
     </div>
@@ -19,6 +23,7 @@ export default {
   props: ["workspace"],
   methods: {
     async onClick() {
+      this.$store.dispatch("setSelectedWorkspace", this.workspace);
       this.$router.push(`/workspaces/${this.workspace.id}`);
     },
   },

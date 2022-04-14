@@ -12,6 +12,7 @@ export default createStore({
     token: null,
     user: null,
     treeStructure: [],
+    selectedWorkspace: null,
   }),
   mutations: {
     receiveSelectedDataX(state, value) {
@@ -44,6 +45,9 @@ export default createStore({
     },
     updateUser(state, user) {
       state.user = user;
+    },
+    updateSelectedWorkspace(state, workspace) {
+      state.selectedWorkspace = workspace;
     },
   },
   getters: {
@@ -92,6 +96,10 @@ export default createStore({
     logout({ commit }) {
       commit("updateToken", null);
       commit("updateUser", null);
+      commit("updateSelectedWorkspace", null);
+    },
+    setSelectedWorkspace({ commit }, workspace) {
+      commit("updateSelectedWorkspace", workspace);
     },
   },
   plugins: [createPersistedState()],
