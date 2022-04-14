@@ -231,26 +231,19 @@ export default {
       }
     },
     saveRequest() {
-      // const payload = {
-      //   workspaceId: this.$route.params.workspaceId,
-      //   query: this.query,
-      //   body: this.body,
-      //   choice: this.choice,
-      // };
-
-      let req = indexedDB.open("db", 1);
-      let getAllRequests = this.getAllRequests;
-      let getItems = this.getItems;
+      const req = indexedDB.open("db", 1);
+      const insertRequest = this.insertRequest;
+      const getAllRequests = this.getAllRequests;
+      const getItems = this.getItems;
 
       req.onerror = function (event) {
         //TODO: gérer l'affichage de l'erreur (autorisation, etc)
         console.error(event);
       };
 
-      //si le client n'a pas de base de données (initialisation)
       req.onupgradeneeded = function () {
         let db = req.result;
-
+        //si le client n'a pas de base de données (initialisation)
         if (!db.objectStoreNames.contains("requests")) {
           db.createObjectStore("requests", { autoIncrement: true });
         }
@@ -259,14 +252,20 @@ export default {
       req.onsuccess = async () => {
         let db = req.result;
 
-        //close db on update
         db.versiononchange = function () {
           db.close();
           alert("Database is outdated, please reload the page.");
         };
-
-        await getAllRequests(db, getItems);
-        console.log(this.requests);
+        if (this.query.split("//").length > 1) {
+          await insertRequest(db, {
+            workspaceId: this.$route.params.workspaceId,
+            query: this.query,
+            body: this.body,
+            choice: this.choice,
+          });
+          await getAllRequests(db, getItems);
+          console.log(this.requests);
+        }
       };
     },
   },
