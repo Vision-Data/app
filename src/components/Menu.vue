@@ -20,12 +20,14 @@
         <vue3-router-tree activeColor="#FE9430" :items="requests">
           <template #item="{ item }">
             <div class="tree-structure-container">
-              <div class="tree-structure-head">
-                <svg aria-hidden="true" focusable="false" role="img" class="tree-structure-icon iconify iconify--carbon" width="20px" height="20px" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32" style="transform: rotate(360deg)">
-                  <path d="M11.17 6l3.42 3.41l.58.59H28v16H4V6h7.17m0-2H4a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h24a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2H16l-3.41-3.41A2 2 0 0 0 11.17 4z" fill="currentColor" />
-                </svg>
-                <a :href="item.path" class="menu-link"><span class="tree-structure-name"> {{ item.name }}</span></a>
-              </div>
+              <a :href="item.path" class="menu-link">
+                <div class="tree-structure-head">
+                  <svg aria-hidden="true" focusable="false" role="img" class="tree-structure-icon iconify iconify--carbon" width="20px" height="20px" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32" style="transform: rotate(360deg)">
+                    <path d="M11.17 6l3.42 3.41l.58.59H28v16H4V6h7.17m0-2H4a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h24a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2H16l-3.41-3.41A2 2 0 0 0 11.17 4z" fill="currentColor" />
+                  </svg>
+                  <span class="tree-structure-name"> {{ item.name }}</span>
+                </div>
+              </a>
             </div>
           </template>
         </vue3-router-tree>
@@ -91,11 +93,12 @@ export default {
   background-color: var(--menu);
   justify-content: left;
   display: flex;
+  width: 100%;
+  max-width: 20rem;
 }
 
 .menu-link {
-  transition: color .2s,
-   bold .3s;
+  transition: color 0.2s, bold 0.3s;
 }
 
 .menu-link:hover {
