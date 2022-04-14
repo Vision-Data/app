@@ -216,6 +216,7 @@ export default {
       if (childrenRequestIndex === -1) {
         parent.children.push({
           workspaceId: id,
+          path: `/workspaces/${id}/${name}`,
           name: name,
           children: [],
         });
@@ -256,6 +257,7 @@ export default {
 
         await getAllRequests(db, getItems);
         this.$store.dispatch("sendStructure", this.requests);
+        console.log(this.requests);
       };
     },
     saveRequest() {

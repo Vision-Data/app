@@ -17,16 +17,15 @@
         <div class="divider"></div>
       </div>
       <div class="tree-structure">
-        <vue3-router-tree :items="requests">
+        <vue3-router-tree activeColor="#FE9430" :items="requests">
           <template #item="{ item }">
             <div class="tree-structure-container">
               <div class="tree-structure-head">
                 <svg aria-hidden="true" focusable="false" role="img" class="tree-structure-icon iconify iconify--carbon" width="20px" height="20px" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32" style="transform: rotate(360deg)">
                   <path d="M11.17 6l3.42 3.41l.58.59H28v16H4V6h7.17m0-2H4a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h24a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2H16l-3.41-3.41A2 2 0 0 0 11.17 4z" fill="currentColor" />
                 </svg>
-                <span class="tree-structure-name"> {{ item.name }}</span>
+                <a :href="item.path" class="menu-link"><span class="tree-structure-name"> {{ item.name }}</span></a>
               </div>
-              <span v-if="item.info" class="tree-structure-chip chip">{{ item.info }}</span>
             </div>
           </template>
         </vue3-router-tree>
@@ -54,15 +53,15 @@ export default {
     },
     display() {
       console.log(this.requests);
-    }
+    },
   },
   components: {
     Vue3RouterTree,
   },
   watch: {
-    '$store.state.treeStructure'(newValue) {
+    "$store.state.treeStructure"(newValue) {
       this.requests = newValue;
-    }
+    },
   },
   async mounted() {
     const { response } = await WorkspaceService.findAll(
@@ -85,13 +84,24 @@ export default {
 </script>
 
 <style scoped>
+.px-4 {
+  padding-right: 0rem !important;
+}
 .menu {
   background-color: var(--menu);
   justify-content: left;
   display: flex;
-  width: 20%;
 }
 
+.menu-link {
+  transition: color .2s,
+   bold .3s;
+}
+
+.menu-link:hover {
+  color: var(--vision-orange);
+  font-weight: bold;
+}
 .workspace-page {
   height: 100%;
   min-height: 100vh;

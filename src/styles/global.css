@@ -16,6 +16,7 @@ html {
 
 :root {
     --menu: #f1f1f1;
+    --vision-orange: #FE9430;
 }
 
 [data-theme=dark] {
