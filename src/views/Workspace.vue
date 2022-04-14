@@ -8,68 +8,28 @@
             <language-select />
             <div class="save" v-if="$store.getters.isLogin">
               <Button class="btn-secondary" @click="saveRequest">
-                <img
-                  id="save"
-                  :src="require(`@/assets/save.svg`)"
-                  alt="icon-save"
-                />
+                <img id="save" :src="require(`@/assets/save.svg`)" alt="icon-save" />
                 <span>{{ $t("workspace.saveButton") }}</span>
               </Button>
             </div>
           </div>
           <dark-mode />
           <div class="sending-container">
-            <ApiUrl
-              class="container w-full max-w-screen-lg"
-              @query="query = $event"
-            />
-            <SelectHttpMethod
-              :query="query"
-              @detectChoice="choice = $event"
-              :body="body"
-            />
-            <Button
-              class="btn-primary runButton"
-              :isLoading="isLoading"
-              @click="fetchData()"
-              >{{ $t("searchbarTooltip.runButton") }}
+            <ApiUrl class="container w-full max-w-screen-lg" @query="query = $event" />
+            <SelectHttpMethod :query="query" @detectChoice="choice = $event" :body="body" />
+            <Button class="btn-primary runButton" :isLoading="isLoading" @click="fetchData()">{{ $t("searchbarTooltip.runButton") }}
             </Button>
           </div>
-          <Button
-            class="btn-sm mt-2"
-            v-if="needBodyToSend()"
-            @click="isBodyOpen = true"
-          >
+          <Button class="btn-sm mt-2" v-if="needBodyToSend()" @click="isBodyOpen = true">
             {{ $t("requestBody.editButton") }}
           </Button>
-          <RequestBody
-            :needBodyToSend="needBodyToSend()"
-            v-show="isBodyOpen"
-            @close="closing"
-            @requestBodyContent="body = $event"
-            class="container w-full md:w-screen max-w-screen-lg md:-mx-60"
-          />
+          <RequestBody :needBodyToSend="needBodyToSend()" v-show="isBodyOpen" @close="closing" @requestBodyContent="body = $event" class="container w-full md:w-screen max-w-screen-lg md:-mx-60" />
         </header>
       </div>
       <DiagramChoice @chart="displayChart" @cancel="isOpened" v-show="isOpen" />
-      <Button
-        id="selectSchema"
-        class="btn-circle btn-lg floating-btn"
-        @click="openModal"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"
-          />
+      <Button id="selectSchema" class="btn-circle btn-lg floating-btn" @click="openModal">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
         </svg>
       </Button>
       <div class="response-container">
@@ -119,6 +79,7 @@ export default {
       isChartDisplayed: false,
       isBodyOpen: true,
       isLoading: false,
+      store: [],
     };
   },
   methods: {
@@ -155,12 +116,10 @@ export default {
       }
     },
     getRequestById(db, id) {
-      let request = db
-        .transaction("requests", "readonly")
-        .objectStore("requests")
-        .get(id);
+      let transaction = db.transaction("requests", "readwrite");
+      let store = transaction.objectStore("requests").get(id);
 
-      request.onsuccess = (event) => {
+      store.onsuccess = (event) => {
         if (!event.target.result) {
           console.log(`The contact with ${id} not found`);
         } else {
@@ -168,55 +127,58 @@ export default {
         }
       };
 
-      request.onerror = (event) => {
+      store.onerror = (event) => {
         console.log(`Error: ${event.target.errorCode}`);
       };
 
-      request.oncomplete = function() {
+      transaction.oncomplete = function () {
         console.log("The request completed successfully");
         db.close();
       };
     },
     insertRequest(db, payload) {
-      let request = db
-        .transaction("requests", "readwrite")
-        .objectStore("requests")
-        .put(payload);
+      let transaction = db.transaction("requests", "readwrite");
+      let store = transaction.objectStore("requests").put(payload);
 
-      request.onsuccess = function() {
-        console.log("Request added to database", request.result);
+      store.onsuccess = function () {
+        console.log("Request added to database", store.result);
       };
-      request.onerror = function() {
+      store.onerror = function () {
         console.error("Error adding request to database");
       };
-      request.oncomplete = function() {
+      transaction.oncomplete = function () {
         console.log("Request added to database");
         db.close();
       };
     },
-    getAllRequests(db) {
-      let res = [];
-      let request = db
-        .transaction("requests", "readonly")
-        .objectStore("requests");
+    getAllRequests(db, callback) {
+      let transaction = db.transaction("requests", "readonly");
+      let store = transaction.objectStore("requests");
+      let items = [];
 
-      request.openCursor().onsuccess = (event) => {
+      transaction.oncomplete = function () {
+        callback(items);
+      };
+
+      let cursorRequest = store.openCursor();
+
+      cursorRequest.onsuccess = function (event) {
         let cursor = event.target.result;
         if (cursor) {
-          res.push(cursor.value);
+          items.push(cursor.value);
           cursor.continue();
-        } else {
-          console.log("No more entries!");
-          return res;
         }
       };
-      request.onerror = function() {
+      cursorRequest.onerror = function () {
         console.error("Error adding request to database");
       };
-      request.oncomplete = function() {
-        console.log("Request added to database");
-        db.close();
-      };
+    },
+    getItems(data) {
+      let addRequest = this.addRequest;
+
+      data.forEach((element) => {
+        addRequest(element.query, element.workspaceId);
+      });
     },
     addRequest(path, id) {
       const result = path.split("//")[1]; //get characters after ://
@@ -240,7 +202,9 @@ export default {
           ? this.requests[this.requests.length - 1]
           : this.requests[hostRequestIndex];
 
-      this.addChildrenRequest(directories, parent, id);
+      if (directories.length > 0) {
+        this.addChildrenRequest(directories, parent, id);
+      }
     },
     addChildrenRequest(directories, parent, id) {
       const name = directories.shift().split(/[?#]/)[0];
@@ -275,19 +239,16 @@ export default {
       // };
 
       let req = indexedDB.open("db", 1);
-      // let insertRequest = this.insertRequest;
-      // let getRequestById = this.getRequestById;
-      // let getAllRequests = this.getAllRequests;
-      // let formatRequestsForTree = this.formatRequestsForTree;
-      // let createStructure = this.createStructure;
+      let getAllRequests = this.getAllRequests;
+      let getItems = this.getItems;
 
-      req.onerror = function(event) {
+      req.onerror = function (event) {
         //TODO: gérer l'affichage de l'erreur (autorisation, etc)
         console.error(event);
       };
 
       //si le client n'a pas de base de données (initialisation)
-      req.onupgradeneeded = function() {
+      req.onupgradeneeded = function () {
         let db = req.result;
 
         if (!db.objectStoreNames.contains("requests")) {
@@ -295,78 +256,19 @@ export default {
         }
       };
 
-      //travailler avec la base de données
-      req.onsuccess = () => {
+      req.onsuccess = async () => {
         let db = req.result;
 
         //close db on update
-        db.versiononchange = function() {
+        db.versiononchange = function () {
           db.close();
           alert("Database is outdated, please reload the page.");
         };
 
-        // insertRequest(db, payload);
-        // getRequestById(db, 3);
-
-        // console.log(getAllRequests(db));
-        let content = [
-          {
-            workspaceId: 1,
-            query: "https://api.github.com/users/octocat/repos",
-            choice: "GET",
-            body: "",
-          },
-          {
-            workspaceId: "b60e6879-df63-41db-bf6f-2c51aa286d55",
-            query: "https://api.vision-data.com/users/octocat/repos",
-            choice: "GET",
-            body: "",
-          },
-        ];
-        content.forEach((element) => {
-          this.addRequest(element.query, element.workspaceId);
-        });
+        await getAllRequests(db, getItems);
         console.log(this.requests);
       };
     },
-    // createStructure(path, id) {
-    //   let result = path.split("//")[1]; //get characters after ://
-    //   let directories = result.split("/"); //array of directories
-    //   // ['api.github.com', 'users', 'octocat', 'repos']
-    //   let parent = {
-    //     workspaceId: id,
-    //     name: directories.shift(),
-    //     children: [],
-    //   };
-
-    //   this.createDirectories(directories, parent, id);
-    //   console.log(this.requests);
-    //   return result;
-    // },
-    // createDirectories(directories, parent, id) {
-    //   let name = directories.shift();
-
-    //   parent.children.push({
-    //     path: `/workspaces/${id}/requests`,
-    //     name,
-    //     hasIcon: true,
-    //     children: [],
-    //   });
-
-    //   if (directories.length > 0) {
-    //     this.createDirectories(directories, parent, id);
-    //   } else {
-    //     this.requests = parent;
-    //   }
-    // },
-    // methodd(payload) {
-    //   let tree = [];
-
-    //   payload.forEach((element) => {
-    //     tree.push(formatRequestsForTree(element));
-    //   });
-    //   return tree
-    // }
   },
 };
 </script>
