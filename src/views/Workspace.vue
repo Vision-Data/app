@@ -8,28 +8,68 @@
             <language-select />
             <div class="save" v-if="$store.getters.isLogin">
               <Button class="btn-secondary" @click="saveRequest">
-                <img id="save" :src="require(`@/assets/save.svg`)" alt="icon-save" />
-                <span>{{ $t('workspace.saveButton') }}</span>
+                <img
+                  id="save"
+                  :src="require(`@/assets/save.svg`)"
+                  alt="icon-save"
+                />
+                <span>{{ $t("workspace.saveButton") }}</span>
               </Button>
             </div>
           </div>
           <dark-mode />
           <div class="sending-container">
-            <ApiUrl class="container w-full max-w-screen-lg" @query="query = $event" />
-            <SelectHttpMethod :query="query" @detectChoice="choice = $event" :body="body" />
-            <Button class="btn-primary runButton" :isLoading="isLoading" @click="fetchData()">{{ $t("searchbarTooltip.runButton") }}
+            <ApiUrl
+              class="container w-full max-w-screen-lg"
+              @query="query = $event"
+            />
+            <SelectHttpMethod
+              :query="query"
+              @detectChoice="choice = $event"
+              :body="body"
+            />
+            <Button
+              class="btn-primary runButton"
+              :isLoading="isLoading"
+              @click="fetchData()"
+              >{{ $t("searchbarTooltip.runButton") }}
             </Button>
           </div>
-          <Button class="btn-sm mt-2" v-if="needBodyToSend()" @click="isBodyOpen = true">
-            {{ $t('requestBody.editButton') }}
+          <Button
+            class="btn-sm mt-2"
+            v-if="needBodyToSend()"
+            @click="isBodyOpen = true"
+          >
+            {{ $t("requestBody.editButton") }}
           </Button>
-          <RequestBody :needBodyToSend="needBodyToSend()" v-show="isBodyOpen" @close="closing" @requestBodyContent="body = $event" class="container w-full md:w-screen max-w-screen-lg md:-mx-60" />
+          <RequestBody
+            :needBodyToSend="needBodyToSend()"
+            v-show="isBodyOpen"
+            @close="closing"
+            @requestBodyContent="body = $event"
+            class="container w-full md:w-screen max-w-screen-lg md:-mx-60"
+          />
         </header>
       </div>
       <DiagramChoice @chart="displayChart" @cancel="isOpened" v-show="isOpen" />
-      <Button id="selectSchema" class="btn-circle btn-lg floating-btn" @click="openModal">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+      <Button
+        id="selectSchema"
+        class="btn-circle btn-lg floating-btn"
+        @click="openModal"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"
+          />
         </svg>
       </Button>
       <div class="response-container">
@@ -132,7 +172,7 @@ export default {
         console.log(`Error: ${event.target.errorCode}`);
       };
 
-      request.oncomplete = function () {
+      request.oncomplete = function() {
         console.log("The request completed successfully");
         db.close();
       };
@@ -143,13 +183,13 @@ export default {
         .objectStore("requests")
         .put(payload);
 
-      request.onsuccess = function () {
+      request.onsuccess = function() {
         console.log("Request added to database", request.result);
       };
-      request.onerror = function () {
+      request.onerror = function() {
         console.error("Error adding request to database");
       };
-      request.oncomplete = function () {
+      request.oncomplete = function() {
         console.log("Request added to database");
         db.close();
       };
@@ -170,13 +210,61 @@ export default {
           return res;
         }
       };
-      request.onerror = function () {
+      request.onerror = function() {
         console.error("Error adding request to database");
       };
-      request.oncomplete = function () {
+      request.oncomplete = function() {
         console.log("Request added to database");
         db.close();
       };
+    },
+    addRequest(path, id) {
+      const result = path.split("//")[1]; //get characters after ://
+      const directories = result.split("/"); //array of directories
+      const name = directories.shift().split(/[?#]/)[0];
+
+      const hostRequestIndex = this.requests.findIndex(
+        (request) => request.name === name
+      );
+
+      if (hostRequestIndex === -1) {
+        this.requests.push({
+          workspaceId: id,
+          name: name,
+          children: [],
+        });
+      }
+
+      const parent =
+        hostRequestIndex === -1
+          ? this.requests[this.requests.length - 1]
+          : this.requests[hostRequestIndex];
+
+      this.addChildrenRequest(directories, parent, id);
+    },
+    addChildrenRequest(directories, parent, id) {
+      const name = directories.shift().split(/[?#]/)[0];
+
+      const childrenRequestIndex = parent.children.findIndex(
+        (request) => request.name === name
+      );
+
+      if (childrenRequestIndex === -1) {
+        parent.children.push({
+          workspaceId: id,
+          name: name,
+          children: [],
+        });
+      }
+
+      if (directories.length > 0) {
+        const parentElement =
+          childrenRequestIndex === -1
+            ? parent.children[parent.children.length - 1]
+            : parent.children[childrenRequestIndex];
+
+        this.addChildrenRequest(directories, parentElement, id);
+      }
     },
     saveRequest() {
       // const payload = {
@@ -191,15 +279,15 @@ export default {
       // let getRequestById = this.getRequestById;
       // let getAllRequests = this.getAllRequests;
       // let formatRequestsForTree = this.formatRequestsForTree;
-      let createStructure = this.createStructure;
+      // let createStructure = this.createStructure;
 
-      req.onerror = function (event) {
+      req.onerror = function(event) {
         //TODO: gérer l'affichage de l'erreur (autorisation, etc)
         console.error(event);
       };
 
       //si le client n'a pas de base de données (initialisation)
-      req.onupgradeneeded = function () {
+      req.onupgradeneeded = function() {
         let db = req.result;
 
         if (!db.objectStoreNames.contains("requests")) {
@@ -208,11 +296,11 @@ export default {
       };
 
       //travailler avec la base de données
-      req.onsuccess = function () {
+      req.onsuccess = () => {
         let db = req.result;
 
         //close db on update
-        db.versiononchange = function () {
+        db.versiononchange = function() {
           db.close();
           alert("Database is outdated, please reload the page.");
         };
@@ -229,48 +317,48 @@ export default {
             body: "",
           },
           {
-            workspaceId: 1,
-            query: "https://api.github.com/users/octocat/repos",
+            workspaceId: "b60e6879-df63-41db-bf6f-2c51aa286d55",
+            query: "https://api.vision-data.com/users/octocat/repos",
             choice: "GET",
             body: "",
           },
         ];
         content.forEach((element) => {
-          createStructure(element.query, element.workspaceId);
+          this.addRequest(element.query, element.workspaceId);
         });
+        console.log(this.requests);
       };
     },
-    createStructure(path, id) {
-      let result = path.split("//")[1]; //get characters after ://
-      let directories = result.split("/"); //array of directories
-      // ['api.github.com', 'users', 'octocat', 'repos']
-      let parent = {
-        workspaceId: id,
-        name: directories.shift(),
-        children: [],
-      };
+    // createStructure(path, id) {
+    //   let result = path.split("//")[1]; //get characters after ://
+    //   let directories = result.split("/"); //array of directories
+    //   // ['api.github.com', 'users', 'octocat', 'repos']
+    //   let parent = {
+    //     workspaceId: id,
+    //     name: directories.shift(),
+    //     children: [],
+    //   };
 
-      this.createDirectories(directories, parent, id);
-      console.log(this.requests);
-      return result;
-    },
-    createDirectories(directories, parent, id) {
-      let name = directories.shift();
+    //   this.createDirectories(directories, parent, id);
+    //   console.log(this.requests);
+    //   return result;
+    // },
+    // createDirectories(directories, parent, id) {
+    //   let name = directories.shift();
 
-      parent.children.push({
-        path: `/workspaces/${id}/requests`,
-        name,
-        hasIcon: true,
-        children: [],
-      });
+    //   parent.children.push({
+    //     path: `/workspaces/${id}/requests`,
+    //     name,
+    //     hasIcon: true,
+    //     children: [],
+    //   });
 
-
-      if (directories.length > 0) {
-        this.createDirectories(directories, parent, id);
-      } else {
-        this.requests = parent;
-      }
-    },
+    //   if (directories.length > 0) {
+    //     this.createDirectories(directories, parent, id);
+    //   } else {
+    //     this.requests = parent;
+    //   }
+    // },
     // methodd(payload) {
     //   let tree = [];
 
