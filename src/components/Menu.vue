@@ -17,7 +17,7 @@
         <div class="divider"></div>
       </div>
       <div class="tree-structure">
-        <vue3-router-tree :items="requestss">
+        <vue3-router-tree :items="requests">
           <template #item="{ item }">
             <div class="tree-structure-container">
               <div class="tree-structure-head">
@@ -32,7 +32,8 @@
         </vue3-router-tree>
       </div>
       <div class="schemas">
-        <button @click="$router.push('Schemas')" class="btn btn-secondary">
+        <!-- <button @click="$router.push('Schemas')" class="btn btn-secondary"> -->
+        <button @click="display" class="btn btn-secondary">
           <img id="schemas" :src="require(`@/assets/schemas.svg`)" alt="icon-schemas" />
           {{ $t('workspace.graphs') }}
         </button>
@@ -47,43 +48,21 @@ import WorkspaceService from "../services/VisionApi/Workspace.js";
 
 export default {
   name: "Menu",
-  props: ["requests"],
   methods: {
     changeRoute() {
       this.$router.push(`/workspaces/${this.selectedWorkspace}`);
     },
-    changeData() {
-      this.requestss = [
-        {
-          path: "/",
-          name: "Workspace",
-          hasIcon: true,
-        },
-        {
-          path: "/workspace",
-          name: "Workspace",
-          hasIcon: true,
-        },
-        {
-          path: "/requetes",
-          name: "Requetes",
-          hasIcon: true,
-          children: [
-            {
-              path: "/requete1",
-              name: "Requete1",
-            },
-            {
-              path: "/requete2",
-              name: "Requete2",
-            },
-          ],
-        },
-      ];
-    },
+    display() {
+      console.log(this.requests);
+    }
   },
   components: {
     Vue3RouterTree,
+  },
+  watch: {
+    '$store.state.treeStructure'(newValue) {
+      this.requests = newValue;
+    }
   },
   async mounted() {
     const { response } = await WorkspaceService.findAll(
@@ -93,14 +72,13 @@ export default {
     this.workspaces = response.data.data;
     this.selectedWorkspace =
       this.$route.params.workspaceId || this.workspaces[0]?.id || "";
-      this.changeData();
   },
   data() {
     return {
       test: 0,
       selectedWorkspace: "",
       workspaces: [],
-      requestss: [],
+      requests: this.$store.state.treeStructure,
     };
   },
 };

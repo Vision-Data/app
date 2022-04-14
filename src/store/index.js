@@ -11,6 +11,7 @@ export default createStore({
     },
     token: null,
     user: null,
+    treeStructure: [],
   }),
   mutations: {
     receiveSelectedDataX(state, value) {
@@ -34,6 +35,9 @@ export default createStore({
     },
     setResponse(state, value) {
       state.response = value;
+    },
+    setStructure(state, value) {
+      state.treeStructure = value;
     },
     updateToken(state, token) {
       state.token = token;
@@ -75,6 +79,9 @@ export default createStore({
     },
     sendRequest({ commit }, payload) {
       commit("setResponse", payload);
+    },
+    sendStructure({ commit }, payload) {
+      commit("setStructure", payload);
     },
     setToken({ commit }, token) {
       commit("updateToken", token);

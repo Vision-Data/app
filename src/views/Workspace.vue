@@ -82,6 +82,9 @@ export default {
       store: [],
     };
   },
+  mounted() {
+    this.initStructure();
+  },
   methods: {
     isOpenByResponse(payload) {
       this.isOpen = payload;
@@ -140,9 +143,6 @@ export default {
       let transaction = db.transaction("requests", "readwrite");
       let store = transaction.objectStore("requests").put(payload);
 
-      store.onsuccess = function () {
-        console.log("Request added to database", store.result);
-      };
       store.onerror = function () {
         console.error("Error adding request to database");
       };
@@ -230,6 +230,34 @@ export default {
         this.addChildrenRequest(directories, parentElement, id);
       }
     },
+    initStructure() {
+      const req = indexedDB.open("db", 1);
+      const getAllRequests = this.getAllRequests;
+      const getItems = this.getItems;
+
+      req.onerror = function (event) {
+        console.error(event);
+      };
+
+      req.onupgradeneeded = function () {
+        let db = req.result;
+        if (!db.objectStoreNames.contains("requests")) {
+          db.createObjectStore("requests", { autoIncrement: true });
+        }
+      };
+
+      req.onsuccess = async () => {
+        let db = req.result;
+
+        db.versiononchange = function () {
+          db.close();
+          alert("Database is outdated, please reload the page.");
+        };
+
+        await getAllRequests(db, getItems);
+        this.$store.dispatch("sendStructure", this.requests);
+      };
+    },
     saveRequest() {
       const req = indexedDB.open("db", 1);
       const insertRequest = this.insertRequest;
@@ -264,7 +292,7 @@ export default {
             choice: this.choice,
           });
           await getAllRequests(db, getItems);
-          console.log(this.requests);
+          this.$store.commit("setStructure", this.requests);
         }
       };
     },
