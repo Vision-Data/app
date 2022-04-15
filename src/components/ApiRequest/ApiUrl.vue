@@ -14,7 +14,7 @@
     <div class="relative">
       <label class="input-group">
         <SecurityLock :isHttps="isHttps" />
-        <input v-model="searchInput" @change="emitQuery" type="text" @keyup="checkHttps" placeholder="https://api.example.com/v1" class="w-full pr-16 input input-primary input-bordered rounded-r" :class="{ 'input-error': pasteError }" :aria-label="$t('searchbarTooltip.insertApiPath')" />
+        <input v-model="searchInputComputed" @change="emitQuery" type="text" @keyup="checkHttps" placeholder="https://api.example.com/v1" class="w-full pr-16 input input-primary input-bordered rounded-r" :class="{ 'input-error': pasteError }" :aria-label="$t('searchbarTooltip.insertApiPath')" />
         <ToolTipInformations direction="bottom" :helperText="$t('clipboardTooltip.helperText')" color="primary">
           <Button class="btn-ghost absolute top-0 right-0 rounded-l-none" @click="pasteContent()">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -41,12 +41,23 @@ import Button from "../Commons/Form/Button.vue";
 export default {
   name: "ApiUrl",
   components: { SecurityLock, ToolTipInformations, Button },
+  props: ["content"],
   data() {
     return {
       searchInput: "",
       pasteError: false,
       isHttps: false,
     };
+  },
+  computed: {
+    searchInputComputed: {
+      get() {
+        return this.searchInput;
+      },
+      set(value) {
+        this.searchInput = value;
+      },
+    },
   },
   methods: {
     async pasteContent() {
@@ -60,6 +71,7 @@ export default {
       }
     },
     checkHttps() {
+      console.log(this.content);
       this.isHttps = this.searchInput.slice(0, 5).includes("https");
     },
     emitQuery() {

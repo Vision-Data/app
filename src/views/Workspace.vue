@@ -16,7 +16,7 @@
           </div>
           <dark-mode />
           <div class="sending-container">
-            <ApiUrl class="container w-full max-w-screen-lg" @query="query = $event" />
+            <ApiUrl class="container w-full max-w-screen-lg" @query="query = $event" :content="query" />
             <SelectHttpMethod :query="query" @detectChoice="choice = $event" :body="body" />
             <Button class="btn-primary runButton" :isLoading="isLoading" @click="fetchData()">{{ $t("searchbarTooltip.runButton") }}
             </Button>
@@ -73,7 +73,7 @@ export default {
   },
   data() {
     return {
-      query: "",
+      query: "https://api.github.com/users/octocat/repos",
       body: "",
       choice: "GET",
       chart: {},
@@ -158,7 +158,9 @@ export default {
     },
     getItems(data) {
       let addRequest = this.addRequest;
-      let items = data.filter((item) => item.workspaceId === this.$route.params.workspaceId);
+      let items = data.filter(
+        (item) => item.workspaceId === this.$route.params.workspaceId
+      );
 
       items.forEach((element) => {
         addRequest(element.query, this.$route.params.workspaceId);
@@ -200,7 +202,7 @@ export default {
       if (childrenRequestIndex === -1) {
         parent.children.push({
           workspaceId: id,
-          path: `/workspaces/${id}/${name}`,
+          path: `/workspaces/${id}?request=${id}`,
           name: name,
           children: [],
         });
@@ -215,11 +217,39 @@ export default {
         this.addChildrenRequest(directories, parentElement, id);
       }
     },
+    getRequestById(db, callback, id) {
+      let transaction = db.transaction("requests", "readwrite");
+      let store = transaction.objectStore("requests").get(id);
+
+      store.onsuccess = (event) => {
+        if (!event.target.result) {
+          console.log(`The contact with ${id} not found`);
+        } else {
+          callback(event.target.result);
+        }
+      };
+
+      store.onerror = (event) => {
+        console.log(`Error: ${event.target.errorCode}`);
+      };
+
+      transaction.oncomplete = function () {
+        console.log("The request completed successfully");
+        db.close();
+      };
+    },
+    setInfoInputs(data) {
+      console.log(data);
+      this.query = data.query;
+      this.body = data.body;
+      this.choice = data.choice;
+    },
     initStructure() {
       const req = indexedDB.open("db", 1);
       const getAllRequests = this.getAllRequests;
       const getItems = this.getItems;
-
+      const getRequestById = this.getRequestById;
+      const setInfoInputs = this.setInfoInputs;
 
       req.onerror = function (event) {
         console.error(event);
@@ -242,8 +272,10 @@ export default {
 
         await getAllRequests(db, getItems);
         this.$store.dispatch("sendStructure", this.requests);
-        console.log(this.requests);
-
+        if(this.$route.query.request !== undefined) {
+          const id = Number(this.$route.query.request);
+          await getRequestById(db, setInfoInputs, id);
+        }
       };
     },
     saveRequest() {
