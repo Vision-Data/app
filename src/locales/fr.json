@@ -97,7 +97,8 @@
     "saveButton": "Enregistrer",
     "editButton": "Modifier le body"
   },
-  "errors": {
-    "errorServer": "Impossible de récupérer les informations. Veuillez réessayer plus tard."
+  "notifications": {
+    "errorServer": "Une erreur est survenue. Veuillez réessayer.",
+    "forbidden": "Vous n'avez pas les droits pour accéder à cette ressource."
   }
 }

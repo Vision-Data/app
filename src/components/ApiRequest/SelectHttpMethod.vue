@@ -1,6 +1,12 @@
 <template>
   <div class="selectMethod">
-    <select v-model="choiceTextComputed" :required="true" class="select select-bordered w-200" aria-label="Sélectionnez la méthode d'envoi" @change="emitChoice">
+    <select
+      v-model="choiceTextComputed"
+      :required="true"
+      class="select select-bordered w-200"
+      aria-label="Sélectionnez la méthode d'envoi"
+      @change="emitChoice"
+    >
       <option v-for="value in choices" :key="value.key" :value="value.method">
         {{ value.text }}
       </option>
@@ -58,7 +64,6 @@ export default {
   },
   methods: {
     emitChoice() {
-      console.log(this.choiceText);
       this.$emit("detectChoice", this.choiceText);
     },
   },

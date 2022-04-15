@@ -97,7 +97,8 @@
     "saveButton": "Save",
     "editButton": "Edit Body"
   },
-  "errors": {
-    "errorServer": "Unable to retrieve information. Please try again later."
+  "notifications": {
+    "errorServer": "An error occurred on the server. Please try again later.",
+    "forbidden": "You don't have the permission to access this resource."
   }
 }
