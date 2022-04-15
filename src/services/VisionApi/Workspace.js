@@ -20,6 +20,7 @@ export default class WorkspaceService {
 
     return { response, errors };
   }
+
   static async create(userToken, data) {
     let response = null;
     let errors = null;
@@ -36,6 +37,21 @@ export default class WorkspaceService {
           headers: { Authorization: `Bearer ${userToken}` },
         }
       );
+    } catch (apiErrors) {
+      errors = formatErrors(apiErrors.response.data.errors);
+    }
+
+    return { response, errors };
+  }
+
+  static async find(userToken, id) {
+    let response = null;
+    let errors = null;
+
+    try {
+      response = await axios.get(`workspaces/${id}`, {
+        headers: { Authorization: `Bearer ${userToken}` },
+      });
     } catch (apiErrors) {
       errors = formatErrors(apiErrors.response.data.errors);
     }
