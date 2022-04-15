@@ -24,7 +24,7 @@
           <Button class="btn-sm mt-2" v-if="needBodyToSend()" @click="isBodyOpen = true">
             {{ $t("requestBody.editButton") }}
           </Button>
-          <RequestBody :needBodyToSend="needBodyToSend()" v-show="isBodyOpen" @close="closing" @requestBodyContent="body = $event" class="container w-full md:w-screen max-w-screen-lg md:-mx-60" />
+          <RequestBody :needBodyToSend="needBodyToSend()" :content="body" v-show="isBodyOpen" @close="closing" @requestBodyContent="body = $event" class="container w-full md:w-screen max-w-screen-lg md:-mx-60" />
         </header>
       </div>
       <DiagramChoice @chart="displayChart" @cancel="isOpened" v-show="isOpen" />

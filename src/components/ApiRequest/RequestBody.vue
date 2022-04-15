@@ -1,17 +1,7 @@
 <template>
-  <Modal
-    :isOpen="needBodyToSend"
-    :closeLabel="$t('requestBody.saveButton')"
-    :title="$t('requestBody.bodyTitle')"
-  >
+  <Modal :isOpen="needBodyToSend" :closeLabel="$t('requestBody.saveButton')" :title="$t('requestBody.bodyTitle')">
     <div class="form-control">
-      <prism-editor
-        class="my-editor"
-        v-model="code"
-        :highlight="highlighter"
-        line-numbers
-        @change="emitBody"
-      ></prism-editor>
+      <prism-editor class="my-editor" v-model="codeComputed" :highlight="highlighter" line-numbers @change="emitBody"></prism-editor>
     </div>
   </Modal>
 </template>
@@ -29,12 +19,28 @@ import "prismjs/themes/prism-tomorrow.css"; // import syntax highlighting styles
 
 export default {
   name: "RequestBody",
-  props: ["needBodyToSend"],
+  props: ["needBodyToSend", "content"],
   components: { PrismEditor, Modal },
   data() {
     return {
-      code: "{\n\tvalue:''\n}",
+      code: "",
     };
+  },
+  watch: {
+    content() {
+      this.codeComputed = this.content;
+    },
+  },
+  computed: {
+    codeComputed: {
+      get() {
+        return this.code;
+      },
+      set(value) {
+        if (value === "") value = "{\n\tvalue:''\n}";
+        this.code = value;
+      },
+    }
   },
   methods: {
     highlighter(code) {
