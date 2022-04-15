@@ -137,18 +137,20 @@ export default {
     getAllRequests(db, callback) {
       let transaction = db.transaction("requests", "readonly");
       let store = transaction.objectStore("requests");
+      let cursorRequest = store.openCursor();
       let items = [];
 
       transaction.oncomplete = function () {
         callback(items);
       };
 
-      let cursorRequest = store.openCursor();
 
       cursorRequest.onsuccess = function (event) {
         let cursor = event.target.result;
         if (cursor) {
-          items.push(cursor.value);
+          const item = cursor.value;
+          item.primaryKey = cursor.primaryKey;
+          items.push(item);
           cursor.continue();
         }
       };
@@ -157,16 +159,16 @@ export default {
       };
     },
     getItems(data) {
-      let addRequest = this.addRequest;
+      const addRequest = this.addRequest;
       let items = data.filter(
         (item) => item.workspaceId === this.$route.params.workspaceId
       );
 
       items.forEach((element) => {
-        addRequest(element.query, this.$route.params.workspaceId);
+        addRequest(element.query, this.$route.params.workspaceId, element.primaryKey);
       });
     },
-    addRequest(path, id) {
+    addRequest(path, id, key) {
       const result = path.split("//")[1]; //get characters after ://
       const directories = result.split("/"); //array of directories
       const name = directories.shift().split(/[?#]/)[0];
@@ -189,10 +191,10 @@ export default {
           : this.requests[hostRequestIndex];
 
       if (directories.length > 0) {
-        this.addChildrenRequest(directories, parent, id);
+        this.addChildrenRequest(directories, parent, id, key);
       }
     },
-    addChildrenRequest(directories, parent, id) {
+    addChildrenRequest(directories, parent, id, key) {
       const name = directories.shift().split(/[?#]/)[0];
 
       const childrenRequestIndex = parent.children.findIndex(
@@ -202,7 +204,7 @@ export default {
       if (childrenRequestIndex === -1) {
         parent.children.push({
           workspaceId: id,
-          path: `/workspaces/${id}?request=${id}`,
+          path: `/workspaces/${id}?request=${key}`,
           name: name,
           children: [],
         });
@@ -214,7 +216,7 @@ export default {
             ? parent.children[parent.children.length - 1]
             : parent.children[childrenRequestIndex];
 
-        this.addChildrenRequest(directories, parentElement, id);
+        this.addChildrenRequest(directories, parentElement, id, key);
       }
     },
     getRequestById(db, callback, id) {
