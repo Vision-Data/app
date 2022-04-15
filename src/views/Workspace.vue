@@ -17,7 +17,7 @@
           <dark-mode />
           <div class="sending-container">
             <ApiUrl class="container w-full max-w-screen-lg" @query="query = $event" :content="query" />
-            <SelectHttpMethod :query="query" @detectChoice="choice = $event" :body="body" />
+            <SelectHttpMethod @detectChoice="choice = $event" :choice="choice" />
             <Button class="btn-primary runButton" :isLoading="isLoading" @click="fetchData()">{{ $t("searchbarTooltip.runButton") }}
             </Button>
           </div>
@@ -73,7 +73,7 @@ export default {
   },
   data() {
     return {
-      query: "https://api.github.com/users/octocat/repos",
+      query: "",
       body: "",
       choice: "GET",
       chart: {},
