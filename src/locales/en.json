@@ -37,7 +37,7 @@
       "name": "Settings",
       "tabs": {
         "informations": {
-          "name": "Informations",
+          "name": "Informations on account",
           "labels": {
             "email": "Email",
             "full_name": "Full name"

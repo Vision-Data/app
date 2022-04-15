@@ -37,7 +37,7 @@
       "name": "Paramètres",
       "tabs": {
         "informations": {
-          "name": "Informations",
+          "name": "Informations du compte",
           "labels": {
             "email": "Email",
             "full_name": "Nom complet"

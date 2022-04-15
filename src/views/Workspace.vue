@@ -43,7 +43,6 @@
 
 <script>
 import DarkMode from "../components/Commons/DarkMode.vue";
-import LanguageSelect from "../components/Commons/LanguageSelect.vue";
 import ApiUrl from "../components/ApiRequest/ApiUrl.vue";
 import Response from "../components/ApiRequest/Response.vue";
 import SelectHttpMethod from "../components/ApiRequest/SelectHttpMethod.vue";
@@ -66,7 +65,6 @@ export default {
     Chart,
     RequestBody,
     DiagramChoice,
-    LanguageSelect,
     Button,
     Menu,
     Settings,
