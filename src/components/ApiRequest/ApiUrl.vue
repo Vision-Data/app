@@ -49,6 +49,11 @@ export default {
       isHttps: false,
     };
   },
+  watch: {
+    content() {
+      this.searchInputComputed = this.content;
+    },
+  },
   computed: {
     searchInputComputed: {
       get() {
