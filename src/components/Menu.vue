@@ -7,7 +7,9 @@
           :src="require(`@/assets/watermark-color.png`)"
           alt="logo-vision"
         />
+        <Loading v-if="isLoading" />
         <select
+          v-else
           name="workspace"
           id="worskpace"
           @change="changeRoute"
@@ -77,42 +79,38 @@
 <script>
 import Vue3RouterTree from "vue3-router-tree";
 import WorkspaceService from "../services/VisionApi/Workspace.js";
+import Loading from "./Commons/Loading.vue";
 
 export default {
   name: "Menu",
   methods: {
     changeRoute() {
-      this.setWorkspace();
       this.$router.push(`/workspaces/${this.selectedWorkspace}`);
     },
     goToSettings() {
       this.$emit("openSettings");
     },
-    setWorkspace() {
-      const workspace = this.workspaces.find(
-        (workspace) => workspace.id === this.selectedWorkspace
-      );
-      this.$store.dispatch("setSelectedWorkspace", workspace);
-    },
   },
   components: {
     Vue3RouterTree,
+    Loading,
   },
   async mounted() {
+    this.isLoading = true;
     const { response } = await WorkspaceService.findAll(
       this.$store.state.token
     );
+    this.isLoading = false;
 
     this.workspaces = response.data.data;
     this.selectedWorkspace =
       this.$route.params.workspaceId || this.workspaces[0]?.id || "";
-
-    this.setWorkspace();
   },
   data() {
     return {
       selectedWorkspace: "",
       workspaces: [],
+      isLoading: false,
       routes: [
         {
           path: "/",

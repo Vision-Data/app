@@ -98,6 +98,7 @@ import Button from "../components/Commons/Form/Button.vue";
 import Settings from "../components/Workspaces/Settings.vue";
 
 import makeRequest from "../services/api-request.js";
+import WorkspaceService from "../services/VisionApi/Workspace.js";
 
 export default {
   name: "Workspace",
@@ -160,6 +161,30 @@ export default {
         this.$store.dispatch("sendRequest", response);
       }
     },
+    async getWorkspace() {
+      const { response } = await WorkspaceService.find(
+        this.$store.state.token,
+        this.$route.params.workspaceId
+      );
+
+      if (response && response.data) {
+        this.$store.dispatch("setSelectedWorkspace", response.data);
+      }
+    },
+  },
+  async mounted() {
+    if (!this.$route.params.workspaceId) {
+      return this.$router.push("/workspaces");
+    }
+
+    this.getWorkspace();
+  },
+  async beforeUpdate() {
+    if (!this.$route.params.workspaceId) {
+      return this.$router.push("/workspaces");
+    }
+
+    this.getWorkspace();
   },
 };
 </script>

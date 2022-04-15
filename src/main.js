@@ -18,19 +18,29 @@ const notyf = new Notyf({
 
 axios.defaults.baseURL = process.env.VUE_APP_HOST_API;
 
-// Intercepts 401 response and logout user
 axios.interceptors.response.use(
   function(response) {
     return response;
   },
   function(error) {
-    if (error.response.status === 401) {
-      store.dispatch("logout");
-      router.push("/login");
-    } else if (error.response.status === 500) {
-      const { t } = i18n.global;
-      notyf.error(t("errors.errorServer"));
+    const { t } = i18n.global;
+    switch (error.response.status) {
+      case 401:
+        store.dispatch("logout");
+        router.push("/login");
+        break;
+      case 403:
+        notyf.error(t("notifications.forbidden"));
+        router.push("/workspaces");
+        break;
+      case 404:
+        router.push("/404");
+        break;
+      default:
+        notyf.error(t("notifications.errorServer"));
+        break;
     }
+
     return Promise.reject(error);
   }
 );
