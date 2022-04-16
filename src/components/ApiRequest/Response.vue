@@ -1,28 +1,20 @@
 <template>
   <div class="response" :key="index">
-    <div
-      class="alert"
-      v-bind:class="{
+    <div class="alert" v-bind:class="{
         'alert-success':
           responseData && responseData.status.toString().startsWith('2'),
         'alert-error':
           responseData && !responseData.status.toString().startsWith('2'),
-      }"
-    >
+      }">
       <div class="flex-1">
-        <label
-          ><span
-            class="badge border-transparent"
-            v-bind:class="{
+        <label><span class="badge border-transparent" v-bind:class="{
               'bg-success':
                 responseData && responseData.status?.toString().startsWith('2'),
               'bg-error':
                 responseData &&
                 !responseData.status?.toString().startsWith('2'),
-            }"
-          >
-            {{ $t("responseCard.responseStatus") }}</span
-          >
+            }">
+            {{ $t("responseCard.responseStatus") }}</span>
           {{ responseData?.status }} : {{ responseData?.statusText }}
         </label>
       </div>
@@ -31,12 +23,7 @@
       <div class="result-container">
         <b> {{ $t("responseCard.responseTitle") }}</b>
         <template v-for="(component, index) in components" :key="index">
-          <component
-            :is="components[index].component"
-            :name="components[index].name"
-            :data="components[index].data"
-            :color="components[index].color"
-          >
+          <component :is="components[index].component" :name="components[index].name" :data="components[index].data" :color="components[index].color">
           </component>
         </template>
       </div>
@@ -100,7 +87,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .selected {
   --tw-bg-opacity: 0.4 !important;
 }
