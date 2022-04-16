@@ -1,80 +1,35 @@
 <template>
   <div class="workspace">
     <Menu v-if="$store.getters.isLogin" @openSettings="isSettingsOpen = true" />
-    <Settings
-      :openSettings="isSettingsOpen"
-      @close="isSettingsOpen = false"
-    ></Settings>
+    <Settings :openSettings="isSettingsOpen" @close="isSettingsOpen = false"></Settings>
     <div class="workspace-body">
       <div class="flex justify-center mt-10">
         <header>
           <div class="workspace-head">
-            <language-select />
             <div class="save" v-if="$store.getters.isLogin">
               <Button class="btn-secondary" @click="saveRequest">
-                <img
-                  id="save"
-                  :src="require(`@/assets/save.svg`)"
-                  alt="icon-save"
-                />
+                <img id="save" :src="require(`@/assets/save.svg`)" alt="icon-save" />
                 <span>{{ $t("workspace.saveButton") }}</span>
               </Button>
             </div>
           </div>
           <dark-mode />
           <div class="sending-container">
-            <ApiUrl
-              class="container w-full max-w-screen-lg"
-              @query="query = $event"
-              :content="query"
-            />
-            <SelectHttpMethod
-              @detectChoice="choice = $event"
-              :choice="choice"
-            />
-            <Button
-              class="btn-primary runButton"
-              :isLoading="isLoading"
-              @click="fetchData()"
-              >{{ $t("searchbarTooltip.runButton") }}
+            <ApiUrl class="container w-full max-w-screen-lg" @query="query = $event" :content="query" />
+            <SelectHttpMethod @detectChoice="choice = $event" :choice="choice" />
+            <Button class="btn-primary runButton" :isLoading="isLoading" @click="fetchData()">{{ $t("searchbarTooltip.runButton") }}
             </Button>
           </div>
-          <Button
-            class="btn-sm mt-2"
-            v-if="needBodyToSend()"
-            @click="isBodyOpen = true"
-          >
+          <Button class="btn-sm mt-2" v-if="needBodyToSend()" @click="isBodyOpen = true">
             {{ $t("requestBody.editButton") }}
           </Button>
-          <RequestBody
-            :needBodyToSend="needBodyToSend()"
-            :content="body"
-            v-show="isBodyOpen"
-            @close="closing"
-            @requestBodyContent="body = $event"
-            class="container w-full md:w-screen max-w-screen-lg md:-mx-60"
-          />
+          <RequestBody :needBodyToSend="needBodyToSend()" :content="body" v-show="isBodyOpen" @close="closing" @requestBodyContent="body = $event" class="container w-full md:w-screen max-w-screen-lg md:-mx-60" />
         </header>
       </div>
       <DiagramChoice @chart="displayChart" @cancel="isOpened" v-show="isOpen" />
-      <Button
-        id="selectSchema"
-        class="btn-circle btn-lg floating-btn"
-        @click="openModal"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"
-          />
+      <Button id="selectSchema" class="btn-circle btn-lg floating-btn" @click="openModal">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
         </svg>
       </Button>
       <div class="response-container">
@@ -187,10 +142,10 @@ export default {
       let transaction = db.transaction("requests", "readwrite");
       let store = transaction.objectStore("requests").put(payload);
 
-      store.onerror = function() {
+      store.onerror = function () {
         console.error("Error adding request to database");
       };
-      transaction.oncomplete = function() {
+      transaction.oncomplete = function () {
         db.close();
       };
     },
@@ -200,11 +155,11 @@ export default {
       let cursorRequest = store.openCursor();
       let items = [];
 
-      transaction.oncomplete = function() {
+      transaction.oncomplete = function () {
         callback(items);
       };
 
-      cursorRequest.onsuccess = function(event) {
+      cursorRequest.onsuccess = function (event) {
         let cursor = event.target.result;
         if (cursor) {
           const item = cursor.value;
@@ -213,7 +168,7 @@ export default {
           cursor.continue();
         }
       };
-      cursorRequest.onerror = function() {
+      cursorRequest.onerror = function () {
         console.error("Error adding request to database");
       };
     },
@@ -297,7 +252,7 @@ export default {
         console.log(`Error: ${event.target.errorCode}`);
       };
 
-      transaction.oncomplete = function() {
+      transaction.oncomplete = function () {
         db.close();
       };
     },
@@ -305,6 +260,7 @@ export default {
       this.query = data.query;
       this.body = data.body;
       this.choice = data.choice;
+      this.$store.state.response = JSON.parse(data.response);
     },
     initStructure() {
       const req = indexedDB.open("db", 1);
@@ -313,11 +269,11 @@ export default {
       const getRequestById = this.getRequestById;
       const setInfoInputs = this.setInfoInputs;
 
-      req.onerror = function(event) {
+      req.onerror = function (event) {
         console.error(event);
       };
 
-      req.onupgradeneeded = function() {
+      req.onupgradeneeded = function () {
         let db = req.result;
         if (!db.objectStoreNames.contains("requests")) {
           db.createObjectStore("requests", { autoIncrement: true });
@@ -327,7 +283,7 @@ export default {
       req.onsuccess = async () => {
         let db = req.result;
 
-        db.versiononchange = function() {
+        db.versiononchange = function () {
           db.close();
           alert("Database is outdated, please reload the page.");
         };
@@ -346,12 +302,12 @@ export default {
       const getAllRequests = this.getAllRequests;
       const getItems = this.getItems;
 
-      req.onerror = function(event) {
+      req.onerror = function (event) {
         //TODO: gérer l'affichage de l'erreur (autorisation, etc)
         console.error(event);
       };
 
-      req.onupgradeneeded = function() {
+      req.onupgradeneeded = function () {
         let db = req.result;
         //si le client n'a pas de base de données (initialisation)
         if (!db.objectStoreNames.contains("requests")) {
@@ -362,16 +318,18 @@ export default {
       req.onsuccess = async () => {
         let db = req.result;
 
-        db.versiononchange = function() {
+        db.versiononchange = function () {
           db.close();
           alert("Database is outdated, please reload the page.");
         };
         if (this.query.split("//").length > 1) {
+          const response = JSON.stringify(this.$store.state.response);
           await insertRequest(db, {
             workspaceId: this.$route.params.workspaceId,
             query: this.query,
             body: this.body,
             choice: this.choice,
+            response: response,
           });
           await getAllRequests(db, getItems);
           this.$store.commit("setStructure", this.requests);
