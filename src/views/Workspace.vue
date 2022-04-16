@@ -124,6 +124,7 @@ export default {
         this.isChartDisplayed = true;
         this.isOpen = false;
       }
+      
     },
     needBodyToSend() {
       return this.choice == "POST" || this.choice == "PUT";
@@ -261,6 +262,7 @@ export default {
       this.body = data.body;
       this.choice = data.choice;
       this.$store.state.response = JSON.parse(data.response);
+      console.log('test');
     },
     initStructure() {
       const req = indexedDB.open("db", 1);
