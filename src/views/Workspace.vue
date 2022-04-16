@@ -11,14 +11,14 @@
           <div class="workspace-head">
             <language-select />
             <div class="save" v-if="$store.getters.isLogin">
-              <button class="btn btn-secondary">
+              <Button class="btn-secondary" @click="saveRequest">
                 <img
                   id="save"
                   :src="require(`@/assets/save.svg`)"
                   alt="icon-save"
                 />
                 <span>{{ $t("workspace.saveButton") }}</span>
-              </button>
+              </Button>
             </div>
           </div>
           <dark-mode />
@@ -26,11 +26,11 @@
             <ApiUrl
               class="container w-full max-w-screen-lg"
               @query="query = $event"
+              :content="query"
             />
             <SelectHttpMethod
-              :query="query"
               @detectChoice="choice = $event"
-              :body="body"
+              :choice="choice"
             />
             <Button
               class="btn-primary runButton"
@@ -48,6 +48,7 @@
           </Button>
           <RequestBody
             :needBodyToSend="needBodyToSend()"
+            :content="body"
             v-show="isBodyOpen"
             @close="closing"
             @requestBodyContent="body = $event"
@@ -86,7 +87,6 @@
 
 <script>
 import DarkMode from "../components/Commons/DarkMode.vue";
-import LanguageSelect from "../components/Commons/LanguageSelect.vue";
 import ApiUrl from "../components/ApiRequest/ApiUrl.vue";
 import Response from "../components/ApiRequest/Response.vue";
 import SelectHttpMethod from "../components/ApiRequest/SelectHttpMethod.vue";
@@ -110,7 +110,6 @@ export default {
     Chart,
     RequestBody,
     DiagramChoice,
-    LanguageSelect,
     Button,
     Menu,
     Settings,
@@ -121,12 +120,35 @@ export default {
       body: "",
       choice: "GET",
       chart: {},
+      requests: [],
       isOpen: false,
       isChartDisplayed: false,
       isBodyOpen: true,
       isLoading: false,
+      store: [],
       isSettingsOpen: false,
     };
+  },
+  async mounted() {
+    if (!this.$route.params.workspaceId) {
+      return this.$router.push("/workspaces");
+    }
+
+    this.getWorkspace();
+
+    this.initStructure();
+  },
+  async beforeUpdate() {
+    if (!this.$route.params.workspaceId) {
+      return this.$router.push("/workspaces");
+    }
+
+    this.getWorkspace();
+    // Reset requests tree
+    this.requests = [];
+    this.$store.dispatch("sendStructure", this.requests);
+
+    this.initStructure();
   },
   methods: {
     isOpenByResponse(payload) {
@@ -161,6 +183,201 @@ export default {
         this.$store.dispatch("sendRequest", response);
       }
     },
+    insertRequest(db, payload) {
+      let transaction = db.transaction("requests", "readwrite");
+      let store = transaction.objectStore("requests").put(payload);
+
+      store.onerror = function() {
+        console.error("Error adding request to database");
+      };
+      transaction.oncomplete = function() {
+        db.close();
+      };
+    },
+    getAllRequests(db, callback) {
+      let transaction = db.transaction("requests", "readonly");
+      let store = transaction.objectStore("requests");
+      let cursorRequest = store.openCursor();
+      let items = [];
+
+      transaction.oncomplete = function() {
+        callback(items);
+      };
+
+      cursorRequest.onsuccess = function(event) {
+        let cursor = event.target.result;
+        if (cursor) {
+          const item = cursor.value;
+          item.primaryKey = cursor.primaryKey;
+          items.push(item);
+          cursor.continue();
+        }
+      };
+      cursorRequest.onerror = function() {
+        console.error("Error adding request to database");
+      };
+    },
+    getItems(data) {
+      const addRequest = this.addRequest;
+      let items = data.filter(
+        (item) => item.workspaceId === this.$route.params.workspaceId
+      );
+
+      items.forEach((element) => {
+        addRequest(
+          element.query,
+          this.$route.params.workspaceId,
+          element.primaryKey
+        );
+      });
+    },
+    addRequest(path, id, key) {
+      const result = path.split("//")[1]; //get characters after ://
+      const directories = result.split("/"); //array of directories
+      const name = directories.shift().split(/[?#]/)[0];
+
+      const hostRequestIndex = this.requests.findIndex(
+        (request) => request.name === name
+      );
+
+      if (hostRequestIndex === -1) {
+        this.requests.push({
+          workspaceId: id,
+          name: name,
+          children: [],
+        });
+      }
+
+      if (directories.length > 0) {
+        const parent =
+          hostRequestIndex === -1
+            ? this.requests[this.requests.length - 1]
+            : this.requests[hostRequestIndex];
+        this.addChildrenRequest(directories, parent, id, key);
+      }
+    },
+    addChildrenRequest(directories, parent, id, key) {
+      const name = directories.shift().split(/[?#]/)[0];
+
+      const childrenRequestIndex = parent.children.findIndex(
+        (request) => request.name === name
+      );
+
+      if (childrenRequestIndex === -1) {
+        parent.children.push({
+          workspaceId: id,
+          path: `/workspaces/${id}?request=${key}`,
+          name: name,
+          children: [],
+        });
+      }
+
+      if (directories.length > 0) {
+        const parentElement =
+          childrenRequestIndex === -1
+            ? parent.children[parent.children.length - 1]
+            : parent.children[childrenRequestIndex];
+
+        this.addChildrenRequest(directories, parentElement, id, key);
+      }
+    },
+    getRequestById(db, callback, id) {
+      let transaction = db.transaction("requests", "readwrite");
+      let store = transaction.objectStore("requests").get(id);
+
+      store.onsuccess = (event) => {
+        if (!event.target.result) {
+          console.log(`The contact with ${id} not found`);
+        } else {
+          callback(event.target.result);
+        }
+      };
+
+      store.onerror = (event) => {
+        console.log(`Error: ${event.target.errorCode}`);
+      };
+
+      transaction.oncomplete = function() {
+        db.close();
+      };
+    },
+    setInfoInputs(data) {
+      this.query = data.query;
+      this.body = data.body;
+      this.choice = data.choice;
+    },
+    initStructure() {
+      const req = indexedDB.open("db", 1);
+      const getAllRequests = this.getAllRequests;
+      const getItems = this.getItems;
+      const getRequestById = this.getRequestById;
+      const setInfoInputs = this.setInfoInputs;
+
+      req.onerror = function(event) {
+        console.error(event);
+      };
+
+      req.onupgradeneeded = function() {
+        let db = req.result;
+        if (!db.objectStoreNames.contains("requests")) {
+          db.createObjectStore("requests", { autoIncrement: true });
+        }
+      };
+
+      req.onsuccess = async () => {
+        let db = req.result;
+
+        db.versiononchange = function() {
+          db.close();
+          alert("Database is outdated, please reload the page.");
+        };
+
+        await getAllRequests(db, getItems);
+        this.$store.dispatch("sendStructure", this.requests);
+        if (this.$route.query.request !== undefined) {
+          const id = Number(this.$route.query.request);
+          await getRequestById(db, setInfoInputs, id);
+        }
+      };
+    },
+    saveRequest() {
+      const req = indexedDB.open("db", 1);
+      const insertRequest = this.insertRequest;
+      const getAllRequests = this.getAllRequests;
+      const getItems = this.getItems;
+
+      req.onerror = function(event) {
+        //TODO: gérer l'affichage de l'erreur (autorisation, etc)
+        console.error(event);
+      };
+
+      req.onupgradeneeded = function() {
+        let db = req.result;
+        //si le client n'a pas de base de données (initialisation)
+        if (!db.objectStoreNames.contains("requests")) {
+          db.createObjectStore("requests", { autoIncrement: true });
+        }
+      };
+
+      req.onsuccess = async () => {
+        let db = req.result;
+
+        db.versiononchange = function() {
+          db.close();
+          alert("Database is outdated, please reload the page.");
+        };
+        if (this.query.split("//").length > 1) {
+          await insertRequest(db, {
+            workspaceId: this.$route.params.workspaceId,
+            query: this.query,
+            body: this.body,
+            choice: this.choice,
+          });
+          await getAllRequests(db, getItems);
+          this.$store.commit("setStructure", this.requests);
+        }
+      };
+    },
     async getWorkspace() {
       const { response } = await WorkspaceService.find(
         this.$store.state.token,
@@ -171,20 +388,6 @@ export default {
         this.$store.dispatch("setSelectedWorkspace", response.data);
       }
     },
-  },
-  async mounted() {
-    if (!this.$route.params.workspaceId) {
-      return this.$router.push("/workspaces");
-    }
-
-    this.getWorkspace();
-  },
-  async beforeUpdate() {
-    if (!this.$route.params.workspaceId) {
-      return this.$router.push("/workspaces");
-    }
-
-    this.getWorkspace();
   },
 };
 </script>

@@ -9,9 +9,8 @@
         />
         <Loading v-if="isLoading" />
         <select
-          v-else
           name="workspace"
-          id="worskpace"
+          id="workspace-select"
           @change="changeRoute"
           v-model="selectedWorkspace"
           class="select select-bordered w-full max-w-xs loading"
@@ -37,28 +36,32 @@
         </div>
         <div class="divider"></div>
       </div>
-      <div class="treeStructure">
-        <vue3-router-tree :items="routes">
+      <div class="tree-structure">
+        <vue3-router-tree activeColor="#FE9430" :items="requests">
           <template #item="{ item }">
-            <svg
-              aria-hidden="true"
-              focusable="false"
-              role="img"
-              class="iconify iconify--carbon"
-              width="20px"
-              height="20px"
-              preserveAspectRatio="xMidYMid meet"
-              viewBox="0 0 32 32"
-              style="transform: rotate(360deg)"
-            >
-              <path
-                d="M11.17 6l3.42 3.41l.58.59H28v16H4V6h7.17m0-2H4a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h24a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2H16l-3.41-3.41A2 2 0 0 0 11.17 4z"
-                fill="currentColor"
-              />
-            </svg>
-            <span> {{ item.name }}</span>
-
-            <span v-if="item.info" class="chip">{{ item.info }}</span>
+            <div class="tree-structure-container">
+              <a :href="item.path" class="menu-link">
+                <div class="tree-structure-head">
+                  <svg
+                    aria-hidden="true"
+                    focusable="false"
+                    role="img"
+                    class="tree-structure-icon iconify iconify--carbon"
+                    width="20px"
+                    height="20px"
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 32 32"
+                    style="transform: rotate(360deg)"
+                  >
+                    <path
+                      d="M11.17 6l3.42 3.41l.58.59H28v16H4V6h7.17m0-2H4a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h24a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2H16l-3.41-3.41A2 2 0 0 0 11.17 4z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                  <span class="tree-structure-name"> {{ item.name }}</span>
+                </div>
+              </a>
+            </div>
           </template>
         </vue3-router-tree>
       </div>
@@ -95,6 +98,11 @@ export default {
     Vue3RouterTree,
     Loading,
   },
+  watch: {
+    "$store.state.treeStructure"(newValue) {
+      this.requests = newValue;
+    },
+  },
   async mounted() {
     this.isLoading = true;
     const { response } = await WorkspaceService.findAll(
@@ -110,83 +118,71 @@ export default {
     return {
       selectedWorkspace: "",
       workspaces: [],
+      requests: this.$store.state.treeStructure,
       isLoading: false,
-      routes: [
-        {
-          path: "/",
-          name: "Workspace",
-          hasIcon: true,
-        },
-        {
-          path: "/workspace",
-          name: "Workspace",
-          hasIcon: true,
-        },
-        {
-          path: "/requetes",
-          name: "Requetes",
-          hasIcon: true,
-          children: [
-            {
-              path: "/requete1",
-              name: "Requete1",
-            },
-            {
-              path: "/requete2",
-              name: "Requete2",
-            },
-          ],
-        },
-      ],
     };
   },
 };
 </script>
 
 <style scoped>
+.px-4 {
+  padding-right: 0rem !important;
+}
 .menu {
-  background-color: #ffffff;
+  background-color: var(--menu);
   justify-content: left;
   display: flex;
-  width: 20%;
+  width: 100%;
+  max-width: 20rem;
 }
 
+.menu-link {
+  transition: color 0.2s, bold 0.3s;
+}
+
+.menu-link:hover {
+  color: var(--vision-orange);
+  font-weight: bold;
+}
 .workspace-page {
   height: 100%;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  padding: 1.5rem;
 }
 
 .divider {
   margin: 1rem;
 }
 
+.workspaceLogo,
+.btn,
 #logo {
-  width: 70%;
-  margin: 5%;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto;
 }
 
 #settings,
 #schemas {
   width: 1.5rem;
   height: 1.5rem;
-  margin: 0.4rem;
+  margin-right: 0.5rem;
+}
+
+[data-theme="dark"] #settings,
+[data-theme="dark"] #schemas {
+  filter: invert(1);
 }
 
 .btn {
   width: auto;
-  margin: 5%;
-  margin-left: auto;
-  margin-right: auto;
   display: flex;
 }
-/* 
-select {
 
-} */
+#workspace-select {
+  margin: 1rem 0;
+}
 
 #workspaceImg {
   width: 4rem;
@@ -196,26 +192,38 @@ select {
 .workspaceLogo {
   height: auto;
   width: 10rem;
-  margin: 5%;
-  margin-left: auto;
-  margin-right: auto;
   display: flex;
 }
 
-.treeStructure {
+.tree-structure {
   flex: 1;
 }
-
-.treeStructure .justify-between {
-  justify-content: flex-start;
+.tree-structure > div {
+  margin-left: -1rem;
 }
 
-.treeStructure svg {
+.tree-structure-icon {
   margin-right: 0.5rem;
   height: 1rem;
   width: 1rem;
   min-height: 1rem;
   min-width: 1rem;
+}
+
+.tree-structure-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.tree-structure-head {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.tree-structure-chip {
+  margin-left: auto;
 }
 
 .settings {

@@ -1,5 +1,5 @@
 <template>
-  <div class="mb-12 mx-auto">
+  <div class="workspace-card mb-12 mx-auto">
     <div class="card bg-base-100 shadow-2xl hover:bg-base-300" @click="onClick">
       <div class="m-8">
         <figure>
