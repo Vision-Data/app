@@ -12,6 +12,7 @@ const routes = [
     path: "/",
     name: "Home",
     component: SelectWorkspace,
+    meta: { requiresAuth: true },
   },
   {
     path: "/register",

@@ -248,12 +248,11 @@ export default {
         });
       }
 
-      const parent =
-        hostRequestIndex === -1
-          ? this.requests[this.requests.length - 1]
-          : this.requests[hostRequestIndex];
-
       if (directories.length > 0) {
+        const parent =
+          hostRequestIndex === -1
+            ? this.requests[this.requests.length - 1]
+            : this.requests[hostRequestIndex];
         this.addChildrenRequest(directories, parent, id, key);
       }
     },

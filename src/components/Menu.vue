@@ -116,7 +116,6 @@ export default {
   },
   data() {
     return {
-      test: 0,
       selectedWorkspace: "",
       workspaces: [],
       requests: this.$store.state.treeStructure,
