@@ -4,20 +4,29 @@
       <Tab :title="$t('workspace.settings.tabs.informations.name')">
         <section class="flex">
           <div class="avatar">
-            <div class="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-              <img :src="$store.state.user?.avatar_url || require('@/assets/noPicture.png')" />
+            <div
+              class="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2"
+            >
+              <img
+                :src="
+                  $store.state.user?.avatar_url ||
+                    require('@/assets/noPicture.png')
+                "
+              />
             </div>
           </div>
           <div class="ml-4 self-center">
             <p>
               <span class="badge mr-2">{{
                 $t("workspace.settings.tabs.informations.labels.full_name")
-              }}</span>{{ $store.state.user?.full_name }}
+              }}</span
+              >{{ $store.state.user?.full_name }}
             </p>
             <p>
               <span class="badge mr-2">{{
                 $t("workspace.settings.tabs.informations.labels.email")
-              }}</span>{{ $store.state.user?.email }}
+              }}</span
+              >{{ $store.state.user?.email }}
             </p>
           </div>
           <LanguageSelect />
@@ -47,7 +56,6 @@ import AuthenticationService from "../../services/VisionApi/Authentication.js";
 
 export default {
   name: "Settings",
-  inject: ["notyf"],
   props: ["openSettings"],
   components: { Modal, Button, Tabs, Tab, LanguageSelect },
   methods: {
@@ -55,7 +63,7 @@ export default {
       await AuthenticationService.logout(this.$store.state.token);
       this.$store.dispatch("logout");
       this.$router.push("/login");
-      this.notyf.success(this.$t("commons.logoutSuccess"));
+      this.$notyf.success(this.$t("commons.logoutSuccess"));
     },
   },
 };

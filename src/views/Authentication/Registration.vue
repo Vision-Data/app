@@ -82,25 +82,18 @@
         </div>
         <p class="text-center mt-4">
           <router-link to="/login" class="link-primary">{{
-            $t("authentication.notRegisteredText")
+            $t("authentication.alreadyRegisteredText")
           }}</router-link>
         </p>
       </form>
-      <!-- <div class="divider divider-horizontal font-bold">
+      <div class="divider divider-horizontal font-bold">
         OU
-      </div> -->
-      <!-- <div class="w-96">
+      </div>
+      <div class="w-96">
         <div class="flex flex-col">
-          <Button class="btn-lg">
-            <img :src="require(`@/assets/LogoGoogle.png`)" class="w-8 mr-4" />
-            Connexion avec Google
-          </Button>
-          <Button class="btn-lg mt-4 mb-8">
-            <img :src="require(`@/assets/LogoGithub.png`)" class="w-8 mr-4" />
-            Connexion avec Github
-          </Button>
+          <Providers />
         </div>
-      </div> -->
+      </div>
     </section>
   </div>
 </template>
@@ -109,12 +102,13 @@
 import Button from "../../components/Commons/Form/Button.vue";
 import ErrorLabel from "../../components/Commons/Form/ErrorLabel.vue";
 import Alert from "../../components/Commons/Alert.vue";
+import Providers from "../../components/Authentication/Providers.vue";
 
 import AuthenticationService from "../../services/VisionApi/Authentication.js";
 
 export default {
   name: "Registration",
-  components: { Button, ErrorLabel, Alert },
+  components: { Button, ErrorLabel, Alert, Providers },
   data() {
     return {
       form: {
