@@ -75,7 +75,6 @@ import ErrorLabel from "../components/Commons/Form/ErrorLabel.vue";
 
 export default {
   name: "NewWorkspace",
-  inject: ["notyf"],
   data() {
     return {
       form: { color: "#000000", name: "", logo: null },
@@ -99,7 +98,7 @@ export default {
 
       this.errors = errors;
       if (!this.errors) {
-        this.notyf.success(this.$t("newWorkspace.success"));
+        this.$notyf.success(this.$t("newWorkspace.success"));
         this.$router.push({
           name: "Workspace",
           params: { workspaceId: response.data.id },

@@ -1,14 +1,15 @@
 import { createApp } from "vue";
 import App from "./App.vue";
-import "./styles/tailwind.css";
-import "./styles/chartist.css";
 import router from "./router";
 import store from "./store";
-
-import "./styles/global.css";
 import i18n from "./i18n";
 import axios from "axios";
 import { Notyf } from "notyf";
+import socketio from "socket.io-client";
+
+import "./styles/tailwind.css";
+import "./styles/chartist.css";
+import "./styles/global.css";
 import "notyf/notyf.min.css";
 
 const notyf = new Notyf({
@@ -46,8 +47,11 @@ axios.interceptors.response.use(
 );
 
 const app = createApp(App);
+
+app.config.globalProperties.$socket = socketio(process.env.VUE_APP_HOST_API);
+app.config.globalProperties.$notyf = notyf;
+
 app.use(store);
 app.use(i18n);
 app.use(router);
-app.provide("notyf", notyf);
 app.mount("#app");
