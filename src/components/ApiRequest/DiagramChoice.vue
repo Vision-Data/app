@@ -2,13 +2,7 @@
   <div class="modal modal-open">
     <div class="modal-box">
       <div class="modal-list">
-        <div
-          class="modal-item"
-          :class="{ active: i == current }"
-          v-for="(diagram, i) in diagrams"
-          :key="diagram.ref"
-          @click="current = i"
-        >
+        <div class="modal-item" :class="{ active: i == current }" v-for="(diagram, i) in diagrams" :key="diagram.ref" @click="current = i">
           <img :src="require(`@/assets/${diagram.image}.png`)" alt="" />
           <p>{{ diagram.name }}</p>
         </div>
