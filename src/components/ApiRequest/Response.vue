@@ -62,7 +62,6 @@ export default {
     },
     parseData() {
       if (this.responseData?.data) {
-        this.launchModal();
         this.components = Recursive.recursive(
           this.responseData?.data,
           this.comps
