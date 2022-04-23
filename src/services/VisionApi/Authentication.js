@@ -1,45 +1,17 @@
-import axios from "axios";
-import formatErrors from "./errors";
+import ApiClient from "./ApiClient";
 
-export default class AuthenticationService {
-  static async signUp(data) {
-    let response = null;
-    let errors = null;
-
-    try {
-      const result = await axios.post(`register`, data);
-      response = result;
-    } catch (apiErrors) {
-      errors = formatErrors(apiErrors.response.data.errors);
-    }
-
-    return { response, errors };
+export default class AuthenticationService extends ApiClient {
+  static signUp(data) {
+    return this.makeRequest("POST", `register`, data);
   }
 
-  static async login(data) {
-    let response = null;
-    let errors = null;
-
-    try {
-      const result = await axios.post(`login`, data);
-      response = result;
-    } catch (apiErrors) {
-      errors = formatErrors(apiErrors.response.data.errors);
-    }
-
-    return { response, errors };
+  static login(data) {
+    return this.makeRequest("POST", `login`, data);
   }
 
-  static async logout(token) {
-    const response = await axios.post(
-      `logout`,
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    return response;
+  static logout(token) {
+    return this.makeRequest("POST", `logout`, null, {
+      Authorization: `Bearer ${token}`,
+    });
   }
 }
