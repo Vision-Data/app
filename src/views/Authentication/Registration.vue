@@ -123,7 +123,7 @@ export default {
   },
   methods: {
     async register() {
-      if (this.password !== this.passwordConf) {
+      if (this.form.password !== this.form.passwordConf) {
         this.errors = {
           password: "Les deux mots de passe doivent être identiques",
         };
