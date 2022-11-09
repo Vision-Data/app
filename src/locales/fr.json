@@ -89,11 +89,6 @@
     "responseTitle": "Résultats",
     "responseStatus": "État"
   },
-  "requestBody": {
-    "bodyTitle": "Body (Données à envoyer)",
-    "saveButton": "Enregistrer",
-    "editButton": "Modifier le body"
-  },
   "notifications": {
     "errorServer": "Une erreur est survenue. Veuillez réessayer.",
     "forbidden": "Vous n'avez pas les droits pour accéder à cette ressource."
