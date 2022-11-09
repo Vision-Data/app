@@ -1,26 +1,63 @@
 <template>
   <div class="workspace">
     <Menu v-if="$store.getters.isLogin" @openSettings="isSettingsOpen = true" />
-    <Settings :openSettings="isSettingsOpen" @close="isSettingsOpen = false"></Settings>
+    <Settings
+      :openSettings="isSettingsOpen"
+      @close="isSettingsOpen = false"
+    ></Settings>
     <div class="workspace-body">
       <div class="flex justify-center mt-10">
         <header>
           <dark-mode />
           <div class="sending-container">
-            <ApiUrl class="container w-full max-w-screen-lg" @query="query = $event" :content="query" />          
-          <Button class="btn-primary runButton" :isLoading="isLoading" @click="fetchData()">{{ $t("searchbarTooltip.runButton") }}
+            <ApiUrl
+              class="container w-full max-w-screen-lg"
+              @query="query = $event"
+              :content="query"
+            />
+            <Button
+              class="btn-primary runButton"
+              :isLoading="isLoading"
+              @click="fetchData()"
+              >Lancer
             </Button>
           </div>
-          <Button class="btn-sm mt-2" v-if="needBodyToSend()" @click="isBodyOpen = true">
-            {{ $t("requestBody.editButton") }}
+          <Button
+            class="btn-sm mt-2"
+            v-if="needBodyToSend()"
+            @click="isBodyOpen = true"
+          >
+            {{ "Modifier le body" }}
           </Button>
-          <RequestBody :needBodyToSend="needBodyToSend()" :content="body" v-show="isBodyOpen" @close="closing" @requestBodyContent="body = $event" class="container w-full md:w-screen max-w-screen-lg md:-mx-60" />
+          <RequestBody
+            :needBodyToSend="needBodyToSend()"
+            :content="body"
+            v-show="isBodyOpen"
+            @close="closing"
+            @requestBodyContent="body = $event"
+            class="container w-full md:w-screen max-w-screen-lg md:-mx-60"
+          />
         </header>
       </div>
       <DiagramChoice @chart="displayChart" @cancel="isOpened" v-show="isOpen" />
-      <Button id="selectSchema" class="btn-circle btn-lg floating-btn" @click="openModal">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+      <Button
+        id="selectSchema"
+        class="btn-circle btn-lg floating-btn"
+        @click="openModal"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"
+          />
         </svg>
       </Button>
       <div class="response-container">
@@ -113,14 +150,13 @@ export default {
         this.isChartDisplayed = true;
         this.isOpen = false;
       }
-      
     },
     needBodyToSend() {
       return this.choice == "POST" || this.choice == "PUT";
     },
     async fetchData() {
       if (this.query === "") {
-        window.alert(this.$t("searchbarTooltip.emptyInputText"));
+        window.alert("Le champ URL est vide");
       } else {
         this.isLoading = true;
         const response = await makeRequest(this.choice, this.query, this.body);
