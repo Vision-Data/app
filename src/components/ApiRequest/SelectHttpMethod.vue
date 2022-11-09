@@ -28,19 +28,19 @@ export default {
       choices: [
         {
           method: "GET",
-          text: `${this.$t("searchbarTooltip.methodGetSelectText")}`,
+          text: `Recevoir (GET)`,
         },
         {
           method: "POST",
-          text: `➤ ${this.$t("searchbarTooltip.methodPostSelectText")}`,
+          text: `➤ Envoyer (POST)`,
         },
         {
           method: "DELETE",
-          text: `🗑 ${this.$t("searchbarTooltip.methodDeleteSelectText")}`,
+          text: `🗑 Supprimer (DELETE)`,
         },
         {
           method: "PUT",
-          text: `✏ ${this.$t("searchbarTooltip.methodPutSelectText")}`,
+          text: `✏ Modifier (PUT)`,
         },
       ],
       choiceText: "GET",

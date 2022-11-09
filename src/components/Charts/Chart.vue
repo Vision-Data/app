@@ -1,6 +1,6 @@
 <template>
   <div class="chart-container">
-    <h1>{{ $t("chart.title") }}</h1>
+    <h1>{{ "Schéma de données" }}</h1>
     <LineChart
       :data="dataChart"
       :options="optionsChart"

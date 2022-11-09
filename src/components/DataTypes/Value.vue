@@ -1,21 +1,49 @@
 <template>
   <section class="value-line">
-    <div class="alert value" :data-identifier="identifier" :class="[`alert-${color}`, { selected: selected }, { 'value-over': over }]" @mouseover="over = true" @mouseout="over = false">
+    <div
+      class="alert value"
+      :data-identifier="identifier"
+      :class="[
+        `alert-${color}`,
+        { selected: selected },
+        { 'value-over': over },
+      ]"
+      @mouseover="over = true"
+      @mouseout="over = false"
+    >
       <div class="flex-1">
-        <b class="badge border-transparent value-name" :class="`bg-${color}`" v-if="name !== ''">{{ name }}</b>
+        <b
+          class="badge border-transparent value-name"
+          :class="`bg-${color}`"
+          v-if="name !== ''"
+          >{{ name }}</b
+        >
 
-        <span class="data-result" :class="{ 'italic': dataValue === $t('commons.emptyPlaceholder') || dataValue === '' }">{{ dataValue === '' ? $t('commons.emptyPlaceholder') : dataValue }}</span>
-        <button class="btn btn-xs selection-data-x" id="selectX" v-show="over" @click="selectDataX()">
+        <span
+          class="data-result"
+          :class="{ italic: dataValue === '(vide)' || dataValue === '' }"
+          >{{ dataValue === "" ? "(vide)" : dataValue }}</span
+        >
+        <button
+          class="btn btn-xs selection-data-x"
+          id="selectX"
+          v-show="over"
+          @click="selectDataX()"
+        >
           X
         </button>
-        <button class="btn btn-xs selection-data-y" id="selectY" v-show="over" @click="selectDataY()">
+        <button
+          class="btn btn-xs selection-data-y"
+          id="selectY"
+          v-show="over"
+          @click="selectDataY()"
+        >
           Y
         </button>
       </div>
     </div>
   </section>
 </template>
-
 
 <script>
 export default {

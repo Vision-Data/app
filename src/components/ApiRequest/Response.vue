@@ -1,29 +1,42 @@
 <template>
   <div class="response" :key="index">
-    <div class="alert" v-bind:class="{
+    <div
+      class="alert"
+      v-bind:class="{
         'alert-success':
           responseData && responseData.status.toString().startsWith('2'),
         'alert-error':
           responseData && !responseData.status.toString().startsWith('2'),
-      }">
+      }"
+    >
       <div class="flex-1">
-        <label><span class="badge border-transparent" v-bind:class="{
+        <label
+          ><span
+            class="badge border-transparent"
+            v-bind:class="{
               'bg-success':
                 responseData && responseData.status?.toString().startsWith('2'),
               'bg-error':
                 responseData &&
                 !responseData.status?.toString().startsWith('2'),
-            }">
-            {{ $t("responseCard.responseStatus") }}</span>
+            }"
+          >
+            {{ "État" }}</span
+          >
           {{ responseData?.status }} : {{ responseData?.statusText }}
         </label>
       </div>
     </div>
     <div class="alert bg-base-200">
       <div class="result-container">
-        <b> {{ $t("responseCard.responseTitle") }}</b>
+        <b> {{ "Résultats" }}</b>
         <template v-for="(component, index) in components" :key="index">
-          <component :is="components[index].component" :name="components[index].name" :data="components[index].data" :color="components[index].color">
+          <component
+            :is="components[index].component"
+            :name="components[index].name"
+            :data="components[index].data"
+            :color="components[index].color"
+          >
           </component>
         </template>
       </div>
