@@ -22,21 +22,6 @@
               >Lancer
             </Button>
           </div>
-          <Button
-            class="btn-sm mt-2"
-            v-if="needBodyToSend()"
-            @click="isBodyOpen = true"
-          >
-            {{ "Modifier le body" }}
-          </Button>
-          <RequestBody
-            :needBodyToSend="needBodyToSend()"
-            :content="body"
-            v-show="isBodyOpen"
-            @close="closing"
-            @requestBodyContent="body = $event"
-            class="container w-full md:w-screen max-w-screen-lg md:-mx-60"
-          />
         </header>
       </div>
       <DiagramChoice @chart="displayChart" @cancel="isOpened" v-show="isOpen" />
@@ -73,7 +58,6 @@ import DarkMode from "../components/Commons/DarkMode.vue";
 import ApiUrl from "../components/ApiRequest/ApiUrl.vue";
 import Response from "../components/ApiRequest/Response.vue";
 import Chart from "../components/Charts/Chart.vue";
-import RequestBody from "../components/ApiRequest/RequestBody.vue";
 import DiagramChoice from "../components/ApiRequest/DiagramChoice.vue";
 import Menu from "../components/Menu.vue";
 import Button from "../components/Commons/Form/Button.vue";
@@ -89,7 +73,6 @@ export default {
     Response,
     DarkMode,
     Chart,
-    RequestBody,
     DiagramChoice,
     Button,
     Menu,
@@ -150,9 +133,6 @@ export default {
         this.isChartDisplayed = true;
         this.isOpen = false;
       }
-    },
-    needBodyToSend() {
-      return this.choice == "POST" || this.choice == "PUT";
     },
     async fetchData() {
       if (this.query === "") {

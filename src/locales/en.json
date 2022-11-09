@@ -2,10 +2,6 @@
   "searchbarTooltip": {
     "helperText": "The URL is the path to the information, usually starting with https://",
     "helperPlaceholder": "API URL",
-    "methodGetSelectText": "GET",
-    "methodPostSelectText": "POST",
-    "methodPutSelectText": "PUT",
-    "methodDeleteSelectText": "DELETE",
     "runButton": "Run",
     "securityHelperText": "Secure URL",
     "emptyInputText": "URL's input is empty",
