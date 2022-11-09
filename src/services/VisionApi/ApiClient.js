@@ -4,7 +4,6 @@ export default class ApiClient {
   static async makeRequest(method, url, data = null, headers = null) {
     let response = null;
     let errors = null;
-    let toto = "lol'";
 
     try {
       response = await axios({
