@@ -84,14 +84,6 @@
           }}</router-link>
         </p>
       </form>
-      <div class="divider divider-horizontal font-bold">
-        OU
-      </div>
-      <div class="w-96">
-        <div class="flex flex-col">
-          <Providers />
-        </div>
-      </div>
     </section>
   </div>
 </template>
@@ -100,13 +92,12 @@
 import Button from "../../components/Commons/Form/Button.vue";
 import ErrorLabel from "../../components/Commons/Form/ErrorLabel.vue";
 import Alert from "../../components/Commons/Alert.vue";
-import Providers from "../../components/Authentication/Providers.vue";
 
 import AuthenticationService from "../../services/VisionApi/Authentication.js";
 
 export default {
   name: "Registration",
-  components: { Button, ErrorLabel, Alert, Providers },
+  components: { Button, ErrorLabel, Alert },
   data() {
     return {
       form: {

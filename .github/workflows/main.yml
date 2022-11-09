@@ -34,7 +34,6 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1
 
-
   deployment:
     name: "🚀 Deploy"
     if: github.ref == 'refs/heads/main'

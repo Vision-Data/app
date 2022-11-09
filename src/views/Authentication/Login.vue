@@ -10,14 +10,6 @@
       {{ "Connexion" }}
     </h1>
     <section class="flex flex-col justify-center items-center mt-8">
-      <div class="w-96 mb-2">
-        <div class="flex flex-col">
-          <Providers />
-        </div>
-      </div>
-      <div class="divider divider-horizontal font-bold">
-        OU
-      </div>
       <div class="flex flex-col items-center w-96">
         <Alert
           type="error"
@@ -77,13 +69,12 @@
 import Button from "../../components/Commons/Form/Button.vue";
 import ErrorLabel from "../../components/Commons/Form/ErrorLabel.vue";
 import Alert from "../../components/Commons/Alert.vue";
-import Providers from "../../components/Authentication/Providers.vue";
 
 import AuthenticationService from "../../services/VisionApi/Authentication.js";
 
 export default {
   name: "Login",
-  components: { Button, ErrorLabel, Alert, Providers },
+  components: { Button, ErrorLabel, Alert },
   data() {
     return {
       form: {

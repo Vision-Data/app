@@ -4,7 +4,6 @@ import router from "./router";
 import store from "./store";
 import axios from "axios";
 import { Notyf } from "notyf";
-import socketio from "socket.io-client";
 
 import "./styles/tailwind.css";
 import "./styles/chartist.css";
@@ -19,10 +18,10 @@ const notyf = new Notyf({
 axios.defaults.baseURL = process.env.VUE_APP_HOST_API;
 
 axios.interceptors.response.use(
-  function(response) {
+  function (response) {
     return response;
   },
-  function(error) {
+  function (error) {
     switch (error.response.status) {
       case 401:
         store.dispatch("logout");
@@ -46,7 +45,6 @@ axios.interceptors.response.use(
 
 const app = createApp(App);
 
-app.config.globalProperties.$socket = socketio(process.env.VUE_APP_HOST_API);
 app.config.globalProperties.$notyf = notyf;
 
 app.use(store);
