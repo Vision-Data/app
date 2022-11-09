@@ -1,7 +1,17 @@
 <template>
-  <Modal :isOpen="needBodyToSend" :closeLabel="$t('requestBody.saveButton')" :title="$t('requestBody.bodyTitle')">
+  <Modal
+    :isOpen="needBodyToSend"
+    closeLabel="Enregistrer"
+    title="Body (Données à envoyer)"
+  >
     <div class="form-control">
-      <prism-editor class="my-editor" v-model="codeComputed" :highlight="highlighter" line-numbers @change="emitBody"></prism-editor>
+      <prism-editor
+        class="my-editor"
+        v-model="codeComputed"
+        :highlight="highlighter"
+        line-numbers
+        @change="emitBody"
+      ></prism-editor>
     </div>
   </Modal>
 </template>
@@ -40,7 +50,7 @@ export default {
         if (value === "") value = "{\n\tvalue:''\n}";
         this.code = value;
       },
-    }
+    },
   },
   methods: {
     highlighter(code) {
