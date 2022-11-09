@@ -8,18 +8,6 @@
     <div class="workspace-body">
       <div class="flex justify-center mt-10">
         <header>
-          <div class="workspace-head">
-            <div class="save" v-if="$store.getters.isLogin">
-              <Button class="btn-secondary" @click="saveRequest">
-                <img
-                  id="save"
-                  :src="require(`@/assets/save.svg`)"
-                  alt="icon-save"
-                />
-                <span>{{ "Sauvegarder la requête" }}</span>
-              </Button>
-            </div>
-          </div>
           <dark-mode />
           <div class="sending-container">
             <ApiUrl
@@ -27,15 +15,11 @@
               @query="query = $event"
               :content="query"
             />
-            <SelectHttpMethod
-              @detectChoice="choice = $event"
-              :choice="choice"
-            />
             <Button
               class="btn-primary runButton"
               :isLoading="isLoading"
               @click="fetchData()"
-              >{{ "Lancer" }}
+              >Lancer
             </Button>
           </div>
           <Button
@@ -88,7 +72,6 @@
 import DarkMode from "../components/Commons/DarkMode.vue";
 import ApiUrl from "../components/ApiRequest/ApiUrl.vue";
 import Response from "../components/ApiRequest/Response.vue";
-import SelectHttpMethod from "../components/ApiRequest/SelectHttpMethod.vue";
 import Chart from "../components/Charts/Chart.vue";
 import RequestBody from "../components/ApiRequest/RequestBody.vue";
 import DiagramChoice from "../components/ApiRequest/DiagramChoice.vue";
@@ -104,7 +87,6 @@ export default {
   components: {
     ApiUrl,
     Response,
-    SelectHttpMethod,
     DarkMode,
     Chart,
     RequestBody,
@@ -186,10 +168,10 @@ export default {
       let transaction = db.transaction("requests", "readwrite");
       let store = transaction.objectStore("requests").put(payload);
 
-      store.onerror = function() {
+      store.onerror = function () {
         console.error("Error adding request to database");
       };
-      transaction.oncomplete = function() {
+      transaction.oncomplete = function () {
         db.close();
       };
     },
@@ -199,11 +181,11 @@ export default {
       let cursorRequest = store.openCursor();
       let items = [];
 
-      transaction.oncomplete = function() {
+      transaction.oncomplete = function () {
         callback(items);
       };
 
-      cursorRequest.onsuccess = function(event) {
+      cursorRequest.onsuccess = function (event) {
         let cursor = event.target.result;
         if (cursor) {
           const item = cursor.value;
@@ -212,7 +194,7 @@ export default {
           cursor.continue();
         }
       };
-      cursorRequest.onerror = function() {
+      cursorRequest.onerror = function () {
         console.error("Error adding request to database");
       };
     },
@@ -296,7 +278,7 @@ export default {
         console.log(`Error: ${event.target.errorCode}`);
       };
 
-      transaction.oncomplete = function() {
+      transaction.oncomplete = function () {
         db.close();
       };
     },
@@ -313,11 +295,11 @@ export default {
       const getRequestById = this.getRequestById;
       const setInfoInputs = this.setInfoInputs;
 
-      req.onerror = function(event) {
+      req.onerror = function (event) {
         console.error(event);
       };
 
-      req.onupgradeneeded = function() {
+      req.onupgradeneeded = function () {
         let db = req.result;
         if (!db.objectStoreNames.contains("requests")) {
           db.createObjectStore("requests", { autoIncrement: true });
@@ -327,7 +309,7 @@ export default {
       req.onsuccess = async () => {
         let db = req.result;
 
-        db.versiononchange = function() {
+        db.versiononchange = function () {
           db.close();
           alert("Database is outdated, please reload the page.");
         };
@@ -337,46 +319,6 @@ export default {
         if (this.$route.query.request !== undefined) {
           const id = Number(this.$route.query.request);
           await getRequestById(db, setInfoInputs, id);
-        }
-      };
-    },
-    saveRequest() {
-      const req = indexedDB.open("db", 1);
-      const insertRequest = this.insertRequest;
-      const getAllRequests = this.getAllRequests;
-      const getItems = this.getItems;
-
-      req.onerror = function(event) {
-        //TODO: gérer l'affichage de l'erreur (autorisation, etc)
-        console.error(event);
-      };
-
-      req.onupgradeneeded = function() {
-        let db = req.result;
-        //si le client n'a pas de base de données (initialisation)
-        if (!db.objectStoreNames.contains("requests")) {
-          db.createObjectStore("requests", { autoIncrement: true });
-        }
-      };
-
-      req.onsuccess = async () => {
-        let db = req.result;
-
-        db.versiononchange = function() {
-          db.close();
-          alert("Database is outdated, please reload the page.");
-        };
-        if (this.query.split("//").length > 1) {
-          const response = JSON.stringify(this.$store.state.response);
-          await insertRequest(db, {
-            workspaceId: this.$route.params.workspaceId,
-            query: this.query,
-            body: this.body,
-            choice: this.choice,
-            response: response,
-          });
-          await getAllRequests(db, getItems);
-          this.$store.commit("setStructure", this.requests);
         }
       };
     },
