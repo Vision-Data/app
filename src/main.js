@@ -2,10 +2,8 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
 import store from './store';
-import i18n from './i18n';
 import axios from 'axios';
 import { Notyf } from 'notyf';
-import socketio from 'socket.io-client';
 
 import './styles/tailwind.css';
 import './styles/chartist.css';
@@ -24,21 +22,20 @@ axios.interceptors.response.use(
     return response;
   },
   function (error) {
-    const { t } = i18n.global;
     switch (error.response.status) {
       case 401:
         store.dispatch('logout');
         router.push('/login');
         break;
       case 403:
-        notyf.error(t('notifications.forbidden'));
+        notyf.error('notifications.forbidden');
         router.push('/workspaces');
         break;
       case 404:
         router.push('/404');
         break;
       default:
-        notyf.error(t('notifications.errorServer'));
+        notyf.error('Une erreur est survenue. Veuillez réessayer.');
         break;
     }
 
@@ -48,10 +45,8 @@ axios.interceptors.response.use(
 
 const app = createApp(App);
 
-app.config.globalProperties.$socket = socketio(process.env.VUE_APP_HOST_API);
 app.config.globalProperties.$notyf = notyf;
 
 app.use(store);
-app.use(i18n);
 app.use(router);
 app.mount('#app');

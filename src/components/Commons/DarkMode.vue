@@ -2,8 +2,8 @@
   <button
     id="change-theme"
     class="bg-base-300"
-    :aria-label="$t('commons.changeTheme')"
-    :title="$t('commons.changeTheme')"
+    aria-label="Changer le thème"
+    title="Changer le thème"
     @click="changeTheme()"
   >
     <div v-if="!isDark" class="sun">

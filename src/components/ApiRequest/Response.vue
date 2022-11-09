@@ -10,8 +10,8 @@
       }"
     >
       <div class="flex-1">
-        <label>
-          <span
+        <label
+          ><span
             class="badge border-transparent"
             :class="{
               'bg-success':
@@ -20,24 +20,23 @@
                 responseData && !responseData.status?.toString().startsWith('2')
             }"
           >
-            {{ $t('responseCard.responseStatus') }}
-          </span>
+            {{ 'État' }}</span
+          >
           {{ responseData?.status }} : {{ responseData?.statusText }}
         </label>
       </div>
     </div>
-
     <div class="alert bg-base-200">
       <div class="result-container">
-        <b> {{ $t('responseCard.responseTitle') }}</b>
-
+        <b> {{ 'Résultats' }}</b>
         <template v-for="(component, index) in components" :key="index">
           <component
             :is="components[index].component"
             :name="components[index].name"
             :data="components[index].data"
             :color="components[index].color"
-          />
+          >
+          </component>
         </template>
       </div>
     </div>
@@ -52,7 +51,11 @@ import Recursive from '../../services/recursive.js';
 import { markRaw } from 'vue';
 export default {
   name: 'Response',
-  components: { ValueComponent, ObjectComponent, ArrayComponent },
+  components: {
+    ValueComponent,
+    ObjectComponent,
+    ArrayComponent
+  },
   emits: ['launch-modal'],
   data() {
     return {
@@ -66,6 +69,7 @@ export default {
       }
     };
   },
+
   created() {
     this.unwatch = this.$store.watch(
       (state) => state.response,

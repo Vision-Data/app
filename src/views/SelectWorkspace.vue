@@ -2,12 +2,11 @@
   <div class="select-workspace">
     <div class="lg:mx-48 md:mx-24 sm:mx-2 my-24">
       <header class="mb-8">
-        <LanguageSelect />
         <dark-mode />
       </header>
       <div class="md:flex justify-between row">
         <h2 class="text-xl">
-          {{ $t('selectWorkspace.title') }}
+          {{ "Choix de l'espace de travail" }}
         </h2>
 
         <div>
@@ -24,7 +23,7 @@
                 clip-rule="evenodd"
               />
             </svg>
-            {{ $t('selectWorkspace.create') }}
+            {{ 'Créer un espace de travail' }}
           </button>
         </div>
       </div>
@@ -51,7 +50,7 @@
             :disabled="!previousPageUrl"
             @click="goToPreviousPage()"
           >
-            {{ $t('selectWorkspace.previous') }}
+            {{ 'Précédent' }}
           </button>
           <button
             class="btn btn-primary btn-outline w-6/12 md:w-24"
@@ -61,7 +60,7 @@
             :disabled="!nextPageUrl"
             @click="goToNextPage()"
           >
-            {{ $t('selectWorkspace.next') }}
+            {{ 'Suivant' }}
           </button>
         </div>
       </div>
@@ -69,7 +68,7 @@
     <div class="help">
       <TooltipInformations
         class="tooltip absolute bottom-0 md:right-0 md:h-16"
-        :helper-text="$t('selectWorkspace.tooltip')"
+        helper-text="Qu'est-ce qu'un espace de travail ?"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -94,7 +93,6 @@
 import DarkMode from '../components/Commons/DarkMode.vue';
 import WorkspaceCard from '../components/Workspaces/WorkspaceCard.vue';
 import WorkspaceService from '../services/VisionApi/Workspace.js';
-import LanguageSelect from '../components/Commons/LanguageSelect.vue';
 import TooltipInformations from '../components/Commons/ToolTipInformations.vue';
 import Alert from '../components/Commons/Alert.vue';
 import Loading from '../components/Commons/Loading.vue';
@@ -103,7 +101,6 @@ export default {
   name: 'SelectWorkspace',
   components: {
     DarkMode,
-    LanguageSelect,
     TooltipInformations,
     WorkspaceCard,
     Alert,

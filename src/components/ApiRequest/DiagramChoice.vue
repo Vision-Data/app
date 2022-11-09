@@ -10,19 +10,16 @@
           @click="current = i"
         >
           <img :src="require(`@/assets/${diagram.image}.png`)" alt="" />
-
           <p>{{ diagram.name }}</p>
         </div>
       </div>
-
       <div class="modal-action">
-        <label for="my-modal-2" class="btn" @click="cancel">
-          {{ $t('diagramChoice.cancelButton') }}
-        </label>
-
-        <label for="my-modal-2" class="btn btn-primary" @click="selectChart">
-          {{ $t('diagramChoice.selectButton') }}
-        </label>
+        <label for="my-modal-2" class="btn" @click="cancel">{{
+          'Annuler'
+        }}</label>
+        <label for="my-modal-2" class="btn btn-primary" @click="selectChart">{{
+          'Selectionner'
+        }}</label>
       </div>
     </div>
   </div>
@@ -37,22 +34,22 @@ export default {
       current: null,
       diagrams: [
         {
-          name: this.$t('diagramChoice.donutDiagram'),
+          name: 'Donut',
           image: 'donut',
           ref: 'donut'
         },
         {
-          name: this.$t('diagramChoice.curvesDiagram'),
+          name: 'Courbes',
           image: 'curves',
           ref: 'curves'
         },
         {
-          name: this.$t('diagramChoice.barsDiagram'),
+          name: 'Barres',
           image: 'bars',
           ref: 'bars'
         },
         {
-          name: this.$t('diagramChoice.mapDiagram'),
+          name: 'Carte',
           image: 'map',
           ref: 'map'
         }
@@ -62,9 +59,6 @@ export default {
   methods: {
     cancel() {
       this.$emit('cancel', false);
-    },
-    diagramName(number) {
-      return this.$$t('diagramChoice'[number]);
     },
     selectChart() {
       this.$emit('chart', { name: this.diagrams[this.current].ref });

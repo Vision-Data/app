@@ -15,7 +15,7 @@
         <b
           class="badge border-transparent array-title tooltip"
           :class="`bg-${color}`"
-          :data-tip="$t('commons.array')"
+          data-tip="Tableau"
           >🗃 {{ name }}</b
         >
         <div class="array-content">

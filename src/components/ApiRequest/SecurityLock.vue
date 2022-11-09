@@ -2,7 +2,7 @@
   <span v-if="isHttps">
     <ToolTipInformations
       direction="bottom"
-      :helper-text="$t('searchbarTooltip.securityHelperText')"
+      helper-text="URL Sécurisée"
       color="primary"
     >
       <svg
@@ -23,7 +23,7 @@
   <span v-else>
     <ToolTipInformations
       direction="bottom"
-      :helper-text="$t('searchbarTooltip.securityHelperTextNoHttps')"
+      helper-text="URL non sécurisée"
       color="primary"
     >
       <svg

@@ -7,9 +7,7 @@
           :src="require(`@/assets/watermark-color.png`)"
           alt="logo-vision"
         />
-
         <Loading v-if="isLoading" />
-
         <select
           id="workspace-select"
           v-model="selectedWorkspace"
@@ -18,7 +16,6 @@
           @change="changeRoute"
         >
           <!-- <option selected value="-1">  Worskpace </option> -->
-
           <option
             v-for="workspace in workspaces"
             :key="workspace.id"
@@ -27,7 +24,6 @@
             {{ workspace.name }}
           </option>
         </select>
-
         <div class="param">
           <button class="btn btn-primary settings" @click="goToSettings">
             <img
@@ -35,13 +31,11 @@
               :src="require(`@/assets/settings.svg`)"
               alt="icon-settings"
             />
-            {{ $t('workspace.settings.name') }}
+            {{ 'Paramètres' }}
           </button>
         </div>
-
-        <div class="divider" />
+        <div class="divider"></div>
       </div>
-
       <div class="tree-structure">
         <vue3-router-tree active-color="#FE9430" :items="requests">
           <template #item="{ item }">
@@ -64,7 +58,6 @@
                       fill="currentColor"
                     />
                   </svg>
-
                   <span class="tree-structure-name"> {{ item.name }}</span>
                 </div>
               </a>
@@ -72,7 +65,6 @@
           </template>
         </vue3-router-tree>
       </div>
-
       <div class="schemas">
         <button
           class="btn btn-secondary"
@@ -84,7 +76,7 @@
             :src="require(`@/assets/schemas.svg`)"
             alt="icon-schemas"
           />
-          {{ $t('workspace.graphs') }}
+          {{ 'Schémas' }}
         </button>
       </div>
     </div>
@@ -95,9 +87,13 @@
 import Vue3RouterTree from 'vue3-router-tree';
 import WorkspaceService from '../services/VisionApi/Workspace.js';
 import Loading from './Commons/Loading.vue';
+
 export default {
   name: 'Menu',
-  components: { Vue3RouterTree, Loading },
+  components: {
+    Vue3RouterTree,
+    Loading
+  },
   emits: ['openSettings'],
   data() {
     return {
@@ -118,6 +114,7 @@ export default {
       this.$store.state.token
     );
     this.isLoading = false;
+
     this.workspaces = response.data.data;
     this.selectedWorkspace =
       this.$route.params.workspaceId || this.workspaces[0]?.id || '';

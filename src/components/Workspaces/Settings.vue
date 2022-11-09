@@ -1,7 +1,7 @@
 <template>
-  <Modal :is-open="openSettings" :title="$t('workspace.settings.name')">
+  <Modal :is-open="openSettings" title="Paramètres">
     <Tabs>
-      <Tab :title="$t('workspace.settings.tabs.informations.name')">
+      <Tab title="Informations du compte">
         <section class="flex">
           <div class="avatar">
             <div
@@ -17,29 +17,24 @@
           </div>
           <div class="ml-4 self-center">
             <p>
-              <span class="badge mr-2">{{
-                $t('workspace.settings.tabs.informations.labels.full_name')
-              }}</span
+              <span class="badge mr-2">{{ 'Nom complet' }}</span
               >{{ $store.state.user?.full_name }}
             </p>
             <p>
-              <span class="badge mr-2">{{
-                $t('workspace.settings.tabs.informations.labels.email')
-              }}</span
+              <span class="badge mr-2">{{ 'Email' }}</span
               >{{ $store.state.user?.email }}
             </p>
           </div>
-          <LanguageSelect />
         </section>
       </Tab>
-      <Tab :title="$t('workspace.settings.tabs.workspaces.name')">
+      <Tab title="Espace de travail">
         {{ $store.state.selectedWorkspace?.name || '' }}
       </Tab>
     </Tabs>
 
     <template #actions>
       <Button class="btn-error btn-outline" @click="logout">
-        {{ $t('workspace.settings.logout') }}
+        {{ 'Déconnexion' }}
       </Button>
     </template>
   </Modal>
@@ -50,20 +45,19 @@ import Modal from '../Commons/Modal.vue';
 import Button from '../Commons/Form/Button.vue';
 import Tabs from '../Commons/Tabs/Tabs.vue';
 import Tab from '../Commons/Tabs/Tab.vue';
-import LanguageSelect from '../Commons/LanguageSelect.vue';
 
 import AuthenticationService from '../../services/VisionApi/Authentication.js';
 
 export default {
   name: 'Settings',
-  components: { Modal, Button, Tabs, Tab, LanguageSelect },
+  components: { Modal, Button, Tabs, Tab },
   props: ['openSettings'],
   methods: {
     async logout() {
       await AuthenticationService.logout(this.$store.state.token);
       this.$store.dispatch('logout');
       this.$router.push('/login');
-      this.$notyf.success(this.$t('commons.logoutSuccess'));
+      this.$notyf.success('Vous avez été déconnecté avec succès.');
     }
   }
 };

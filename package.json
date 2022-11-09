@@ -8,7 +8,6 @@
     "lint": "eslint . --ext .js,.vue",
     "lint-and-fix": "eslint . --ext .js,.vue --fix",
     "format": "prettier --config .prettierrc --write \"src/**/*.{js,vue}\"",
-    "i18n:report": "vue-cli-service i18n:report --src \"./src/**/*.?(js|vue)\" --locales \"./src/locales/**/*.json\"",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -21,11 +20,9 @@
     "notyf": "^3.10.0",
     "postcss": "^8.2.13",
     "prismjs": "^1.27.0",
-    "socket.io-client": "^4.4.1",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.17",
     "vue": "^3.0.0",
     "vue-chartist": "^3.0.0",
-    "vue-i18n": "^9.1.9",
     "vue-prism-editor": "^2.0.0-alpha.2",
     "vue-router": "^4.0.12",
     "vue-toast-notification": "^3.0.0",
@@ -34,9 +31,8 @@
     "vuex-persistedstate": "^4.1.0"
   },
   "devDependencies": {
-    "@intlify/vue-i18n-loader": "^3.0.0",
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
+    "@vue/cli-plugin-babel": "~5.0.8",
+    "@vue/cli-service": "~5.0.8",
     "@vue/compiler-sfc": "^3.0.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.0.0",

@@ -1,22 +1,13 @@
 <template>
   <div class="workspace">
     <Menu v-if="$store.getters.isLogin" @openSettings="isSettingsOpen = true" />
-    <Settings :open-settings="isSettingsOpen" @close="isSettingsOpen = false" />
+    <Settings
+      :open-settings="isSettingsOpen"
+      @close="isSettingsOpen = false"
+    ></Settings>
     <div class="workspace-body">
       <div class="flex justify-center mt-10">
         <header>
-          <div class="workspace-head">
-            <div v-if="$store.getters.isLogin" class="save">
-              <Button class="btn-secondary" @click="saveRequest">
-                <img
-                  id="save"
-                  :src="require(`@/assets/save.svg`)"
-                  alt="icon-save"
-                />
-                <span>{{ $t('workspace.saveButton') }}</span>
-              </Button>
-            </div>
-          </div>
           <dark-mode />
           <div class="sending-container">
             <ApiUrl
@@ -24,33 +15,13 @@
               :content="query"
               @query="query = $event"
             />
-            <SelectHttpMethod
-              :choice="choice"
-              @detectChoice="choice = $event"
-            />
             <Button
               class="btn-primary runButton"
               :is-loading="isLoading"
               @click="fetchData()"
-            >
-              {{ $t('searchbarTooltip.runButton') }}
+              >Lancer
             </Button>
           </div>
-          <Button
-            v-if="needBodyToSend()"
-            class="btn-sm mt-2"
-            @click="isBodyOpen = true"
-          >
-            {{ $t('requestBody.editButton') }}
-          </Button>
-          <RequestBody
-            v-show="isBodyOpen"
-            :need-body-to-send="needBodyToSend()"
-            :content="body"
-            class="container w-full md:w-screen max-w-screen-lg md:-mx-60"
-            @close="closing"
-            @requestBodyContent="body = $event"
-          />
         </header>
       </div>
       <DiagramChoice v-show="isOpen" @chart="displayChart" @cancel="isOpened" />
@@ -86,9 +57,7 @@
 import DarkMode from '../components/Commons/DarkMode.vue';
 import ApiUrl from '../components/ApiRequest/ApiUrl.vue';
 import Response from '../components/ApiRequest/Response.vue';
-import SelectHttpMethod from '../components/ApiRequest/SelectHttpMethod.vue';
 import Chart from '../components/Charts/Chart.vue';
-import RequestBody from '../components/ApiRequest/RequestBody.vue';
 import DiagramChoice from '../components/ApiRequest/DiagramChoice.vue';
 import Menu from '../components/Menu.vue';
 import Button from '../components/Commons/Form/Button.vue';
@@ -102,10 +71,8 @@ export default {
   components: {
     ApiUrl,
     Response,
-    SelectHttpMethod,
     DarkMode,
     Chart,
-    RequestBody,
     DiagramChoice,
     Button,
     Menu,
@@ -167,12 +134,9 @@ export default {
         this.isOpen = false;
       }
     },
-    needBodyToSend() {
-      return this.choice == 'POST' || this.choice == 'PUT';
-    },
     async fetchData() {
       if (this.query === '') {
-        window.alert(this.$t('searchbarTooltip.emptyInputText'));
+        window.alert('Le champ URL est vide');
       } else {
         this.isLoading = true;
         const response = await makeRequest(this.choice, this.query, this.body);
@@ -180,9 +144,8 @@ export default {
         this.$store.dispatch('sendRequest', response);
       }
     },
-    insertRequest(db, payload) {
+    insertRequest(db) {
       let transaction = db.transaction('requests', 'readwrite');
-      transaction.objectStore('requests').put(payload);
 
       transaction.oncomplete = function () {
         db.close();
@@ -319,46 +282,6 @@ export default {
         if (this.$route.query.request !== undefined) {
           const id = Number(this.$route.query.request);
           await getRequestById(db, setInfoInputs, id);
-        }
-      };
-    },
-    saveRequest() {
-      const req = indexedDB.open('db', 1);
-      const insertRequest = this.insertRequest;
-      const getAllRequests = this.getAllRequests;
-      const getItems = this.getItems;
-
-      // req.onerror = function (event) {
-      //   //TODO: gérer l'affichage de l'erreur (autorisation, etc)
-      //   console.error(event);
-      // };
-
-      req.onupgradeneeded = function () {
-        let db = req.result;
-        //si le client n'a pas de base de données (initialisation)
-        if (!db.objectStoreNames.contains('requests')) {
-          db.createObjectStore('requests', { autoIncrement: true });
-        }
-      };
-
-      req.onsuccess = async () => {
-        let db = req.result;
-
-        db.versiononchange = function () {
-          db.close();
-          alert('Database is outdated, please reload the page.');
-        };
-        if (this.query.split('//').length > 1) {
-          const response = JSON.stringify(this.$store.state.response);
-          await insertRequest(db, {
-            workspaceId: this.$route.params.workspaceId,
-            query: this.query,
-            body: this.body,
-            choice: this.choice,
-            response: response
-          });
-          await getAllRequests(db, getItems);
-          this.$store.commit('setStructure', this.requests);
         }
       };
     },

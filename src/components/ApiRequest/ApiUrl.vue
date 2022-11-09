@@ -2,10 +2,10 @@
   <div class="form-control">
     <label class="label">
       <span class="label-text text-gray-500">
-        {{ $t('searchbarTooltip.helperPlaceholder') }}
+        {{ "URL de l'API" }}
         <ToolTipInformations
           direction="top"
-          :helper-text="$t('searchbarTooltip.helperText')"
+          helper-text="L'URL est le chemin d'accès des informations débutant généralement par https:"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -28,21 +28,19 @@
     <div class="relative">
       <label class="input-group">
         <SecurityLock :is-https="isHttps" />
-
         <input
           v-model="searchInputComputed"
           type="text"
           placeholder="https://api.example.com/v1"
           class="w-full pr-16 input input-primary input-bordered rounded-r"
           :class="{ 'input-error': pasteError }"
-          :aria-label="$t('searchbarTooltip.insertApiPath')"
+          aria-label="Insérer le chemin l'API"
           @change="emitQuery"
           @keyup="checkHttps"
         />
-
         <ToolTipInformations
           direction="bottom"
-          :helper-text="$t('clipboardTooltip.helperText')"
+          helper-text="Coller le contenu"
           color="primary"
         >
           <Button
@@ -69,7 +67,7 @@
 
       <label v-if="pasteError" class="label">
         <span class="label-text-alt text-error">
-          {{ $t('searchbarTooltip.clipboardAccess') }}
+          {{ "Vous devez autoriser l'accès à votre presse papier" }}
         </span>
       </label>
     </div>
@@ -80,13 +78,18 @@
 import SecurityLock from './SecurityLock.vue';
 import ToolTipInformations from '../Commons/ToolTipInformations.vue';
 import Button from '../Commons/Form/Button.vue';
+
 export default {
   name: 'ApiUrl',
   components: { SecurityLock, ToolTipInformations, Button },
   props: ['content'],
   emits: ['query'],
   data() {
-    return { searchInput: '', pasteError: false, isHttps: false };
+    return {
+      searchInput: '',
+      pasteError: false,
+      isHttps: false
+    };
   },
   computed: {
     searchInputComputed: {

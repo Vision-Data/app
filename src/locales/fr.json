@@ -2,10 +2,6 @@
   "searchbarTooltip": {
     "helperText": "L'URL est le chemin d'accès des informations débutant généralement par https://",
     "helperPlaceholder": "URL de l'API",
-    "methodGetSelectText": "Recevoir (GET)",
-    "methodPostSelectText": "Envoyer (POST)",
-    "methodPutSelectText": "Modifier (PUT)",
-    "methodDeleteSelectText": "Supprimer (DELETE)",
     "runButton": "Lancer",
     "securityHelperText": "URL Sécurisée",
     "securityHelperTextNoHttps": "URL non sécurisée",
@@ -91,11 +87,6 @@
   "responseCard": {
     "responseTitle": "Résultats",
     "responseStatus": "État"
-  },
-  "requestBody": {
-    "bodyTitle": "Body (Données à envoyer)",
-    "saveButton": "Enregistrer",
-    "editButton": "Modifier le body"
   },
   "notifications": {
     "errorServer": "Une erreur est survenue. Veuillez réessayer.",

@@ -9,16 +9,16 @@
         :src="require(`@/assets/watermark-color.png`)"
         alt="logo-vision"
       />
-      <h1>{{ $t('newWorkspace.title') }}</h1>
+      <h1>{{ 'Créer un espace de travail' }}</h1>
       <form class="w-full max-w-xs" @submit.prevent="create">
         <div class="form-control w-full max-w-xs name">
           <label class="label">
-            <span class="label-text">{{ $t('newWorkspace.name') }}</span>
+            <span class="label-text">{{ "Nom de l'espace de travail" }}</span>
           </label>
           <input
             v-model="form.name"
             type="text"
-            :placeholder="$t('newWorkspace.namePlaceholder')"
+            placeholder="Nom"
             class="input input-bordered w-full max-w-xs"
             :class="{ 'input-error': errors && errors.name }"
           />
@@ -27,7 +27,7 @@
 
         <div class="form-control w-full max-w-xs color">
           <label class="label">
-            <span class="label-text">{{ $t('newWorkspace.color') }}</span>
+            <span class="label-text">{{ 'Couleur' }}</span>
           </label>
           <div class="color-body">
             <input
@@ -42,7 +42,7 @@
 
         <div class="form-control w-full max-w-xs picture">
           <label class="label">
-            <span class="label-text">{{ $t('newWorkspace.image') }}</span>
+            <span class="label-text">{{ "Image de l'espace de travail" }}</span>
           </label>
           <input
             v-model="form.logo"
@@ -59,9 +59,8 @@
             class="btn btn-primary"
             :is-loading="isLoading"
             @click.prevent="create"
+            >{{ 'Créer' }}</Button
           >
-            {{ $t('newWorkspace.createButton') }}
-          </Button>
         </div>
       </form>
     </div>
@@ -99,7 +98,7 @@ export default {
 
       this.errors = errors;
       if (!this.errors) {
-        this.$notyf.success(this.$t('newWorkspace.success'));
+        this.$notyf.success('Bienvenue dans votre nouvel espace de travail');
         this.$router.push({
           name: 'Workspace',
           params: { workspaceId: response.data.id }

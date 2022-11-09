@@ -21,13 +21,8 @@
 
         <span
           class="data-result"
-          :class="{
-            italic:
-              dataValue === $t('commons.emptyPlaceholder') || dataValue === ''
-          }"
-          >{{
-            dataValue === '' ? $t('commons.emptyPlaceholder') : dataValue
-          }}</span
+          :class="{ italic: dataValue === '(vide)' || dataValue === '' }"
+          >{{ dataValue === '' ? '(vide)' : dataValue }}</span
         >
         <button
           v-show="over"
