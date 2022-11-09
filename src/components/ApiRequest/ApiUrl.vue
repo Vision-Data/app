@@ -2,10 +2,10 @@
   <div class="form-control">
     <label class="label">
       <span class="label-text text-gray-500">
-        {{ $t("searchbarTooltip.helperPlaceholder") }}
+        {{ "URL de l'API" }}
         <ToolTipInformations
           direction="top"
-          :helperText="$t('searchbarTooltip.helperText')"
+          helperText="L'URL est le chemin d'accès des informations débutant généralement par https:"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -36,11 +36,11 @@
           placeholder="https://api.example.com/v1"
           class="w-full pr-16 input input-primary input-bordered rounded-r"
           :class="{ 'input-error': pasteError }"
-          :aria-label="$t('searchbarTooltip.insertApiPath')"
+          aria-label="Insérer le chemin l'API"
         />
         <ToolTipInformations
           direction="bottom"
-          :helperText="$t('clipboardTooltip.helperText')"
+          helperText="Coller le contenu"
           color="primary"
         >
           <Button
@@ -67,7 +67,7 @@
 
       <label class="label" v-if="pasteError">
         <span class="label-text-alt text-error">
-          {{ $t("searchbarTooltip.clipboardAccess") }}
+          {{ "Vous devez autoriser l'accès à votre presse papier" }}
         </span>
       </label>
     </div>

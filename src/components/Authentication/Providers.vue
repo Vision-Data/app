@@ -44,7 +44,7 @@ export default {
 
       this.$socket.on("errorLogin", () => {
         popup.close();
-        this.$notyf.error(this.$t("notifications.errorServer"));
+        this.$notyf.error("Une erreur est survenue. Veuillez réessayer.");
       });
     },
   },

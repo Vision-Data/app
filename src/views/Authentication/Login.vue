@@ -7,17 +7,9 @@
       alt="logo-vision mb-8"
     />
     <h1 class="text-center font-bold text-4xl mt-4">
-      {{ $t("authentication.login") }}
+      {{ "Connexion" }}
     </h1>
     <section class="flex flex-col justify-center items-center mt-8">
-      <div class="w-96 mb-2">
-        <div class="flex flex-col">
-          <Providers />
-        </div>
-      </div>
-      <div class="divider divider-horizontal font-bold">
-        OU
-      </div>
       <div class="flex flex-col items-center w-96">
         <Alert
           type="error"
@@ -27,13 +19,11 @@
         <form class="w-full max-w-xs" @submit.prevent="login">
           <div class="form-control w-full max-w-xs">
             <label class="label">
-              <span class="label-text">{{
-                $t("authentication.emailAdress")
-              }}</span>
+              <span class="label-text">{{ "Adresse e-mail" }}</span>
             </label>
             <input
               type="text"
-              :placeholder="$t('authentication.emailAdress')"
+              placeholder="Adresse e-mail"
               class="input input-bordered w-full max-w-xs"
               :class="{ 'input-error': errors && errors.email }"
               v-model="form.email"
@@ -42,13 +32,11 @@
           </div>
           <div class="form-control w-full max-w-xs">
             <label class="label">
-              <span class="label-text">{{
-                $t("authentication.password")
-              }}</span>
+              <span class="label-text">{{ "Mot de passe" }}</span>
             </label>
             <input
               type="password"
-              :placeholder="$t('authentication.password')"
+              placeholder="Mot de passe"
               class="input input-bordered w-full max-w-xs"
               :class="{ 'input-error': errors && errors.password }"
               v-model="form.password"
@@ -63,13 +51,13 @@
               class="btn btn-primary"
               @click.prevent="login"
               :isLoading="isLoading"
-              >{{ $t("authentication.loginButton") }}</Button
+              >{{ "Connexion" }}</Button
             >
           </div>
         </form>
         <p class="text-center mt-4">
           <router-link to="/register" class="link-primary">{{
-            $t("authentication.notRegisteredText")
+            "Vous n'avez pas de compte ? Inscrivez-vous !"
           }}</router-link>
         </p>
       </div>
@@ -81,13 +69,12 @@
 import Button from "../../components/Commons/Form/Button.vue";
 import ErrorLabel from "../../components/Commons/Form/ErrorLabel.vue";
 import Alert from "../../components/Commons/Alert.vue";
-import Providers from "../../components/Authentication/Providers.vue";
 
 import AuthenticationService from "../../services/VisionApi/Authentication.js";
 
 export default {
   name: "Login",
-  components: { Button, ErrorLabel, Alert, Providers },
+  components: { Button, ErrorLabel, Alert },
   data() {
     return {
       form: {

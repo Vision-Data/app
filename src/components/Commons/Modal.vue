@@ -6,7 +6,7 @@
       <div class="modal-action">
         <slot name="actions"></slot>
         <label for="my-modal-2" class="btn btn-primary" @click="close">
-          {{ closeLabel || $t("commons.closeModal") }}
+          {{ closeLabel || "Fermer" }}
         </label>
       </div>
     </div>

@@ -7,7 +7,7 @@
       alt="logo-vision"
     />
     <h1 class="text-center font-bold text-4xl mt-4">
-      {{ $t("authentication.signup") }}
+      {{ "Inscription" }}
     </h1>
     <section
       class="flex flex-col md:flex-row justify-center md:space-x-10 items-center mt-8"
@@ -20,13 +20,11 @@
       <form class="flex flex-col items-center w-96" @submit.prevent="register">
         <div class="form-control w-full max-w-xs">
           <label class="label">
-            <span class="label-text">{{
-              $t("authentication.emailAdress")
-            }}</span>
+            <span class="label-text">{{ "Adresse e-mail" }}</span>
           </label>
           <input
             type="text"
-            :placeholder="$t('authentication.emailAdress')"
+            placeholder="Adresse e-mail"
             class="input input-bordered w-full max-w-xs"
             :class="{ 'input-error': errors && errors.email }"
             v-model="form.email"
@@ -35,11 +33,11 @@
         </div>
         <div class="form-control w-full max-w-xs">
           <label class="label">
-            <span class="label-text">{{ $t("authentication.username") }}</span>
+            <span class="label-text">{{ "Nom d'utilisateur" }}</span>
           </label>
           <input
             type="text"
-            :placeholder="$t('authentication.username')"
+            placeholder="Nom d'utilisateur"
             class="input input-bordered w-full max-w-xs"
             :class="{ 'input-error': errors && errors.full_name }"
             v-model="form.full_name"
@@ -51,18 +49,18 @@
         </div>
         <div class="form-control w-full max-w-xs">
           <label class="label">
-            <span class="label-text">{{ $t("authentication.password") }}</span>
+            <span class="label-text">{{ "Mot de passe" }}</span>
           </label>
           <input
             type="password"
-            :placeholder="$t('authentication.password')"
+            placeholder="Mot de passe"
             class="input input-bordered w-full max-w-xs"
             :class="{ 'input-error': errors && errors.password }"
             v-model="form.password"
           />
           <input
             type="password"
-            :placeholder="$t('authentication.confirmPassword')"
+            placeholder="Confirmer le Mot de passe"
             class="input input-bordered w-full max-w-xs"
             :class="{ 'input-error': errors && errors.password }"
             v-model="form.passwordConf"
@@ -77,23 +75,15 @@
             class="btn-primary"
             @click.prevent="register"
             :isLoading="isLoading"
-            >{{ $t("authentication.signupButton") }}</Button
+            >{{ "Inscription" }}</Button
           >
         </div>
         <p class="text-center mt-4">
           <router-link to="/login" class="link-primary">{{
-            $t("authentication.alreadyRegisteredText")
+            "Vous avez déjà un compte ? Connectez-vous !"
           }}</router-link>
         </p>
       </form>
-      <div class="divider divider-horizontal font-bold">
-        OU
-      </div>
-      <div class="w-96">
-        <div class="flex flex-col">
-          <Providers />
-        </div>
-      </div>
     </section>
   </div>
 </template>
@@ -102,13 +92,12 @@
 import Button from "../../components/Commons/Form/Button.vue";
 import ErrorLabel from "../../components/Commons/Form/ErrorLabel.vue";
 import Alert from "../../components/Commons/Alert.vue";
-import Providers from "../../components/Authentication/Providers.vue";
 
 import AuthenticationService from "../../services/VisionApi/Authentication.js";
 
 export default {
   name: "Registration",
-  components: { Button, ErrorLabel, Alert, Providers },
+  components: { Button, ErrorLabel, Alert },
   data() {
     return {
       form: {
