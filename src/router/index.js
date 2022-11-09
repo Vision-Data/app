@@ -1,64 +1,64 @@
-import Workspace from "../views/Workspace.vue";
-import SelectWorkspace from "../views/SelectWorkspace.vue";
-import NewWorkspace from "../views/NewWorkspace.vue";
-import Register from "../views/Authentication/Registration.vue";
-import Login from "../views/Authentication/Login.vue";
-import NotFound from "../views/NotFound.vue";
-import { createWebHistory, createRouter } from "vue-router";
-import store from "../store";
+import Workspace from '../views/Workspace.vue';
+import SelectWorkspace from '../views/SelectWorkspace.vue';
+import NewWorkspace from '../views/NewWorkspace.vue';
+import Register from '../views/Authentication/Registration.vue';
+import Login from '../views/Authentication/Login.vue';
+import NotFound from '../views/NotFound.vue';
+import { createWebHistory, createRouter } from 'vue-router';
+import store from '../store';
 
 const routes = [
   {
-    path: "/",
-    name: "Home",
+    path: '/',
+    name: 'Home',
     component: SelectWorkspace,
-    meta: { requiresAuth: true },
+    meta: { requiresAuth: true }
   },
   {
-    path: "/register",
-    name: "Register",
+    path: '/register',
+    name: 'Register',
     component: Register,
-    meta: { guest: true },
+    meta: { guest: true }
   },
   {
-    path: "/login",
-    name: "Login",
+    path: '/login',
+    name: 'Login',
     component: Login,
-    meta: { guest: true },
+    meta: { guest: true }
   },
   {
-    path: "/schemas",
-    name: "Schemas",
-    component: () => import("../views/Workspace.vue"),
+    path: '/schemas',
+    name: 'Schemas',
+    component: () => import('../views/Workspace.vue')
   },
   {
-    path: "/workspaces",
-    name: "SelectWorkspaces",
+    path: '/workspaces',
+    name: 'SelectWorkspaces',
     component: SelectWorkspace,
-    meta: { requiresAuth: true },
+    meta: { requiresAuth: true }
   },
   {
-    path: "/workspaces/:workspaceId",
-    name: "Workspace",
+    path: '/workspaces/:workspaceId',
+    name: 'Workspace',
     component: Workspace,
-    meta: { requiresAuth: true },
+    meta: { requiresAuth: true }
   },
   {
-    path: "/workspaces/create",
-    name: "NewWorkspaces",
+    path: '/workspaces/create',
+    name: 'NewWorkspaces',
     component: NewWorkspace,
-    meta: { requiresAuth: true },
+    meta: { requiresAuth: true }
   },
   {
-    path: "/:catchAll(.*)*",
-    name: "Not Found",
-    component: NotFound,
-  },
+    path: '/:catchAll(.*)*',
+    name: 'Not Found',
+    component: NotFound
+  }
 ];
 
 const router = createRouter({
   history: createWebHistory(),
-  routes,
+  routes
 });
 
 // Check if user is authenticated before navigating to a page
@@ -69,7 +69,7 @@ router.beforeEach((to, from, next) => {
       return;
     }
 
-    next("/login");
+    next('/login');
   } else {
     next();
   }
@@ -79,7 +79,7 @@ router.beforeEach((to, from, next) => {
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.guest)) {
     if (store.getters.isLogin) {
-      next("/workspaces");
+      next('/workspaces');
       return;
     }
 

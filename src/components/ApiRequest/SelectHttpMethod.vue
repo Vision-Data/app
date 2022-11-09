@@ -16,40 +16,31 @@
 
 <script>
 export default {
-  name: "SelectHttpMethod",
-  props: {
-    choice: {
-      type: String,
-      default: "GET",
-    },
-  },
+  name: 'SelectHttpMethod',
+  props: { choice: { type: String, default: 'GET' } },
+  emits: ['detectChoice'],
   data() {
     return {
       choices: [
         {
-          method: "GET",
-          text: `${this.$t("searchbarTooltip.methodGetSelectText")}`,
+          method: 'GET',
+          text: `${this.$t('searchbarTooltip.methodGetSelectText')}`
         },
         {
-          method: "POST",
-          text: `➤ ${this.$t("searchbarTooltip.methodPostSelectText")}`,
+          method: 'POST',
+          text: `➤ ${this.$t('searchbarTooltip.methodPostSelectText')}`
         },
         {
-          method: "DELETE",
-          text: `🗑 ${this.$t("searchbarTooltip.methodDeleteSelectText")}`,
+          method: 'DELETE',
+          text: `🗑 ${this.$t('searchbarTooltip.methodDeleteSelectText')}`
         },
         {
-          method: "PUT",
-          text: `✏ ${this.$t("searchbarTooltip.methodPutSelectText")}`,
-        },
+          method: 'PUT',
+          text: `✏ ${this.$t('searchbarTooltip.methodPutSelectText')}`
+        }
       ],
-      choiceText: "GET",
+      choiceText: 'GET'
     };
-  },
-  watch: {
-    choice() {
-      this.choiceTextComputed = this.choice;
-    },
   },
   computed: {
     choiceTextComputed: {
@@ -57,15 +48,20 @@ export default {
         return this.choiceText;
       },
       set(value) {
-        if (value === "") value = "GET";
+        if (value === '') value = 'GET';
         this.choiceText = value;
-      },
-    },
+      }
+    }
+  },
+  watch: {
+    choice() {
+      this.choiceTextComputed = this.choice;
+    }
   },
   methods: {
     emitChoice() {
-      this.$emit("detectChoice", this.choiceText);
-    },
-  },
+      this.$emit('detectChoice', this.choiceText);
+    }
+  }
 };
 </script>

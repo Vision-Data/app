@@ -4,9 +4,9 @@
   >
     <ul class="flex flex-wrap -mb-px">
       <li
-        class="mr-8"
         v-for="title in tabTitles"
         :key="title"
+        class="mr-8"
         @click="selectedTitle = title"
       >
         <a
@@ -14,31 +14,31 @@
           class="inline-block py-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
           :class="{
             'text-primary': selectedTitle === title,
-            'border-primary': selectedTitle === title,
+            'border-primary': selectedTitle === title
           }"
           >{{ title }}</a
         >
       </li>
     </ul>
   </div>
-  <slot></slot>
+  <slot />
 </template>
 
 <script>
-import { ref, provide } from "vue";
+import { ref, provide } from 'vue';
 
 export default {
-  name: "Tabs",
+  name: 'Tabs',
   setup(props, { slots }) {
     const tabTitles = ref(slots.default().map((tab) => tab.props.title));
     const selectedTitle = ref(tabTitles.value[0]);
 
-    provide("selectedTitle", selectedTitle);
+    provide('selectedTitle', selectedTitle);
 
     return {
       selectedTitle,
-      tabTitles,
+      tabTitles
     };
-  },
+  }
 };
 </script>

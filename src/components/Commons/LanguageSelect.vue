@@ -1,11 +1,12 @@
 <template>
   <div>
-    <select class="select select-bordered  max-w-xs" v-model="$i18n.locale">
+    <select v-model="$i18n.locale" class="select select-bordered max-w-xs">
       <option
         v-for="option in orderedItems(optionsList)"
-        v-bind:value="option.value"
         :key="option.value"
-        >{{ option.text }}
+        :value="option.value"
+      >
+        {{ option.text }}
       </option>
     </select>
   </div>
@@ -13,14 +14,14 @@
 
 <script>
 export default {
-  name: "selectLang",
-  currentValue: "fr",
+  name: 'SelectLang',
+  currentValue: 'fr',
   data() {
     return {
       optionsList: [
-        { value: "en", text: "English", selected: this.$i18n.locale === "en" },
-        { value: "fr", text: "Français", selected: this.$i18n.locale === "fr" },
-      ],
+        { value: 'en', text: 'English', selected: this.$i18n.locale === 'en' },
+        { value: 'fr', text: 'Français', selected: this.$i18n.locale === 'fr' }
+      ]
     };
   },
   methods: {
@@ -38,7 +39,7 @@ export default {
 
     orderedItems(list) {
       return this.sortItems(list);
-    },
-  },
+    }
+  }
 };
 </script>

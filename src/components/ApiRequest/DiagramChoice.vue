@@ -2,18 +2,27 @@
   <div class="modal modal-open">
     <div class="modal-box">
       <div class="modal-list">
-        <div class="modal-item" :class="{ active: i == current }" v-for="(diagram, i) in diagrams" :key="diagram.ref" @click="current = i">
+        <div
+          v-for="(diagram, i) in diagrams"
+          :key="diagram.ref"
+          class="modal-item"
+          :class="{ active: i == current }"
+          @click="current = i"
+        >
           <img :src="require(`@/assets/${diagram.image}.png`)" alt="" />
+
           <p>{{ diagram.name }}</p>
         </div>
       </div>
+
       <div class="modal-action">
-        <label for="my-modal-2" class="btn" @click="cancel">{{
-          $t("diagramChoice.cancelButton")
-        }}</label>
-        <label for="my-modal-2" class="btn btn-primary" @click="selectChart">{{
-          $t("diagramChoice.selectButton")
-        }}</label>
+        <label for="my-modal-2" class="btn" @click="cancel">
+          {{ $t('diagramChoice.cancelButton') }}
+        </label>
+
+        <label for="my-modal-2" class="btn btn-primary" @click="selectChart">
+          {{ $t('diagramChoice.selectButton') }}
+        </label>
       </div>
     </div>
   </div>
@@ -21,45 +30,46 @@
 
 <script>
 export default {
-  name: "DiagramChoice",
+  name: 'DiagramChoice',
+  emits: ['cancel', 'chart'],
   data() {
     return {
       current: null,
       diagrams: [
         {
-          name: this.$t("diagramChoice.donutDiagram"),
-          image: "donut",
-          ref: "donut",
+          name: this.$t('diagramChoice.donutDiagram'),
+          image: 'donut',
+          ref: 'donut'
         },
         {
-          name: this.$t("diagramChoice.curvesDiagram"),
-          image: "curves",
-          ref: "curves",
+          name: this.$t('diagramChoice.curvesDiagram'),
+          image: 'curves',
+          ref: 'curves'
         },
         {
-          name: this.$t("diagramChoice.barsDiagram"),
-          image: "bars",
-          ref: "bars",
+          name: this.$t('diagramChoice.barsDiagram'),
+          image: 'bars',
+          ref: 'bars'
         },
         {
-          name: this.$t("diagramChoice.mapDiagram"),
-          image: "map",
-          ref: "map",
-        },
-      ],
+          name: this.$t('diagramChoice.mapDiagram'),
+          image: 'map',
+          ref: 'map'
+        }
+      ]
     };
   },
   methods: {
     cancel() {
-      this.$emit("cancel", false);
+      this.$emit('cancel', false);
     },
     diagramName(number) {
-      return this.$$t("diagramChoice"[number]);
+      return this.$$t('diagramChoice'[number]);
     },
     selectChart() {
-      this.$emit("chart", { name: this.diagrams[this.current].ref });
-    },
-  },
+      this.$emit('chart', { name: this.diagrams[this.current].ref });
+    }
+  }
 };
 </script>
 

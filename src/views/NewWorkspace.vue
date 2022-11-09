@@ -9,58 +9,59 @@
         :src="require(`@/assets/watermark-color.png`)"
         alt="logo-vision"
       />
-      <h1>{{ $t("newWorkspace.title") }}</h1>
+      <h1>{{ $t('newWorkspace.title') }}</h1>
       <form class="w-full max-w-xs" @submit.prevent="create">
         <div class="form-control w-full max-w-xs name">
           <label class="label">
-            <span class="label-text">{{ $t("newWorkspace.name") }}</span>
+            <span class="label-text">{{ $t('newWorkspace.name') }}</span>
           </label>
           <input
+            v-model="form.name"
             type="text"
             :placeholder="$t('newWorkspace.namePlaceholder')"
             class="input input-bordered w-full max-w-xs"
             :class="{ 'input-error': errors && errors.name }"
-            v-model="form.name"
           />
-          <ErrorLabel :label="errors.name" v-if="errors && errors.name" />
+          <ErrorLabel v-if="errors && errors.name" :label="errors.name" />
         </div>
 
         <div class="form-control w-full max-w-xs color">
           <label class="label">
-            <span class="label-text">{{ $t("newWorkspace.color") }}</span>
+            <span class="label-text">{{ $t('newWorkspace.color') }}</span>
           </label>
           <div class="color-body">
             <input
+              v-model="form.color"
               type="color"
               :class="{ 'input-error': errors && errors.color }"
-              v-model="form.color"
             />
             <p>{{ form.color }}</p>
           </div>
-          <ErrorLabel :label="errors.color" v-if="errors && errors.color" />
+          <ErrorLabel v-if="errors && errors.color" :label="errors.color" />
         </div>
 
         <div class="form-control w-full max-w-xs picture">
           <label class="label">
-            <span class="label-text">{{ $t("newWorkspace.image") }}</span>
+            <span class="label-text">{{ $t('newWorkspace.image') }}</span>
           </label>
           <input
+            v-model="form.logo"
             type="text"
             placeholder="https://..."
             class="input input-bordered w-full max-w-xs"
             :class="{ 'input-error': errors && errors.logo }"
-            v-model="form.logo"
           />
-          <ErrorLabel :label="errors.logo" v-if="errors && errors.logo" />
+          <ErrorLabel v-if="errors && errors.logo" :label="errors.logo" />
         </div>
 
         <div class="form-control w-full max-w-xs mt-4">
           <Button
             class="btn btn-primary"
+            :is-loading="isLoading"
             @click.prevent="create"
-            :isLoading="isLoading"
-            >{{ $t("newWorkspace.createButton") }}</Button
           >
+            {{ $t('newWorkspace.createButton') }}
+          </Button>
         </div>
       </form>
     </div>
@@ -68,24 +69,24 @@
 </template>
 
 <script>
-import DarkMode from "../components/Commons/DarkMode.vue";
-import WorkspaceService from "../services/VisionApi/Workspace.js";
-import Button from "../components/Commons/Form/Button.vue";
-import ErrorLabel from "../components/Commons/Form/ErrorLabel.vue";
+import DarkMode from '../components/Commons/DarkMode.vue';
+import WorkspaceService from '../services/VisionApi/Workspace.js';
+import Button from '../components/Commons/Form/Button.vue';
+import ErrorLabel from '../components/Commons/Form/ErrorLabel.vue';
 
 export default {
-  name: "NewWorkspace",
-  data() {
-    return {
-      form: { color: "#000000", name: "", logo: null },
-      errors: null,
-      isLoading: false,
-    };
-  },
+  name: 'NewWorkspace',
   components: {
     DarkMode,
     Button,
-    ErrorLabel,
+    ErrorLabel
+  },
+  data() {
+    return {
+      form: { color: '#000000', name: '', logo: null },
+      errors: null,
+      isLoading: false
+    };
   },
   methods: {
     async create() {
@@ -98,14 +99,14 @@ export default {
 
       this.errors = errors;
       if (!this.errors) {
-        this.$notyf.success(this.$t("newWorkspace.success"));
+        this.$notyf.success(this.$t('newWorkspace.success'));
         this.$router.push({
-          name: "Workspace",
-          params: { workspaceId: response.data.id },
+          name: 'Workspace',
+          params: { workspaceId: response.data.id }
         });
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

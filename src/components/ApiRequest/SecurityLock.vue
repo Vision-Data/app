@@ -2,7 +2,7 @@
   <span v-if="isHttps">
     <ToolTipInformations
       direction="bottom"
-      :helperText="$t('searchbarTooltip.securityHelperText')"
+      :helper-text="$t('searchbarTooltip.securityHelperText')"
       color="primary"
     >
       <svg
@@ -23,7 +23,7 @@
   <span v-else>
     <ToolTipInformations
       direction="bottom"
-      :helperText="$t('searchbarTooltip.securityHelperTextNoHttps')"
+      :helper-text="$t('searchbarTooltip.securityHelperTextNoHttps')"
       color="primary"
     >
       <svg
@@ -41,11 +41,11 @@
 </template>
 
 <script>
-import ToolTipInformations from "../Commons/ToolTipInformations.vue";
+import ToolTipInformations from '../Commons/ToolTipInformations.vue';
 export default {
-  name: "SecurityLock",
-  props: ["isHttps"],
+  name: 'SecurityLock',
   components: { ToolTipInformations },
+  props: ['isHttps']
 };
 </script>
 

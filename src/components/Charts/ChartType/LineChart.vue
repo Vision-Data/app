@@ -1,32 +1,32 @@
 <template>
-  <div class="ct-chart-line"></div>
+  <div class="ct-chart-line" />
 </template>
 
 <script>
-import Chartist from "chartist";
+import Chartist from 'chartist';
 export default {
-  name: "LineChart",
-  props: ["data", "options", "responsiveOptions"],
+  name: 'LineChart',
+  props: ['data', 'options', 'responsiveOptions'],
   data() {
     return {
-      chart: null,
+      chart: null
     };
-  },
-  mounted() {
-    this.chart = new Chartist.Line(
-      ".ct-chart-line",
-      this.data,
-      this.options,
-      this.responsiveOptions
-    );
   },
   watch: {
     data: {
       handler(newValue) {
         this.chart.update(newValue);
       },
-      deep: true,
-    },
+      deep: true
+    }
   },
+  mounted() {
+    this.chart = new Chartist.Line(
+      '.ct-chart-line',
+      this.data,
+      this.options,
+      this.responsiveOptions
+    );
+  }
 };
 </script>

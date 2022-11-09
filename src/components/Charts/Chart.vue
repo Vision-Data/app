@@ -1,57 +1,71 @@
 <template>
   <div class="chart-container">
-    <h1>{{ $t("chart.title") }}</h1>
+    <h1>{{ $t('chart.title') }}</h1>
     <LineChart
       :data="dataChart"
       :options="optionsChart"
-      :responsiveOptions="responsiveOptionsChart"
+      :responsive-options="responsiveOptionsChart"
     />
   </div>
 </template>
 
 <script>
-import LineChart from "./ChartType/LineChart.vue";
+import LineChart from './ChartType/LineChart.vue';
 export default {
-  name: "Chart",
+  name: 'Chart',
+  components: {
+    LineChart
+  },
   data() {
     return {
       selectedDataX: this.$store.state.selectedData.x,
       selectedDataY: this.$store.state.selectedData.y,
       dataChart: {
         labels: this.selectedDataX ? this.selectedDataX : [],
-        series: this.selectedDataY ? [this.selectedDataY] : [],
+        series: this.selectedDataY ? [this.selectedDataY] : []
       },
       optionsChart: {
         width: 600,
         height: 300,
-        labelInterpolationFnc: function(value) {
+        labelInterpolationFnc: function (value) {
           return value[0];
-        },
+        }
       },
       responsiveOptionsChart: [
         [
-          "screen and (min-width: 640px)",
+          'screen and (min-width: 640px)',
           {
             chartPadding: 30,
             labelOffset: 100,
-            labelDirection: "explode",
-            labelInterpolationFnc: function(value) {
+            labelDirection: 'explode',
+            labelInterpolationFnc: function (value) {
               return value;
-            },
-          },
+            }
+          }
         ],
         [
-          "screen and (min-width: 1024px)",
+          'screen and (min-width: 1024px)',
           {
             labelOffset: 80,
-            chartPadding: 20,
-          },
-        ],
-      ],
+            chartPadding: 20
+          }
+        ]
+      ]
     };
   },
-  components: {
-    LineChart,
+  watch: {
+    selectedDataX: {
+      handler(newValue) {
+        this.dataChart.labels = newValue;
+      },
+      deep: true
+    },
+    selectedDataY: {
+      handler(newValue) {
+        this.dataChart.series = [newValue];
+      },
+      deep: true
+    }
   },
   mounted() {
     this.unwatchX = this.$store.watch(
@@ -72,20 +86,6 @@ export default {
   beforeUnmount() {
     this.unwatchX();
     this.unwatchY();
-  },
-  watch: {
-    selectedDataX: {
-      handler(newValue) {
-        this.dataChart.labels = newValue;
-      },
-      deep: true,
-    },
-    selectedDataY: {
-      handler(newValue) {
-        this.dataChart.series = [newValue];
-      },
-      deep: true,
-    },
-  },
+  }
 };
 </script>

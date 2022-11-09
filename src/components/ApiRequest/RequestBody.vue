@@ -1,35 +1,36 @@
 <template>
-  <Modal :isOpen="needBodyToSend" :closeLabel="$t('requestBody.saveButton')" :title="$t('requestBody.bodyTitle')">
+  <Modal
+    :is-open="needBodyToSend"
+    :close-label="$t('requestBody.saveButton')"
+    :title="$t('requestBody.bodyTitle')"
+  >
     <div class="form-control">
-      <prism-editor class="my-editor" v-model="codeComputed" :highlight="highlighter" line-numbers @change="emitBody"></prism-editor>
+      <prism-editor
+        v-model="codeComputed"
+        class="my-editor"
+        :highlight="highlighter"
+        line-numbers
+        @change="emitBody"
+      />
     </div>
   </Modal>
 </template>
 
 <script>
-import Modal from "../Commons/Modal.vue";
-import { PrismEditor } from "vue-prism-editor";
-import "vue-prism-editor/dist/prismeditor.min.css"; // import the styles somewhere
-
-// import highlighting library (you can use any library you want just return html string)
-import { highlight, languages } from "prismjs/components/prism-core";
-import "prismjs/components/prism-clike";
-import "prismjs/components/prism-javascript";
-import "prismjs/themes/prism-tomorrow.css"; // import syntax highlighting styles
-
+import Modal from '../Commons/Modal.vue';
+import { PrismEditor } from 'vue-prism-editor';
+import 'vue-prism-editor/dist/prismeditor.min.css';
+import { highlight, languages } from 'prismjs/components/prism-core';
+import 'prismjs/components/prism-clike';
+import 'prismjs/components/prism-javascript';
+import 'prismjs/themes/prism-tomorrow.css';
 export default {
-  name: "RequestBody",
-  props: ["needBodyToSend", "content"],
+  name: 'RequestBody',
   components: { PrismEditor, Modal },
+  props: ['needBodyToSend', 'content'],
+  emits: ['requestBodyContent'],
   data() {
-    return {
-      code: "",
-    };
-  },
-  watch: {
-    content() {
-      this.codeComputed = this.content;
-    },
+    return { code: '' };
   },
   computed: {
     codeComputed: {
@@ -37,9 +38,14 @@ export default {
         return this.code;
       },
       set(value) {
-        if (value === "") value = "{\n\tvalue:''\n}";
+        if (value === '') value = "{\n\tvalue:''\n}";
         this.code = value;
-      },
+      }
+    }
+  },
+  watch: {
+    content() {
+      this.codeComputed = this.content;
     }
   },
   methods: {
@@ -47,9 +53,9 @@ export default {
       return highlight(code, languages.js);
     },
     emitBody() {
-      this.$emit("requestBodyContent", this.code);
-    },
-  },
+      this.$emit('requestBodyContent', this.code);
+    }
+  }
 };
 </script>
 

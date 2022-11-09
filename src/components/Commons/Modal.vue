@@ -1,12 +1,17 @@
 <template>
-  <div class="modal" :class="{ 'modal-open': this.isOpen }">
+  <div class="modal" :class="{ 'modal-open': isOpen }">
     <div class="modal-box">
-      <h3 class="font-bold text-2xl mb-4">{{ title }}</h3>
-      <slot></slot>
+      <h3 class="font-bold text-2xl mb-4">
+        {{ title }}
+      </h3>
+
+      <slot />
+
       <div class="modal-action">
-        <slot name="actions"></slot>
+        <slot name="actions" />
+
         <label for="my-modal-2" class="btn btn-primary" @click="close">
-          {{ closeLabel || $t("commons.closeModal") }}
+          {{ closeLabel || $t('commons.closeModal') }}
         </label>
       </div>
     </div>
@@ -15,13 +20,14 @@
 
 <script>
 export default {
-  name: "Modal",
-  props: ["isOpen", "title", "closeLabel"],
+  name: 'Modal',
+  props: ['isOpen', 'title', 'closeLabel'],
+  emits: ['close'],
   methods: {
     close() {
-      this.$emit("close", false);
-    },
-  },
+      this.$emit('close', false);
+    }
+  }
 };
 </script>
 

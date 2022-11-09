@@ -2,10 +2,10 @@
   <div class="form-control">
     <label class="label">
       <span class="label-text text-gray-500">
-        {{ $t("searchbarTooltip.helperPlaceholder") }}
+        {{ $t('searchbarTooltip.helperPlaceholder') }}
         <ToolTipInformations
           direction="top"
-          :helperText="$t('searchbarTooltip.helperText')"
+          :helper-text="$t('searchbarTooltip.helperText')"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -27,20 +27,22 @@
 
     <div class="relative">
       <label class="input-group">
-        <SecurityLock :isHttps="isHttps" />
+        <SecurityLock :is-https="isHttps" />
+
         <input
           v-model="searchInputComputed"
-          @change="emitQuery"
           type="text"
-          @keyup="checkHttps"
           placeholder="https://api.example.com/v1"
           class="w-full pr-16 input input-primary input-bordered rounded-r"
           :class="{ 'input-error': pasteError }"
           :aria-label="$t('searchbarTooltip.insertApiPath')"
+          @change="emitQuery"
+          @keyup="checkHttps"
         />
+
         <ToolTipInformations
           direction="bottom"
-          :helperText="$t('clipboardTooltip.helperText')"
+          :helper-text="$t('clipboardTooltip.helperText')"
           color="primary"
         >
           <Button
@@ -65,9 +67,9 @@
         </ToolTipInformations>
       </label>
 
-      <label class="label" v-if="pasteError">
+      <label v-if="pasteError" class="label">
         <span class="label-text-alt text-error">
-          {{ $t("searchbarTooltip.clipboardAccess") }}
+          {{ $t('searchbarTooltip.clipboardAccess') }}
         </span>
       </label>
     </div>
@@ -75,25 +77,16 @@
 </template>
 
 <script>
-import SecurityLock from "./SecurityLock.vue";
-import ToolTipInformations from "../Commons/ToolTipInformations.vue";
-import Button from "../Commons/Form/Button.vue";
-
+import SecurityLock from './SecurityLock.vue';
+import ToolTipInformations from '../Commons/ToolTipInformations.vue';
+import Button from '../Commons/Form/Button.vue';
 export default {
-  name: "ApiUrl",
+  name: 'ApiUrl',
   components: { SecurityLock, ToolTipInformations, Button },
-  props: ["content"],
+  props: ['content'],
+  emits: ['query'],
   data() {
-    return {
-      searchInput: "",
-      pasteError: false,
-      isHttps: false,
-    };
-  },
-  watch: {
-    content() {
-      this.searchInputComputed = this.content;
-    },
+    return { searchInput: '', pasteError: false, isHttps: false };
   },
   computed: {
     searchInputComputed: {
@@ -102,8 +95,13 @@ export default {
       },
       set(value) {
         this.searchInput = value;
-      },
-    },
+      }
+    }
+  },
+  watch: {
+    content() {
+      this.searchInputComputed = this.content;
+    }
   },
   methods: {
     async pasteContent() {
@@ -117,12 +115,12 @@ export default {
       }
     },
     checkHttps() {
-      this.isHttps = this.searchInput.slice(0, 5).includes("https");
+      this.isHttps = this.searchInput.slice(0, 5).includes('https');
     },
     emitQuery() {
-      this.$emit("query", this.searchInput);
-    },
-  },
+      this.$emit('query', this.searchInput);
+    }
+  }
 };
 </script>
 

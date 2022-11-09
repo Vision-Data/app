@@ -10,12 +10,12 @@
 </template>
 
 <script>
-import Button from "../Commons/Form/Button.vue";
+import Button from '../Commons/Form/Button.vue';
 
 export default {
-  name: "Providers",
+  name: 'Providers',
   components: {
-    Button,
+    Button
   },
   methods: {
     logWithProvider(provider) {
@@ -29,24 +29,24 @@ export default {
       // Open provider popup
       const popup = window.open(
         url,
-        "",
+        '',
         `toolbar=no, location=no, directories=no, status=no, menubar=no, 
         scrollbars=no, resizable=no, copyhistory=no, width=${width}, 
         height=${height}, top=${top}, left=${left}`
       );
 
-      this.$socket.on("login", (data) => {
+      this.$socket.on('login', (data) => {
         popup.close();
-        this.$store.dispatch("setToken", data.token);
-        this.$store.dispatch("setUser", data.user);
-        this.$router.push("/workspaces");
+        this.$store.dispatch('setToken', data.token);
+        this.$store.dispatch('setUser', data.user);
+        this.$router.push('/workspaces');
       });
 
-      this.$socket.on("errorLogin", () => {
+      this.$socket.on('errorLogin', () => {
         popup.close();
-        this.$notyf.error(this.$t("notifications.errorServer"));
+        this.$notyf.error(this.$t('notifications.errorServer'));
       });
-    },
-  },
+    }
+  }
 };
 </script>

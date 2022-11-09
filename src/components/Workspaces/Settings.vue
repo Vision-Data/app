@@ -1,5 +1,5 @@
 <template>
-  <Modal :isOpen="openSettings" :title="$t('workspace.settings.name')">
+  <Modal :is-open="openSettings" :title="$t('workspace.settings.name')">
     <Tabs>
       <Tab :title="$t('workspace.settings.tabs.informations.name')">
         <section class="flex">
@@ -10,7 +10,7 @@
               <img
                 :src="
                   $store.state.user?.avatar_url ||
-                    require('@/assets/noPicture.png')
+                  require('@/assets/noPicture.png')
                 "
               />
             </div>
@@ -18,13 +18,13 @@
           <div class="ml-4 self-center">
             <p>
               <span class="badge mr-2">{{
-                $t("workspace.settings.tabs.informations.labels.full_name")
+                $t('workspace.settings.tabs.informations.labels.full_name')
               }}</span
               >{{ $store.state.user?.full_name }}
             </p>
             <p>
               <span class="badge mr-2">{{
-                $t("workspace.settings.tabs.informations.labels.email")
+                $t('workspace.settings.tabs.informations.labels.email')
               }}</span
               >{{ $store.state.user?.email }}
             </p>
@@ -33,38 +33,38 @@
         </section>
       </Tab>
       <Tab :title="$t('workspace.settings.tabs.workspaces.name')">
-        {{ $store.state.selectedWorkspace?.name || "" }}
+        {{ $store.state.selectedWorkspace?.name || '' }}
       </Tab>
     </Tabs>
 
-    <template v-slot:actions>
+    <template #actions>
       <Button class="btn-error btn-outline" @click="logout">
-        {{ $t("workspace.settings.logout") }}
+        {{ $t('workspace.settings.logout') }}
       </Button>
     </template>
   </Modal>
 </template>
 
 <script>
-import Modal from "../Commons/Modal.vue";
-import Button from "../Commons/Form/Button.vue";
-import Tabs from "../Commons/Tabs/Tabs.vue";
-import Tab from "../Commons/Tabs/Tab.vue";
-import LanguageSelect from "../Commons/LanguageSelect.vue";
+import Modal from '../Commons/Modal.vue';
+import Button from '../Commons/Form/Button.vue';
+import Tabs from '../Commons/Tabs/Tabs.vue';
+import Tab from '../Commons/Tabs/Tab.vue';
+import LanguageSelect from '../Commons/LanguageSelect.vue';
 
-import AuthenticationService from "../../services/VisionApi/Authentication.js";
+import AuthenticationService from '../../services/VisionApi/Authentication.js';
 
 export default {
-  name: "Settings",
-  props: ["openSettings"],
+  name: 'Settings',
   components: { Modal, Button, Tabs, Tab, LanguageSelect },
+  props: ['openSettings'],
   methods: {
     async logout() {
       await AuthenticationService.logout(this.$store.state.token);
-      this.$store.dispatch("logout");
-      this.$router.push("/login");
-      this.$notyf.success(this.$t("commons.logoutSuccess"));
-    },
-  },
+      this.$store.dispatch('logout');
+      this.$router.push('/login');
+      this.$notyf.success(this.$t('commons.logoutSuccess'));
+    }
+  }
 };
 </script>

@@ -2,31 +2,69 @@
   <div class="menu">
     <div class="workspace-page">
       <div class="workspace-header">
-        <img id="logo" :src="require(`@/assets/watermark-color.png`)" alt="logo-vision" />
+        <img
+          id="logo"
+          :src="require(`@/assets/watermark-color.png`)"
+          alt="logo-vision"
+        />
+
         <Loading v-if="isLoading" />
-        <select name="workspace" id="workspace-select" @change="changeRoute" v-model="selectedWorkspace" class="select select-bordered w-full max-w-xs loading">
+
+        <select
+          id="workspace-select"
+          v-model="selectedWorkspace"
+          name="workspace"
+          class="select select-bordered w-full max-w-xs loading"
+          @change="changeRoute"
+        >
           <!-- <option selected value="-1">  Worskpace </option> -->
-          <option v-for="workspace in workspaces" :key="workspace.id" :value="workspace.id">
+
+          <option
+            v-for="workspace in workspaces"
+            :key="workspace.id"
+            :value="workspace.id"
+          >
             {{ workspace.name }}
           </option>
         </select>
+
         <div class="param">
-          <button @click="goToSettings" class="btn btn-primary settings">
-            <img id="settings" :src="require(`@/assets/settings.svg`)" alt="icon-settings" />
-            {{ $t("workspace.settings.name") }}
+          <button class="btn btn-primary settings" @click="goToSettings">
+            <img
+              id="settings"
+              :src="require(`@/assets/settings.svg`)"
+              alt="icon-settings"
+            />
+            {{ $t('workspace.settings.name') }}
           </button>
         </div>
-        <div class="divider"></div>
+
+        <div class="divider" />
       </div>
+
       <div class="tree-structure">
-        <vue3-router-tree activeColor="#FE9430" :items="requests">
+        <vue3-router-tree active-color="#FE9430" :items="requests">
           <template #item="{ item }">
             <div class="tree-structure-container">
               <a :href="item.path" class="menu-link">
                 <div class="tree-structure-head">
-                  <svg aria-hidden="true" focusable="false" role="img" class="tree-structure-icon iconify iconify--carbon" width="20px" height="20px" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32" style="transform: rotate(360deg)">
-                    <path d="M11.17 6l3.42 3.41l.58.59H28v16H4V6h7.17m0-2H4a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h24a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2H16l-3.41-3.41A2 2 0 0 0 11.17 4z" fill="currentColor" />
+                  <svg
+                    aria-hidden="true"
+                    focusable="false"
+                    role="img"
+                    class="tree-structure-icon iconify iconify--carbon"
+                    width="20px"
+                    height="20px"
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 32 32"
+                    style="transform: rotate(360deg)"
+                  >
+                    <path
+                      d="M11.17 6l3.42 3.41l.58.59H28v16H4V6h7.17m0-2H4a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h24a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2H16l-3.41-3.41A2 2 0 0 0 11.17 4z"
+                      fill="currentColor"
+                    />
                   </svg>
+
                   <span class="tree-structure-name"> {{ item.name }}</span>
                 </div>
               </a>
@@ -34,10 +72,19 @@
           </template>
         </vue3-router-tree>
       </div>
+
       <div class="schemas">
-        <button @click="$router.push('Schemas')" class="btn btn-secondary" style="display:none;">
-          <img id="schemas" :src="require(`@/assets/schemas.svg`)" alt="icon-schemas" />
-          {{ $t("workspace.graphs") }}
+        <button
+          class="btn btn-secondary"
+          style="display: none"
+          @click="$router.push('Schemas')"
+        >
+          <img
+            id="schemas"
+            :src="require(`@/assets/schemas.svg`)"
+            alt="icon-schemas"
+          />
+          {{ $t('workspace.graphs') }}
         </button>
       </div>
     </div>
@@ -45,28 +92,25 @@
 </template>
 
 <script>
-import Vue3RouterTree from "vue3-router-tree";
-import WorkspaceService from "../services/VisionApi/Workspace.js";
-import Loading from "./Commons/Loading.vue";
-
+import Vue3RouterTree from 'vue3-router-tree';
+import WorkspaceService from '../services/VisionApi/Workspace.js';
+import Loading from './Commons/Loading.vue';
 export default {
-  name: "Menu",
-  methods: {
-    changeRoute() {
-      this.$router.push(`/workspaces/${this.selectedWorkspace}`);
-    },
-    goToSettings() {
-      this.$emit("openSettings");
-    },
-  },
-  components: {
-    Vue3RouterTree,
-    Loading,
+  name: 'Menu',
+  components: { Vue3RouterTree, Loading },
+  emits: ['openSettings'],
+  data() {
+    return {
+      selectedWorkspace: '',
+      workspaces: [],
+      requests: this.$store.state.treeStructure,
+      isLoading: false
+    };
   },
   watch: {
-    "$store.state.treeStructure"(newValue) {
+    '$store.state.treeStructure'(newValue) {
       this.requests = newValue;
-    },
+    }
   },
   async mounted() {
     this.isLoading = true;
@@ -74,19 +118,18 @@ export default {
       this.$store.state.token
     );
     this.isLoading = false;
-
     this.workspaces = response.data.data;
     this.selectedWorkspace =
-      this.$route.params.workspaceId || this.workspaces[0]?.id || "";
+      this.$route.params.workspaceId || this.workspaces[0]?.id || '';
   },
-  data() {
-    return {
-      selectedWorkspace: "",
-      workspaces: [],
-      requests: this.$store.state.treeStructure,
-      isLoading: false,
-    };
-  },
+  methods: {
+    changeRoute() {
+      this.$router.push(`/workspaces/${this.selectedWorkspace}`);
+    },
+    goToSettings() {
+      this.$emit('openSettings');
+    }
+  }
 };
 </script>
 
@@ -135,8 +178,8 @@ export default {
   margin-right: 0.5rem;
 }
 
-[data-theme="dark"] #settings,
-[data-theme="dark"] #schemas {
+[data-theme='dark'] #settings,
+[data-theme='dark'] #schemas {
   filter: invert(1);
 }
 

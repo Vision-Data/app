@@ -1,5 +1,5 @@
-import { createStore } from "vuex";
-import createPersistedState from "vuex-persistedstate";
+import { createStore } from 'vuex';
+import createPersistedState from 'vuex-persistedstate';
 
 export default createStore({
   state: () => ({
@@ -7,12 +7,12 @@ export default createStore({
     response: null,
     selectedData: {
       x: [],
-      y: [],
+      y: []
     },
     token: null,
     user: null,
     treeStructure: [],
-    selectedWorkspace: null,
+    selectedWorkspace: null
   }),
   mutations: {
     receiveSelectedDataX(state, value) {
@@ -48,7 +48,7 @@ export default createStore({
     },
     updateSelectedWorkspace(state, workspace) {
       state.selectedWorkspace = workspace;
-    },
+    }
   },
   getters: {
     getIdentifier(state) {
@@ -56,51 +56,51 @@ export default createStore({
     },
     isLogin(state) {
       return state.token && state.user;
-    },
+    }
   },
   actions: {
     giveIdentifier({ commit, getters }) {
-      commit("changeIdentifier");
+      commit('changeIdentifier');
       return getters.getIdentifier;
     },
     verifyExistanceX({ state, commit }, payload) {
       if (state.selectedData.x.length === 0) {
-        commit("receiveSelectedDataX", payload);
+        commit('receiveSelectedDataX', payload);
       } else {
         const obj = state.selectedData.x.find((res) => res.id === payload.id);
-        if (obj === undefined) commit("receiveSelectedDataX", payload);
-        else commit("deleteSpecifiedDataX", payload);
+        if (obj === undefined) commit('receiveSelectedDataX', payload);
+        else commit('deleteSpecifiedDataX', payload);
       }
     },
     verifyExistanceY({ state, commit }, payload) {
       if (state.selectedData.y.length === 0) {
-        commit("receiveSelectedDataY", payload);
+        commit('receiveSelectedDataY', payload);
       } else {
         const obj = state.selectedData.y.find((res) => res.id === payload.id);
-        if (obj === undefined) commit("receiveSelectedDataY", payload);
-        else commit("deleteSpecifiedDataY", payload);
+        if (obj === undefined) commit('receiveSelectedDataY', payload);
+        else commit('deleteSpecifiedDataY', payload);
       }
     },
     sendRequest({ commit }, payload) {
-      commit("setResponse", payload);
+      commit('setResponse', payload);
     },
     sendStructure({ commit }, payload) {
-      commit("setStructure", payload);
+      commit('setStructure', payload);
     },
     setToken({ commit }, token) {
-      commit("updateToken", token);
+      commit('updateToken', token);
     },
     setUser({ commit }, user) {
-      commit("updateUser", user);
+      commit('updateUser', user);
     },
     logout({ commit }) {
-      commit("updateToken", null);
-      commit("updateUser", null);
-      commit("updateSelectedWorkspace", null);
+      commit('updateToken', null);
+      commit('updateUser', null);
+      commit('updateSelectedWorkspace', null);
     },
     setSelectedWorkspace({ commit }, workspace) {
-      commit("updateSelectedWorkspace", workspace);
-    },
+      commit('updateSelectedWorkspace', workspace);
+    }
   },
-  plugins: [createPersistedState()],
+  plugins: [createPersistedState()]
 });
