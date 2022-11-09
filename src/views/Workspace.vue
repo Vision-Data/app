@@ -15,9 +15,8 @@
           </div>
           <dark-mode />
           <div class="sending-container">
-            <ApiUrl class="container w-full max-w-screen-lg" @query="query = $event" :content="query" />
-            <SelectHttpMethod @detectChoice="choice = $event" :choice="choice" />
-            <Button class="btn-primary runButton" :isLoading="isLoading" @click="fetchData()">{{ $t("searchbarTooltip.runButton") }}
+            <ApiUrl class="container w-full max-w-screen-lg" @query="query = $event" :content="query" />          
+          <Button class="btn-primary runButton" :isLoading="isLoading" @click="fetchData()">{{ $t("searchbarTooltip.runButton") }}
             </Button>
           </div>
           <Button class="btn-sm mt-2" v-if="needBodyToSend()" @click="isBodyOpen = true">
@@ -44,7 +43,6 @@
 import DarkMode from "../components/Commons/DarkMode.vue";
 import ApiUrl from "../components/ApiRequest/ApiUrl.vue";
 import Response from "../components/ApiRequest/Response.vue";
-import SelectHttpMethod from "../components/ApiRequest/SelectHttpMethod.vue";
 import Chart from "../components/Charts/Chart.vue";
 import RequestBody from "../components/ApiRequest/RequestBody.vue";
 import DiagramChoice from "../components/ApiRequest/DiagramChoice.vue";
@@ -60,7 +58,6 @@ export default {
   components: {
     ApiUrl,
     Response,
-    SelectHttpMethod,
     DarkMode,
     Chart,
     RequestBody,
