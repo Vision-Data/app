@@ -1,12 +1,12 @@
 <template>
   <button
     id="change-theme"
-    @click="changeTheme()"
     class="bg-base-300"
     aria-label="Changer le thème"
     title="Changer le thème"
+    @click="changeTheme()"
   >
-    <div class="sun" v-if="!isDark">
+    <div v-if="!isDark" class="sun">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="h-6 w-6"
@@ -22,7 +22,7 @@
         />
       </svg>
     </div>
-    <div class="moon" v-else>
+    <div v-else class="moon">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="h-6 w-6"
@@ -43,16 +43,16 @@
 
 <script>
 export default {
-  name: "dark-mode",
+  name: 'DarkMode',
   data: () => ({
-    isDark: false,
+    isDark: false
   }),
   created() {
     if (
       (window.matchMedia &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches &&
-        localStorage.getItem("dark") === "true") ||
-      localStorage.getItem("dark") === "true"
+        window.matchMedia('(prefers-color-scheme: dark)').matches &&
+        localStorage.getItem('dark') === 'true') ||
+      localStorage.getItem('dark') === 'true'
     ) {
       this.isDark = true;
       this.toDark();
@@ -68,14 +68,14 @@ export default {
       else this.toLight();
     },
     toDark() {
-      document.querySelector("html").setAttribute("data-theme", "dark");
-      localStorage.setItem("dark", true);
+      document.querySelector('html').setAttribute('data-theme', 'dark');
+      localStorage.setItem('dark', true);
     },
     toLight() {
-      document.querySelector("html").setAttribute("data-theme", "visionTheme");
-      localStorage.setItem("dark", false);
-    },
-  },
+      document.querySelector('html').setAttribute('data-theme', 'visionTheme');
+      localStorage.setItem('dark', false);
+    }
+  }
 };
 </script>
 

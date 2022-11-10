@@ -10,7 +10,7 @@
         </h2>
 
         <div>
-          <button class="btn btn-primary" @click="this.goToCreatePage()">
+          <button class="btn btn-primary" @click="goToCreatePage()">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="h-5 w-7"
@@ -23,15 +23,15 @@
                 clip-rule="evenodd"
               />
             </svg>
-            {{ "Créer un espace de travail" }}
+            {{ 'Créer un espace de travail' }}
           </button>
         </div>
       </div>
-      <div class="container mx-auto px-auto ">
+      <div class="container mx-auto px-auto">
         <Alert
+          v-if="!workspaces.length && isLoading === false"
           label="Vous n'avez pas encore d'espace de travail. Créez le vôtre dès maintenant."
           type="info"
-          v-if="!workspaces.length && isLoading === false"
         />
         <Loading v-if="isLoading" />
         <div class="workspace-grid grid sm:grid-rows-8 md:grid-cols-4 my-8">
@@ -41,26 +41,26 @@
             :workspace="workspace"
           />
         </div>
-        <div class="btn-group flex justify-center" v-if="workspaces.length">
+        <div v-if="workspaces.length" class="btn-group flex justify-center">
           <button
-            class="btn  btn-primary btn-outline w-6/12 md:w-24"
-            v-bind:class="{
-              'opacity-50': !previousPageUrl,
+            class="btn btn-primary btn-outline w-6/12 md:w-24"
+            :class="{
+              'opacity-50': !previousPageUrl
             }"
             :disabled="!previousPageUrl"
-            @click="this.goToPreviousPage()"
+            @click="goToPreviousPage()"
           >
-            {{ "Précédent" }}
+            {{ 'Précédent' }}
           </button>
           <button
             class="btn btn-primary btn-outline w-6/12 md:w-24"
-            v-bind:class="{
-              'opacity-50': !nextPageUrl,
+            :class="{
+              'opacity-50': !nextPageUrl
             }"
             :disabled="!nextPageUrl"
-            @click="this.goToNextPage()"
+            @click="goToNextPage()"
           >
-            {{ "Suivant" }}
+            {{ 'Suivant' }}
           </button>
         </div>
       </div>
@@ -68,7 +68,7 @@
     <div class="help">
       <TooltipInformations
         class="tooltip absolute bottom-0 md:right-0 md:h-16"
-        helperText="Qu'est-ce qu'un espace de travail ?"
+        helper-text="Qu'est-ce qu'un espace de travail ?"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -90,21 +90,21 @@
 </template>
 
 <script>
-import DarkMode from "../components/Commons/DarkMode.vue";
-import WorkspaceCard from "../components/Workspaces/WorkspaceCard.vue";
-import WorkspaceService from "../services/VisionApi/Workspace.js";
-import TooltipInformations from "../components/Commons/ToolTipInformations.vue";
-import Alert from "../components/Commons/Alert.vue";
-import Loading from "../components/Commons/Loading.vue";
+import DarkMode from '../components/Commons/DarkMode.vue';
+import WorkspaceCard from '../components/Workspaces/WorkspaceCard.vue';
+import WorkspaceService from '../services/VisionApi/Workspace.js';
+import TooltipInformations from '../components/Commons/ToolTipInformations.vue';
+import Alert from '../components/Commons/Alert.vue';
+import Loading from '../components/Commons/Loading.vue';
 
 export default {
-  name: "SelectWorkspace",
+  name: 'SelectWorkspace',
   components: {
     DarkMode,
     TooltipInformations,
     WorkspaceCard,
     Alert,
-    Loading,
+    Loading
   },
   data() {
     return {
@@ -112,12 +112,26 @@ export default {
       nextPageUrl: undefined,
       previousPageUrl: undefined,
       isLoading: true,
-      errors: null,
+      errors: null
     };
+  },
+  async mounted() {
+    let { response, errors } = await WorkspaceService.findAll(
+      this.$store.state.token
+    );
+    this.isLoading = false;
+    this.errors = errors;
+
+    this.workspaces = response.data.data;
+    if (!this.errors && this.workspaces.length === 0) {
+      this.goToCreatePage();
+    }
+
+    this.nextPageUrl = response.data.meta.next_page_url;
   },
   methods: {
     goToCreatePage() {
-      this.$router.push("/workspaces/create");
+      this.$router.push('/workspaces/create');
     },
 
     async goToNextPage() {
@@ -147,22 +161,8 @@ export default {
         this.previousPageUrl = response.data.meta.previous_page_url;
         this.nextPageUrl = response.data.meta.next_page_url;
       }
-    },
-  },
-  async mounted() {
-    let { response, errors } = await WorkspaceService.findAll(
-      this.$store.state.token
-    );
-    this.isLoading = false;
-    this.errors = errors;
-
-    this.workspaces = response.data.data;
-    if (!this.errors && this.workspaces.length === 0) {
-      this.goToCreatePage();
     }
-
-    this.nextPageUrl = response.data.meta.next_page_url;
-  },
+  }
 };
 </script>
 

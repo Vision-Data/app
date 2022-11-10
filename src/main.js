@@ -1,18 +1,18 @@
-import { createApp } from "vue";
-import App from "./App.vue";
-import router from "./router";
-import store from "./store";
-import axios from "axios";
-import { Notyf } from "notyf";
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router';
+import store from './store';
+import axios from 'axios';
+import { Notyf } from 'notyf';
 
-import "./styles/tailwind.css";
-import "./styles/chartist.css";
-import "./styles/global.css";
-import "notyf/notyf.min.css";
+import './styles/tailwind.css';
+import './styles/chartist.css';
+import './styles/global.css';
+import 'notyf/notyf.min.css';
 
 const notyf = new Notyf({
   duration: 4000,
-  position: { x: "center", y: "top" },
+  position: { x: 'center', y: 'top' }
 });
 
 axios.defaults.baseURL = process.env.VUE_APP_HOST_API;
@@ -24,18 +24,18 @@ axios.interceptors.response.use(
   function (error) {
     switch (error.response.status) {
       case 401:
-        store.dispatch("logout");
-        router.push("/login");
+        store.dispatch('logout');
+        router.push('/login');
         break;
       case 403:
-        notyf.error("notifications.forbidden");
-        router.push("/workspaces");
+        notyf.error('notifications.forbidden');
+        router.push('/workspaces');
         break;
       case 404:
-        router.push("/404");
+        router.push('/404');
         break;
       default:
-        notyf.error("Une erreur est survenue. Veuillez réessayer.");
+        notyf.error('Une erreur est survenue. Veuillez réessayer.');
         break;
     }
 
@@ -49,4 +49,4 @@ app.config.globalProperties.$notyf = notyf;
 
 app.use(store);
 app.use(router);
-app.mount("#app");
+app.mount('#app');

@@ -3,10 +3,10 @@
     <div class="modal-box">
       <div class="modal-list">
         <div
-          class="modal-item"
-          :class="{ active: i == current }"
           v-for="(diagram, i) in diagrams"
           :key="diagram.ref"
+          class="modal-item"
+          :class="{ active: i == current }"
           @click="current = i"
         >
           <img :src="require(`@/assets/${diagram.image}.png`)" alt="" />
@@ -15,10 +15,10 @@
       </div>
       <div class="modal-action">
         <label for="my-modal-2" class="btn" @click="cancel">{{
-          "Annuler"
+          'Annuler'
         }}</label>
         <label for="my-modal-2" class="btn btn-primary" @click="selectChart">{{
-          "Selectionner"
+          'Selectionner'
         }}</label>
       </div>
     </div>
@@ -27,42 +27,43 @@
 
 <script>
 export default {
-  name: "DiagramChoice",
+  name: 'DiagramChoice',
+  emits: ['cancel', 'chart'],
   data() {
     return {
       current: null,
       diagrams: [
         {
-          name: "Donut",
-          image: "donut",
-          ref: "donut",
+          name: 'Donut',
+          image: 'donut',
+          ref: 'donut'
         },
         {
-          name: "Courbes",
-          image: "curves",
-          ref: "curves",
+          name: 'Courbes',
+          image: 'curves',
+          ref: 'curves'
         },
         {
-          name: "Barres",
-          image: "bars",
-          ref: "bars",
+          name: 'Barres',
+          image: 'bars',
+          ref: 'bars'
         },
         {
-          name: "Carte",
-          image: "map",
-          ref: "map",
-        },
-      ],
+          name: 'Carte',
+          image: 'map',
+          ref: 'map'
+        }
+      ]
     };
   },
   methods: {
     cancel() {
-      this.$emit("cancel", false);
+      this.$emit('cancel', false);
     },
     selectChart() {
-      this.$emit("chart", { name: this.diagrams[this.current].ref });
-    },
-  },
+      this.$emit('chart', { name: this.diagrams[this.current].ref });
+    }
+  }
 };
 </script>
 

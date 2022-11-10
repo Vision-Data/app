@@ -2,7 +2,7 @@
   <div class="workspace">
     <Menu v-if="$store.getters.isLogin" @openSettings="isSettingsOpen = true" />
     <Settings
-      :openSettings="isSettingsOpen"
+      :open-settings="isSettingsOpen"
       @close="isSettingsOpen = false"
     ></Settings>
     <div class="workspace-body">
@@ -12,19 +12,19 @@
           <div class="sending-container">
             <ApiUrl
               class="container w-full max-w-screen-lg"
-              @query="query = $event"
               :content="query"
+              @query="query = $event"
             />
             <Button
               class="btn-primary runButton"
-              :isLoading="isLoading"
+              :is-loading="isLoading"
               @click="fetchData()"
               >Lancer
             </Button>
           </div>
         </header>
       </div>
-      <DiagramChoice @chart="displayChart" @cancel="isOpened" v-show="isOpen" />
+      <DiagramChoice v-show="isOpen" @chart="displayChart" @cancel="isOpened" />
       <Button
         id="selectSchema"
         class="btn-circle btn-lg floating-btn"
@@ -54,20 +54,20 @@
 </template>
 
 <script>
-import DarkMode from "../components/Commons/DarkMode.vue";
-import ApiUrl from "../components/ApiRequest/ApiUrl.vue";
-import Response from "../components/ApiRequest/Response.vue";
-import Chart from "../components/Charts/Chart.vue";
-import DiagramChoice from "../components/ApiRequest/DiagramChoice.vue";
-import Menu from "../components/Menu.vue";
-import Button from "../components/Commons/Form/Button.vue";
-import Settings from "../components/Workspaces/Settings.vue";
+import DarkMode from '../components/Commons/DarkMode.vue';
+import ApiUrl from '../components/ApiRequest/ApiUrl.vue';
+import Response from '../components/ApiRequest/Response.vue';
+import Chart from '../components/Charts/Chart.vue';
+import DiagramChoice from '../components/ApiRequest/DiagramChoice.vue';
+import Menu from '../components/Menu.vue';
+import Button from '../components/Commons/Form/Button.vue';
+import Settings from '../components/Workspaces/Settings.vue';
 
-import makeRequest from "../services/api-request.js";
-import WorkspaceService from "../services/VisionApi/Workspace.js";
+import makeRequest from '../services/api-request.js';
+import WorkspaceService from '../services/VisionApi/Workspace.js';
 
 export default {
-  name: "Workspace",
+  name: 'Workspace',
   components: {
     ApiUrl,
     Response,
@@ -76,13 +76,13 @@ export default {
     DiagramChoice,
     Button,
     Menu,
-    Settings,
+    Settings
   },
   data() {
     return {
-      query: "",
-      body: "",
-      choice: "GET",
+      query: '',
+      body: '',
+      choice: 'GET',
       chart: {},
       requests: [],
       isOpen: false,
@@ -90,12 +90,12 @@ export default {
       isBodyOpen: true,
       isLoading: false,
       store: [],
-      isSettingsOpen: false,
+      isSettingsOpen: false
     };
   },
   async mounted() {
     if (!this.$route.params.workspaceId) {
-      return this.$router.push("/workspaces");
+      return this.$router.push('/workspaces');
     }
 
     this.getWorkspace();
@@ -104,13 +104,13 @@ export default {
   },
   async beforeUpdate() {
     if (!this.$route.params.workspaceId) {
-      return this.$router.push("/workspaces");
+      return this.$router.push('/workspaces');
     }
 
     this.getWorkspace();
     // Reset requests tree
     this.requests = [];
-    this.$store.dispatch("sendStructure", this.requests);
+    this.$store.dispatch('sendStructure', this.requests);
 
     this.initStructure();
   },
@@ -129,35 +129,31 @@ export default {
     },
     displayChart(payload) {
       // TODO: change for dynamic chart display
-      if (payload.name === "curves") {
+      if (payload.name === 'curves') {
         this.isChartDisplayed = true;
         this.isOpen = false;
       }
     },
     async fetchData() {
-      if (this.query === "") {
-        window.alert("Le champ URL est vide");
+      if (this.query === '') {
+        window.alert('Le champ URL est vide');
       } else {
         this.isLoading = true;
         const response = await makeRequest(this.choice, this.query, this.body);
         this.isLoading = false;
-        this.$store.dispatch("sendRequest", response);
+        this.$store.dispatch('sendRequest', response);
       }
     },
-    insertRequest(db, payload) {
-      let transaction = db.transaction("requests", "readwrite");
-      let store = transaction.objectStore("requests").put(payload);
+    insertRequest(db) {
+      let transaction = db.transaction('requests', 'readwrite');
 
-      store.onerror = function () {
-        console.error("Error adding request to database");
-      };
       transaction.oncomplete = function () {
         db.close();
       };
     },
     getAllRequests(db, callback) {
-      let transaction = db.transaction("requests", "readonly");
-      let store = transaction.objectStore("requests");
+      let transaction = db.transaction('requests', 'readonly');
+      let store = transaction.objectStore('requests');
       let cursorRequest = store.openCursor();
       let items = [];
 
@@ -173,9 +169,6 @@ export default {
           items.push(item);
           cursor.continue();
         }
-      };
-      cursorRequest.onerror = function () {
-        console.error("Error adding request to database");
       };
     },
     getItems(data) {
@@ -193,8 +186,8 @@ export default {
       });
     },
     addRequest(path, id, key) {
-      const result = path.split("//")[1]; //get characters after ://
-      const directories = result.split("/"); //array of directories
+      const result = path.split('//')[1]; //get characters after ://
+      const directories = result.split('/'); //array of directories
       const name = directories.shift().split(/[?#]/)[0];
 
       const hostRequestIndex = this.requests.findIndex(
@@ -205,7 +198,7 @@ export default {
         this.requests.push({
           workspaceId: id,
           name: name,
-          children: [],
+          children: []
         });
       }
 
@@ -229,7 +222,7 @@ export default {
           workspaceId: id,
           path: `/workspaces/${id}?request=${key}`,
           name: name,
-          children: [],
+          children: []
         });
       }
 
@@ -243,19 +236,13 @@ export default {
       }
     },
     getRequestById(db, callback, id) {
-      let transaction = db.transaction("requests", "readwrite");
-      let store = transaction.objectStore("requests").get(id);
+      let transaction = db.transaction('requests', 'readwrite');
+      let store = transaction.objectStore('requests').get(id);
 
       store.onsuccess = (event) => {
-        if (!event.target.result) {
-          console.log(`The contact with ${id} not found`);
-        } else {
+        if (event.target.result) {
           callback(event.target.result);
         }
-      };
-
-      store.onerror = (event) => {
-        console.log(`Error: ${event.target.errorCode}`);
       };
 
       transaction.oncomplete = function () {
@@ -269,20 +256,16 @@ export default {
       this.$store.state.response = JSON.parse(data.response);
     },
     initStructure() {
-      const req = indexedDB.open("db", 1);
+      const req = indexedDB.open('db', 1);
       const getAllRequests = this.getAllRequests;
       const getItems = this.getItems;
       const getRequestById = this.getRequestById;
       const setInfoInputs = this.setInfoInputs;
 
-      req.onerror = function (event) {
-        console.error(event);
-      };
-
       req.onupgradeneeded = function () {
         let db = req.result;
-        if (!db.objectStoreNames.contains("requests")) {
-          db.createObjectStore("requests", { autoIncrement: true });
+        if (!db.objectStoreNames.contains('requests')) {
+          db.createObjectStore('requests', { autoIncrement: true });
         }
       };
 
@@ -291,11 +274,11 @@ export default {
 
         db.versiononchange = function () {
           db.close();
-          alert("Database is outdated, please reload the page.");
+          alert('Database is outdated, please reload the page.');
         };
 
         await getAllRequests(db, getItems);
-        this.$store.dispatch("sendStructure", this.requests);
+        this.$store.dispatch('sendStructure', this.requests);
         if (this.$route.query.request !== undefined) {
           const id = Number(this.$route.query.request);
           await getRequestById(db, setInfoInputs, id);
@@ -309,10 +292,10 @@ export default {
       );
 
       if (response && response.data) {
-        this.$store.dispatch("setSelectedWorkspace", response.data);
+        this.$store.dispatch('setSelectedWorkspace', response.data);
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

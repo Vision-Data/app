@@ -1,27 +1,26 @@
 <template>
-  <div class="response" :key="index">
+  <div :key="index" class="response">
     <div
       class="alert"
-      v-bind:class="{
+      :class="{
         'alert-success':
           responseData && responseData.status.toString().startsWith('2'),
         'alert-error':
-          responseData && !responseData.status.toString().startsWith('2'),
+          responseData && !responseData.status.toString().startsWith('2')
       }"
     >
       <div class="flex-1">
         <label
           ><span
             class="badge border-transparent"
-            v-bind:class="{
+            :class="{
               'bg-success':
                 responseData && responseData.status?.toString().startsWith('2'),
               'bg-error':
-                responseData &&
-                !responseData.status?.toString().startsWith('2'),
+                responseData && !responseData.status?.toString().startsWith('2')
             }"
           >
-            {{ "État" }}</span
+            {{ 'État' }}</span
           >
           {{ responseData?.status }} : {{ responseData?.statusText }}
         </label>
@@ -29,7 +28,7 @@
     </div>
     <div class="alert bg-base-200">
       <div class="result-container">
-        <b> {{ "Résultats" }}</b>
+        <b> {{ 'Résultats' }}</b>
         <template v-for="(component, index) in components" :key="index">
           <component
             :is="components[index].component"
@@ -45,18 +44,19 @@
 </template>
 
 <script>
-import ValueComponent from "../DataTypes/Value.vue";
-import ObjectComponent from "../DataTypes/Object.vue";
-import ArrayComponent from "../DataTypes/Array.vue";
-import Recursive from "../../services/recursive.js";
-import { markRaw } from "vue";
+import ValueComponent from '../DataTypes/Value.vue';
+import ObjectComponent from '../DataTypes/Object.vue';
+import ArrayComponent from '../DataTypes/Array.vue';
+import Recursive from '../../services/recursive.js';
+import { markRaw } from 'vue';
 export default {
-  name: "Response",
+  name: 'Response',
   components: {
     ValueComponent,
     ObjectComponent,
-    ArrayComponent,
+    ArrayComponent
   },
+  emits: ['launch-modal'],
   data() {
     return {
       index: 0,
@@ -65,22 +65,9 @@ export default {
       comps: {
         ValueComponent: markRaw(ValueComponent),
         ObjectComponent: markRaw(ObjectComponent),
-        ArrayComponent: markRaw(ArrayComponent),
-      },
-    };
-  },
-  methods: {
-    launchModal() {
-      this.$emit("launch-modal", true);
-    },
-    parseData() {
-      if (this.responseData?.data) {
-        this.components = Recursive.recursive(
-          this.responseData?.data,
-          this.comps
-        );
+        ArrayComponent: markRaw(ArrayComponent)
       }
-    },
+    };
   },
 
   created() {
@@ -96,6 +83,19 @@ export default {
   beforeUnmount() {
     this.unwatch();
   },
+  methods: {
+    launchModal() {
+      this.$emit('launch-modal', true);
+    },
+    parseData() {
+      if (this.responseData?.data) {
+        this.components = Recursive.recursive(
+          this.responseData?.data,
+          this.comps
+        );
+      }
+    }
+  }
 };
 </script>
 
@@ -156,10 +156,10 @@ export default {
   font-weight: bold;
   flex: 1;
 }
-[data-theme="dark"] .value:not(.selected):not(.selected-value),
-[data-theme="dark"] .badge,
-[data-theme="dark"] .data-result,
-[data-theme="dark"] .alert.selected {
+[data-theme='dark'] .value:not(.selected):not(.selected-value),
+[data-theme='dark'] .badge,
+[data-theme='dark'] .data-result,
+[data-theme='dark'] .alert.selected {
   color: white;
 }
 </style>

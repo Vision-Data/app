@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 export default class ApiClient {
   static async makeRequest(method, url, data = null, headers = null) {
@@ -10,7 +10,7 @@ export default class ApiClient {
         method,
         url,
         data,
-        headers,
+        headers
       });
     } catch (apiErrors) {
       errors = this.formatErrors(apiErrors.response.data.errors);
@@ -24,8 +24,8 @@ export default class ApiClient {
 
     if (errors && errors.length > 0) {
       errors.forEach((error) => {
-        if (error["field"] === undefined) {
-          result["message"] = error.message;
+        if (error['field'] === undefined) {
+          result['message'] = error.message;
         } else {
           result[error.field] = error.message;
         }

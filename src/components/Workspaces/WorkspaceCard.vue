@@ -12,21 +12,23 @@
       </div>
     </div>
     <div class="w-36 flex justify-center mt-8">
-      <h1 class="text-3xl workspaceName">{{ workspace.name }}</h1>
+      <h1 class="text-3xl workspaceName">
+        {{ workspace.name }}
+      </h1>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "WorkspaceCard",
-  props: ["workspace"],
+  name: 'WorkspaceCard',
+  props: ['workspace'],
   methods: {
     async onClick() {
-      this.$store.dispatch("setSelectedWorkspace", this.workspace);
+      this.$store.dispatch('setSelectedWorkspace', this.workspace);
       this.$router.push(`/workspaces/${this.workspace.id}`);
-    },
-  },
+    }
+  }
 };
 </script>
 

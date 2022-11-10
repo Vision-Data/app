@@ -9,11 +9,11 @@
         />
         <Loading v-if="isLoading" />
         <select
-          name="workspace"
           id="workspace-select"
-          @change="changeRoute"
           v-model="selectedWorkspace"
+          name="workspace"
           class="select select-bordered w-full max-w-xs loading"
+          @change="changeRoute"
         >
           <!-- <option selected value="-1">  Worskpace </option> -->
           <option
@@ -25,19 +25,19 @@
           </option>
         </select>
         <div class="param">
-          <button @click="goToSettings" class="btn btn-primary settings">
+          <button class="btn btn-primary settings" @click="goToSettings">
             <img
               id="settings"
               :src="require(`@/assets/settings.svg`)"
               alt="icon-settings"
             />
-            {{ "Paramètres" }}
+            {{ 'Paramètres' }}
           </button>
         </div>
         <div class="divider"></div>
       </div>
       <div class="tree-structure">
-        <vue3-router-tree activeColor="#FE9430" :items="requests">
+        <vue3-router-tree active-color="#FE9430" :items="requests">
           <template #item="{ item }">
             <div class="tree-structure-container">
               <a :href="item.path" class="menu-link">
@@ -67,16 +67,16 @@
       </div>
       <div class="schemas">
         <button
-          @click="$router.push('Schemas')"
           class="btn btn-secondary"
-          style="display:none;"
+          style="display: none"
+          @click="$router.push('Schemas')"
         >
           <img
             id="schemas"
             :src="require(`@/assets/schemas.svg`)"
             alt="icon-schemas"
           />
-          {{ "Schémas" }}
+          {{ 'Schémas' }}
         </button>
       </div>
     </div>
@@ -84,28 +84,29 @@
 </template>
 
 <script>
-import Vue3RouterTree from "vue3-router-tree";
-import WorkspaceService from "../services/VisionApi/Workspace.js";
-import Loading from "./Commons/Loading.vue";
+import Vue3RouterTree from 'vue3-router-tree';
+import WorkspaceService from '../services/VisionApi/Workspace.js';
+import Loading from './Commons/Loading.vue';
 
 export default {
-  name: "Menu",
-  methods: {
-    changeRoute() {
-      this.$router.push(`/workspaces/${this.selectedWorkspace}`);
-    },
-    goToSettings() {
-      this.$emit("openSettings");
-    },
-  },
+  name: 'Menu',
   components: {
     Vue3RouterTree,
-    Loading,
+    Loading
+  },
+  emits: ['openSettings'],
+  data() {
+    return {
+      selectedWorkspace: '',
+      workspaces: [],
+      requests: this.$store.state.treeStructure,
+      isLoading: false
+    };
   },
   watch: {
-    "$store.state.treeStructure"(newValue) {
+    '$store.state.treeStructure'(newValue) {
       this.requests = newValue;
-    },
+    }
   },
   async mounted() {
     this.isLoading = true;
@@ -116,16 +117,16 @@ export default {
 
     this.workspaces = response.data.data;
     this.selectedWorkspace =
-      this.$route.params.workspaceId || this.workspaces[0]?.id || "";
+      this.$route.params.workspaceId || this.workspaces[0]?.id || '';
   },
-  data() {
-    return {
-      selectedWorkspace: "",
-      workspaces: [],
-      requests: this.$store.state.treeStructure,
-      isLoading: false,
-    };
-  },
+  methods: {
+    changeRoute() {
+      this.$router.push(`/workspaces/${this.selectedWorkspace}`);
+    },
+    goToSettings() {
+      this.$emit('openSettings');
+    }
+  }
 };
 </script>
 
@@ -174,8 +175,8 @@ export default {
   margin-right: 0.5rem;
 }
 
-[data-theme="dark"] #settings,
-[data-theme="dark"] #schemas {
+[data-theme='dark'] #settings,
+[data-theme='dark'] #schemas {
   filter: invert(1);
 }
 

@@ -7,51 +7,51 @@
       alt="logo-vision mb-8"
     />
     <h1 class="text-center font-bold text-4xl mt-4">
-      {{ "Connexion" }}
+      {{ 'Connexion' }}
     </h1>
     <section class="flex flex-col justify-center items-center mt-8">
       <div class="flex flex-col items-center w-96">
         <Alert
+          v-if="errors && errors.message"
           type="error"
           :label="errors.message"
-          v-if="errors && errors.message"
         />
         <form class="w-full max-w-xs" @submit.prevent="login">
           <div class="form-control w-full max-w-xs">
             <label class="label">
-              <span class="label-text">{{ "Adresse e-mail" }}</span>
+              <span class="label-text">{{ 'Adresse e-mail' }}</span>
             </label>
             <input
+              v-model="form.email"
               type="text"
               placeholder="Adresse e-mail"
               class="input input-bordered w-full max-w-xs"
               :class="{ 'input-error': errors && errors.email }"
-              v-model="form.email"
             />
-            <ErrorLabel :label="errors.email" v-if="errors && errors.email" />
+            <ErrorLabel v-if="errors && errors.email" :label="errors.email" />
           </div>
           <div class="form-control w-full max-w-xs">
             <label class="label">
-              <span class="label-text">{{ "Mot de passe" }}</span>
+              <span class="label-text">{{ 'Mot de passe' }}</span>
             </label>
             <input
+              v-model="form.password"
               type="password"
               placeholder="Mot de passe"
               class="input input-bordered w-full max-w-xs"
               :class="{ 'input-error': errors && errors.password }"
-              v-model="form.password"
             />
             <ErrorLabel
-              :label="errors.password"
               v-if="errors && errors.password"
+              :label="errors.password"
             />
           </div>
           <div class="form-control w-full max-w-xs mt-4">
             <Button
               class="btn btn-primary"
+              :is-loading="isLoading"
               @click.prevent="login"
-              :isLoading="isLoading"
-              >{{ "Connexion" }}</Button
+              >{{ 'Connexion' }}</Button
             >
           </div>
         </form>
@@ -66,23 +66,23 @@
 </template>
 
 <script>
-import Button from "../../components/Commons/Form/Button.vue";
-import ErrorLabel from "../../components/Commons/Form/ErrorLabel.vue";
-import Alert from "../../components/Commons/Alert.vue";
+import Button from '../../components/Commons/Form/Button.vue';
+import ErrorLabel from '../../components/Commons/Form/ErrorLabel.vue';
+import Alert from '../../components/Commons/Alert.vue';
 
-import AuthenticationService from "../../services/VisionApi/Authentication.js";
+import AuthenticationService from '../../services/VisionApi/Authentication.js';
 
 export default {
-  name: "Login",
+  name: 'Login',
   components: { Button, ErrorLabel, Alert },
   data() {
     return {
       form: {
-        email: "",
-        password: "",
+        email: '',
+        password: ''
       },
       errors: null,
-      isLoading: false,
+      isLoading: false
     };
   },
 
@@ -94,12 +94,12 @@ export default {
 
       this.errors = errors;
       if (!this.errors) {
-        this.$store.dispatch("setToken", response.data.token);
-        this.$store.dispatch("setUser", response.data.user);
-        this.$router.push("/workspaces");
+        this.$store.dispatch('setToken', response.data.token);
+        this.$store.dispatch('setUser', response.data.user);
+        this.$router.push('/workspaces');
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

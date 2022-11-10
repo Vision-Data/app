@@ -6,36 +6,36 @@
       :class="[
         `alert-${color}`,
         { selected: selected },
-        { 'value-over': over },
+        { 'value-over': over }
       ]"
       @mouseover="over = true"
       @mouseout="over = false"
     >
       <div class="flex-1">
         <b
+          v-if="name !== ''"
           class="badge border-transparent value-name"
           :class="`bg-${color}`"
-          v-if="name !== ''"
           >{{ name }}</b
         >
 
         <span
           class="data-result"
           :class="{ italic: dataValue === '(vide)' || dataValue === '' }"
-          >{{ dataValue === "" ? "(vide)" : dataValue }}</span
+          >{{ dataValue === '' ? '(vide)' : dataValue }}</span
         >
         <button
-          class="btn btn-xs selection-data-x"
-          id="selectX"
           v-show="over"
+          id="selectX"
+          class="btn btn-xs selection-data-x"
           @click="selectDataX()"
         >
           X
         </button>
         <button
-          class="btn btn-xs selection-data-y"
-          id="selectY"
           v-show="over"
+          id="selectY"
+          class="btn btn-xs selection-data-y"
           @click="selectDataY()"
         >
           Y
@@ -47,41 +47,41 @@
 
 <script>
 export default {
-  name: "Value",
-  props: ["name", "data", "color", "isParentSelected"],
+  name: 'Value',
+  props: ['name', 'data', 'color', 'isParentSelected'],
   data: () => ({
-    dataValue: "",
+    dataValue: '',
     over: false,
     select: false,
-    identifier: null,
+    identifier: null
   }),
+  computed: {
+    selected() {
+      return this.isParentSelected || this.select ? true : false;
+    }
+  },
   async created() {
     this.dataValue = this.data;
-    this.identifier = await this.$store.dispatch("giveIdentifier");
+    this.identifier = await this.$store.dispatch('giveIdentifier');
   },
   methods: {
     async selectDataX() {
       this.select = !this.select;
-      await this.$store.dispatch("verifyExistanceX", {
+      await this.$store.dispatch('verifyExistanceX', {
         id: this.identifier,
         key: this.name,
-        value: this.data,
+        value: this.data
       });
     },
     async selectDataY() {
       this.select = !this.select;
-      await this.$store.dispatch("verifyExistanceY", {
+      await this.$store.dispatch('verifyExistanceY', {
         id: this.identifier,
         key: this.name,
-        value: this.data,
+        value: this.data
       });
-    },
-  },
-  computed: {
-    selected() {
-      return this.isParentSelected || this.select ? true : false;
-    },
-  },
+    }
+  }
 };
 </script>
 

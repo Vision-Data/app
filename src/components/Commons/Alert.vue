@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: "Alert",
-  props: ["label", "type"],
+  name: 'Alert',
+  props: ['label', 'type']
 };
 </script>

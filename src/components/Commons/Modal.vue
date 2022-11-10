@@ -1,12 +1,12 @@
 <template>
-  <div class="modal" :class="{ 'modal-open': this.isOpen }">
+  <div class="modal" :class="{ 'modal-open': isOpen }">
     <div class="modal-box">
       <h3 class="font-bold text-2xl mb-4">{{ title }}</h3>
       <slot></slot>
       <div class="modal-action">
         <slot name="actions"></slot>
         <label for="my-modal-2" class="btn btn-primary" @click="close">
-          {{ closeLabel || "Fermer" }}
+          {{ closeLabel || 'Fermer' }}
         </label>
       </div>
     </div>
@@ -15,13 +15,15 @@
 
 <script>
 export default {
-  name: "Modal",
-  props: ["isOpen", "title", "closeLabel"],
+  name: 'Modal',
+  props: ['isOpen', 'title', 'closeLabel'],
+  emits: ['close'],
+  query: ['close'],
   methods: {
     close() {
-      this.$emit("close", false);
-    },
-  },
+      this.$emit('close', false);
+    }
+  }
 };
 </script>
 

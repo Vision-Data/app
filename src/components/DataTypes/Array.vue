@@ -6,7 +6,7 @@
       :class="[
         `alert-${color}`,
         { selected: selected },
-        { 'array-over': selection },
+        { 'array-over': selection }
       ]"
       @mouseover="selection = true"
       @mouseout="selection = false"
@@ -25,9 +25,8 @@
               :name="components[index].name"
               :data="components[index].data"
               :color="components[index].color"
-              :isParentSelected="selected"
-            >
-            </component>
+              :is-parent-selected="selected"
+            />
           </template>
         </div>
       </div>
@@ -36,20 +35,20 @@
 </template>
 
 <script>
-import ValueComponent from "./Value.vue";
-import ObjectComponent from "./Object.vue";
-import ArrayComponent from "./Array.vue";
-import Recursive from "../../services/recursive.js";
-import { markRaw } from "vue";
+import ValueComponent from './Value.vue';
+import ObjectComponent from './Object.vue';
+import ArrayComponent from './Array.vue';
+import Recursive from '../../services/recursive.js';
+import { markRaw } from 'vue';
 
 export default {
-  name: "Array",
-  props: ["name", "data", "color", "isParentSelected"],
+  name: 'Array',
   components: {
     ValueComponent,
     ObjectComponent,
-    ArrayComponent,
+    ArrayComponent
   },
+  props: ['name', 'data', 'color', 'isParentSelected'],
   data: () => ({
     identifier: null,
     selection: false,
@@ -58,22 +57,22 @@ export default {
     comps: {
       ValueComponent: markRaw(ValueComponent),
       ObjectComponent: markRaw(ObjectComponent),
-      ArrayComponent: markRaw(ArrayComponent),
-    },
+      ArrayComponent: markRaw(ArrayComponent)
+    }
   }),
-  async created() {
-    this.components = Recursive.recursive(this.data, this.comps);
-    this.identifier = await this.$store.dispatch("giveIdentifier");
-  },
   watch: {
     isParentSelected: {
       immediate: true,
       handler(val, oldVal) {
         if (!oldVal && val) this.selected = true;
         else this.selected = false;
-      },
-    },
+      }
+    }
   },
+  async created() {
+    this.components = Recursive.recursive(this.data, this.comps);
+    this.identifier = await this.$store.dispatch('giveIdentifier');
+  }
 };
 </script>
 
