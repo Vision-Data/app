@@ -75,61 +75,61 @@
 </template>
 
 <script>
-import SecurityLock from './SecurityLock.vue';
-import ToolTipInformations from '../Commons/ToolTipInformations.vue';
-import Button from '../Commons/Form/Button.vue';
+  import SecurityLock from './SecurityLock.vue';
+  import ToolTipInformations from '../Commons/ToolTipInformations.vue';
+  import Button from '../Commons/Form/Button.vue';
 
-export default {
-  name: 'ApiUrl',
-  components: { SecurityLock, ToolTipInformations, Button },
-  props: ['content'],
-  emits: ['query'],
-  data() {
-    return {
-      searchInput: '',
-      pasteError: false,
-      isHttps: false
-    };
-  },
-  computed: {
-    searchInputComputed: {
-      get() {
-        return this.searchInput;
+  export default {
+    name: 'ApiUrl',
+    components: { SecurityLock, ToolTipInformations, Button },
+    props: ['content'],
+    emits: ['query'],
+    data() {
+      return {
+        searchInput: '',
+        pasteError: false,
+        isHttps: false,
+      };
+    },
+    computed: {
+      searchInputComputed: {
+        get() {
+          return this.searchInput;
+        },
+        set(value) {
+          this.searchInput = value;
+        },
       },
-      set(value) {
-        this.searchInput = value;
-      }
-    }
-  },
-  watch: {
-    content() {
-      this.searchInputComputed = this.content;
-    }
-  },
-  methods: {
-    async pasteContent() {
-      this.pasteError = false;
-      try {
-        this.searchInput = await navigator.clipboard.readText();
-        this.checkHttps();
-        this.emitQuery();
-      } catch (error) {
-        this.pasteError = true;
-      }
     },
-    checkHttps() {
-      this.isHttps = this.searchInput.slice(0, 5).includes('https');
+    watch: {
+      content() {
+        this.searchInputComputed = this.content;
+      },
     },
-    emitQuery() {
-      this.$emit('query', this.searchInput);
-    }
-  }
-};
+    methods: {
+      async pasteContent() {
+        this.pasteError = false;
+        try {
+          this.searchInput = await navigator.clipboard.readText();
+          this.checkHttps();
+          this.emitQuery();
+        } catch (error) {
+          this.pasteError = true;
+        }
+      },
+      checkHttps() {
+        this.isHttps = this.searchInput.slice(0, 5).includes('https');
+      },
+      emitQuery() {
+        this.$emit('query', this.searchInput);
+      },
+    },
+  };
 </script>
 
 <style scoped>
-.rounded-r {
-  border-top-right-radius: 0.5rem !important;
-  border-bottom-right-radius: 0.5rem !important;
-}
+  .rounded-r {
+    border-top-right-radius: 0.5rem !important;
+    border-bottom-right-radius: 0.5rem !important;
+  }
 </style>

@@ -5,5 +5,5 @@
 </template>
 
 <script>
-export default { name: 'Button', props: ['isLoading'] };
+  export default { name: 'Button', props: ['isLoading'] };
 </script>

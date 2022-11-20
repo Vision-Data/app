@@ -14,22 +14,22 @@
 </template>
 
 <script>
-export default {
-  name: 'Modal',
-  props: ['isOpen', 'title', 'closeLabel'],
-  emits: ['close'],
-  query: ['close'],
-  methods: {
-    close() {
-      this.$emit('close', false);
-    }
-  }
-};
+  export default {
+    name: 'Modal',
+    props: ['isOpen', 'title', 'closeLabel'],
+    emits: ['close'],
+    query: ['close'],
+    methods: {
+      close() {
+        this.$emit('close', false);
+      },
+    },
+  };
 </script>
 
 <style scoped>
-.modal {
-  margin: 0;
-  max-width: unset;
-}
+  .modal {
+    margin: 0;
+    max-width: unset;
+  }
 </style>

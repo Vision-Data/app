@@ -6,7 +6,7 @@ const makeRequest = async (choice, query, body) => {
     response = await axios({
       method: choice,
       url: query,
-      data: body
+      data: body,
     });
   } catch (error) {
     if (error.response) {

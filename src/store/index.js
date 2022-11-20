@@ -7,12 +7,12 @@ export default createStore({
     response: null,
     selectedData: {
       x: [],
-      y: []
+      y: [],
     },
     token: null,
     user: null,
     treeStructure: [],
-    selectedWorkspace: null
+    selectedWorkspace: null,
   }),
   mutations: {
     receiveSelectedDataX(state, value) {
@@ -48,7 +48,7 @@ export default createStore({
     },
     updateSelectedWorkspace(state, workspace) {
       state.selectedWorkspace = workspace;
-    }
+    },
   },
   getters: {
     getIdentifier(state) {
@@ -56,7 +56,7 @@ export default createStore({
     },
     isLogin(state) {
       return state.token && state.user;
-    }
+    },
   },
   actions: {
     giveIdentifier({ commit, getters }) {
@@ -100,7 +100,7 @@ export default createStore({
     },
     setSelectedWorkspace({ commit }, workspace) {
       commit('updateSelectedWorkspace', workspace);
-    }
+    },
   },
-  plugins: [createPersistedState()]
+  plugins: [createPersistedState()],
 });

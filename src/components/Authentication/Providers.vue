@@ -12,16 +12,16 @@
 </template>
 
 <script>
-import Button from '../Commons/Form/Button.vue';
-export default {
-  name: 'Providers',
-  components: {
-    Button
-  },
-  methods: {
-    logWithProvider(provider) {
-      window.location = `${process.env.VUE_APP_HOST_API}auth/${provider}`;
-    }
-  }
-};
+  import Button from '../Commons/Form/Button.vue';
+  export default {
+    name: 'Providers',
+    components: {
+      Button,
+    },
+    methods: {
+      logWithProvider(provider) {
+        window.location = `${process.env.VUE_APP_HOST_API}auth/${provider}`;
+      },
+    },
+  };
 </script>

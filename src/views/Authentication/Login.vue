@@ -68,73 +68,75 @@
 </template>
 
 <script>
-import Button from '../../components/Commons/Form/Button.vue';
-import ErrorLabel from '../../components/Commons/Form/ErrorLabel.vue';
-import Alert from '../../components/Commons/Alert.vue';
-import Providers from '../../components/Authentication/Providers.vue';
+  import Button from '../../components/Commons/Form/Button.vue';
+  import ErrorLabel from '../../components/Commons/Form/ErrorLabel.vue';
+  import Alert from '../../components/Commons/Alert.vue';
+  import Providers from '../../components/Authentication/Providers.vue';
 
-import { Buffer } from 'buffer';
+  import { Buffer } from 'buffer';
 
-import AuthenticationService from '../../services/VisionApi/Authentication.js';
+  import AuthenticationService from '../../services/VisionApi/Authentication.js';
 
-export default {
-  name: 'Login',
-  components: { Button, ErrorLabel, Alert, Providers },
-  data() {
-    return {
-      form: {
-        email: '',
-        password: ''
-      },
-      errors: null,
-      isLoading: false
-    };
-  },
-  mounted() {
-    if (
-      this.$route.query &&
-      this.$route.query.token &&
-      this.$route.query.user
-    ) {
-      const token = Buffer.from(this.$route.query.token, 'base64').toString(
-        'ascii'
-      );
+  export default {
+    name: 'Login',
+    components: { Button, ErrorLabel, Alert, Providers },
+    data() {
+      return {
+        form: {
+          email: '',
+          password: '',
+        },
+        errors: null,
+        isLoading: false,
+      };
+    },
+    mounted() {
+      if (
+        this.$route.query &&
+        this.$route.query.token &&
+        this.$route.query.user
+      ) {
+        const token = Buffer.from(this.$route.query.token, 'base64').toString(
+          'ascii'
+        );
 
-      const user = JSON.parse(
-        Buffer.from(this.$route.query.user, 'base64').toString('ascii')
-      );
+        const user = JSON.parse(
+          Buffer.from(this.$route.query.user, 'base64').toString('ascii')
+        );
 
-      this.loggedUser(token, user);
-    }
-  },
-
-  methods: {
-    async login() {
-      this.isLoading = true;
-      const { response, errors } = await AuthenticationService.login(this.form);
-      this.isLoading = false;
-
-      this.errors = errors;
-      if (!this.errors) {
-        this.loggedUser(response.data.token, response.data.user);
+        this.loggedUser(token, user);
       }
     },
 
-    loggedUser(token, user) {
-      this.$store.dispatch('setToken', token);
-      this.$store.dispatch('setUser', user);
-      this.$router.push('/workspaces');
-    }
-  }
-};
+    methods: {
+      async login() {
+        this.isLoading = true;
+        const { response, errors } = await AuthenticationService.login(
+          this.form
+        );
+        this.isLoading = false;
+
+        this.errors = errors;
+        if (!this.errors) {
+          this.loggedUser(response.data.token, response.data.user);
+        }
+      },
+
+      loggedUser(token, user) {
+        this.$store.dispatch('setToken', token);
+        this.$store.dispatch('setUser', user);
+        this.$router.push('/workspaces');
+      },
+    },
+  };
 </script>
 
 <style scoped>
-.login {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
+  .login {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
 </style>

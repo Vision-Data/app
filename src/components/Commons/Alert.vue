@@ -10,8 +10,8 @@
 </template>
 
 <script>
-export default {
-  name: 'Alert',
-  props: ['label', 'type']
-};
+  export default {
+    name: 'Alert',
+    props: ['label', 'type'],
+  };
 </script>

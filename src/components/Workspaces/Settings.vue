@@ -41,24 +41,24 @@
 </template>
 
 <script>
-import Modal from '../Commons/Modal.vue';
-import Button from '../Commons/Form/Button.vue';
-import Tabs from '../Commons/Tabs/Tabs.vue';
-import Tab from '../Commons/Tabs/Tab.vue';
+  import Modal from '../Commons/Modal.vue';
+  import Button from '../Commons/Form/Button.vue';
+  import Tabs from '../Commons/Tabs/Tabs.vue';
+  import Tab from '../Commons/Tabs/Tab.vue';
 
-import AuthenticationService from '../../services/VisionApi/Authentication.js';
+  import AuthenticationService from '../../services/VisionApi/Authentication.js';
 
-export default {
-  name: 'Settings',
-  components: { Modal, Button, Tabs, Tab },
-  props: ['openSettings'],
-  methods: {
-    async logout() {
-      await AuthenticationService.logout(this.$store.state.token);
-      this.$store.dispatch('logout');
-      this.$router.push('/login');
-      this.$notyf.success('Vous avez été déconnecté avec succès.');
-    }
-  }
-};
+  export default {
+    name: 'Settings',
+    components: { Modal, Button, Tabs, Tab },
+    props: ['openSettings'],
+    methods: {
+      async logout() {
+        await AuthenticationService.logout(this.$store.state.token);
+        this.$store.dispatch('logout');
+        this.$router.push('/login');
+        this.$notyf.success('Vous avez été déconnecté avec succès.');
+      },
+    },
+  };
 </script>

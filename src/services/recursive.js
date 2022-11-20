@@ -10,7 +10,7 @@ function recursive(data, comps) {
       component: comps.ValueComponent,
       name: '',
       data: data,
-      color: 'info'
+      color: 'info',
     });
   } else {
     const json = Object.keys(data);
@@ -25,7 +25,7 @@ function recursive(data, comps) {
           component: comps.ValueComponent,
           name: key,
           data: data[key],
-          color: 'info'
+          color: 'info',
         });
       } else if (
         typeof data[key] === 'object' &&
@@ -36,7 +36,7 @@ function recursive(data, comps) {
           component: comps.ValueComponent,
           name: key,
           data: data[key],
-          color: 'info'
+          color: 'info',
         });
       } else if (typeof data[key] === 'object') {
         if (Array.isArray(data[key])) {
@@ -44,14 +44,14 @@ function recursive(data, comps) {
             component: comps.ArrayComponent,
             name: key,
             data: data[key],
-            color: 'warning'
+            color: 'warning',
           });
         } else {
           components.push({
             component: comps.ObjectComponent,
             name: key,
             data: data[key],
-            color: 'error'
+            color: 'error',
           });
         }
       }

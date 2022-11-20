@@ -8,8 +8,8 @@
 </template>
 
 <script>
-export default {
-  name: 'ToolTipInformations',
-  props: ['helperText', 'direction', 'color']
-};
+  export default {
+    name: 'ToolTipInformations',
+    props: ['helperText', 'direction', 'color'],
+  };
 </script>

@@ -14,7 +14,7 @@
           class="inline-block py-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
           :class="{
             'text-primary': selectedTitle === title,
-            'border-primary': selectedTitle === title
+            'border-primary': selectedTitle === title,
           }"
           >{{ title }}</a
         >
@@ -25,20 +25,20 @@
 </template>
 
 <script>
-import { ref, provide } from 'vue';
+  import { ref, provide } from 'vue';
 
-export default {
-  name: 'Tabs',
-  setup(props, { slots }) {
-    const tabTitles = ref(slots.default().map((tab) => tab.props.title));
-    const selectedTitle = ref(tabTitles.value[0]);
+  export default {
+    name: 'Tabs',
+    setup(props, { slots }) {
+      const tabTitles = ref(slots.default().map((tab) => tab.props.title));
+      const selectedTitle = ref(tabTitles.value[0]);
 
-    provide('selectedTitle', selectedTitle);
+      provide('selectedTitle', selectedTitle);
 
-    return {
-      selectedTitle,
-      tabTitles
-    };
-  }
-};
+      return {
+        selectedTitle,
+        tabTitles,
+      };
+    },
+  };
 </script>

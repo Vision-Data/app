@@ -84,155 +84,155 @@
 </template>
 
 <script>
-import Vue3RouterTree from 'vue3-router-tree';
-import WorkspaceService from '../services/VisionApi/Workspace.js';
-import Loading from './Commons/Loading.vue';
+  import Vue3RouterTree from 'vue3-router-tree';
+  import WorkspaceService from '../services/VisionApi/Workspace.js';
+  import Loading from './Commons/Loading.vue';
 
-export default {
-  name: 'Menu',
-  components: {
-    Vue3RouterTree,
-    Loading
-  },
-  emits: ['openSettings'],
-  data() {
-    return {
-      selectedWorkspace: '',
-      workspaces: [],
-      requests: this.$store.state.treeStructure,
-      isLoading: false
-    };
-  },
-  watch: {
-    '$store.state.treeStructure'(newValue) {
-      this.requests = newValue;
-    }
-  },
-  async mounted() {
-    this.isLoading = true;
-    const { response } = await WorkspaceService.findAll(
-      this.$store.state.token
-    );
-    this.isLoading = false;
-
-    this.workspaces = response.data.data;
-    this.selectedWorkspace =
-      this.$route.params.workspaceId || this.workspaces[0]?.id || '';
-  },
-  methods: {
-    changeRoute() {
-      this.$router.push(`/workspaces/${this.selectedWorkspace}`);
+  export default {
+    name: 'Menu',
+    components: {
+      Vue3RouterTree,
+      Loading,
     },
-    goToSettings() {
-      this.$emit('openSettings');
-    }
-  }
-};
+    emits: ['openSettings'],
+    data() {
+      return {
+        selectedWorkspace: '',
+        workspaces: [],
+        requests: this.$store.state.treeStructure,
+        isLoading: false,
+      };
+    },
+    watch: {
+      '$store.state.treeStructure'(newValue) {
+        this.requests = newValue;
+      },
+    },
+    async mounted() {
+      this.isLoading = true;
+      const { response } = await WorkspaceService.findAll(
+        this.$store.state.token
+      );
+      this.isLoading = false;
+
+      this.workspaces = response.data.data;
+      this.selectedWorkspace =
+        this.$route.params.workspaceId || this.workspaces[0]?.id || '';
+    },
+    methods: {
+      changeRoute() {
+        this.$router.push(`/workspaces/${this.selectedWorkspace}`);
+      },
+      goToSettings() {
+        this.$emit('openSettings');
+      },
+    },
+  };
 </script>
 
 <style scoped>
-.px-4 {
-  padding-right: 0rem !important;
-}
-.menu {
-  background-color: var(--menu);
-  justify-content: left;
-  display: flex;
-  width: 100%;
-  max-width: 20rem;
-}
+  .px-4 {
+    padding-right: 0rem !important;
+  }
+  .menu {
+    background-color: var(--menu);
+    justify-content: left;
+    display: flex;
+    width: 100%;
+    max-width: 20rem;
+  }
 
-.menu-link {
-  transition: color 0.2s, bold 0.3s;
-}
+  .menu-link {
+    transition: color 0.2s, bold 0.3s;
+  }
 
-.menu-link:hover {
-  color: var(--vision-orange);
-  font-weight: bold;
-}
-.workspace-page {
-  height: 100%;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  padding: 1.5rem;
-}
+  .menu-link:hover {
+    color: var(--vision-orange);
+    font-weight: bold;
+  }
+  .workspace-page {
+    height: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+  }
 
-.divider {
-  margin: 1rem;
-}
+  .divider {
+    margin: 1rem;
+  }
 
-.workspaceLogo,
-.btn,
-#logo {
-  margin: 0 auto;
-}
+  .workspaceLogo,
+  .btn,
+  #logo {
+    margin: 0 auto;
+  }
 
-#settings,
-#schemas {
-  width: 1.5rem;
-  height: 1.5rem;
-  margin-right: 0.5rem;
-}
+  #settings,
+  #schemas {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 0.5rem;
+  }
 
-[data-theme='dark'] #settings,
-[data-theme='dark'] #schemas {
-  filter: invert(1);
-}
+  [data-theme='dark'] #settings,
+  [data-theme='dark'] #schemas {
+    filter: invert(1);
+  }
 
-.btn {
-  width: auto;
-  display: flex;
-}
+  .btn {
+    width: auto;
+    display: flex;
+  }
 
-#workspace-select {
-  margin: 1rem 0;
-}
+  #workspace-select {
+    margin: 1rem 0;
+  }
 
-#workspaceImg {
-  width: 4rem;
-  height: 4rem;
-}
+  #workspaceImg {
+    width: 4rem;
+    height: 4rem;
+  }
 
-.workspaceLogo {
-  height: auto;
-  width: 10rem;
-  display: flex;
-}
+  .workspaceLogo {
+    height: auto;
+    width: 10rem;
+    display: flex;
+  }
 
-.tree-structure {
-  flex: 1;
-}
-.tree-structure > div {
-  margin-left: -1rem;
-}
+  .tree-structure {
+    flex: 1;
+  }
+  .tree-structure > div {
+    margin-left: -1rem;
+  }
 
-.tree-structure-icon {
-  margin-right: 0.5rem;
-  height: 1rem;
-  width: 1rem;
-  min-height: 1rem;
-  min-width: 1rem;
-}
+  .tree-structure-icon {
+    margin-right: 0.5rem;
+    height: 1rem;
+    width: 1rem;
+    min-height: 1rem;
+    min-width: 1rem;
+  }
 
-.tree-structure-container {
-  display: flex;
-  align-items: center;
-  width: 100%;
-}
+  .tree-structure-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
 
-.tree-structure-head {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-}
+  .tree-structure-head {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
 
-.tree-structure-chip {
-  margin-left: auto;
-}
+  .tree-structure-chip {
+    margin-left: auto;
+  }
 
-.settings {
-  background-color: transparent;
-  color: var(--p);
-}
+  .settings {
+    background-color: transparent;
+    color: var(--p);
+  }
 </style>

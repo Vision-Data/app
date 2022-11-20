@@ -4,8 +4,8 @@
   </label>
 </template>
 <script>
-export default {
-  name: 'ErrorLabel',
-  props: ['label']
-};
+  export default {
+    name: 'ErrorLabel',
+    props: ['label'],
+  };
 </script>

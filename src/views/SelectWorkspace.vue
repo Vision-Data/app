@@ -45,7 +45,7 @@
           <button
             class="btn btn-primary btn-outline w-6/12 md:w-24"
             :class="{
-              'opacity-50': !previousPageUrl
+              'opacity-50': !previousPageUrl,
             }"
             :disabled="!previousPageUrl"
             @click="goToPreviousPage()"
@@ -55,7 +55,7 @@
           <button
             class="btn btn-primary btn-outline w-6/12 md:w-24"
             :class="{
-              'opacity-50': !nextPageUrl
+              'opacity-50': !nextPageUrl,
             }"
             :disabled="!nextPageUrl"
             @click="goToNextPage()"
@@ -90,124 +90,124 @@
 </template>
 
 <script>
-import DarkMode from '../components/Commons/DarkMode.vue';
-import WorkspaceCard from '../components/Workspaces/WorkspaceCard.vue';
-import WorkspaceService from '../services/VisionApi/Workspace.js';
-import TooltipInformations from '../components/Commons/ToolTipInformations.vue';
-import Alert from '../components/Commons/Alert.vue';
-import Loading from '../components/Commons/Loading.vue';
+  import DarkMode from '../components/Commons/DarkMode.vue';
+  import WorkspaceCard from '../components/Workspaces/WorkspaceCard.vue';
+  import WorkspaceService from '../services/VisionApi/Workspace.js';
+  import TooltipInformations from '../components/Commons/ToolTipInformations.vue';
+  import Alert from '../components/Commons/Alert.vue';
+  import Loading from '../components/Commons/Loading.vue';
 
-export default {
-  name: 'SelectWorkspace',
-  components: {
-    DarkMode,
-    TooltipInformations,
-    WorkspaceCard,
-    Alert,
-    Loading
-  },
-  data() {
-    return {
-      workspaces: [],
-      nextPageUrl: undefined,
-      previousPageUrl: undefined,
-      isLoading: true,
-      errors: null
-    };
-  },
-  async mounted() {
-    let { response, errors } = await WorkspaceService.findAll(
-      this.$store.state.token
-    );
-    this.isLoading = false;
-    this.errors = errors;
-
-    this.workspaces = response.data.data;
-    if (!this.errors && this.workspaces.length === 0) {
-      this.goToCreatePage();
-    }
-
-    this.nextPageUrl = response.data.meta.next_page_url;
-  },
-  methods: {
-    goToCreatePage() {
-      this.$router.push('/workspaces/create');
+  export default {
+    name: 'SelectWorkspace',
+    components: {
+      DarkMode,
+      TooltipInformations,
+      WorkspaceCard,
+      Alert,
+      Loading,
     },
-
-    async goToNextPage() {
-      if (this.nextPageUrl) {
-        this.isLoading = true;
-        let { response, errors } = await WorkspaceService.findAll(
-          this.$store.state.token,
-          this.nextPageUrl
-        );
-
-        this.isLoading = false;
-        this.workspaces = response.data.data;
-        this.errors = errors;
-        this.previousPageUrl = response.data.meta.previous_page_url;
-        this.nextPageUrl = response.data.meta.next_page_url;
-      }
+    data() {
+      return {
+        workspaces: [],
+        nextPageUrl: undefined,
+        previousPageUrl: undefined,
+        isLoading: true,
+        errors: null,
+      };
     },
-    async goToPreviousPage() {
-      if (this.previousPageUrl) {
-        let { response, errors } = await WorkspaceService.findAll(
-          this.$store.state.token,
-          this.previousPageUrl
-        );
+    async mounted() {
+      let { response, errors } = await WorkspaceService.findAll(
+        this.$store.state.token
+      );
+      this.isLoading = false;
+      this.errors = errors;
 
-        this.errors = errors;
-        this.workspaces = response.data.data;
-        this.previousPageUrl = response.data.meta.previous_page_url;
-        this.nextPageUrl = response.data.meta.next_page_url;
+      this.workspaces = response.data.data;
+      if (!this.errors && this.workspaces.length === 0) {
+        this.goToCreatePage();
       }
-    }
-  }
-};
+
+      this.nextPageUrl = response.data.meta.next_page_url;
+    },
+    methods: {
+      goToCreatePage() {
+        this.$router.push('/workspaces/create');
+      },
+
+      async goToNextPage() {
+        if (this.nextPageUrl) {
+          this.isLoading = true;
+          let { response, errors } = await WorkspaceService.findAll(
+            this.$store.state.token,
+            this.nextPageUrl
+          );
+
+          this.isLoading = false;
+          this.workspaces = response.data.data;
+          this.errors = errors;
+          this.previousPageUrl = response.data.meta.previous_page_url;
+          this.nextPageUrl = response.data.meta.next_page_url;
+        }
+      },
+      async goToPreviousPage() {
+        if (this.previousPageUrl) {
+          let { response, errors } = await WorkspaceService.findAll(
+            this.$store.state.token,
+            this.previousPageUrl
+          );
+
+          this.errors = errors;
+          this.workspaces = response.data.data;
+          this.previousPageUrl = response.data.meta.previous_page_url;
+          this.nextPageUrl = response.data.meta.next_page_url;
+        }
+      },
+    },
+  };
 </script>
 
 <style scoped>
-.select-workspace {
-  max-height: 100vh;
-}
-@media (max-width: 768px) {
   .select-workspace {
-    margin: 2rem;
+    max-height: 100vh;
   }
-}
+  @media (max-width: 768px) {
+    .select-workspace {
+      margin: 2rem;
+    }
+  }
 
-.workspace-grid {
-  gap: 1rem 2rem;
-}
+  .workspace-grid {
+    gap: 1rem 2rem;
+  }
 
-.help {
-  position: fixed;
-  bottom: 2rem;
-  right: 4rem;
-}
-.avatar {
-  background-color: #afafaf !important;
-}
+  .help {
+    position: fixed;
+    bottom: 2rem;
+    right: 4rem;
+  }
+  .avatar {
+    background-color: #afafaf !important;
+  }
 
-.titleBlock {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-.tooltip::before {
-  font-weight: bold;
-  font-size: 1.2em;
-  color: #afafaf !important;
-  background-color: #f0f0f0 !important;
-  transform: translateX(-80%);
-}
+  .titleBlock {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .tooltip::before {
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #afafaf !important;
+    background-color: #f0f0f0 !important;
+    transform: translateX(-80%);
+  }
 
-.tooltip {
-  cursor: pointer;
-}
+  .tooltip {
+    cursor: pointer;
+  }
 
-.text-xl {
-  color: #afafaf;
-  font-weight: bold;
-}
+  .text-xl {
+    color: #afafaf;
+    font-weight: bold;
+  }
 </style>

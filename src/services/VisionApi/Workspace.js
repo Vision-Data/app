@@ -5,7 +5,7 @@ export default class WorkspaceService extends ApiClient {
     let url = params ? `workspaces${params}` : `workspaces`;
 
     return this.makeRequest('GET', url, null, {
-      Authorization: `Bearer ${userToken}`
+      Authorization: `Bearer ${userToken}`,
     });
   }
 
@@ -16,17 +16,17 @@ export default class WorkspaceService extends ApiClient {
       {
         name: data.name,
         logo: data.logo,
-        color: data.color
+        color: data.color,
       },
       {
-        Authorization: `Bearer ${userToken}`
+        Authorization: `Bearer ${userToken}`,
       }
     );
   }
 
   static async find(userToken, id) {
     return this.makeRequest('GET', `workspaces/${id}`, null, {
-      Authorization: `Bearer ${userToken}`
+      Authorization: `Bearer ${userToken}`,
     });
   }
 }

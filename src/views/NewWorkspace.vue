@@ -68,111 +68,111 @@
 </template>
 
 <script>
-import DarkMode from '../components/Commons/DarkMode.vue';
-import WorkspaceService from '../services/VisionApi/Workspace.js';
-import Button from '../components/Commons/Form/Button.vue';
-import ErrorLabel from '../components/Commons/Form/ErrorLabel.vue';
+  import DarkMode from '../components/Commons/DarkMode.vue';
+  import WorkspaceService from '../services/VisionApi/Workspace.js';
+  import Button from '../components/Commons/Form/Button.vue';
+  import ErrorLabel from '../components/Commons/Form/ErrorLabel.vue';
 
-export default {
-  name: 'NewWorkspace',
-  components: {
-    DarkMode,
-    Button,
-    ErrorLabel
-  },
-  data() {
-    return {
-      form: { color: '#000000', name: '', logo: null },
-      errors: null,
-      isLoading: false
-    };
-  },
-  methods: {
-    async create() {
-      this.isLoading = true;
-      const { response, errors } = await WorkspaceService.create(
-        this.$store.state.token,
-        this.form
-      );
-      this.isLoading = false;
+  export default {
+    name: 'NewWorkspace',
+    components: {
+      DarkMode,
+      Button,
+      ErrorLabel,
+    },
+    data() {
+      return {
+        form: { color: '#000000', name: '', logo: null },
+        errors: null,
+        isLoading: false,
+      };
+    },
+    methods: {
+      async create() {
+        this.isLoading = true;
+        const { response, errors } = await WorkspaceService.create(
+          this.$store.state.token,
+          this.form
+        );
+        this.isLoading = false;
 
-      this.errors = errors;
-      if (!this.errors) {
-        this.$notyf.success('Bienvenue dans votre nouvel espace de travail');
-        this.$router.push({
-          name: 'Workspace',
-          params: { workspaceId: response.data.id }
-        });
-      }
-    }
-  }
-};
+        this.errors = errors;
+        if (!this.errors) {
+          this.$notyf.success('Bienvenue dans votre nouvel espace de travail');
+          this.$router.push({
+            name: 'Workspace',
+            params: { workspaceId: response.data.id },
+          });
+        }
+      },
+    },
+  };
 </script>
 
 <style scoped>
-.new-workspace {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
+  .new-workspace {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
 
-.color-body {
-  display: flex;
-  justify-content: space-between;
-}
+  .color-body {
+    display: flex;
+    justify-content: space-between;
+  }
 
-:focus-visible {
-  outline: none;
-}
+  :focus-visible {
+    outline: none;
+  }
 
-.form-control > div {
-  margin-bottom: 15px;
-}
+  .form-control > div {
+    margin-bottom: 15px;
+  }
 
-.input {
-  font-weight: bold;
-}
+  .input {
+    font-weight: bold;
+  }
 
-h1 {
-  color: var(-pc);
-  font-weight: bold;
-  text-align: center;
-  font-size: 20px;
-}
-#logo {
-  margin: 0 auto;
-  width: 20rem;
-  margin-bottom: 2rem;
-}
+  h1 {
+    color: var(-pc);
+    font-weight: bold;
+    text-align: center;
+    font-size: 20px;
+  }
+  #logo {
+    margin: 0 auto;
+    width: 20rem;
+    margin-bottom: 2rem;
+  }
 
-.color {
-  display: flex;
-  justify-content: space-between;
-}
+  .color {
+    display: flex;
+    justify-content: space-between;
+  }
 
-.color .value {
-  display: flex;
-}
+  .color .value {
+    display: flex;
+  }
 
-.name,
-.picture {
-  display: flex;
-  flex-direction: column;
-}
+  .name,
+  .picture {
+    display: flex;
+    flex-direction: column;
+  }
 
-.create {
-  border-radius: 10px;
-  background-color: var(--pf);
-  color: var(--color-white);
-  width: 100%;
-}
+  .create {
+    border-radius: 10px;
+    background-color: var(--pf);
+    color: var(--color-white);
+    width: 100%;
+  }
 
-.error {
-  background-color: #f16e6e;
-  border: red solid 1px;
-  border-radius: 5px;
-  color: white;
-}
+  .error {
+    background-color: #f16e6e;
+    border: red solid 1px;
+    border-radius: 5px;
+    color: white;
+  }
 </style>

@@ -11,7 +11,7 @@ export default class AuthenticationService extends ApiClient {
 
   static logout(token) {
     return this.makeRequest('POST', `logout`, null, {
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     });
   }
 }

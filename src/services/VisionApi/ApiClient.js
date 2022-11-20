@@ -10,7 +10,7 @@ export default class ApiClient {
         method,
         url,
         data,
-        headers
+        headers,
       });
     } catch (apiErrors) {
       errors = this.formatErrors(apiErrors.response.data.errors);

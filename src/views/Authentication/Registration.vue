@@ -91,61 +91,61 @@
 </template>
 
 <script>
-import Button from '../../components/Commons/Form/Button.vue';
-import ErrorLabel from '../../components/Commons/Form/ErrorLabel.vue';
-import Alert from '../../components/Commons/Alert.vue';
-import Providers from '../../components/Authentication/Providers.vue';
+  import Button from '../../components/Commons/Form/Button.vue';
+  import ErrorLabel from '../../components/Commons/Form/ErrorLabel.vue';
+  import Alert from '../../components/Commons/Alert.vue';
+  import Providers from '../../components/Authentication/Providers.vue';
 
-import AuthenticationService from '../../services/VisionApi/Authentication.js';
+  import AuthenticationService from '../../services/VisionApi/Authentication.js';
 
-export default {
-  name: 'Registration',
-  components: { Button, ErrorLabel, Alert, Providers },
-  data() {
-    return {
-      form: {
-        email: '',
-        full_name: '',
-        password: '',
-        passwordConf: ''
+  export default {
+    name: 'Registration',
+    components: { Button, ErrorLabel, Alert, Providers },
+    data() {
+      return {
+        form: {
+          email: '',
+          full_name: '',
+          password: '',
+          passwordConf: '',
+        },
+        errors: null,
+        isLoading: false,
+      };
+    },
+    methods: {
+      async register() {
+        if (this.form.password !== this.form.passwordConf) {
+          this.errors = {
+            password: 'Les deux mots de passe doivent être identiques',
+          };
+          return;
+        }
+
+        this.isLoading = true;
+        const { response, errors } = await AuthenticationService.signUp(
+          this.form
+        );
+
+        this.isLoading = false;
+        this.errors = errors;
+
+        if (!this.errors) {
+          this.$store.dispatch('setToken', response.data.token);
+          this.$store.dispatch('setUser', response.data.user);
+          this.$router.push('/workspaces');
+        }
       },
-      errors: null,
-      isLoading: false
-    };
-  },
-  methods: {
-    async register() {
-      if (this.form.password !== this.form.passwordConf) {
-        this.errors = {
-          password: 'Les deux mots de passe doivent être identiques'
-        };
-        return;
-      }
-
-      this.isLoading = true;
-      const { response, errors } = await AuthenticationService.signUp(
-        this.form
-      );
-
-      this.isLoading = false;
-      this.errors = errors;
-
-      if (!this.errors) {
-        this.$store.dispatch('setToken', response.data.token);
-        this.$store.dispatch('setUser', response.data.user);
-        this.$router.push('/workspaces');
-      }
-    }
-  }
-};
+    },
+  };
 </script>
 
 <style scoped>
-.register {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
+  .register {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
 </style>

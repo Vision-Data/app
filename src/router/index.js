@@ -12,53 +12,53 @@ const routes = [
     path: '/',
     name: 'Home',
     component: SelectWorkspace,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true },
   },
   {
     path: '/register',
     name: 'Register',
     component: Register,
-    meta: { guest: true }
+    meta: { guest: true },
   },
   {
     path: '/login',
     name: 'Login',
     component: Login,
-    meta: { guest: true }
+    meta: { guest: true },
   },
   {
     path: '/schemas',
     name: 'Schemas',
-    component: () => import('../views/Workspace.vue')
+    component: () => import('../views/Workspace.vue'),
   },
   {
     path: '/workspaces',
     name: 'SelectWorkspaces',
     component: SelectWorkspace,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true },
   },
   {
     path: '/workspaces/:workspaceId',
     name: 'Workspace',
     component: Workspace,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true },
   },
   {
     path: '/workspaces/create',
     name: 'NewWorkspaces',
     component: NewWorkspace,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true },
   },
   {
     path: '/:catchAll(.*)*',
     name: 'Not Found',
-    component: NotFound
-  }
+    component: NotFound,
+  },
 ];
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
+  routes,
 });
 
 // Check if user is authenticated before navigating to a page

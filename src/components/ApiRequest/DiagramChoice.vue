@@ -26,76 +26,76 @@
 </template>
 
 <script>
-export default {
-  name: 'DiagramChoice',
-  emits: ['cancel', 'chart'],
-  data() {
-    return {
-      current: null,
-      diagrams: [
-        {
-          name: 'Donut',
-          image: 'donut',
-          ref: 'donut'
-        },
-        {
-          name: 'Courbes',
-          image: 'curves',
-          ref: 'curves'
-        },
-        {
-          name: 'Barres',
-          image: 'bars',
-          ref: 'bars'
-        },
-        {
-          name: 'Carte',
-          image: 'map',
-          ref: 'map'
-        }
-      ]
-    };
-  },
-  methods: {
-    cancel() {
-      this.$emit('cancel', false);
+  export default {
+    name: 'DiagramChoice',
+    emits: ['cancel', 'chart'],
+    data() {
+      return {
+        current: null,
+        diagrams: [
+          {
+            name: 'Donut',
+            image: 'donut',
+            ref: 'donut',
+          },
+          {
+            name: 'Courbes',
+            image: 'curves',
+            ref: 'curves',
+          },
+          {
+            name: 'Barres',
+            image: 'bars',
+            ref: 'bars',
+          },
+          {
+            name: 'Carte',
+            image: 'map',
+            ref: 'map',
+          },
+        ],
+      };
     },
-    selectChart() {
-      this.$emit('chart', { name: this.diagrams[this.current].ref });
-    }
-  }
-};
+    methods: {
+      cancel() {
+        this.$emit('cancel', false);
+      },
+      selectChart() {
+        this.$emit('chart', { name: this.diagrams[this.current].ref });
+      },
+    },
+  };
 </script>
 
 <style scoped>
-.modal-list {
-  display: grid;
-  grid-template-columns: 50% 50%;
-  justify-items: center;
-}
-.modal-item {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-  border-radius: 0.5rem;
-  width: 100%;
-}
-.modal-item:hover {
-  background-color: #f5f5f5;
-}
-.modal-item img {
-  width: 6rem;
-  height: 6rem;
-  object-fit: contain;
-}
+  .modal-list {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    justify-items: center;
+  }
+  .modal-item {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 0.5rem;
+    width: 100%;
+  }
+  .modal-item:hover {
+    background-color: #f5f5f5;
+  }
+  .modal-item img {
+    width: 6rem;
+    height: 6rem;
+    object-fit: contain;
+  }
 
-/* TODO: remove css temporary */
-.modal-item:nth-child(4),
-.modal-item:nth-child(2n + 1) {
-  opacity: 0.4;
-}
-.modal-item.active {
-  border: 2px solid black;
-}
+  /* TODO: remove css temporary */
+  .modal-item:nth-child(4),
+  .modal-item:nth-child(2n + 1) {
+    opacity: 0.4;
+  }
+  .modal-item.active {
+    border: 2px solid black;
+  }
 </style>

@@ -12,7 +12,7 @@ import 'notyf/notyf.min.css';
 
 const notyf = new Notyf({
   duration: 4000,
-  position: { x: 'center', y: 'top' }
+  position: { x: 'center', y: 'top' },
 });
 
 axios.defaults.baseURL = process.env.VUE_APP_HOST_API;
