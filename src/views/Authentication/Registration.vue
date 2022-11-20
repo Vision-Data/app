@@ -10,7 +10,7 @@
       {{ 'Inscription' }}
     </h1>
     <section
-      class="flex flex-col md:flex-row justify-center md:space-x-10 items-center mt-8"
+      class="flex flex-col-reverse md:flex-row justify-center md:space-x-10 items-center mt-8"
     >
       <Alert
         v-if="errors && errors.message"
@@ -84,6 +84,8 @@
           }}</router-link>
         </p>
       </form>
+      <div class="divider divider-horizontal font-bold">OU</div>
+      <Providers />
     </section>
   </div>
 </template>
@@ -92,12 +94,13 @@
 import Button from '../../components/Commons/Form/Button.vue';
 import ErrorLabel from '../../components/Commons/Form/ErrorLabel.vue';
 import Alert from '../../components/Commons/Alert.vue';
+import Providers from '../../components/Authentication/Providers.vue';
 
 import AuthenticationService from '../../services/VisionApi/Authentication.js';
 
 export default {
   name: 'Registration',
-  components: { Button, ErrorLabel, Alert },
+  components: { Button, ErrorLabel, Alert, Providers },
   data() {
     return {
       form: {

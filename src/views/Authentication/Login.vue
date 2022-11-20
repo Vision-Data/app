@@ -10,6 +10,8 @@
       {{ 'Connexion' }}
     </h1>
     <section class="flex flex-col justify-center items-center mt-8">
+      <Providers />
+      <div class="divider divider-horizontal font-bold">OU</div>
       <div class="flex flex-col items-center w-96">
         <Alert
           v-if="errors && errors.message"
@@ -69,12 +71,15 @@
 import Button from '../../components/Commons/Form/Button.vue';
 import ErrorLabel from '../../components/Commons/Form/ErrorLabel.vue';
 import Alert from '../../components/Commons/Alert.vue';
+import Providers from '../../components/Authentication/Providers.vue';
+
+import { Buffer } from 'buffer';
 
 import AuthenticationService from '../../services/VisionApi/Authentication.js';
 
 export default {
   name: 'Login',
-  components: { Button, ErrorLabel, Alert },
+  components: { Button, ErrorLabel, Alert, Providers },
   data() {
     return {
       form: {
@@ -85,6 +90,23 @@ export default {
       isLoading: false
     };
   },
+  mounted() {
+    if (
+      this.$route.query &&
+      this.$route.query.token &&
+      this.$route.query.user
+    ) {
+      const token = Buffer.from(this.$route.query.token, 'base64').toString(
+        'ascii'
+      );
+
+      const user = JSON.parse(
+        Buffer.from(this.$route.query.user, 'base64').toString('ascii')
+      );
+
+      this.loggedUser(token, user);
+    }
+  },
 
   methods: {
     async login() {
@@ -94,10 +116,14 @@ export default {
 
       this.errors = errors;
       if (!this.errors) {
-        this.$store.dispatch('setToken', response.data.token);
-        this.$store.dispatch('setUser', response.data.user);
-        this.$router.push('/workspaces');
+        this.loggedUser(response.data.token, response.data.user);
       }
+    },
+
+    loggedUser(token, user) {
+      this.$store.dispatch('setToken', token);
+      this.$store.dispatch('setUser', user);
+      this.$router.push('/workspaces');
     }
   }
 };
