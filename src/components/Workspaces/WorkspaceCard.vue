@@ -44,13 +44,18 @@
   }
   figure {
     width: 6rem;
-    height: 6rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
   }
   .workspace-logo {
-    width: 100%;
-    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
     object-fit: cover;
-    background-color: #afafafaf;
     border-radius: 0.5rem;
+  }
+  .m-8 {
+    width: 10rem;
+    height: 6rem;
   }
 </style>
