@@ -61,6 +61,9 @@
             @click.prevent="create"
             >{{ 'Créer' }}</Button
           >
+          <Button class="btn btn-info" @click="goBack()">
+            {{ 'Annuler' }}
+          </Button>
         </div>
       </form>
     </div>
@@ -104,6 +107,9 @@
             params: { workspaceId: response.data.id },
           });
         }
+      },
+      goBack() {
+        this.$router.push('/workspaces');
       },
     },
   };
