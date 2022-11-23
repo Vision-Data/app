@@ -61,7 +61,7 @@
             @click.prevent="create"
             >{{ 'Créer' }}</Button
           >
-          <Button class="btn btn-info" @click="goBack()">
+          <Button class="btn btn-primary go-back" @click="goBack()">
             {{ 'Annuler' }}
           </Button>
         </div>
@@ -190,5 +190,17 @@
 
   .buttons > .btn {
     width: fit-content;
+  }
+
+  .buttons .go-back {
+    background-color: transparent;
+    color: #fa810f;
+    border: 2px #fa810f solid;
+  }
+
+  .buttons .go-back:hover {
+    background-color: #fa810f;
+    color: #fff;
+    border: 2px #fa810f solid;
   }
 </style>
