@@ -89,3 +89,9 @@
     },
   };
 </script>
+
+<style>
+  [data-theme='dark'] .ct-label {
+    filter: invert(1) !important;
+  }
+</style>
