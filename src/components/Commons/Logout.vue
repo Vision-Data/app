@@ -26,10 +26,10 @@
 
 <style scoped>
   #logout {
+    position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
-    position: fixed;
     top: 1rem;
     right: 1rem;
   }

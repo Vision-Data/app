@@ -90,7 +90,7 @@
     height: 3rem;
     outline: none;
     border-radius: 0.3rem;
-    position: fixed;
+    position: absolute;
     top: 1rem;
     right: 10rem;
     box-shadow: 0px 0px 0 2px hsl(var(--b1)), 0px 0px 0 0px gray;
