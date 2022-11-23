@@ -31,34 +31,18 @@
         {{ $store.state.selectedWorkspace?.name || '' }}
       </Tab>
     </Tabs>
-
-    <template #actions>
-      <Button class="btn-error btn-outline" @click="logout">
-        {{ 'Déconnexion' }}
-      </Button>
-    </template>
   </Modal>
 </template>
 
 <script>
   import Modal from '../Commons/Modal.vue';
-  import Button from '../Commons/Form/Button.vue';
   import Tabs from '../Commons/Tabs/Tabs.vue';
   import Tab from '../Commons/Tabs/Tab.vue';
 
-  import AuthenticationService from '../../services/VisionApi/Authentication.js';
-
   export default {
     name: 'Settings',
-    components: { Modal, Button, Tabs, Tab },
+    components: { Modal, Tabs, Tab },
     props: ['openSettings'],
-    methods: {
-      async logout() {
-        await AuthenticationService.logout(this.$store.state.token);
-        this.$store.dispatch('logout');
-        this.$router.push('/login');
-        this.$notyf.success('Vous avez été déconnecté avec succès.');
-      },
-    },
+    methods: {},
   };
 </script>
