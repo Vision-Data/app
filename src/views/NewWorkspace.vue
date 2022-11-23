@@ -54,7 +54,7 @@
           <ErrorLabel v-if="errors && errors.logo" :label="errors.logo" />
         </div>
 
-        <div class="form-control w-full max-w-xs mt-4">
+        <div class="buttons form-control w-full max-w-xs mt-4">
           <Button
             class="btn btn-primary"
             :is-loading="isLoading"
@@ -180,5 +180,15 @@
     border: red solid 1px;
     border-radius: 5px;
     color: white;
+  }
+
+  .buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  .buttons > .btn {
+    width: fit-content;
   }
 </style>
