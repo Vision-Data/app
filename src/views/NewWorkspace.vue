@@ -1,6 +1,7 @@
 <template>
   <div class="new-workspace">
     <header>
+      <Logout />
       <dark-mode />
     </header>
     <div class="new-workspace-form">
@@ -69,6 +70,7 @@
 
 <script>
   import DarkMode from '../components/Commons/DarkMode.vue';
+  import Logout from '../components/Commons/Logout.vue';
   import WorkspaceService from '../services/VisionApi/Workspace.js';
   import Button from '../components/Commons/Form/Button.vue';
   import ErrorLabel from '../components/Commons/Form/ErrorLabel.vue';
@@ -79,6 +81,7 @@
       DarkMode,
       Button,
       ErrorLabel,
+      Logout,
     },
     data() {
       return {

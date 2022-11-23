@@ -2,6 +2,7 @@
   <div class="select-workspace">
     <div class="lg:mx-48 md:mx-24 sm:mx-2 my-24">
       <header class="mb-8">
+        <Logout />
         <dark-mode />
       </header>
       <div class="md:flex justify-between row">
@@ -91,6 +92,7 @@
 
 <script>
   import DarkMode from '../components/Commons/DarkMode.vue';
+  import Logout from '../components/Commons/Logout.vue';
   import WorkspaceCard from '../components/Workspaces/WorkspaceCard.vue';
   import WorkspaceService from '../services/VisionApi/Workspace.js';
   import TooltipInformations from '../components/Commons/ToolTipInformations.vue';
@@ -105,6 +107,7 @@
       WorkspaceCard,
       Alert,
       Loading,
+      Logout,
     },
     data() {
       return {

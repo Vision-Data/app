@@ -86,13 +86,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 3rem;
+    height: 3rem;
     outline: none;
     border-radius: 0.3rem;
     position: fixed;
     top: 1rem;
-    right: 1rem;
+    right: 10rem;
     box-shadow: 0px 0px 0 2px hsl(var(--b1)), 0px 0px 0 0px gray;
     transition: box-shadow 0.2s ease-in;
   }

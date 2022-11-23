@@ -9,6 +9,7 @@
       <div class="flex justify-center mt-10">
         <header>
           <dark-mode />
+          <Logout />
           <div class="sending-container">
             <ApiUrl
               class="container w-full max-w-screen-lg"
@@ -55,6 +56,7 @@
 
 <script>
   import DarkMode from '../components/Commons/DarkMode.vue';
+  import Logout from '../components/Commons/Logout.vue';
   import ApiUrl from '../components/ApiRequest/ApiUrl.vue';
   import Response from '../components/ApiRequest/Response.vue';
   import Chart from '../components/Charts/Chart.vue';
@@ -77,6 +79,7 @@
       Button,
       Menu,
       Settings,
+      Logout,
     },
     data() {
       return {
