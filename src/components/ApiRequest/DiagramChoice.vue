@@ -84,6 +84,9 @@
   .modal-item:hover {
     background-color: #f5f5f5;
   }
+  [data-theme='dark'] .modal-item:hover {
+    background-color: #4e5666;
+  }
   .modal-item img {
     width: 6rem;
     height: 6rem;
