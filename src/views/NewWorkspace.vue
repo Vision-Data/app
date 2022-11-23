@@ -54,13 +54,16 @@
           <ErrorLabel v-if="errors && errors.logo" :label="errors.logo" />
         </div>
 
-        <div class="form-control w-full max-w-xs mt-4">
+        <div class="buttons form-control w-full max-w-xs mt-4">
           <Button
             class="btn btn-primary"
             :is-loading="isLoading"
             @click.prevent="create"
             >{{ 'Créer' }}</Button
           >
+          <Button class="btn btn-primary go-back" @click="goBack()">
+            {{ 'Annuler' }}
+          </Button>
         </div>
       </form>
     </div>
@@ -104,6 +107,9 @@
             params: { workspaceId: response.data.id },
           });
         }
+      },
+      goBack() {
+        this.$router.push('/workspaces');
       },
     },
   };
@@ -174,5 +180,27 @@
     border: red solid 1px;
     border-radius: 5px;
     color: white;
+  }
+
+  .buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  .buttons > .btn {
+    width: fit-content;
+  }
+
+  .buttons .go-back {
+    background-color: transparent;
+    color: #fa810f;
+    border: 2px #fa810f solid;
+  }
+
+  .buttons .go-back:hover {
+    background-color: #fa810f;
+    color: #fff;
+    border: 2px #fa810f solid;
   }
 </style>
