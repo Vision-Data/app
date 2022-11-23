@@ -10,7 +10,7 @@
               <img
                 :src="
                   $store.state.user?.avatar_url ||
-                    require('@/assets/noPicture.png')
+                  require('@/assets/noPicture.png')
                 "
               />
             </div>
