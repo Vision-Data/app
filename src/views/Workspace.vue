@@ -146,6 +146,10 @@
           );
           this.isLoading = false;
           this.$store.dispatch('sendRequest', response);
+          this.$store.state.selectedData = {
+            x: [],
+            y: [],
+          };
         }
       },
       insertRequest(db) {
