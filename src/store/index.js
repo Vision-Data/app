@@ -34,6 +34,12 @@ export default createStore({
     changeIdentifier(state) {
       state.identifier++;
     },
+    resetSelectedData(state) {
+      state.selectedData = {
+        x: [],
+        y: [],
+      };
+    },
     setResponse(state, value) {
       state.response = value;
     },
