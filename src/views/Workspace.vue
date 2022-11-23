@@ -106,6 +106,11 @@
       this.initStructure();
     },
     async beforeUpdate() {
+      // Quick hack to avoid errors when the user is logs out
+      if (!this.$store.getters.isLogin) {
+        return;
+      }
+
       if (!this.$route.params.workspaceId) {
         return this.$router.push('/workspaces');
       }
