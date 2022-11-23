@@ -43,16 +43,6 @@
             image: 'curves',
             ref: 'curves',
           },
-          {
-            name: 'Barres',
-            image: 'bars',
-            ref: 'bars',
-          },
-          {
-            name: 'Carte',
-            image: 'map',
-            ref: 'map',
-          },
         ],
       };
     },
