@@ -153,6 +153,7 @@
             this.body
           );
           this.isLoading = false;
+          this.$store.dispatch('resetSelectedData');
           this.$store.dispatch('sendRequest', response);
         }
       },
