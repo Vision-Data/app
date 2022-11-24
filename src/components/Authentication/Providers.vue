@@ -1,10 +1,10 @@
 <template>
   <div class="flex flex-col">
-    <Button class="btn-lg" @click.prevent="logWithProvider('google')">
+    <Button class="btn-md google" @click.prevent="logWithProvider('google')">
       <img :src="require(`@/assets/LogoGoogle.png`)" class="w-8 mr-4" />
       Connexion avec Google
     </Button>
-    <Button class="btn-lg mt-4 mb-8" @click.prevent="logWithProvider('github')">
+    <Button class="btn-md git" @click.prevent="logWithProvider('github')">
       <img :src="require(`@/assets/LogoGithub.png`)" class="w-8 mr-4" />
       Connexion avec Github
     </Button>
@@ -25,3 +25,22 @@
     },
   };
 </script>
+<style>
+  .google {
+    margin-top: 36px;
+  }
+
+  .git {
+    margin-top: 52px;
+  }
+
+  @media only screen and (max-width: 600px) {
+    .google {
+      margin-top: 10px;
+    }
+
+    .git {
+      margin-top: 10px;
+    }
+  }
+</style>

@@ -2,17 +2,18 @@
   <div class="login">
     <img
       id="logo"
-      class="w-96"
       :src="require(`@/assets/watermark-color.png`)"
       alt="logo-vision mb-8"
     />
-    <h1 class="text-center font-bold text-4xl mt-4">
+    <h1 class="text-center font-bold text-3xl mt-4">
       {{ 'Connexion' }}
     </h1>
-    <section class="flex flex-col justify-center items-center mt-8">
+    <section
+      class="login-info flex flex-row-reverse justify-center items-flex_start mt-8"
+    >
       <Providers />
-      <div class="divider divider-horizontal font-bold">OU</div>
-      <div class="flex flex-col items-center w-96">
+      <div class="divider divider-horizontal font-bold center">OU</div>
+      <div class="classique flex flex-col items-center w-17">
         <Alert
           v-if="errors && errors.message"
           type="error"
@@ -138,5 +139,32 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+  }
+
+  #logo {
+    width: 20rem;
+  }
+
+  .w-17 {
+    width: 17rem;
+  }
+
+  .center {
+    margin-top: 100px;
+  }
+
+  @media only screen and (max-width: 600px) {
+    .login-info {
+      flex-direction: column;
+      margin-top: 0;
+    }
+
+    .center {
+      margin-top: 20px;
+    }
+
+    .classique input {
+      margin: 0;
+    }
   }
 </style>

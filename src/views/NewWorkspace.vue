@@ -132,6 +132,10 @@
     justify-content: space-between;
   }
 
+  .color-body input {
+    background: none;
+  }
+
   :focus-visible {
     outline: none;
   }
