@@ -107,6 +107,9 @@ export default createStore({
     setSelectedWorkspace({ commit }, workspace) {
       commit('updateSelectedWorkspace', workspace);
     },
+    resetSelectedData({ commit }) {
+      commit('resetSelectedData');
+    },
   },
   plugins: [createPersistedState()],
 });

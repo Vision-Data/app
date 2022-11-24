@@ -134,9 +134,6 @@
           this.isOpen = false;
         }
       },
-      resetData() {
-        this.$store.commit('resetSelectedData');
-      },
       async fetchData() {
         if (this.query === '') {
           window.alert('Le champ URL est vide');
@@ -148,8 +145,8 @@
             this.body
           );
           this.isLoading = false;
+          this.$store.dispatch('resetSelectedData');
           this.$store.dispatch('sendRequest', response);
-          this.resetData();
         }
       },
       insertRequest(db) {
