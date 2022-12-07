@@ -8,22 +8,9 @@
           alt="logo-vision"
         />
         <Loading v-if="isLoading" />
-        <select
-          id="workspace-select"
-          v-model="selectedWorkspace"
-          name="workspace"
-          class="select select-bordered w-full max-w-xs loading"
-          @change="changeRoute"
-        >
-          <!-- <option selected value="-1">  Worskpace </option> -->
-          <option
-            v-for="workspace in workspaces"
-            :key="workspace.id"
-            :value="workspace.id"
-          >
-            {{ workspace.name }}
-          </option>
-        </select>
+        <Button class="go-back btn btn-primary" @click="goBack()">
+          {{ "Changer d'espace de travail" }}
+        </Button>
         <div class="param">
           <button class="btn btn-primary settings" @click="goToSettings">
             <img
@@ -85,7 +72,6 @@
 
 <script>
   import Vue3RouterTree from 'vue3-router-tree';
-  import WorkspaceService from '../services/VisionApi/Workspace.js';
   import Loading from './Commons/Loading.vue';
 
   export default {
@@ -97,8 +83,6 @@
     emits: ['openSettings'],
     data() {
       return {
-        selectedWorkspace: '',
-        workspaces: [],
         requests: this.$store.state.treeStructure,
         isLoading: false,
       };
@@ -108,23 +92,12 @@
         this.requests = newValue;
       },
     },
-    async mounted() {
-      this.isLoading = true;
-      const { response } = await WorkspaceService.findAll(
-        this.$store.state.token
-      );
-      this.isLoading = false;
-
-      this.workspaces = response.data.data;
-      this.selectedWorkspace =
-        this.$route.params.workspaceId || this.workspaces[0]?.id || '';
-    },
     methods: {
-      changeRoute() {
-        this.$router.push(`/workspaces/${this.selectedWorkspace}`);
-      },
       goToSettings() {
         this.$emit('openSettings');
+      },
+      goBack() {
+        this.$router.push('/workspaces');
       },
     },
   };
@@ -162,7 +135,6 @@
     margin: 1rem;
   }
 
-  .workspaceLogo,
   .btn,
   #logo {
     margin: 0 auto;
@@ -182,21 +154,6 @@
 
   .btn {
     width: auto;
-    display: flex;
-  }
-
-  #workspace-select {
-    margin: 1rem 0;
-  }
-
-  #workspaceImg {
-    width: 4rem;
-    height: 4rem;
-  }
-
-  .workspaceLogo {
-    height: auto;
-    width: 10rem;
     display: flex;
   }
 
@@ -234,5 +191,10 @@
   .settings {
     background-color: transparent;
     color: var(--p);
+  }
+
+  .workspace-header .go-back {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
   }
 </style>

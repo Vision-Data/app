@@ -90,9 +90,8 @@
   };
 </script>
 
-<style scoped>
-  .chart-container {
-    position: fixed;
-    right: 0;
+<style>
+  [data-theme='dark'] .ct-label {
+    filter: invert(1) !important;
   }
 </style>

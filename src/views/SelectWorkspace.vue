@@ -42,7 +42,10 @@
             :workspace="workspace"
           />
         </div>
-        <div v-if="workspaces.length" class="btn-group flex justify-center">
+        <div
+          v-if="previousPageUrl || nextPageUrl"
+          class="btn-group flex justify-center"
+        >
           <button
             class="btn btn-primary btn-outline w-6/12 md:w-24"
             :class="{

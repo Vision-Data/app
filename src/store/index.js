@@ -34,6 +34,12 @@ export default createStore({
     changeIdentifier(state) {
       state.identifier++;
     },
+    resetSelectedData(state) {
+      state.selectedData = {
+        x: [],
+        y: [],
+      };
+    },
     setResponse(state, value) {
       state.response = value;
     },
@@ -100,6 +106,9 @@ export default createStore({
     },
     setSelectedWorkspace({ commit }, workspace) {
       commit('updateSelectedWorkspace', workspace);
+    },
+    resetSelectedData({ commit }) {
+      commit('resetSelectedData');
     },
   },
   plugins: [createPersistedState()],

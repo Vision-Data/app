@@ -22,13 +22,21 @@ axios.interceptors.response.use(
     return response;
   },
   function (error) {
+    const isVisionApi = axios
+      .getUri(error.config)
+      .includes(axios.defaults.baseURL);
+
+    if (!isVisionApi) {
+      return notyf.error('Une erreur est survenue. Veuillez réessayer.');
+    }
+
     switch (error.response.status) {
       case 401:
         store.dispatch('logout');
         router.push('/login');
         break;
       case 403:
-        notyf.error('notifications.forbidden');
+        notyf.error("Vous n'avez pas les droits pour effectuer cette action.");
         router.push('/workspaces');
         break;
       case 404:
