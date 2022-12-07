@@ -47,7 +47,10 @@
         </svg>
       </Button>
       <div class="response-container">
-        <Response @launch-modal="isOpenByResponse" />
+        <Response
+          :fullwidth="isChartDisplayed"
+          @launch-modal="isOpenByResponse"
+        />
         <Chart v-if="isChartDisplayed" />
       </div>
     </div>
