@@ -30,12 +30,14 @@
     <div class="alert bg-base-200">
       <div class="result-container">
         <b> {{ 'Résultats' }}</b>
+        <ResetButtonVue @click="setModeInReset" />
         <template v-for="(component, index) in components" :key="index">
           <component
             :is="components[index].component"
             :name="components[index].name"
             :data="components[index].data"
             :color="components[index].color"
+            :isInResetMode="isInResetMode"
           >
           </component>
         </template>
@@ -49,6 +51,7 @@
   import ObjectComponent from '../DataTypes/Object.vue';
   import ArrayComponent from '../DataTypes/Array.vue';
   import Recursive from '../../services/recursive.js';
+  import ResetButtonVue from '../Charts/Commons/ResetButton.vue';
   import { markRaw } from 'vue';
   export default {
     name: 'Response',
@@ -56,11 +59,13 @@
       ValueComponent,
       ObjectComponent,
       ArrayComponent,
+      ResetButtonVue,
     },
     emits: ['launch-modal'],
     data() {
       return {
         index: 0,
+        isInResetMode: false,
         responseData: this.$store.state.response,
         components: [],
         comps: {
@@ -88,7 +93,19 @@
       launchModal() {
         this.$emit('launch-modal', true);
       },
+
+      setModeInReset() {
+        this.$store.commit('resetSelectedData');
+        this.isInResetMode = true;
+      },
+      // resetSelectedData() {
+      //   this.components.forEach((element) => {
+      //     console.log(element);
+      //     element.selected = false;
+      //   });
+      // },
       parseData() {
+        this.isInResetMode = false;
         if (this.responseData?.data) {
           this.components = Recursive.recursive(
             this.responseData?.data,

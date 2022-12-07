@@ -25,6 +25,7 @@
             :data="components[index].data"
             :color="components[index].color"
             :is-parent-selected="selected"
+            :isInResetMode="isInResetMode"
           />
         </template>
       </div>
@@ -46,7 +47,7 @@
       ObjectComponent,
       ArrayComponent,
     },
-    props: ['name', 'data', 'color', 'isParentSelected'],
+    props: ['name', 'data', 'color', 'isParentSelected', 'inResetMode'],
     data: () => ({
       identifier: null,
       selection: false,
@@ -64,6 +65,11 @@
         handler(val, oldVal) {
           if (!oldVal && val) this.selected = true;
           else this.selected = false;
+        },
+      },
+      inResetMode: {
+        handler(val, oldVal) {
+          if (!oldVal && val) this.selected = false;
         },
       },
     },

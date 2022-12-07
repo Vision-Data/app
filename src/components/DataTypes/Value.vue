@@ -48,7 +48,7 @@
 <script>
   export default {
     name: 'Value',
-    props: ['name', 'data', 'color', 'isParentSelected'],
+    props: ['name', 'data', 'color', 'isParentSelected', 'isInResetMode'],
     data: () => ({
       dataValue: '',
       over: false,
@@ -57,7 +57,9 @@
     }),
     computed: {
       selected() {
-        return this.isParentSelected || this.select ? true : false;
+        return this.isParentSelected || this.select || this.isInResetMode
+          ? true
+          : false;
       },
     },
     async created() {

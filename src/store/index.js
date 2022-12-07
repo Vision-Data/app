@@ -35,6 +35,7 @@ export default createStore({
       state.identifier++;
     },
     resetSelectedData(state) {
+      console.log('reset');
       state.selectedData = {
         x: [],
         y: [],
