@@ -72,7 +72,7 @@
     <div class="help">
       <TooltipInformations
         class="tooltip absolute bottom-0 md:right-0 md:h-16"
-        helper-text="Qu'est-ce qu'un espace de travail ?"
+        helper-text="Un espace de travail est un environnement virtuel qui permet à un utilisateur d'accéder à des données et d'utiliser des outils pour les manipuler et les analyser."
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -203,7 +203,7 @@
   .tooltip::before {
     font-weight: bold;
     font-size: 1.2em;
-    color: #afafaf !important;
+    color: #3d4451 !important;
     background-color: #f0f0f0 !important;
     transform: translateX(-80%);
   }
