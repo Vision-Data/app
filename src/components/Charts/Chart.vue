@@ -89,3 +89,10 @@
     },
   };
 </script>
+
+<style scoped>
+  .chart-container {
+    position: fixed;
+    right: 0;
+  }
+</style>

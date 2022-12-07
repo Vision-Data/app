@@ -1,5 +1,5 @@
 <template>
-  <div :key="index" class="response">
+  <div :key="index" :class="{ response: isActive }">
     <div
       class="alert"
       :class="{
@@ -61,6 +61,7 @@
     data() {
       return {
         index: 0,
+        isActive: false,
         responseData: this.$store.state.response,
         components: [],
         comps: {
@@ -114,9 +115,13 @@
     background-color: #414141 !important;
     color: rgb(255, 255, 255) !important;
   }
+  .response {
+    width: 50%;
+  }
   .result-container {
     display: flex;
     flex-direction: column;
+    width: 100%;
   }
   .result-container .object > .flex-1 > .value-line > .alert {
     margin: 2px;
