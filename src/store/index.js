@@ -34,6 +34,9 @@ export default createStore({
     changeIdentifier(state) {
       state.identifier++;
     },
+    resetStateIdentifier(state) {
+      state.identifier = 0;
+    },
     resetSelectedData(state) {
       state.selectedData = {
         x: [],
@@ -103,6 +106,10 @@ export default createStore({
       commit('updateToken', null);
       commit('updateUser', null);
       commit('updateSelectedWorkspace', null);
+      commit('resetSelectedData');
+      commit('setResponse', null);
+      commit('resetStateIdentifier');
+      commit('setStructure', []);
     },
     setSelectedWorkspace({ commit }, workspace) {
       commit('updateSelectedWorkspace', workspace);
