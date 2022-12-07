@@ -1,5 +1,5 @@
 <template>
-  <div :key="index" :class="{ response: isActive }">
+  <div :key="index" :class="{ response: fullwidth }">
     <div
       class="alert"
       :class="{
@@ -57,11 +57,11 @@
       ObjectComponent,
       ArrayComponent,
     },
+    props: ['fullwidth'],
     emits: ['launch-modal'],
     data() {
       return {
         index: 0,
-        isActive: false,
         responseData: this.$store.state.response,
         components: [],
         comps: {
