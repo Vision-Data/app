@@ -27,10 +27,9 @@ export default {
   watch: {
     data: {
       handler(newValue, oldValue) {
-        console.log('ma direction');
+        console.log(newValue, oldValue);
         if (newValue !== oldValue) {
           this.renderSvg();
-          console.log('deuxieme direction');
         }
       },
       deep: true
@@ -41,15 +40,13 @@ export default {
   },
   computed: {
     donut() {
-      const pie = d3.pie().sort(null).value((d) => d[1]);
-      
+      const pie = d3.pie().sort(null).value((d) => Number(d[1]));
       return pie(Object.entries(this.data)); //formattage des données grâce a Object.entries
     },
   },
   methods: {
     initSvg() {
       this.radius = Math.min(this.width, this.height) / 2 - this.margin.top; //calculer le rayon du donut en fonction de la largeur et de la hauteur du canvas
-
 
       //récupération de l'élément svg et ajout d'un groupe
       this.svg = d3.select(this.$refs.donut);
@@ -65,7 +62,7 @@ export default {
       this.renderSvg(); //lancer la création du graphique
     },
     renderSvg() {
-      const ready = this.donut;
+      // const ready = this.donut; 
 
       //création des carces du donut
       const arc = d3.arc()
@@ -86,7 +83,7 @@ export default {
       
       this.svg = this.svg
       .selectAll('allSlices')
-      .data(ready)
+      .data(this.donut)
       .join('path')
         .attr('d', arc)
         .attr('fill', d => color(d.data[1]))
@@ -96,7 +93,7 @@ export default {
     this.svg = this.svg
       .selectAll('allPolylines')
       .insert('polyline', ':first-child')
-      .data(ready)
+      .data(this.donut)
       .join('polyline')
         .attr("stroke", "black")
         .style("fill", "none")
@@ -112,7 +109,7 @@ export default {
 
       this.svg = this.svg
         .selectAll('allLabels')
-        .data(ready)
+        .data(this.donut)
         .join('text')
           .text(d => d.data[0])
           .attr('transform', function(d) {

@@ -48,7 +48,7 @@ export default {
     initSvg() {
       //récupération de l'élément svg et ajout d'un groupe
       this.svg = d3.select(this.$refs.histogram);
-      // décalage du svg pour améliorer l'affichage
+      
       this.svg = this.svg
         .append("g")
         .attr(

@@ -19,7 +19,8 @@ export default {
     selectedDataX: this.$store.state.selectedData.x,
     selectedDataY: this.$store.state.selectedData.y,
     selectedDataObj: this.$store.state.selectedData.obj,
-    dataDonut:  this.selectedDataObj ? this.selectedDataObj : {},
+    // dataDonut:  this.selectedDataObj ? this.selectedDataObj : {},
+    dataDonut: [12, 13],
     dataHisto: [
       -0.07759597784808844, 0.5619279383911953, -0.051554452335713964,
       -0.3839089613567747, 0.9658295198906364, 0.48366524934238464,
@@ -79,8 +80,8 @@ export default {
     this.unwatchObj = this.$store.watch(
       (state) => state.selectedData.obj,
       (newValue) => {
-        console.log(newValue);
-        this.selectedDataObj = newValue.map(item => ({ key: item.key.toString(), value: item.value }));
+        console.log(JSON.stringify(newValue))
+        this.selectedDataObj.push(JSON.stringify(newValue[0]));
       }
     );
   },

@@ -53,11 +53,7 @@ export default {
     },
     async selectDataAll() {
       this.select = !this.select;
-      await this.$store.dispatch("verifyExistanceObj", {
-        id: this.identifier,
-        key: this.name,
-        value: this.data,
-      });
+      await this.$store.dispatch("verifyExistanceObj", this.data);
     },
   },
   computed: {
