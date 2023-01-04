@@ -4,9 +4,9 @@
       class="alert"
       :class="{
         'alert-success':
-          responseData && responseData.status.toString().startsWith('2'),
+          responseData && responseData.status?.toString().startsWith('2'),
         'alert-error':
-          responseData && !responseData.status.toString().startsWith('2'),
+          responseData && !responseData.status?.toString().startsWith('2'),
       }"
     >
       <div class="flex-1">

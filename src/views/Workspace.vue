@@ -22,6 +22,10 @@
               @click="fetchData()"
               >Lancer
             </Button>
+
+            <Button v-if="isLoading" class="ml-2" @click="cancelRequest"
+              >Annuler</Button
+            >
           </div>
         </header>
       </div>
@@ -97,6 +101,7 @@
         isLoading: false,
         store: [],
         isSettingsOpen: false,
+        abortController: new AbortController(),
       };
     },
     async mounted() {
@@ -153,12 +158,18 @@
           const response = await makeRequest(
             this.choice,
             this.query,
-            this.body
+            this.body,
+            this.abortController
           );
           this.isLoading = false;
           this.$store.dispatch('resetSelectedData');
           this.$store.dispatch('sendRequest', response);
         }
+      },
+      cancelRequest() {
+        this.abortController.abort();
+        this.abortController = new AbortController();
+        this.isLoading = false;
       },
       insertRequest(db) {
         let transaction = db.transaction('requests', 'readwrite');
