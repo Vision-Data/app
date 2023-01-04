@@ -7,6 +7,7 @@ const makeRequest = async (choice, query, body) => {
       method: choice,
       url: query,
       data: body,
+      timeout: 10000,
     });
   } catch (error) {
     if (error.response) {
