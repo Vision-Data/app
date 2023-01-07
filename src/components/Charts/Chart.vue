@@ -2,20 +2,25 @@
   <div class="chart-container">
     <h1>{{ 'Schéma de données' }}</h1>
     <LineChart
+      v-if="type === 'curves'"
       :data="dataChart"
       :options="optionsChart"
       :responsive-options="responsiveOptionsChart"
     />
+    <DonutChart v-if="type === 'donut'" :data="dataChart" />
   </div>
 </template>
 
 <script>
   import LineChart from './ChartType/LineChart.vue';
+  import DonutChart from './ChartType/DonutChart.vue';
   export default {
     name: 'Chart',
     components: {
       LineChart,
+      DonutChart,
     },
+    props: ['type'],
     data() {
       return {
         selectedDataX: this.$store.state.selectedData.x,
