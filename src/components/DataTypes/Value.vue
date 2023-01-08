@@ -40,6 +40,14 @@
         >
           Y
         </button>
+        <button
+          v-show="over"
+          id="selectUnique"
+          class="btn btn-xs selection-data"
+          @click="selectDataUnique()"
+        >
+          Unique
+        </button>
       </div>
     </div>
   </section>
@@ -80,6 +88,10 @@
           key: this.name,
           value: this.data,
         });
+      },
+      async selectDataUnique() {
+        this.select = !this.select;
+        await this.$store.dispatch('verifyExistanceUnique', this.data);
       },
     },
   };

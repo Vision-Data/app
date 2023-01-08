@@ -9,6 +9,7 @@ export default createStore({
       x: [],
       y: [],
     },
+    unique: [],
     token: null,
     user: null,
     treeStructure: [],
@@ -20,6 +21,9 @@ export default createStore({
     },
     receiveSelectedDataY(state, value) {
       state.selectedData.y = [...state.selectedData.y, value];
+    },
+    receiveSelectedDataUnique(state, value) {
+      state.unique = [...state.unique, value];
     },
     deleteSpecifiedDataX(state, value) {
       state.selectedData.x = state.selectedData.x.filter(
@@ -89,6 +93,9 @@ export default createStore({
         if (obj === undefined) commit('receiveSelectedDataY', payload);
         else commit('deleteSpecifiedDataY', payload);
       }
+    },
+    verifyExistanceUnique({ commit }, payload) {
+      commit('receiveSelectedDataUnique', payload);
     },
     sendRequest({ commit }, payload) {
       commit('setResponse', payload);
