@@ -73,12 +73,14 @@
 <script>
   import Vue3RouterTree from 'vue3-router-tree';
   import Loading from './Commons/Loading.vue';
+  import Button from './Commons/Form/Button.vue';
 
   export default {
     name: 'Menu',
     components: {
       Vue3RouterTree,
       Loading,
+      Button,
     },
     emits: ['openSettings'],
     data() {

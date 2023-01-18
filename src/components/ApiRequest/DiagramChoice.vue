@@ -7,27 +7,31 @@
           :key="diagram.ref"
           class="modal-item"
           :class="{ active: i == current }"
+          role="button"
+          tabindex="0"
           @click="current = i"
+          @keypress.enter="current = i"
         >
           <img :src="require(`@/assets/${diagram.image}.png`)" alt="" />
           <p>{{ diagram.name }}</p>
         </div>
       </div>
       <div class="modal-action">
-        <label for="my-modal-2" class="btn" @click="cancel">{{
-          'Annuler'
-        }}</label>
-        <label for="my-modal-2" class="btn btn-primary" @click="selectChart">{{
-          'Selectionner'
-        }}</label>
+        <Button @click="cancel">Annuler</Button>
+        <Button class="btn-primary" @click="selectChart">Sélectionner</Button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+  import Button from '../Commons/Form/Button.vue';
+
   export default {
     name: 'DiagramChoice',
+    components: {
+      Button,
+    },
     emits: ['cancel', 'chart'],
     data() {
       return {

@@ -1,6 +1,12 @@
 <template>
   <div class="workspace-card mb-12 mx-auto">
-    <div class="card bg-base-100 shadow-2xl hover:bg-base-300" @click="onClick">
+    <div
+      class="card bg-base-100 shadow-2xl hover:bg-base-300"
+      role="button"
+      tabindex="0"
+      @click="onClick"
+      @keypress.enter="onClick"
+    >
       <div class="m-6">
         <figure>
           <img

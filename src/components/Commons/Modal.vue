@@ -5,17 +5,21 @@
       <slot></slot>
       <div class="modal-action">
         <slot name="actions"></slot>
-        <label for="my-modal-2" class="btn btn-primary" @click="close">
-          {{ closeLabel || 'Fermer' }}
-        </label>
+        <Button class="btn-primary" @click="close">{{
+          closeLabel || 'Fermer'
+        }}</Button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+  import Button from './Form/Button.vue';
   export default {
     name: 'Modal',
+    components: {
+      Button,
+    },
     props: ['isOpen', 'title', 'closeLabel'],
     emits: ['close'],
     query: ['close'],

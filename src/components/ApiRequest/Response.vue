@@ -10,21 +10,18 @@
       }"
     >
       <div class="flex-1">
-        <label
-          ><span
-            class="badge border-transparent"
-            :class="{
-              'bg-success':
-                responseData && responseData.status?.toString().startsWith('2'),
-              'bg-error':
-                responseData &&
-                !responseData.status?.toString().startsWith('2'),
-            }"
-          >
-            {{ 'État' }}</span
-          >
-          {{ responseData?.status }} : {{ responseData?.statusText }}
-        </label>
+        <span
+          class="badge border-transparent"
+          :class="{
+            'bg-success':
+              responseData && responseData.status?.toString().startsWith('2'),
+            'bg-error':
+              responseData && !responseData.status?.toString().startsWith('2'),
+          }"
+        >
+          État</span
+        >
+        {{ responseData?.status }} : {{ responseData?.statusText }}
       </div>
     </div>
     <div class="alert bg-base-200">

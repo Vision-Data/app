@@ -13,45 +13,50 @@
       <h1>{{ 'Créer un espace de travail' }}</h1>
       <form class="w-full max-w-xs" @submit.prevent="create">
         <div class="form-control w-full max-w-xs name">
-          <label class="label">
-            <span class="label-text">{{ "Nom de l'espace de travail" }}</span>
+          <label class="label flex flex-col items-start" for="name">
+            <span class="label-text mb-2">Nom de l'espace de travail</span>
+            <input
+              id="name"
+              v-model="form.name"
+              type="text"
+              placeholder="Nom"
+              class="input input-bordered w-full max-w-xs"
+              :class="{ 'input-error': errors && errors.name }"
+            />
           </label>
-          <input
-            v-model="form.name"
-            type="text"
-            placeholder="Nom"
-            class="input input-bordered w-full max-w-xs"
-            :class="{ 'input-error': errors && errors.name }"
-          />
+
           <ErrorLabel v-if="errors && errors.name" :label="errors.name" />
         </div>
 
         <div class="form-control w-full max-w-xs color">
-          <label class="label">
-            <span class="label-text">{{ 'Couleur' }}</span>
+          <label class="label flex flex-col items-start" for="color">
+            <span class="label-text mb-2">Couleur</span>
+            <div class="color-body">
+              <input
+                v-model="form.color"
+                type="color"
+                :class="{ 'input-error': errors && errors.color }"
+              />
+              <p>{{ form.color }}</p>
+            </div>
           </label>
-          <div class="color-body">
-            <input
-              v-model="form.color"
-              type="color"
-              :class="{ 'input-error': errors && errors.color }"
-            />
-            <p>{{ form.color }}</p>
-          </div>
+
           <ErrorLabel v-if="errors && errors.color" :label="errors.color" />
         </div>
 
         <div class="form-control w-full max-w-xs picture">
-          <label class="label">
-            <span class="label-text">{{ "Image de l'espace de travail" }}</span>
+          <label class="label flex flex-col items-start" for="logo">
+            <span class="label-text mb-2">Image de l'espace de travail</span>
+            <input
+              id="logo"
+              v-model="form.logo"
+              type="text"
+              placeholder="https://..."
+              class="input input-bordered w-full max-w-xs"
+              :class="{ 'input-error': errors && errors.logo }"
+            />
           </label>
-          <input
-            v-model="form.logo"
-            type="text"
-            placeholder="https://..."
-            class="input input-bordered w-full max-w-xs"
-            :class="{ 'input-error': errors && errors.logo }"
-          />
+
           <ErrorLabel v-if="errors && errors.logo" :label="errors.logo" />
         </div>
 

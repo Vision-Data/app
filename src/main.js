@@ -27,7 +27,8 @@ axios.interceptors.response.use(
       .includes(axios.defaults.baseURL);
 
     if (!isVisionApi) {
-      return notyf.error('Une erreur est survenue. Veuillez réessayer.');
+      notyf.error('Une erreur est survenue. Veuillez réessayer.');
+      return Promise.reject(error);
     }
 
     switch (error.response.status) {
