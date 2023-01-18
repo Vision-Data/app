@@ -8,8 +8,12 @@
         { selected: selected },
         { 'object-over': selection },
       ]"
+      role="button"
+      tabindex="0"
       @mouseover="selection = true"
+      @focus="selection = true"
       @mouseout="selection = false"
+      @blur="selection = false"
     >
       <div class="flex-1">
         <b

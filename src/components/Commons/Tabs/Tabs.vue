@@ -7,7 +7,10 @@
         v-for="title in tabTitles"
         :key="title"
         class="mr-8"
+        role="button"
+        tabIndex="0"
         @click="selectedTitle = title"
+        @keypress.enter="selectedTitle = title"
       >
         <a
           href="#"

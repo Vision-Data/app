@@ -23,52 +23,58 @@
           @submit.prevent="register"
         >
           <div class="form-control w-full max-w-xs">
-            <label class="label">
-              <span class="label-text">{{ 'Adresse e-mail' }}</span>
+            <label class="label flex flex-col items-start" for="email">
+              <span class="label-text mb-2">Adresse e-mail</span>
+              <input
+                id="email"
+                v-model="form.email"
+                type="text"
+                placeholder="Adresse e-mail"
+                class="input input-bordered w-full max-w-xs"
+                :class="{ 'input-error': errors && errors.email }"
+              />
             </label>
-            <input
-              v-model="form.email"
-              type="text"
-              placeholder="Adresse e-mail"
-              class="input input-bordered w-full max-w-xs"
-              :class="{ 'input-error': errors && errors.email }"
-            />
+
             <ErrorLabel v-if="errors && errors.email" :label="errors.email" />
           </div>
           <div class="form-control w-full max-w-xs">
-            <label class="label">
-              <span class="label-text">{{ "Nom d'utilisateur" }}</span>
+            <label class="label flex flex-col items-start" for="username">
+              <span class="label-text mb-2">Nom d'utilisateur</span>
+              <input
+                id="username"
+                v-model="form.full_name"
+                type="text"
+                placeholder="Nom d'utilisateur"
+                class="input input-bordered w-full max-w-xs"
+                :class="{ 'input-error': errors && errors.full_name }"
+              />
             </label>
-            <input
-              v-model="form.full_name"
-              type="text"
-              placeholder="Nom d'utilisateur"
-              class="input input-bordered w-full max-w-xs"
-              :class="{ 'input-error': errors && errors.full_name }"
-            />
+
             <ErrorLabel
               v-if="errors && errors.full_name"
               :label="errors.full_name"
             />
           </div>
           <div class="form-control w-full max-w-xs">
-            <label class="label">
-              <span class="label-text">{{ 'Mot de passe' }}</span>
+            <label class="label flex flex-col items-start" for="password">
+              <span class="label-text mb-2">Mot de passe</span>
+              <input
+                id="password"
+                v-model="form.password"
+                type="password"
+                placeholder="Mot de passe"
+                class="input input-bordered w-full max-w-xs"
+                :class="{ 'input-error': errors && errors.password }"
+              />
+              <input
+                v-model="form.passwordConf"
+                type="password"
+                placeholder="Confirmer le Mot de passe"
+                class="input input-bordered w-full max-w-xs"
+                :class="{ 'input-error': errors && errors.password }"
+              />
             </label>
-            <input
-              v-model="form.password"
-              type="password"
-              placeholder="Mot de passe"
-              class="input input-bordered w-full max-w-xs"
-              :class="{ 'input-error': errors && errors.password }"
-            />
-            <input
-              v-model="form.passwordConf"
-              type="password"
-              placeholder="Confirmer le Mot de passe"
-              class="input input-bordered w-full max-w-xs"
-              :class="{ 'input-error': errors && errors.password }"
-            />
+
             <ErrorLabel
               v-if="errors && errors.password"
               :label="errors.password"
