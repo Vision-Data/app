@@ -14,6 +14,7 @@
 <script>
   import LineChart from './ChartType/LineChart.vue';
   import DonutChart from './ChartType/DonutChart.vue';
+
   export default {
     name: 'Chart',
     components: {
@@ -26,7 +27,7 @@
         selectedDataX: this.$store.state.selectedData.x,
         selectedDataY: this.$store.state.selectedData.y,
         selectedDataUnique: this.$store.state.unique,
-        dataDonut: [],
+        dataDonut: [6, 12, 13],
         dataChart: {
           labels: this.selectedDataX ? this.selectedDataX : [],
           series: this.selectedDataY ? [this.selectedDataY] : [],
@@ -81,6 +82,7 @@
       },
     },
     mounted() {
+      // console.log(toRaw(this.selectedDataUnique));
       this.unwatchX = this.$store.watch(
         (state) => state.selectedData.x,
         (newValue) => {
@@ -99,7 +101,7 @@
         (state) => state.unique,
         (newValue) => {
           // TODO : gérer les valeurs uniques
-          this.selectedDataY = newValue.map((item) => item.value.toString());
+          this.selectedDataUnique = newValue;
         }
       );
     },

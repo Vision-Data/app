@@ -11,6 +11,8 @@
 </template>
 
 <script>
+  import { toRaw } from 'vue';
+
   import * as d3 from 'd3'; //importation de d3 pour utiliser la librairie
   export default {
     name: 'DonutChart',
@@ -33,13 +35,14 @@
           .pie()
           .sort(null)
           .value((d) => Number(d[1]));
-        return pie(Object.entries(this.data)); //formattage des données grâce a Object.entries
+        return pie(Object.entries(toRaw(this.data))); //formattage des données grâce a Object.entries
       },
     },
     watch: {
       data: {
         handler(newValue, oldValue) {
           if (newValue !== oldValue) {
+            this.initSvg();
             this.renderSvg();
           }
         },

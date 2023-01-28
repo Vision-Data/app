@@ -3,7 +3,11 @@
     <div
       class="alert value"
       :data-identifier="identifier"
-      :class="[{ selected: selected }, { 'value-over': over }]"
+      :class="[
+        `alert-${color}`,
+        { selected: selected },
+        { 'value-over': over },
+      ]"
       @mouseover="over = true"
       @mouseout="over = false"
     >
