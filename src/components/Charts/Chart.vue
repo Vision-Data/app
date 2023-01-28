@@ -100,7 +100,6 @@
       this.unwatchUnique = this.$store.watch(
         (state) => state.unique,
         (newValue) => {
-          // TODO : gérer les valeurs uniques
           this.selectedDataUnique = newValue;
         }
       );

@@ -11,13 +11,12 @@
 </template>
 
 <script>
-  import { toRaw } from 'vue';
-
   import * as d3 from 'd3'; //importation de d3 pour utiliser la librairie
   export default {
     name: 'DonutChart',
-    props: ['data'],
+    // props: ['data'],
     data: () => ({
+      data: [6, 12, 13], //données du graphique
       width: 400, //largeur du canvas du graphique
       height: 400, //hauteur du canvas du graphique
       margin: {
@@ -35,7 +34,7 @@
           .pie()
           .sort(null)
           .value((d) => Number(d[1]));
-        return pie(Object.entries(toRaw(this.data))); //formattage des données grâce a Object.entries
+        return pie(Object.entries(JSON.parse(JSON.stringify(this.data)))); //formattage des données grâce a Object.entries
       },
     },
     watch: {
@@ -43,7 +42,6 @@
         handler(newValue, oldValue) {
           if (newValue !== oldValue) {
             this.initSvg();
-            this.renderSvg();
           }
         },
         deep: true,
@@ -51,6 +49,12 @@
     },
     mounted() {
       this.initSvg(); //lancer la création du svg
+      this.unwatchUnique = this.$store.watch(
+        (state) => state.unique,
+        (newValue) => {
+          this.data = newValue;
+        }
+      );
     },
     methods: {
       initSvg() {
