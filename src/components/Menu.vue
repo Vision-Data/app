@@ -8,9 +8,9 @@
           alt="logo-vision"
         />
         <Loading v-if="isLoading" />
-        <Button class="go-back btn btn-primary" @click="goBack()">
+        <button class="go-back btn btn-primary" @click="goBack()">
           {{ "Changer d'espace de travail" }}
-        </Button>
+        </button>
         <div class="param">
           <button class="btn btn-primary settings" @click="goToSettings">
             <img
@@ -24,7 +24,7 @@
         <div class="divider"></div>
       </div>
       <div class="tree-structure">
-        <vue3-router-tree active-color="#FE9430" :items="requests">
+        <!-- <vue3-router-tree active-color="#FE9430" :items="requests">
           <template #item="{ item }">
             <div class="tree-structure-container">
               <a :href="item.path" class="menu-link">
@@ -50,7 +50,7 @@
               </a>
             </div>
           </template>
-        </vue3-router-tree>
+        </vue3-router-tree> -->
       </div>
       <div class="schemas">
         <button
@@ -71,13 +71,11 @@
 </template>
 
 <script>
-  import Vue3RouterTree from 'vue3-router-tree';
   import Loading from './Commons/Loading.vue';
 
   export default {
     name: 'Menu',
     components: {
-      Vue3RouterTree,
       Loading,
     },
     emits: ['openSettings'],
