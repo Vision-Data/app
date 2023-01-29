@@ -16,7 +16,7 @@
     name: 'DonutChart',
     // props: ['data'],
     data: () => ({
-      data: [6, 12, 13], //données du graphique
+      data: [1], //données du graphique
       width: 400, //largeur du canvas du graphique
       height: 400, //hauteur du canvas du graphique
       margin: {

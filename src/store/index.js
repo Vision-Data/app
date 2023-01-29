@@ -42,6 +42,7 @@ export default createStore({
       state.identifier = 0;
     },
     resetSelectedData(state) {
+      state.unique = [];
       state.selectedData = {
         x: [],
         y: [],
