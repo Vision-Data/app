@@ -14,9 +14,9 @@
   import * as d3 from 'd3'; //importation de d3 pour utiliser la librairie
   export default {
     name: 'DonutChart',
-    // props: ['data'],
+    // this.$store.state.unique !== [] ? this.$store.state.unique : [1]
     data: () => ({
-      data: [1], //données du graphique
+      data: [],
       width: 400, //largeur du canvas du graphique
       height: 400, //hauteur du canvas du graphique
       margin: {
@@ -48,6 +48,8 @@
       },
     },
     mounted() {
+      const storage = JSON.parse(JSON.stringify(this.$store.state.unique));
+      this.data = storage.length === 0 ? [1] : storage;
       this.initSvg(); //lancer la création du svg
       this.unwatchUnique = this.$store.watch(
         (state) => state.unique,

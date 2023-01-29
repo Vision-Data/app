@@ -7,7 +7,7 @@
       :options="optionsChart"
       :responsive-options="responsiveOptionsChart"
     />
-    <DonutChart v-if="type === 'donut'" :data="dataDonut" />
+    <DonutChart v-if="type === 'donut'" />
   </div>
 </template>
 
@@ -26,8 +26,6 @@
       return {
         selectedDataX: this.$store.state.selectedData.x,
         selectedDataY: this.$store.state.selectedData.y,
-        selectedDataUnique: this.$store.state.unique,
-        dataDonut: [6, 12, 13],
         dataChart: {
           labels: this.selectedDataX ? this.selectedDataX : [],
           series: this.selectedDataY ? [this.selectedDataY] : [],
@@ -74,12 +72,6 @@
         },
         deep: true,
       },
-      selectedDataUnique: {
-        handler(newValue) {
-          this.dataDonut = newValue;
-        },
-        deep: true,
-      },
     },
     mounted() {
       // console.log(toRaw(this.selectedDataUnique));
@@ -97,17 +89,10 @@
           this.selectedDataY = newValue.map((item) => item.value.toString());
         }
       );
-      this.unwatchUnique = this.$store.watch(
-        (state) => state.unique,
-        (newValue) => {
-          this.selectedDataUnique = newValue;
-        }
-      );
     },
     beforeUnmount() {
       this.unwatchX();
       this.unwatchY();
-      this.unwatchUnique();
     },
   };
 </script>
