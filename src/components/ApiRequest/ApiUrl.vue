@@ -1,34 +1,33 @@
 <template>
   <div class="form-control">
-    <label class="label">
-      <span class="label-text text-gray-500">
-        {{ "URL de l'API" }}
-        <ToolTipInformations
-          direction="top"
-          helper-text="L'URL est le chemin d'accès des informations débutant généralement par https:"
+    <span class="label-text text-gray-500 mb-2">
+      URL de l'API
+      <ToolTipInformations
+        direction="top"
+        helper-text="L'URL est le chemin d'accès des informations débutant généralement par https:"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-4 w-4"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-4 w-4"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-        </ToolTipInformations>
-      </span>
-    </label>
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+      </ToolTipInformations>
+    </span>
 
     <div class="relative">
-      <label class="input-group">
+      <label class="input-group" for="api-url">
         <SecurityLock :is-https="isHttps" />
         <input
+          id="api-url"
           v-model="searchInputComputed"
           type="text"
           placeholder="https://api.example.com/v1"
@@ -65,11 +64,9 @@
         </ToolTipInformations>
       </label>
 
-      <label v-if="pasteError" class="label">
-        <span class="label-text-alt text-error">
-          {{ "Vous devez autoriser l'accès à votre presse papier" }}
-        </span>
-      </label>
+      <span v-if="pasteError" class="label-text-alt text-error">
+        Vous devez autoriser l'accès à votre presse papier
+      </span>
     </div>
   </div>
 </template>

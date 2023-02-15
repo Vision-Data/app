@@ -12,6 +12,7 @@
                   $store.state.user?.avatar_url ||
                   require('@/assets/noPicture.png')
                 "
+                alt="No picture"
               />
             </div>
           </div>

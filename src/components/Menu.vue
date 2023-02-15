@@ -72,11 +72,13 @@
 
 <script>
   import Loading from './Commons/Loading.vue';
+  import Button from './Commons/Form/Button.vue';
 
   export default {
     name: 'Menu',
     components: {
       Loading,
+      Button,
     },
     emits: ['openSettings'],
     data() {

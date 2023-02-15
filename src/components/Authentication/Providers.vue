@@ -1,11 +1,19 @@
 <template>
   <div class="flex flex-col">
     <Button class="btn-md google" @click.prevent="logWithProvider('google')">
-      <img :src="require(`@/assets/LogoGoogle.png`)" class="w-8 mr-4" />
+      <img
+        :src="require(`@/assets/LogoGoogle.png`)"
+        class="w-8 mr-4"
+        alt="google"
+      />
       Connexion avec Google
     </Button>
     <Button class="btn-md git" @click.prevent="logWithProvider('github')">
-      <img :src="require(`@/assets/LogoGithub.png`)" class="w-8 mr-4" />
+      <img
+        :src="require(`@/assets/LogoGithub.png`)"
+        class="w-8 mr-4"
+        alt="github"
+      />
       Connexion avec Github
     </Button>
   </div>
