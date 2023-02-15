@@ -51,6 +51,9 @@
         this.$emit('cancel', false);
       },
       selectChart() {
+        this.$store.dispatch('setChart', {
+          chart: this.diagrams[this.current].ref,
+        });
         this.$emit('chart', { name: this.diagrams[this.current].ref });
       },
     },

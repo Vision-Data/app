@@ -164,6 +164,7 @@
           );
           this.isLoading = false;
           this.$store.dispatch('resetSelectedData');
+          this.$store.dispatch('resetChartData');
           this.$store.dispatch('sendRequest', response);
         }
       },
@@ -175,7 +176,7 @@
       insertRequest(db) {
         let transaction = db.transaction('requests', 'readwrite');
 
-        transaction.oncomplete = function () {
+        transaction.oncomplete = function() {
           db.close();
         };
       },
@@ -185,11 +186,11 @@
         let cursorRequest = store.openCursor();
         let items = [];
 
-        transaction.oncomplete = function () {
+        transaction.oncomplete = function() {
           callback(items);
         };
 
-        cursorRequest.onsuccess = function (event) {
+        cursorRequest.onsuccess = function(event) {
           let cursor = event.target.result;
           if (cursor) {
             const item = cursor.value;
@@ -273,7 +274,7 @@
           }
         };
 
-        transaction.oncomplete = function () {
+        transaction.oncomplete = function() {
           db.close();
         };
       },
@@ -290,7 +291,7 @@
         const getRequestById = this.getRequestById;
         const setInfoInputs = this.setInfoInputs;
 
-        req.onupgradeneeded = function () {
+        req.onupgradeneeded = function() {
           let db = req.result;
           if (!db.objectStoreNames.contains('requests')) {
             db.createObjectStore('requests', { autoIncrement: true });
@@ -300,7 +301,7 @@
         req.onsuccess = async () => {
           let db = req.result;
 
-          db.versiononchange = function () {
+          db.versiononchange = function() {
             db.close();
             alert('Database is outdated, please reload the page.');
           };
