@@ -1,7 +1,5 @@
 <template>
-  <div ref="chart">
-    <svg width="500" height="300"></svg>
-  </div>
+  <div ref="chart"></div>
 </template>
 
 <script>

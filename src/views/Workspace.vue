@@ -145,7 +145,11 @@
         this.isOpen = true;
       },
       displayChart(payload) {
-        if (payload.name === 'curves' || payload.name === 'donut') {
+        if (
+          payload.name === 'curves' ||
+          payload.name === 'donut' ||
+          payload.name === 'bars'
+        ) {
           this.isChartDisplayed = true;
           this.isOpen = false;
           this.chartType = payload.name;

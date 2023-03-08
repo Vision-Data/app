@@ -8,14 +8,13 @@
       :responsive-options="responsiveOptionsChart"
     />
     <DonutChart v-if="type === 'donut'" />
-    <BarChart />
+    <BarChart v-if="type === 'bars'" />
   </div>
 </template>
 
 <script>
   import LineChart from './ChartType/LineChart.vue';
   import DonutChart from './ChartType/DonutChart.vue';
-
   import BarChart from './ChartType/BarChart.vue';
   export default {
     name: 'Chart',
