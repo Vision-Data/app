@@ -55,7 +55,7 @@
           :fullwidth="isChartDisplayed"
           @launch-modal="isOpenByResponse"
         />
-        <Chart v-if="isChartDisplayed" />
+        <Chart v-if="isChartDisplayed" :type="chartType" />
       </div>
     </div>
   </div>
@@ -93,6 +93,7 @@
         query: '',
         body: '',
         choice: 'GET',
+        chartType: 'curves',
         chart: {},
         requests: [],
         isOpen: false,
@@ -144,10 +145,10 @@
         this.isOpen = true;
       },
       displayChart(payload) {
-        // TODO: change for dynamic chart display
-        if (payload.name === 'curves') {
+        if (payload.name === 'curves' || payload.name === 'donut') {
           this.isChartDisplayed = true;
           this.isOpen = false;
+          this.chartType = payload.name;
         }
       },
       async fetchData() {
@@ -163,6 +164,7 @@
           );
           this.isLoading = false;
           this.$store.dispatch('resetSelectedData');
+          this.$store.dispatch('resetChartData');
           this.$store.dispatch('sendRequest', response);
         }
       },

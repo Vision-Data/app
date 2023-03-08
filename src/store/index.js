@@ -9,8 +9,10 @@ export default createStore({
       x: [],
       y: [],
     },
+    unique: [],
     token: null,
     user: null,
+    chart: 'unknown',
     treeStructure: [],
     selectedWorkspace: null,
   }),
@@ -20,6 +22,9 @@ export default createStore({
     },
     receiveSelectedDataY(state, value) {
       state.selectedData.y = [...state.selectedData.y, value];
+    },
+    receiveSelectedDataUnique(state, value) {
+      state.unique = [...state.unique, value];
     },
     deleteSpecifiedDataX(state, value) {
       state.selectedData.x = state.selectedData.x.filter(
@@ -37,7 +42,11 @@ export default createStore({
     resetStateIdentifier(state) {
       state.identifier = 0;
     },
+    resetChart(state) {
+      state.chart = 'unknown';
+    },
     resetSelectedData(state) {
+      state.unique = [];
       state.selectedData = {
         x: [],
         y: [],
@@ -51,6 +60,9 @@ export default createStore({
     },
     updateToken(state, token) {
       state.token = token;
+    },
+    updateChart(state, chart) {
+      state.chart = chart;
     },
     updateUser(state, user) {
       state.user = user;
@@ -90,6 +102,9 @@ export default createStore({
         else commit('deleteSpecifiedDataY', payload);
       }
     },
+    verifyExistanceUnique({ commit }, payload) {
+      commit('receiveSelectedDataUnique', payload);
+    },
     sendRequest({ commit }, payload) {
       commit('setResponse', payload);
     },
@@ -98,6 +113,9 @@ export default createStore({
     },
     setToken({ commit }, token) {
       commit('updateToken', token);
+    },
+    setChart({ commit }, chart) {
+      commit('updateChart', chart);
     },
     setUser({ commit }, user) {
       commit('updateUser', user);
@@ -116,6 +134,9 @@ export default createStore({
     },
     resetSelectedData({ commit }) {
       commit('resetSelectedData');
+    },
+    resetChartData({ commit }) {
+      commit('resetChart');
     },
   },
   plugins: [createPersistedState()],

@@ -28,22 +28,34 @@
           :class="{ italic: dataValue === '(vide)' || dataValue === '' }"
           >{{ dataValue === '' ? '(vide)' : dataValue }}</span
         >
-        <button
-          v-show="over"
-          id="selectX"
-          class="btn btn-xs selection-data-x"
-          @click="selectDataX()"
-        >
-          X
-        </button>
-        <button
-          v-show="over"
-          id="selectY"
-          class="btn btn-xs selection-data-y"
-          @click="selectDataY()"
-        >
-          Y
-        </button>
+        <div v-if="curves">
+          <button
+            v-show="over"
+            id="selectX"
+            class="btn btn-xs selection-data-x"
+            @click="selectDataX()"
+          >
+            X
+          </button>
+          <button
+            v-show="over"
+            id="selectY"
+            class="btn btn-xs selection-data-y"
+            @click="selectDataY()"
+          >
+            Y
+          </button>
+        </div>
+        <div v-if="donut">
+          <button
+            v-show="over"
+            id="selectUnique"
+            class="btn btn-xs selection-data"
+            @click="selectDataUnique()"
+          >
+            Unique
+          </button>
+        </div>
       </div>
     </div>
   </section>
@@ -62,6 +74,18 @@
     computed: {
       selected() {
         return this.isParentSelected || this.select ? true : false;
+      },
+      donut() {
+        return JSON.parse(JSON.stringify(this.$store.state.chart)).chart ===
+          'donut'
+          ? true
+          : false;
+      },
+      curves() {
+        return JSON.parse(JSON.stringify(this.$store.state.chart)).chart ===
+          'curves'
+          ? true
+          : false;
       },
     },
     async created() {
@@ -84,6 +108,10 @@
           key: this.name,
           value: this.data,
         });
+      },
+      async selectDataUnique() {
+        this.select = !this.select;
+        await this.$store.dispatch('verifyExistanceUnique', this.data);
       },
     },
   };
