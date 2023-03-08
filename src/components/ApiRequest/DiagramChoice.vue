@@ -47,6 +47,11 @@
             image: 'curves',
             ref: 'curves',
           },
+          {
+            name: 'Nuage de points',
+            image: 'scatterPoint',
+            ref: 'scatterPoint',
+          },
         ],
       };
     },

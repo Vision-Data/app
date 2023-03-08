@@ -8,18 +8,21 @@
       :responsive-options="responsiveOptionsChart"
     />
     <DonutChart v-if="type === 'donut'" />
+    <ScatterPointChart v-if="type === 'scatterPoint'" />
   </div>
 </template>
 
 <script>
   import LineChart from './ChartType/LineChart.vue';
   import DonutChart from './ChartType/DonutChart.vue';
+  import ScatterPointChart from './ChartType/ScatterPointChart.vue';
 
   export default {
     name: 'Chart',
     components: {
       LineChart,
       DonutChart,
+      ScatterPointChart,
     },
     props: ['type'],
     data() {

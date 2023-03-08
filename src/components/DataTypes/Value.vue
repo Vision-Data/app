@@ -46,6 +46,26 @@
             Y
           </button>
         </div>
+
+        <div v-if="scatterPoint">
+          <button
+            v-show="over"
+            id="selectX"
+            class="btn btn-xs selection-data-x"
+            @click="selectDataX()"
+          >
+            X
+          </button>
+          <button
+            v-show="over"
+            id="selectY"
+            class="btn btn-xs selection-data-y"
+            @click="selectDataY()"
+          >
+            Y
+          </button>
+        </div>
+
         <div v-if="donut">
           <button
             v-show="over"
@@ -84,6 +104,12 @@
       curves() {
         return JSON.parse(JSON.stringify(this.$store.state.chart)).chart ===
           'curves'
+          ? true
+          : false;
+      },
+      scatterPoint() {
+        return JSON.parse(JSON.stringify(this.$store.state.chart)).chart ===
+          'scatterPoint'
           ? true
           : false;
       },
