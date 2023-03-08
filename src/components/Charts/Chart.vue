@@ -30,13 +30,6 @@
           labels: this.selectedDataX ? this.selectedDataX : [],
           series: this.selectedDataY ? [this.selectedDataY] : [],
         },
-        optionsChart: {
-          width: 600,
-          height: 300,
-          labelInterpolationFnc: function (value) {
-            return value[0];
-          },
-        },
         responsiveOptionsChart: [
           [
             'screen and (min-width: 640px)',
