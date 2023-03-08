@@ -67,13 +67,7 @@
           .attr('y', (d) => y(d.value))
           .attr('width', x.bandwidth())
           .attr('height', (d) => height - y(d.value))
-          .attr('fill', 'steelblue')
-          .on('mouseover', function () {
-            d3.select(this).attr('fill', '#1e90ff');
-          })
-          .on('mouseout', function () {
-            d3.select(this).attr('fill', 'steelblue');
-          });
+          .attr('fill', 'steelblue');
 
         svg
           .selectAll('.text')
