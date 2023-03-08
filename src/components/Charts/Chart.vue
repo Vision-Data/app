@@ -34,12 +34,12 @@
             : this.selectedDataX
             ? this.selectedDataX
             : [],
-          xName: selectedDataKeyX,
-          yName: selectedDataKeyY
-            ? series
-            : this.selectedDataY
-            ? [this.selectedDataY]
-            : [],
+          // xName: selectedDataKeyX,
+          // yName: selectedDataKeyY
+          // ? series
+          // : this.selectedDataY
+          // ? [this.selectedDataY]
+          // : [],
         },
         responsiveOptionsChart: [
           [

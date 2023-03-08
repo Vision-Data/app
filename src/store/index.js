@@ -9,7 +9,7 @@ export default createStore({
       x: [],
       y: [],
       keyX: '',
-      keyY: ''
+      keyY: '',
     },
     unique: [],
     token: null,
