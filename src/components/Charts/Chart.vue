@@ -26,9 +26,20 @@
       return {
         selectedDataX: this.$store.state.selectedData.x,
         selectedDataY: this.$store.state.selectedData.y,
+        selectedDataKeyx: this.$store.state.selectedData?.keyX,
+        selectedDataKeyY: this.$store.state.selectedData?.keyY,
         dataChart: {
-          labels: this.selectedDataX ? this.selectedDataX : [],
-          series: this.selectedDataY ? [this.selectedDataY] : [],
+          labels: this.selectedDataKeyx
+            ? this.selectedDataKeyx
+            : this.selectedDataX
+            ? this.selectedDataX
+            : [],
+          xName: selectedDataKeyX,
+          yName: selectedDataKeyY
+            ? series
+            : this.selectedDataY
+            ? [this.selectedDataY]
+            : [],
         },
         responsiveOptionsChart: [
           [
@@ -56,18 +67,21 @@
       selectedDataX: {
         handler(newValue) {
           this.dataChart.labels = newValue;
+          console.log(this.$store.state.selectedData.keyX);
+          console.log(this.selectedDataKeyx);
         },
         deep: true,
       },
       selectedDataY: {
         handler(newValue) {
           this.dataChart.series = [newValue];
+          console.log(this.$store.state.selectedData.keyY);
+          console.log(this.selectedDataKeyY);
         },
         deep: true,
       },
     },
     mounted() {
-      // console.log(toRaw(this.selectedDataUnique));
       this.unwatchX = this.$store.watch(
         (state) => state.selectedData.x,
         (newValue) => {

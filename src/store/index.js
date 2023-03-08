@@ -8,6 +8,8 @@ export default createStore({
     selectedData: {
       x: [],
       y: [],
+      keyX: '',
+      keyY: ''
     },
     unique: [],
     token: null,
@@ -19,9 +21,11 @@ export default createStore({
   mutations: {
     receiveSelectedDataX(state, value) {
       state.selectedData.x = [...state.selectedData.x, value];
+      state.selectedData.keyX = value?.key;
     },
     receiveSelectedDataY(state, value) {
       state.selectedData.y = [...state.selectedData.y, value];
+      state.selectedData.keyY = value?.key;
     },
     receiveSelectedDataUnique(state, value) {
       state.unique = [...state.unique, value];

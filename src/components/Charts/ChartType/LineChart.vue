@@ -23,6 +23,7 @@
       },
     },
     mounted() {
+      console.log(this.data);
       this.chart = new Chartist.Line(
         '.ct-chart-line',
         this.data,
