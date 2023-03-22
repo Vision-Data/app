@@ -19,7 +19,10 @@
             <Button
               class="btn-primary runButton"
               :is-loading="isLoading"
-              @click="fetchData()"
+              @click="
+                fetchData();
+                openModal();
+              "
               >Lancer
             </Button>
 
@@ -142,7 +145,9 @@
         this.isBodyOpen = false;
       },
       openModal() {
-        this.isOpen = true;
+        if (this.query !== '') {
+          this.isOpen = true;
+        }
       },
       displayChart(payload) {
         if (payload.name === 'curves' || payload.name === 'donut') {

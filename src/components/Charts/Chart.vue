@@ -26,16 +26,20 @@
       return {
         selectedDataX: this.$store.state.selectedData.x,
         selectedDataY: this.$store.state.selectedData.y,
+        selectedDataKeyx: this.$store.state.selectedData?.keyX,
+        selectedDataKeyY: this.$store.state.selectedData?.keyY,
         dataChart: {
-          labels: this.selectedDataX ? this.selectedDataX : [],
-          series: this.selectedDataY ? [this.selectedDataY] : [],
-        },
-        optionsChart: {
-          width: 600,
-          height: 300,
-          labelInterpolationFnc: function (value) {
-            return value[0];
-          },
+          labels: this.selectedDataKeyx
+            ? this.selectedDataKeyx
+            : this.selectedDataX
+            ? this.selectedDataX
+            : [],
+          // xName: selectedDataKeyX,
+          // yName: selectedDataKeyY
+          // ? series
+          // : this.selectedDataY
+          // ? [this.selectedDataY]
+          // : [],
         },
         responsiveOptionsChart: [
           [
@@ -74,7 +78,6 @@
       },
     },
     mounted() {
-      // console.log(toRaw(this.selectedDataUnique));
       this.unwatchX = this.$store.watch(
         (state) => state.selectedData.x,
         (newValue) => {
