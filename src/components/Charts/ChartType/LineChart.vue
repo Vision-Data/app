@@ -12,6 +12,8 @@
     data() {
       return {
         chart: null,
+        titleX: 'X',
+        titleY: 'Y',
       };
     },
     watch: {
@@ -23,7 +25,6 @@
       },
     },
     mounted() {
-      console.log(this.data);
       this.chart = new Chartist.Line(
         '.ct-chart-line',
         this.data,
@@ -36,22 +37,23 @@
           plugins: [
             ctAxisTitle({
               axisX: {
-                axisTitle: 'Time (mins)',
+                axisTitle: this.titleX,
                 axisClass: 'ct-axis-title',
                 offset: {
                   x: 0,
-                  y: 50,
+                  y: 30,
                 },
                 textAnchor: 'middle',
               },
               axisY: {
-                axisTitle: 'Goals',
+                axisTitle: this.titleY,
                 axisClass: 'ct-axis-title',
                 offset: {
                   x: 0,
-                  y: -1,
+                  y: 20,
                 },
-                flipTitle: false,
+                textAnchor: 'middle',
+                flipTitle: true,
               },
             }),
           ],

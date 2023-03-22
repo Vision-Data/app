@@ -67,16 +67,12 @@
       selectedDataX: {
         handler(newValue) {
           this.dataChart.labels = newValue;
-          console.log(this.$store.state.selectedData.keyX);
-          console.log(this.selectedDataKeyx);
         },
         deep: true,
       },
       selectedDataY: {
         handler(newValue) {
           this.dataChart.series = [newValue];
-          console.log(this.$store.state.selectedData.keyY);
-          console.log(this.selectedDataKeyY);
         },
         deep: true,
       },
