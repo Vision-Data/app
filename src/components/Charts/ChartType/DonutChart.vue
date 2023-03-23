@@ -73,8 +73,7 @@
         this.renderSvg(); //lancer la création du graphique
       },
       renderSvg() {
-        // const ready = this.donut;
-        //création des carces du donut
+        //création des cercles du donut
         const arc = d3
           .arc()
           .innerRadius(this.radius * 0.5)
