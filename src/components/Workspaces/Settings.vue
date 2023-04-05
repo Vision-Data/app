@@ -30,6 +30,9 @@
       </Tab>
       <Tab title="Espace de travail">
         {{ $store.state.selectedWorkspace?.name || '' }}
+        <button class="btn btn-primary" @click.prevent="destroy">
+          Supprimer l'espace de travail
+        </button>
       </Tab>
     </Tabs>
   </Modal>
@@ -39,11 +42,26 @@
   import Modal from '../Commons/Modal.vue';
   import Tabs from '../Commons/Tabs/Tabs.vue';
   import Tab from '../Commons/Tabs/Tab.vue';
+  import WorkspaceService from '../../services/VisionApi/Workspace.js';
 
   export default {
     name: 'Settings',
     components: { Modal, Tabs, Tab },
     props: ['openSettings'],
-    methods: {},
+    methods: {
+      async destroy() {
+        this.isLoading = true;
+        const { errors } = await WorkspaceService.destroy(
+          this.$store.state.token,
+          this.$store.state.selectedWorkspace.id
+        );
+        this.isLoading = false;
+        this.errors = errors;
+        if (!this.errors) {
+          this.$notyf.success('Votre espace de travail a bien été supprimé');
+          this.$router.push('/workspaces');
+        }
+      },
+    },
   };
 </script>
