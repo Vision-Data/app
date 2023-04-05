@@ -60,6 +60,7 @@
         this.$emit('cancel', false);
       },
       selectChart() {
+        console.log(this.diagrams);
         this.$store.dispatch('setChart', {
           chart: this.diagrams[this.current].ref,
         });

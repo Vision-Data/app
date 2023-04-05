@@ -1,9 +1,11 @@
 <template>
-  <div ref="chart"></div>
+  <div>
+    <div ref="chart"></div>
+  </div>
 </template>
 
 <script>
-  import * as d3 from 'd3'; //importation de d3 pour utiliser la librairie
+  import * as d3 from 'd3';
   export default {
     name: 'BarChart',
     data() {
@@ -11,16 +13,26 @@
         width: 500,
         height: 300,
         barPadding: 5,
-        data: [],
+        name: '',
       };
     },
+    computed: {
+      data() {
+        return this.$store.getters['getSelectedDataX'].map((element) => {
+          return { name: element.key, value: element.value };
+        });
+      },
+    },
+    watch: {
+      data() {
+        const children = this.$refs.chart.childNodes;
+        children.forEach((child) => {
+          child.remove();
+        });
+        this.drawChart();
+      },
+    },
     mounted() {
-      const storage = JSON.parse(
-        JSON.stringify(this.$store.state.selectedData.x)
-      );
-      +storage.forEach((element) => {
-        this.data.push({ name: element.key, value: element.value });
-      });
       this.drawChart();
     },
     methods: {
@@ -84,6 +96,6 @@
 
 <style>
   .bar {
-    fill: steelblue;
+    fill: #fa810f;
   }
 </style>

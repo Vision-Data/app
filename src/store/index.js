@@ -72,6 +72,9 @@ export default createStore({
     },
   },
   getters: {
+    getSelectedDataX(state) {
+      return state.selectedData.x;
+    },
     getIdentifier(state) {
       return state.identifier;
     },
