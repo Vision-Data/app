@@ -60,6 +60,7 @@
         },
         this.responsiveOptions
       );
+      this.chart.supportsForeignObject = false;
     },
   };
 </script>
