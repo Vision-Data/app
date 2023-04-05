@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div ref="chart"></div>
+    <div ref="chart" class="bar-container"></div>
   </div>
 </template>
 
