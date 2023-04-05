@@ -23,6 +23,20 @@
         </div>
         <div class="divider"></div>
       </div>
+      <div class="informations">
+        <a href="https://vision-data.io/pages/index.html#lexique">
+          <p>Lexique</p>
+        </a>
+        <a href="https://github.com/Vision-Data/app/blob/main/LICENSE">
+          <p>Licence</p>
+        </a>
+        <a href="https://vision-data.io/pages/index.html#agreement">
+          <p>Conditions d'utilisations</p>
+        </a>
+        <a href="https://vision-data.io/pages/index.html#policy">
+          <p>Politique de confidentialité</p>
+        </a>
+      </div>
       <div class="tree-structure">
         <!-- <vue3-router-tree active-color="#FE9430" :items="requests">
           <template #item="{ item }">
@@ -131,6 +145,18 @@
 
   .divider {
     margin: 1rem;
+  }
+
+  .workspace-page .informations {
+    display: flex;
+    flex-direction: column;
+    bottom: 20px;
+    position: absolute;
+  }
+
+  .workspace-page .informations p {
+    padding: 0;
+    font-size: 13px;
   }
 
   .btn,
