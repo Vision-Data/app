@@ -1,5 +1,5 @@
 <template>
-  <div class="chart-container">
+  <div class="chart-container ml-4">
     <h1>{{ 'Schéma de données' }}</h1>
     <LineChart
       v-if="type === 'curves'"
@@ -9,6 +9,7 @@
     />
     <DonutChart v-if="type === 'donut'" />
     <BarChart v-if="type === 'bars'" />
+    <Export :chart-type="type" />
   </div>
 </template>
 
@@ -16,28 +17,35 @@
   import LineChart from './ChartType/LineChart.vue';
   import DonutChart from './ChartType/DonutChart.vue';
   import BarChart from './ChartType/BarChart.vue';
+  import Export from './Export/Export.vue';
+
   export default {
     name: 'Chart',
     components: {
       LineChart,
       DonutChart,
       BarChart,
+      Export,
     },
     props: ['type'],
     data() {
       return {
         selectedDataX: this.$store.state.selectedData.x,
         selectedDataY: this.$store.state.selectedData.y,
+        selectedDataKeyx: this.$store.state.selectedData?.keyX,
+        selectedDataKeyY: this.$store.state.selectedData?.keyY,
         dataChart: {
-          labels: this.selectedDataX ? this.selectedDataX : [],
-          series: this.selectedDataY ? [this.selectedDataY] : [],
-        },
-        optionsChart: {
-          width: 600,
-          height: 300,
-          labelInterpolationFnc: function (value) {
-            return value[0];
-          },
+          labels: this.selectedDataKeyx
+            ? this.selectedDataKeyx
+            : this.selectedDataX
+            ? this.selectedDataX
+            : [],
+          // xName: selectedDataKeyX,
+          // yName: selectedDataKeyY
+          // ? series
+          // : this.selectedDataY
+          // ? [this.selectedDataY]
+          // : [],
         },
         responsiveOptionsChart: [
           [
@@ -76,7 +84,6 @@
       },
     },
     mounted() {
-      // console.log(toRaw(this.selectedDataUnique));
       this.unwatchX = this.$store.watch(
         (state) => state.selectedData.x,
         (newValue) => {
