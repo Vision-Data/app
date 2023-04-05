@@ -1,5 +1,5 @@
 <template>
-  <div class="chart-container">
+  <div class="chart-container ml-4">
     <h1>{{ 'Schéma de données' }}</h1>
     <LineChart
       v-if="type === 'curves'"
@@ -8,18 +8,21 @@
       :responsive-options="responsiveOptionsChart"
     />
     <DonutChart v-if="type === 'donut'" />
+    <Export :chart-type="type" />
   </div>
 </template>
 
 <script>
   import LineChart from './ChartType/LineChart.vue';
   import DonutChart from './ChartType/DonutChart.vue';
+  import Export from './Export/Export.vue';
 
   export default {
     name: 'Chart',
     components: {
       LineChart,
       DonutChart,
+      Export,
     },
     props: ['type'],
     data() {

@@ -4,6 +4,7 @@
 
 <script>
   import Chartist from 'chartist';
+
   export default {
     name: 'LineChart',
     props: ['data', 'options', 'responsiveOptions'],
@@ -27,6 +28,7 @@
         this.options,
         this.responsiveOptions
       );
+      this.chart.supportsForeignObject = false;
     },
   };
 </script>
