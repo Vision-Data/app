@@ -29,4 +29,10 @@ export default class WorkspaceService extends ApiClient {
       Authorization: `Bearer ${userToken}`,
     });
   }
+
+  static async destroy(userToken, id) {
+    return this.makeRequest('DELETE', `workspaces/${id}`, null, {
+      Authorization: `Bearer ${userToken}`,
+    });
+  }
 }
