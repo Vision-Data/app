@@ -1,9 +1,5 @@
 <template>
-  <Button
-    :class="[{ 'btn-disabled': !isSelectedData }, 'ml-2']"
-    @click="isOpen = true"
-    >Exporter le schéma</Button
-  >
+  <Button class="ml-2" @click="isOpen = true">Exporter le schéma</Button>
 
   <Modal
     :is-open="isOpen"
@@ -25,26 +21,17 @@
 <script setup>
   import Button from '../../Commons/Form/Button.vue';
   import Modal from '../../Commons/Modal.vue';
-  import { ref, computed, watch } from 'vue';
-  import { useStore } from 'vuex';
+  import { ref, watch } from 'vue';
 
   const isOpen = ref(false);
   const chartTitle = ref(null);
 
-  const store = useStore();
   const props = defineProps({
     chartType: {
       type: String,
       required: true,
     },
   });
-
-  const isSelectedData = computed(
-    () =>
-      (store.state.selectedData.x.length > 0 &&
-        store.state.selectedData.y.length > 0) ||
-      store.state.unique.length > 0
-  );
 
   watch([chartTitle, isOpen], ([newChartTitle, newIsOpen]) => {
     const chartExport = {
@@ -57,6 +44,11 @@
         selector: '.donut-container svg',
         width: 480,
         height: 440,
+      },
+      bars: {
+        selector: '.bar-container svg',
+        width: 500,
+        height: 300,
       },
     };
 
