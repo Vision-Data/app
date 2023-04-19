@@ -113,6 +113,7 @@ export default createStore({
       commit('receiveSelectedDataUnique', payload);
     },
     sendRequest({ commit }, payload) {
+      commit('resetSelectedData');
       commit('setResponse', payload);
     },
     sendStructure({ commit }, payload) {

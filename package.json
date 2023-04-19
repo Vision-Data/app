@@ -18,7 +18,7 @@
     "chartist-plugin-axistitle": "^0.0.7",
     "core-js": "^3.6.5",
     "d3": "^7.8.2",
-    "daisyui": "^1.16.2",
+    "daisyui": "^1.25.4",
     "notyf": "^3.10.0",
     "postcss": "^8.2.13",
     "prismjs": "^1.27.0",
