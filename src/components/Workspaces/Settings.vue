@@ -29,8 +29,8 @@
         </section>
       </Tab>
       <Tab title="Espace de travail">
-        {{ $store.state.selectedWorkspace?.name || '' }}
-        <button class="btn btn-primary" @click.prevent="destroy">
+        <p>{{ $store.state.selectedWorkspace?.name || '' }}</p>
+        <button class="mt-2 btn btn-error" @click.prevent="destroy">
           Supprimer l'espace de travail
         </button>
       </Tab>

@@ -10,26 +10,33 @@
         <header>
           <dark-mode />
           <Logout />
-          <div class="sending-container">
-            <ApiUrl
-              class="container w-full max-w-screen-lg"
-              :content="query"
-              @query="query = $event"
-            />
-            <Button
-              class="btn-primary runButton"
-              :is-loading="isLoading"
-              @click="
-                fetchData();
-                openModal();
-              "
-              >Lancer
-            </Button>
+          <Tabs>
+            <Tab title="Récupérer les données avec une API">
+              <div class="sending-container">
+                <ApiUrl
+                  class="container w-full max-w-screen-lg"
+                  :content="query"
+                  @query="query = $event"
+                />
+                <Button
+                  class="btn-primary runButton"
+                  :is-loading="isLoading"
+                  @click="
+                    fetchData();
+                    openModal();
+                  "
+                  >Lancer
+                </Button>
 
-            <Button v-if="isLoading" class="ml-2" @click="cancelRequest"
-              >Annuler</Button
-            >
-          </div>
+                <Button v-if="isLoading" class="ml-2" @click="cancelRequest"
+                  >Annuler</Button
+                >
+              </div>
+            </Tab>
+            <Tab title="Importer un fichier">
+              <ImportFile @loadFile="isOpen = true" />
+            </Tab>
+          </Tabs>
         </header>
       </div>
       <DiagramChoice v-show="isOpen" @chart="displayChart" @cancel="isOpened" />
@@ -68,12 +75,15 @@
   import DarkMode from '../components/Commons/DarkMode.vue';
   import Logout from '../components/Commons/Logout.vue';
   import ApiUrl from '../components/ApiRequest/ApiUrl.vue';
+  import ImportFile from '../components/ApiRequest/ImportFile.vue';
   import Response from '../components/ApiRequest/Response.vue';
   import Chart from '../components/Charts/Chart.vue';
   import DiagramChoice from '../components/ApiRequest/DiagramChoice.vue';
   import Menu from '../components/Menu.vue';
   import Button from '../components/Commons/Form/Button.vue';
   import Settings from '../components/Workspaces/Settings.vue';
+  import Tabs from '../components/Commons/Tabs/Tabs.vue';
+  import Tab from '../components/Commons/Tabs/Tab.vue';
 
   import makeRequest from '../services/api-request.js';
   import WorkspaceService from '../services/VisionApi/Workspace.js';
@@ -90,6 +100,9 @@
       Menu,
       Settings,
       Logout,
+      Tabs,
+      Tab,
+      ImportFile,
     },
     data() {
       return {
